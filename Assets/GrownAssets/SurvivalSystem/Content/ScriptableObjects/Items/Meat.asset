@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e38498b791211488c7ec520c6450a8, type: 3}
+  m_Name: Meat
+  m_EditorClassIdentifier: 
+  displayName: Meat
+  description: This is a piece of meat.
+  type: 2
+  icon: {fileID: 21300000, guid: 17114bf2e80ec3a45843bb8a1e46fd4e, type: 3}
+  dropPrefab: {fileID: 2935456705387644987, guid: a391c2511d4d75d469a934cdd3a8b397, type: 3}
+  canStackItem: 1
+  maxStackamount: 10
+  consumables:
+  - type: 2
+    value: 30
+  - type: 0
+    value: 40
+  wieldablePrefab: {fileID: 0}

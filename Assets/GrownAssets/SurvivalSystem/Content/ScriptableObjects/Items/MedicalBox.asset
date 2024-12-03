@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e38498b791211488c7ec520c6450a8, type: 3}
+  m_Name: MedicalBox
+  m_EditorClassIdentifier: 
+  displayName: Medical Box
+  description: A box containing all medical supplies.
+  type: 2
+  icon: {fileID: 21300000, guid: 59995872c9063724cb2c7902e496f831, type: 3}
+  dropPrefab: {fileID: 5133561880163558293, guid: 0fb2b0c2407354dbe89e79956edfd540, type: 3}
+  canStackItem: 1
+  maxStackamount: 5
+  consumables:
+  - type: 2
+    value: 100
+  wieldablePrefab: {fileID: 0}
