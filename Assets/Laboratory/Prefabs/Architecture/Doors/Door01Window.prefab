@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5626974602649223585}
   - component: {fileID: 2101930871660920152}
   - component: {fileID: 8811724792503767517}
-  - component: {fileID: 4634481374734556199}
+  - component: {fileID: 5873594488816366133}
   m_Layer: 0
   m_Name: Door01Window
   m_TagString: Untagged
@@ -68,6 +68,7 @@ MeshRenderer:
   - {fileID: 2100000, guid: 7f4c80360ec100846bed6604c350261c, type: 2}
   - {fileID: 2100000, guid: 1fccce7c8dafc4342b9ffcb385ffb4af, type: 2}
   - {fileID: 2100000, guid: 5a3a40270c0ca5b4ca9328e520ddea97, type: 2}
+  - {fileID: 2100000, guid: 8abf35c85660c63439b8468ebb18e939, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,7 +111,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9, y: 0.050257668, z: 2.1000004}
   m_Center: {x: -0.45, y: 0.024999728, z: 1.0500002}
---- !u!114 &4634481374734556199
+--- !u!114 &5873594488816366133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,8 +120,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 366859688749599108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 187232ab6eedf244199c30a28cc70318, type: 3}
+  m_Script: {fileID: 11500000, guid: b1bbb502083c41048a8fedc6a9693be7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  deathEffect: {fileID: 0}
+  _totalHitPoints: 100
+  _currentHitPoints: 100
+  damageLevels:
+  - maxHitPoints: 100
+    minHitPoints: 80.1
+    healthPercent: 100
+    hasError: 0
+    visibleDamageLevel: 0
+  - maxHitPoints: 80
+    minHitPoints: 60.1
+    healthPercent: 80
+    hasError: 0
+    visibleDamageLevel: 2
+  - maxHitPoints: 60
+    minHitPoints: 40.1
+    healthPercent: 60
+    hasError: 0
+    visibleDamageLevel: 4
+  - maxHitPoints: 40
+    minHitPoints: 20.1
+    healthPercent: 40
+    hasError: 0
+    visibleDamageLevel: 6
+  - maxHitPoints: 20
+    minHitPoints: 0
+    healthPercent: 20
+    hasError: 0
+    visibleDamageLevel: 8
+  destroyedPrefab: {fileID: 0}
+  destroyedPrefabParent: {fileID: 0}
+  fallbackParticle: {fileID: 19800004, guid: 6b46cad447c64dd48b8b715df6e3d2ad, type: 3}
+  fallbackParticleMatOption: 0
+  damageEffects: []
+  velocityReduction: 0.5
+  limitDamage: 0
+  minDamage: 10
+  maxDamage: 100
+  minDamageTime: 0
+  ignoreCollisionsUnder: 2
+  unparentOnDestroy: []
+  disableKinematicOnUparentedChildren: 1
+  replaceMaterials: []
+  replaceParticleMats: []
+  canBeDestroyed: 1
+  canBeRepaired: 1
+  debrisToReParentByName: []
+  debrisToReParentIsKinematic: 0
+  childrenToReParentByName: []
+  isDebrisChipAway: 0
+  chipAwayDebrisMass: 1
+  chipAwayDebrisDrag: 0
+  chipAwayDebrisAngularDrag: 0.05
+  autoPoolDestroyedPrefab: 1
+  useFallbackParticle: 1
+  centerPointOverride: {x: 0, y: 0, z: 0}
+  fallbackParticleScale: {x: 1, y: 1, z: 1}
+  fallbackParticleParent: {fileID: 0}
+  sinkWhenDestroyed: 0
+  shouldDeactivate: 0
+  isTerrainTree: 0
+  destroyedSound: {fileID: 0}
+  damagedSound: {fileID: 0}
+  repairedSound: {fileID: 0}

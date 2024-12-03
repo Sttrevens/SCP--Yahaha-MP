@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DestroyIt;
 
 namespace LPSurvivalEngine
 {
@@ -80,9 +81,9 @@ namespace LPSurvivalEngine
                 }
 
                 // 对实现了IDamagable接口的物体造成伤害
-                if (doesDealDamage && hit.collider.GetComponent<IDamagable>() != null)
+                if (doesDealDamage && hit.collider.GetComponent<Destructible>() != null)
                 {
-                    hit.collider.GetComponent<IDamagable>().TakePhysicDamage(damage);
+                    hit.collider.GetComponent<Destructible>().ApplyDamage(damage);
                 }
             }
         }
