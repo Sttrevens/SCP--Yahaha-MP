@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace DestroyIt
 {
@@ -23,6 +22,21 @@ namespace DestroyIt
 
         [Tooltip("Randomize the drop rotation?")]
         public bool randomizeDropRotation = false;
+
+        [Header("Impact Settings")]
+        [Tooltip("The minimum force applied to the dropped item.")]
+        public float minDropForce = 2f;
+
+        [Tooltip("The maximum force applied to the dropped item.")]
+        public float maxDropForce = 5f;
+
+        [Tooltip("The random spread of the drop force (in each direction).")]
+        public float spreadFactor = 1f;
+
+        [Header("Drop Probability Settings")]
+        [Tooltip("The probability (0-1) that each item will drop when the object is destroyed.")]
+        [Range(0f, 1f)]
+        public float dropProbability = 0.5f;
 
         private void Start()
         {
@@ -64,22 +78,37 @@ namespace DestroyIt
                 // Create the dropped item at the calculated position
                 foreach (var item in itemsToDrop)
                 {
-                    Instantiate(item, spawnPosition, Quaternion.identity);
-
-                    if (randomizeDropRotation)
+                    // Check if the item should drop based on dropProbability
+                    if (Random.value <= dropProbability)
                     {
-                        item.transform.rotation = Random.rotation;
-                    }
+                        GameObject droppedItem = Instantiate(item, spawnPosition, Quaternion.identity);
 
-                    // Optionally, you can apply velocity or forces to the dropped item (e.g., Rigidbody)
-                    Rigidbody rb = item.GetComponent<Rigidbody>();
-                    if (rb != null)
+                        if (randomizeDropRotation)
+                        {
+                            droppedItem.transform.rotation = Random.rotation;
+                        }
+
+                        // Apply random force to the dropped item (if it has a Rigidbody)
+                        Rigidbody rb = droppedItem.GetComponent<Rigidbody>();
+                        if (rb != null)
+                        {
+                            Vector3 randomDirection = new Vector3(
+                                Random.Range(-spreadFactor, spreadFactor),
+                                Random.Range(minDropForce, maxDropForce),
+                                Random.Range(-spreadFactor, spreadFactor)
+                            ).normalized;
+
+                            float forceAmount = Random.Range(minDropForce, maxDropForce);
+                            rb.AddForce(randomDirection * forceAmount, ForceMode.Impulse);
+                        }
+
+                        // Log the drop
+                        Debug.Log($"Dropped item: {droppedItem.name} at position: {spawnPosition}");
+                    }
+                    else
                     {
-                        rb.AddForce(Vector3.up * 5f, ForceMode.Impulse);  // Example of giving the item an upward force
+                        Debug.Log($"Item {item.name} did not drop due to probability check.");
                     }
-
-                    // Log the drop
-                    Debug.Log($"Dropped item: {item.name} at position: {spawnPosition}");
                 }
             }
             else

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7835263352799737290}
   - component: {fileID: 155280281300291059}
   - component: {fileID: 846662837270888385}
+  - component: {fileID: 301633769025754717}
   m_Layer: 0
   m_Name: Door01
   m_TagString: Untagged
@@ -151,7 +152,7 @@ MonoBehaviour:
     visibleDamageLevel: 8
   destroyedPrefab: {fileID: 0}
   destroyedPrefabParent: {fileID: 0}
-  fallbackParticle: {fileID: 19800004, guid: 6b46cad447c64dd48b8b715df6e3d2ad, type: 3}
+  fallbackParticle: {fileID: 19800002, guid: 57c55d09e6ab296408c349462a6cf5c1, type: 3}
   fallbackParticleMatOption: 0
   damageEffects: []
   velocityReduction: 0.5
@@ -184,3 +185,27 @@ MonoBehaviour:
   destroyedSound: {fileID: 0}
   damagedSound: {fileID: 0}
   repairedSound: {fileID: 0}
+--- !u!114 &301633769025754717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394890631265222934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67843ba2e75a59e4eb4ca0a89a4169fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsToDrop:
+  - {fileID: 2976463804789829844, guid: 057351cc20f37d84882bbaa834bbbb5f, type: 3}
+  - {fileID: 2976463804789829844, guid: 057351cc20f37d84882bbaa834bbbb5f, type: 3}
+  - {fileID: 2976463804789829844, guid: 057351cc20f37d84882bbaa834bbbb5f, type: 3}
+  - {fileID: 2976463804789829844, guid: 057351cc20f37d84882bbaa834bbbb5f, type: 3}
+  dropOffset: {x: 0, y: 0, z: 0}
+  randomizeDropPosition: 1
+  randomizeDropRotation: 0
+  minDropForce: 2
+  maxDropForce: 5
+  spreadFactor: 1
+  dropProbability: 0.5
