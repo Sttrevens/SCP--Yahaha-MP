@@ -89,14 +89,16 @@ namespace LPSurvivalEngine
     {
         if (canBuild)
         {
+                Debug.Log("fake");
             BuildingSystem.instance.SetNewBuildingRecipe(building);
         }
 
-        else
+        /*else
         {
-            PlayerController.instance.ToggleCursor(true);
+                Debug.Log("fuck");
+                PlayerController.instance.ToggleCursor(true);
             BuildingSystem.instance.gameObject.SetActive(false);
-        }
+        }*/
     }
     
     

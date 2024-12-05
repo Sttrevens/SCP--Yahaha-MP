@@ -16,7 +16,7 @@ namespace LPSurvivalEngine
     [Space]
 
     public float placementUpdateRate = 0.03f;
-    public float placementMaxDistance = 5.0f;
+    public float placementMaxDistance = 0.1f;
     public float rotateSpeed = 180.0f;
 
     [Space]
@@ -48,7 +48,9 @@ namespace LPSurvivalEngine
     {
         instance = this;
         cam = Camera.main;
-    }
+
+            placementLayerMask = LayerMask.GetMask("Terrain", "Floor");
+        }
 
     /*void Start ()
     {
@@ -95,48 +97,65 @@ namespace LPSurvivalEngine
         currentBuildingPreview = Instantiate(item.previewPrefab).GetComponent<BuildingPlacer>();
     }
 
-    void Update ()
-    {
-        if(buildingObject != null && currentBuildingPreview != null && Time.time - lastPlacementUpdateTime > placementUpdateRate)
+        void Update()
         {
-            lastPlacementUpdateTime = Time.time;
-
-            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-            RaycastHit hit;
-
-            if(Physics.Raycast(ray, out hit, placementMaxDistance, placementLayerMask))
+            if (buildingObject != null && currentBuildingPreview != null && Time.time - lastPlacementUpdateTime > placementUpdateRate)
             {
-                currentBuildingPreview.transform.position = hit.point;
-                currentBuildingPreview.transform.up = hit.normal;
-                currentBuildingPreview.transform.Rotate(new Vector3(0, YRotation, 0), Space.Self);
+                lastPlacementUpdateTime = Time.time;
 
-                if(!currentBuildingPreview.CollidingWithObjects())
+                Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, placementMaxDistance, placementLayerMask))
                 {
-                    if(!canPlace)
-                        currentBuildingPreview.CanPlace();
+                    Vector3 targetPosition = hit.point;
 
-                    canPlace = true;
-                }
-                else
-                {
-                    if(canPlace)
-                        currentBuildingPreview.CannotPlace();
+                    // Clamp the position to ensure it's within a certain range of the player (e.g., 5 units from the player)
+                    float maxDistanceFromPlayer = 2.0f;  // Define the max radius from the player
+                    Vector3 playerPosition = transform.position;  // Assuming this script is on the player object
 
-                    canPlace = false;
+                    // Calculate the distance between the player and the hit point
+                    Vector3 directionToTarget = targetPosition - playerPosition;
+
+                    // If the distance is greater than the max allowed distance, clamp it
+                    if (directionToTarget.magnitude > maxDistanceFromPlayer)
+                    {
+                        targetPosition = playerPosition + directionToTarget.normalized * maxDistanceFromPlayer;
+                    }
+
+                    // Set the preview building's position
+                    currentBuildingPreview.transform.position = targetPosition;
+                    currentBuildingPreview.transform.up = hit.normal;
+                    currentBuildingPreview.transform.Rotate(new Vector3(0, YRotation, 0), Space.Self);
+
+                    if (!currentBuildingPreview.CollidingWithObjects())
+                    {
+                        if (!canPlace)
+                            currentBuildingPreview.CanPlace();
+
+                        canPlace = true;
+                    }
+                    else
+                    {
+                        if (canPlace)
+                            currentBuildingPreview.CannotPlace();
+
+                        canPlace = false;
+                    }
                 }
+            }
+
+            if (Keyboard.current.rKey.isPressed)
+            {
+                YRotation += rotateSpeed * Time.deltaTime;
+
+                if (YRotation > 360.0f)
+                    YRotation = 0.0f;
             }
         }
 
-        if(Keyboard.current.rKey.isPressed)
-        {
-            YRotation += rotateSpeed * Time.deltaTime;
 
-            if(YRotation > 360.0f)
-                YRotation = 0.0f;
-        }    
-    }
-
-    void OnDestroy ()
+        void OnDestroy ()
     {
         if (currentBuildingPreview != null)
         Destroy(currentBuildingPreview.gameObject);

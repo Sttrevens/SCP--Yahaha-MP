@@ -25,10 +25,10 @@ namespace DestroyIt
 
         [Header("Impact Settings")]
         [Tooltip("The minimum force applied to the dropped item.")]
-        public float minDropForce = 2f;
+        public float minDropForce = 0.5f;
 
         [Tooltip("The maximum force applied to the dropped item.")]
-        public float maxDropForce = 5f;
+        public float maxDropForce = 1f;
 
         [Tooltip("The random spread of the drop force (in each direction).")]
         public float spreadFactor = 1f;
