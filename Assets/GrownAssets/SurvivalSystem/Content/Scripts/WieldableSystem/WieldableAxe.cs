@@ -18,7 +18,8 @@ namespace LPSurvivalEngine
     [Space]
 
     public float hitRate;
-    public float hitDistance;
+        public float hitCoolDownTime;
+        public float hitDistance;
     
     [Space]
     [Header("Combat")] 
@@ -56,15 +57,23 @@ namespace LPSurvivalEngine
             hitting = true;
             anim.SetTrigger("TwoHandAttack");
             Invoke("OnCanAttack", hitRate);
+                //PlayerController.instance.SetIsAttacking(true);
         }
     }
 
-    void OnCanAttack()
-    {
-        
-        OnHit();
-        hitting = false;
-    }
+        void OnCanAttack()
+        {
+            OnHit();
+
+            StartCoroutine(DelaySetAttackingFalse());
+        }
+
+        private IEnumerator DelaySetAttackingFalse()
+        {
+            yield return new WaitForSeconds(hitCoolDownTime);
+            hitting = false;
+        }
+
 
         public void OnHit()
         {
@@ -74,13 +83,11 @@ namespace LPSurvivalEngine
 
             if (Physics.Raycast(ray, out hit, hitDistance))
             {
-                // 资源采集
                 if (doesGatherresources && hit.collider.GetComponent<ResourceTree>())
                 {
                     hit.collider.GetComponent<ResourceTree>().Gather(hit.point, hit.normal);
                 }
 
-                // 对实现了IDamagable接口的物体造成伤害
                 if (doesDealDamage && hit.collider.GetComponent<Destructible>() != null)
                 {
                     hit.collider.GetComponent<Destructible>().ApplyDamage(damage);
