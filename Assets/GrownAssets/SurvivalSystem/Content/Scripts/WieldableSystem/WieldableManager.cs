@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,7 @@ namespace LPSurvivalEngine
     
     public Wieldable currentWieldable;
     public Transform wieldablesPosition;
+        public Transform flashlightPosition;
     
     public static WieldableManager instance;
     private PlayerController controller;
@@ -42,11 +44,18 @@ namespace LPSurvivalEngine
         }
     }
 
-    public void EquipNewItem(ItemDatabase item)
-    {
-        DropWieldable();
-        currentWieldable = Instantiate(item.wieldablePrefab, wieldablesPosition).GetComponent<Wieldable>();
-    }
+        public void EquipNewItem(ItemDatabase item)
+        {
+            DropWieldable();
+            if (item.wieldablePrefab.GetComponent<Flashlight>() == null)
+            {
+                currentWieldable = Instantiate(item.wieldablePrefab, wieldablesPosition).GetComponent<Wieldable>();
+            }
+            else
+            {
+                currentWieldable = Instantiate(item.wieldablePrefab, flashlightPosition).GetComponent<Wieldable>();
+            }
+        }
 
     public void DropWieldable()
     {
