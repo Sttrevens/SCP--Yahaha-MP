@@ -91,10 +91,9 @@ namespace LPSurvivalEngine
                 if (doesDealDamage && hit.collider.GetComponent<Destructible>() != null)
                 {
                     hit.collider.GetComponent<Destructible>().ApplyDamage(damage);
+                    DestructibleBarController.Instance.UpdateHealthBar(hit.collider.GetComponent<Destructible>().CurrentHitPoints, hit.collider.GetComponent<Destructible>().TotalHitPoints);
                 }
+            }
             }
         }
     }
-
-
-}
