@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 178345740467792248}
-  - component: {fileID: 5511429519167600528}
   - component: {fileID: 4356814235778997105}
   - component: {fileID: 7825974208350912165}
   - component: {fileID: 6518624243295361046}
@@ -37,27 +36,6 @@ Transform:
   - {fileID: 304379025947556969}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5511429519167600528
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3756782026907163499}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.41571882, y: 0.26314878, z: 0.30870244}
-  m_Center: {x: -0.000980809, y: 0.1424228, z: -0.02935131}
 --- !u!54 &4356814235778997105
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -66,7 +44,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3756782026907163499}
   serializedVersion: 4
-  m_Mass: 5
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -175,6 +153,7 @@ MonoBehaviour:
   itemsToDrop:
   - {fileID: 8440707628185488915, guid: 3d26c80efcd28494da497a34381dfacf, type: 3}
   - {fileID: 2976463804789829844, guid: 057351cc20f37d84882bbaa834bbbb5f, type: 3}
+  - {fileID: 3423434151840272865, guid: 58c65399ed8f51b47a9556a59ee24060, type: 3}
   dropOffset: {x: 0, y: 0, z: 0}
   randomizeDropPosition: 1
   randomizeDropRotation: 0

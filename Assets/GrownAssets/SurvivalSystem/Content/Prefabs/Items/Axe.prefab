@@ -168,7 +168,19 @@ MonoBehaviour:
   glowOptimalBlit: 1
   glowBlitDebug: 0
   glowBlendPasses: 1
-  glowPasses: []
+  glowPasses:
+  - offset: 4
+    alpha: 0.1
+    color: {r: 0.64, g: 1, b: 0, a: 1}
+  - offset: 3
+    alpha: 0.2
+    color: {r: 0.64, g: 1, b: 0, a: 1}
+  - offset: 2
+    alpha: 0.3
+    color: {r: 0.64, g: 1, b: 0, a: 1}
+  - offset: 1
+    alpha: 0.4
+    color: {r: 0.64, g: 1, b: 0, a: 1}
   glowIgnoreMask: 0
   innerGlow: 0
   innerGlowWidth: 1
@@ -210,7 +222,7 @@ MonoBehaviour:
   seeThroughBorderOnly: 0
   seeThroughBorderWidth: 0.45
   seeThroughOrdered: 0
-  rmsCount: 0
+  rmsCount: 1
   hitFxInitialIntensity: 0
   hitFxMode: 0
   hitFxFadeOutDuration: 0.25
