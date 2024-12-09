@@ -6,6 +6,7 @@ public class RoomManager : MonoBehaviour
     public GameObject initialRoomPrefab; // The initial fixed room where the player spawns
     public GameObject[] roomPrefabs; // Array of possible room prefabs to choose from
     public int maxGenerationSteps = 2; // Maximum steps to generate new rooms
+    public GameObject initialRoomInScene;
 
     private int generationSteps = 0; // Tracks how many generations have been made
     private GameObject currentRoom; // The current room the player is in
@@ -13,8 +14,23 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
-        GenerateInitialRoom(); // Generate the first room on start
+        // 如果初始房间已经在场景中，直接引用它
+        if (initialRoomInScene != null)
+        {
+            currentRoom = initialRoomInScene; // 从场景中的初始房间获取
+        }
+        else
+        {
+            GenerateInitialRoom(); // 如果初始房间为空，则生成它
+        }
+
+        // 获取当前房间的门信息
+        currentRoomDoors = currentRoom.GetComponentsInChildren<Door>();
+
+        // 生成与当前房间相连的房间
+        GenerateRoomsForCurrentRoom();
     }
+
 
     // Generates the initial room and its linked door
     void GenerateInitialRoom()
@@ -77,8 +93,8 @@ public class RoomManager : MonoBehaviour
         newRoomDoor.HasConnectedRoom = true;
 
         // Ensure the new room is positioned correctly relative to the current room's door
-        Vector3 currentRoomDoorPosition = currentRoomDoor.transform.position;
-        Vector3 newRoomDoorPosition = newRoomDoor.transform.position;
+        Vector3 currentRoomDoorPosition = currentRoomDoor.transform.position;  // World position
+        Vector3 newRoomDoorPosition = newRoomDoor.transform.position;  // World position
 
         // Calculate the difference in position to align the doors correctly
         Vector3 offset = currentRoomDoorPosition - newRoomDoorPosition;
@@ -87,6 +103,7 @@ public class RoomManager : MonoBehaviour
         newRoom.transform.position = currentRoom.transform.position + offset;
 
         // Optionally, adjust the rotation of the new room to ensure the doors align properly
-        newRoom.transform.rotation = Quaternion.Euler(currentRoomDoor.transform.eulerAngles);
+        newRoom.transform.rotation = Quaternion.Euler(currentRoomDoor.transform.rotation.eulerAngles);
     }
+
 }
