@@ -52,11 +52,11 @@ namespace LPSurvivalEngine
         private ItemSlot selectedItem;
         public static Inventory instance;
 
-        // ĞÂÔö£ºÒıÓÃÏä×ÓµÄÎïÆ·²Û
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½Æ·ï¿½ï¿½
         public ContainerInventory containerInventory;
         private int currentWieldableIndex;
         public GameObject containerUIWindow;
-        public ItemSlotUI[] containerSlots;// UI´°¿Ú£¬ÏÔÊ¾Ïä×ÓºÍ±³°üµÄÎïÆ·
+        public ItemSlotUI[] containerSlots;// UIï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ÓºÍ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
 
         private void Awake()
         {
@@ -115,7 +115,7 @@ namespace LPSurvivalEngine
             return inventoryWindow.activeInHierarchy;
         }
 
-        // Ìí¼ÓÎïÆ·µ½±³°ü
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         public void AddItem(ItemDatabase item)
         {
             if (item.canStackItem)
@@ -141,7 +141,7 @@ namespace LPSurvivalEngine
             ThrowItem(item);
         }
 
-        // ½«ÎïÆ·¶ªÆú
+        // ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
         void ThrowItem(ItemDatabase item)
         {
             Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360.0f));
@@ -162,8 +162,8 @@ namespace LPSurvivalEngine
             }
         }
 
-        // ´ÓÎïÆ·¶ÑÕ»ÖĞ»ñÈ¡¿Õ²Û
-        ItemSlot GetItemstack(ItemDatabase item)
+        // ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Õ»ï¿½Ğ»ï¿½È¡ï¿½Õ²ï¿½
+        ItemSlot GetItemstack(ItemDatabase item) // TODO: èƒ½å¦æ”¹æˆmapï¼Œæé«˜æŸ¥æ‰¾æ•ˆç‡
         {
             for (int x = 0; x < slots.Length; x++)
             {
@@ -175,7 +175,7 @@ namespace LPSurvivalEngine
             return null;
         }
 
-        // »ñÈ¡¿ÕµÄÎïÆ·²Û
+        // ï¿½ï¿½È¡ï¿½Õµï¿½ï¿½ï¿½Æ·ï¿½ï¿½
         ItemSlot GetEmptySlot()
         {
             for (int x = 0; x < slots.Length; x++)
@@ -188,7 +188,7 @@ namespace LPSurvivalEngine
             return null;
         }
 
-        // Ñ¡ÔñÎïÆ·
+        // Ñ¡ï¿½ï¿½ï¿½ï¿½Æ·
         public void SelectItem(int index)
         {
             if (slots[index].item == null)
@@ -308,15 +308,15 @@ namespace LPSurvivalEngine
 
         public void InteractWithContainer()
         {
-            containerUIWindow.SetActive(true);  // ÏÔÊ¾Ïä×ÓµÄUI½çÃæ
-            UpdateContainerUI();  // ¸üĞÂUI£¬ÏÔÊ¾Ïä×ÓºÍ±³°üÖĞµÄÎïÆ·
+            containerUIWindow.SetActive(true);  // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Óµï¿½UIï¿½ï¿½ï¿½ï¿½
+            UpdateContainerUI();  // ï¿½ï¿½ï¿½ï¿½UIï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ÓºÍ±ï¿½ï¿½ï¿½ï¿½Ğµï¿½ï¿½ï¿½Æ·
             playerController.ToggleCursor(true);
         }
 
-        // ¸üĞÂÏä×ÓºÍ±³°üµÄUI
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓºÍ±ï¿½ï¿½ï¿½ï¿½ï¿½UI
         public void UpdateContainerUI()
         {
-            // ¸üĞÂ±³°üµÄÎïÆ·²Û
+            // ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½
             for (int i = 0; i < slots.Length; i++)
             {
                 if (slots[i].item != null)
@@ -329,12 +329,12 @@ namespace LPSurvivalEngine
                 }
             }
 
-            // ¸üĞÂÏä×ÓµÄÎïÆ·²Û
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½Æ·ï¿½ï¿½
             for (int i = 0; i < containerInventory.containerSlots.Length; i++)
             {
                 if (containerInventory.containerSlots[i].item != null)
                 {
-                    // ¼ÙÉèÄãÓĞÒ»¸öÀàËÆÓÚ±³°ü²ÛÎ»UIµÄ×é¼ş£¬ÓÃÓÚÏÔÊ¾Ïä×ÓÖĞµÄÎïÆ·
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½Î»UIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½Ğµï¿½ï¿½ï¿½Æ·
                     containerSlots[i].Set(containerInventory.containerSlots[i]);
                 }
                 /*else
@@ -344,7 +344,7 @@ namespace LPSurvivalEngine
             }
         }
 
-        // ½«ÎïÆ·´Ó±³°ü×ªÒÆµ½Ïä×Ó
+        // ï¿½ï¿½ï¿½ï¿½Æ·ï¿½Ó±ï¿½ï¿½ï¿½×ªï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½
         public void TransferItemToContainer(int inventoryIndex)
         {
             ItemSlot inventorySlot = slots[inventoryIndex];
@@ -365,7 +365,7 @@ namespace LPSurvivalEngine
             }
         }
 
-        // ½«ÎïÆ·´ÓÏä×Ó×ªÒÆµ½±³°ü
+        // ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½
         public void TransferItemToInventory(int containerIndex)
         {
             ItemSlot containerSlot = containerInventory.containerSlots[containerIndex];
