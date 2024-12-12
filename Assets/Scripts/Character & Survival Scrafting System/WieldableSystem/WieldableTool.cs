@@ -6,6 +6,15 @@ using UnityEngine;
 
 namespace LPSurvivalEngine
 {
+    [Serializable]
+    public enum WieldableType
+    {
+        Tool,
+        BluntMelee,
+        SharpMelee,
+        Ranged
+    }
+
     public class WieldableTool : Wieldable
     {
         [Space]
@@ -26,7 +35,8 @@ namespace LPSurvivalEngine
     [Space]
     [Header("Combat")] 
     [Space]
-
+    
+    public WieldableType wieldableType;
     public bool doesDealDamage;
     public int damage;
 
@@ -98,7 +108,14 @@ namespace LPSurvivalEngine
 
                 if (doesDealDamage && hit.collider.GetComponent<Destructible>() != null)
                 {
-                    hit.collider.GetComponent<Destructible>().ApplyDamage(damage);
+                    if (wieldableType == WieldableType.BluntMelee)
+                    {
+                        hit.collider.GetComponent<Destructible>().ApplyDamage(damage);
+                    }
+                    else
+                    {
+                        hit.collider.GetComponent<Destructible>().ApplyDamage(damage / 2);
+                    }
                     DestructibleBarController.Instance.UpdateHealthBar(hit.collider.GetComponent<Destructible>().CurrentHitPoints, hit.collider.GetComponent<Destructible>().TotalHitPoints);
                 }
 

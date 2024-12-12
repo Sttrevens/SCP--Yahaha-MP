@@ -20,12 +20,13 @@ namespace LPSurvivalEngine
     public float hitRate;
         public float hitCoolDownTime;
         public float hitDistance;
-    
-    [Space]
-    [Header("Combat")] 
-    [Space]
 
-    public bool doesDealDamage;
+        [Space]
+        [Header("Combat")]
+        [Space]
+
+        public WieldableType wieldableType = WieldableType.BluntMelee;
+        public bool doesDealDamage;
     public int damage;
 
     [Space]
