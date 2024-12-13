@@ -26,6 +26,4 @@ namespace LPSurvivalEngine
     }
 
 }
-
-
 }
