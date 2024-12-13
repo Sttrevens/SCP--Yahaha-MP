@@ -35049,6 +35049,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8c553085-a7ed-4b73-baae-f4668e595bd7
     m_ActionName: Main/CancelBuild[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8f8bd496-34d4-42d8-ae30-8b60e347360b
+    m_ActionName: Main/Rotate[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Main
@@ -35346,9 +35350,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdPoint: {fileID: 8673146641249302909}
   throwForceBase: 5
-  throwForceMax: 1000
+  throwForceMax: 10000
   maxPickupMass: 1000
   rotateSpeed: 100
+  pickupSmoothDuration: 0.15
 --- !u!1 &5662185099758455059
 GameObject:
   m_ObjectHideFlags: 0
@@ -35709,14 +35714,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5944288832318449984}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.46, y: -0.184, z: 1.009}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 865230183947924868}
   m_Father: {fileID: 5480734551038065329}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &5974537399768774173
 GameObject:
   m_ObjectHideFlags: 0
