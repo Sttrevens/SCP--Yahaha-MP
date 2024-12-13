@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5869027869814918526}
   - component: {fileID: 5800981081377324839}
   - component: {fileID: 6859752650524071677}
-  - component: {fileID: 1721161242134839243}
   m_Layer: 0
   m_Name: Microscope01
   m_TagString: Untagged
@@ -150,30 +149,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1bbb502083c41048a8fedc6a9693be7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _totalHitPoints: 50
-  _currentHitPoints: 50
+  _totalHitPoints: 60
+  _currentHitPoints: 60
   damageLevels:
-  - maxHitPoints: 50
-    minHitPoints: 40.1
+  - maxHitPoints: 60
+    minHitPoints: 48.1
     healthPercent: 100
     hasError: 0
     visibleDamageLevel: 0
-  - maxHitPoints: 40
-    minHitPoints: 30.099998
+  - maxHitPoints: 48
+    minHitPoints: 36.1
     healthPercent: 80
     hasError: 0
     visibleDamageLevel: 2
-  - maxHitPoints: 30
-    minHitPoints: 20.1
+  - maxHitPoints: 36
+    minHitPoints: 24.1
     healthPercent: 60
     hasError: 0
     visibleDamageLevel: 4
-  - maxHitPoints: 20
-    minHitPoints: 10.099999
+  - maxHitPoints: 24
+    minHitPoints: 12.099999
     healthPercent: 40
     hasError: 0
     visibleDamageLevel: 6
-  - maxHitPoints: 10
+  - maxHitPoints: 12
     minHitPoints: 0
     healthPercent: 20
     hasError: 0
@@ -213,27 +212,6 @@ MonoBehaviour:
   destroyedSound: {fileID: 0}
   damagedSound: {fileID: 0}
   repairedSound: {fileID: 0}
---- !u!114 &1721161242134839243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524064643163718802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67843ba2e75a59e4eb4ca0a89a4169fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemsToDrop:
-  - {fileID: 8352550844526286471, guid: 9ef77cf7efea35a42a84bfe5032f3c94, type: 3}
-  dropOffset: {x: 0, y: 0, z: 0}
-  randomizeDropPosition: 1
-  randomizeDropRotation: 1
-  minDropForce: 0.5
-  maxDropForce: 1
-  spreadFactor: 1
-  dropProbability: 1
 --- !u!1 &3106837817584986314
 GameObject:
   m_ObjectHideFlags: 0
