@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System.Security.Cryptography;
 
 public class PlayerThrow : MonoBehaviour
 {
@@ -18,6 +20,8 @@ public class PlayerThrow : MonoBehaviour
     private bool isRotating = false;
 
     private bool isInteracting = false;
+
+    public TMPro.TextMeshProUGUI pickupErrorMessage;
 
     void Update()
     {
@@ -92,26 +96,41 @@ public class PlayerThrow : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 5f))
         {
             Rigidbody targetRb = hit.collider?.GetComponent<Rigidbody>();
-            if (targetRb != null && targetRb.mass <= maxPickupMass)
+            if (targetRb != null)
             {
-                heldObject = targetRb;
-                heldObjectCollider = heldObject.GetComponent<Collider>();
-                heldObject.useGravity = false;
-                heldObject.velocity = Vector3.zero;
-                heldObject.angularVelocity = Vector3.zero;
-
-                if (heldObjectCollider != null)
+                if (targetRb.mass <= maxPickupMass)
                 {
-                    Physics.IgnoreCollision(heldObjectCollider, GetComponent<Collider>(), true);
-                }
+                    heldObject = targetRb;
+                    heldObjectCollider = heldObject.GetComponent<Collider>();
+                    heldObject.useGravity = false;
+                    heldObject.velocity = Vector3.zero;
+                    heldObject.angularVelocity = Vector3.zero;
 
-                StartCoroutine(SmoothPickup());
+                    if (heldObjectCollider != null)
+                    {
+                        Physics.IgnoreCollision(heldObjectCollider, GetComponent<Collider>(), true);
+                    }
+
+                    StartCoroutine(SmoothPickup());
+                }
+                else
+                {
+                    // 质量太大举不动时，显示提示文本
+                    pickupErrorMessage.gameObject.SetActive(true);
+                    StartCoroutine(HideErrorMessageAfterSeconds(3f));
+                }
             }
         }
         else
         {
             isInteracting = false;
         }
+    }
+
+    private IEnumerator HideErrorMessageAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        pickupErrorMessage.gameObject.SetActive(false);
     }
 
     IEnumerator SmoothPickup()
