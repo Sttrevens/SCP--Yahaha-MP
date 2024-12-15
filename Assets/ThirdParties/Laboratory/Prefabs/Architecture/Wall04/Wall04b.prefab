@@ -14,12 +14,13 @@ GameObject:
   - component: {fileID: 3691296064962299498}
   - component: {fileID: 5456734333957236183}
   - component: {fileID: 5475041718778029143}
-  m_Layer: 0
+  - component: {fileID: 4634652948749569270}
+  m_Layer: 13
   m_Name: Wall04b
-  m_TagString: Untagged
+  m_TagString: Passable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5277187630633599695
 Transform:
@@ -208,3 +209,19 @@ MonoBehaviour:
   maxDropForce: 1
   spreadFactor: 1
   dropProbability: 0.5
+--- !u!208 &4634652948749569270
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9180323855977591004}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1, y: 0.025, z: 1.5000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.025, z: 1.5000001}
+  m_TimeToStationary: 0.5

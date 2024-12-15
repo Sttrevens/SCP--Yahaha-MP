@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace EnemyAI
-{
     public class EnemyAI : MonoBehaviour
     {
         private NavMeshAgent agent;
@@ -17,45 +15,51 @@ namespace EnemyAI
         [Header("AI Logic")]
         [Space]
 
-        public float detectionRange = 10f; // ÊÓÒ°·¶Î§
-        public float destroyRange = 1f; // ´İ»ÙÕÏ°­ÎïµÄ¾àÀë
-        public float destroyTime = 3f; // ´İ»ÙÕÏ°­ÎïËùĞèÊ±¼ä
-        public float chasingSpeed = 3.5f; // ×·ÖğËÙ¶È
-        public float patrollingSpeed = 2f; // Ñ²ÂßËÙ¶È
+        public float detectionRange = 10f; // ï¿½ï¿½Ò°ï¿½ï¿½Î§
+        public float attackInterval = 3f; // ï¿½İ»ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+        public float chasingSpeed = 3.5f; // ×·ï¿½ï¿½ï¿½Ù¶ï¿½
+        public float patrollingSpeed = 2f; // Ñ²ï¿½ï¿½ï¿½Ù¶ï¿½
 
         private bool isDestroying = false;
 
-        public float fieldOfViewAngleHorizontal = 90f;  // Ë®Æ½ÊÓÒ°½Ç¶È
-        public float fieldOfViewAngleVertical = 60f;  // ´¹Ö±ÊÓÒ°½Ç¶È
-        public float sphereRadius = 0.1f;
+        public float fieldOfViewAngleHorizontal = 90f;  // Ë®Æ½ï¿½ï¿½Ò°ï¿½Ç¶ï¿½
+        public float fieldOfViewAngleVertical = 60f;  // ï¿½ï¿½Ö±ï¿½ï¿½Ò°ï¿½Ç¶ï¿½
+        public float sensingRadius = 0.1f;
 
         public enum PatrolMode
         {
-            FixedPoints,  // ¹Ì¶¨Ñ²Âßµã
-            RandomCircle, // Ô²ĞÎ·¶Î§Ñ²Âß
-            RandomRectangle // ¾ØĞÎ·¶Î§Ñ²Âß
+            FixedPoints,  // ï¿½Ì¶ï¿½Ñ²ï¿½ßµï¿½
+            RandomCircle, // Ô²ï¿½Î·ï¿½Î§Ñ²ï¿½ï¿½
+            RandomRectangle // ï¿½ï¿½ï¿½Î·ï¿½Î§Ñ²ï¿½ï¿½
         }
 
-        public PatrolMode patrolMode = PatrolMode.FixedPoints; // µ±Ç°Ñ²ÂßÄ£Ê½
-        public Transform[] patrolPoints; // Ñ²Âßµã
-        public float patrolRange = 10f; // Ô²ĞÎÑ²ÂßÄ£Ê½µÄÑ²Âß°ë¾¶
-        public float patrolWidth = 10f; // ¾ØĞÎ·¶Î§Ñ²ÂßµÄ¿í¶È
-        public float patrolHeight = 10f; // ¾ØĞÎ·¶Î§Ñ²ÂßµÄ¸ß¶È
-        public float waitTimeAtPatrolPoint = 2f; // Ã¿¸öÑ²ÂßµãµÈ´ıµÄÊ±¼ä
+        public PatrolMode patrolMode = PatrolMode.FixedPoints; // ï¿½ï¿½Ç°Ñ²ï¿½ï¿½Ä£Ê½
+        public Transform[] patrolPoints; // Ñ²ï¿½ßµï¿½
+        public float patrolRange = 10f; // Ô²ï¿½ï¿½Ñ²ï¿½ï¿½Ä£Ê½ï¿½ï¿½Ñ²ï¿½ß°ë¾¶
+        public float patrolWidth = 10f; // ï¿½ï¿½ï¿½Î·ï¿½Î§Ñ²ï¿½ßµÄ¿ï¿½ï¿½ï¿½
+        public float patrolHeight = 10f; // ï¿½ï¿½ï¿½Î·ï¿½Î§Ñ²ï¿½ßµÄ¸ß¶ï¿½
+        public float waitTimeAtPatrolPoint = 2f; // Ã¿ï¿½ï¿½Ñ²ï¿½ßµï¿½È´ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 
         [Space]
         [Header("Enemy")]
         [Space]
 
         public float attackDamage = 20f;
+        public float health = 100f; // æ•Œäººç”Ÿå‘½å€¼
+public float attackRange = 2f; // æ”»å‡»ç©å®¶çš„èŒƒå›´
+private float lastAttackTime = 0f; // ä¸Šæ¬¡æ”»å‡»æ—¶é—´
+private GameObject targetPlayer; // å½“å‰è¿½é€çš„ç©å®¶
+
 
         private enum EnemyState
-        {
-            Patrolling,
-            Chasing,
-            Destroying,
-            Idle
-        }
+{
+    Patrolling,
+    Chasing,
+    Attacking, // æ”»å‡»çŠ¶æ€
+    BeingAttacked, // è¢«æ”»å‡»çŠ¶æ€
+    Dead, // æ­»äº¡çŠ¶æ€
+    Idle
+}
 
         private EnemyState currentState;
 
@@ -73,40 +77,50 @@ namespace EnemyAI
         }
 
         private IEnumerator StateMachine()
+{
+    while (true)
+    {
+        switch (currentState)
         {
-            while (true)
-            {
-                switch (currentState)
-                {
-                    case EnemyState.Patrolling:
-                        yield return StartCoroutine(Patrol());
-                        break;
+            case EnemyState.Patrolling:
+                yield return StartCoroutine(Patrol());
+                break;
 
-                    case EnemyState.Chasing:
-                        ChasePlayer();
-                        break;
+            case EnemyState.Chasing:
+                ChasePlayer();
+                break;
 
-                    case EnemyState.Destroying:
-                        DestroyObstacle();
-                        break;
+            case EnemyState.Attacking:
+                AttackPlayer();
+                break;
 
-                    case EnemyState.Idle:
-                        Idle();
-                        break;
-                }
+            case EnemyState.BeingAttacked:
+                yield return new WaitForSeconds(1f); 
+                currentState = EnemyState.Chasing; 
+                break;
 
-                yield return null;
-            }
+            case EnemyState.Dead:
+                Dead();
+                yield break; // ç»“æŸåç¨‹
+                break;
+
+            case EnemyState.Idle:
+                Idle();
+                break;
         }
+
+        yield return null;
+    }
+}
 
         private IEnumerator Patrol()
         {
             if (patrolMode == PatrolMode.FixedPoints)
             {
-                // ¹Ì¶¨Ñ²ÂßµãÄ£Ê½
+                // ï¿½Ì¶ï¿½Ñ²ï¿½ßµï¿½Ä£Ê½
                 if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) < 0.5f)
                 {
-                    // µ½´ïÑ²ÂßµãºóµÈ´ıÒ»¶ÎÊ±¼ä
+                    // ï¿½ï¿½ï¿½ï¿½Ñ²ï¿½ßµï¿½ï¿½È´ï¿½Ò»ï¿½ï¿½Ê±ï¿½ï¿½
                     yield return new WaitForSeconds(waitTimeAtPatrolPoint);
                     currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
                 }
@@ -115,10 +129,10 @@ namespace EnemyAI
             }
             else if (patrolMode == PatrolMode.RandomCircle || patrolMode == PatrolMode.RandomRectangle)
             {
-                // ·¶Î§ÄÚËæ»úÑ²ÂßÄ£Ê½
+                // ï¿½ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½Ñ²ï¿½ï¿½Ä£Ê½
                 if (Vector3.Distance(transform.position, agent.destination) < 0.5f)
                 {
-                    // µ½´ïÄ¿±êµãºóµÈ´ıÒ»¶ÎÊ±¼ä
+                    // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½È´ï¿½Ò»ï¿½ï¿½Ê±ï¿½ï¿½
                     yield return new WaitForSeconds(waitTimeAtPatrolPoint);
                     Vector3 randomPatrolPoint = GetRandomPatrolPoint();
                     agent.SetDestination(randomPatrolPoint);
@@ -128,87 +142,114 @@ namespace EnemyAI
             if (PlayerInSight())
             {
                 currentState = EnemyState.Chasing;
-                agent.speed = chasingSpeed; // ÇĞ»»Îª×·ÖğËÙ¶È
+                agent.speed = chasingSpeed; // ï¿½Ğ»ï¿½Îª×·ï¿½ï¿½ï¿½Ù¶ï¿½
             }
 
-            // ÔÚÑ²ÂßÖĞ¼ì²éÊÇ·ñÓĞÕÏ°­Îï×èµ²
-            if (PathBlocked())
-            {
-                GameObject obstacle = CheckForDestroyableObstacle();
-                if (obstacle != null)
-                {
-                    currentState = EnemyState.Destroying;
-                }
-            }
+            // ï¿½ï¿½Ñ²ï¿½ï¿½ï¿½Ğ¼ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ï¿½èµ²
+            // if (PathBlocked())
+            // {
+            //     GameObject obstacle = CheckForDestroyableObstacle();
+            //     if (obstacle != null)
+            //     {
+            //         currentState = EnemyState.Destroying;
+            //     }
+            // }
 
-            // ²¥·ÅÑ²Âß¶¯»­
+            // ï¿½ï¿½ï¿½ï¿½Ñ²ï¿½ß¶ï¿½ï¿½ï¿½
             PlayAnimation("IsPatrolling", true);
-            // ¿ØÖÆ³¯ÏòÄ¿±ê·½Ïò
+            // ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½Ä¿ï¿½ê·½ï¿½ï¿½
             RotateTowards(agent.destination);
         }
 
-        private GameObject targetPlayer;
-
         private void ChasePlayer()
+{
+    if (targetPlayer != null)
+    {
+        agent.SetDestination(targetPlayer.transform.position);
+
+        // å¦‚æœç©å®¶è·ç¦»æ•Œäººå°äºæ”»å‡»èŒƒå›´ï¼Œè¿›å…¥æ”»å‡»çŠ¶æ€
+        if (Vector3.Distance(transform.position, targetPlayer.transform.position) <= attackRange)
         {
-            if (targetPlayer != null)
-            {
-                agent.SetDestination(targetPlayer.transform.position);
-
-                // ×·Öğ¹ı³ÌÖĞ¼ì²éÊÇ·ñ·¢ÏÖÄ¿±êÍæ¼ÒÀë¿ªÁËÊÓÒ°
-                if (Vector3.Distance(transform.position, targetPlayer.transform.position) > detectionRange)
-                {
-                    currentState = EnemyState.Patrolling;
-                    agent.speed = patrollingSpeed;
-                    targetPlayer = null; // ¶ªÊ§Ä¿±êºó£¬ÖØÖÃÄ¿±êÍæ¼Ò¶ÔÏóÎªnull
-                }
-
-                // ×·ÖğÖĞÓöµ½ÕÏ°­ÎïÊ±¼ì²éÊÇ·ñ¿ÉÒÔ´İ»Ù
-                if (PathBlocked())
-                {
-                    GameObject obstacle = CheckForDestroyableObstacle();
-                    if (obstacle != null)
-                    {
-                        currentState = EnemyState.Destroying;
-                    }
-                }
-
-                // ²¥·Å×·Öğ¶¯»­
-                PlayAnimation("IsChasing", true);
-                // ¿ØÖÆ³¯ÏòÄ¿±ê·½Ïò
-                RotateTowards(targetPlayer.transform.position);
-            }
-            else
-            {
-                // Èç¹ûÃ»ÓĞÄ¿±êÍæ¼Ò£¨¿ÉÄÜÖ®Ç°×·ÖğµÄÍæ¼Ò¶ªÊ§ÁËÇÒÃ»·¢ÏÖĞÂÄ¿±ê£©£¬¿ÉÒÔÇĞ»»»ØÑ²Âß×´Ì¬µÈÂß¼­´¦Àí
-                currentState = EnemyState.Patrolling;
-                agent.speed = patrollingSpeed;
-            }
+            currentState = EnemyState.Attacking; // åˆ‡æ¢åˆ°æ”»å‡»çŠ¶æ€
         }
+        else if (Vector3.Distance(transform.position, targetPlayer.transform.position) > detectionRange)
+        {
+            currentState = EnemyState.Patrolling;
+            agent.speed = patrollingSpeed;
+            targetPlayer = null;
+        }
+
+        // æ’­æ”¾è¿½å‡»åŠ¨ç”»
+        PlayAnimation("IsChasing", true);
+        RotateTowards(targetPlayer.transform.position);
+    }
+    else
+    {
+        currentState = EnemyState.Patrolling;
+        agent.speed = patrollingSpeed;
+    }
+}
+
+private void AttackPlayer()
+{
+    if (targetPlayer != null && Time.time - lastAttackTime >= attackInterval)
+    {
+        lastAttackTime = Time.time; // æ›´æ–°ä¸Šæ¬¡æ”»å‡»æ—¶é—´
+
+        // è¿™é‡Œè°ƒç”¨ç©å®¶çš„å—ä¼¤æ–¹æ³• (ä½ å¯ä»¥è‡ªå·±å®ç°)
+        // targetPlayer.GetComponent<PlayerHealth>().TakeDamage(attackDamage); 
+
+        animator.SetTrigger("Attack");
+
+        // æ”»å‡»åè¿”å›è¿½é€çŠ¶æ€
+        currentState = EnemyState.Chasing;
+    }
+}
+
 
         private void DestroyObstacle()
         {
-            // ¼ÙÉèÕÏ°­ÎïÊÇÒ»¸ö¿ÉÒÔ´İ»ÙµÄÎïÌå
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ô´İ»Ùµï¿½ï¿½ï¿½ï¿½ï¿½
             GameObject obstacle = CheckForDestroyableObstacle();
             if (obstacle != null)
             {
-                // ÔÚ´İ»ÙÕÏ°­ÎïÇ°Í£ÏÂÀ´
+                // ï¿½Ú´İ»ï¿½ï¿½Ï°ï¿½ï¿½ï¿½Ç°Í£ï¿½ï¿½ï¿½ï¿½
                 agent.isStopped = true;
                 StartCoroutine(DestroyObstacleRoutine(obstacle));
             }
 
-            // ²¥·Å´İ»ÙÕÏ°­Îï¶¯»­
-            PlayAnimation("IsDestroying", false); // ¶¯»­Ö»²¥·ÅÒ»´Î
+            // ï¿½ï¿½ï¿½Å´İ»ï¿½ï¿½Ï°ï¿½ï¿½ï¶¯ï¿½ï¿½
+            PlayAnimation("IsDestroying", true); // ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
         }
 
         private IEnumerator DestroyObstacleRoutine(GameObject obstacle)
+{
+    while (obstacle != null) // å¦‚æœéšœç¢ç‰©ä»ç„¶å­˜åœ¨
+    {
+        Destructible destructible = obstacle.GetComponent<Destructible>();
+
+        // æ’­æ”¾æ”»å‡»åŠ¨ç”»
+        animator.SetTrigger("Attack");  // ä½¿ç”¨Triggerè§¦å‘æ”»å‡»åŠ¨ç”»
+       
+        yield return new WaitForSeconds(1f);
+        
+        destructible.ApplyDamage(attackDamage);
+        
+        yield return new WaitForSeconds(attackInterval);
+
+        // æ£€æŸ¥ç‰©ä½“æ˜¯å¦ä»ç„¶åœ¨åœºæ™¯ä¸­
+        if (obstacle == null)
         {
-            // Ä£Äâ´İ»ÙÕÏ°­ÎïµÄ¹ı³Ì
-            yield return new WaitForSeconds(destroyTime);
-            obstacle.GetComponent<Destructible>().ApplyDamage(attackDamage);
-            agent.isStopped = false;
-            currentState = EnemyState.Chasing; // ´İ»ÙÍêºó¼ÌĞø×·Öğ
+            // å¦‚æœè¢«é”€æ¯ï¼Œè·³å‡ºå¾ªç¯
+            break;
         }
+    }
+
+    // å¦‚æœéšœç¢ç‰©è¢«æ‘§æ¯ï¼Œåœæ­¢è¿½é€å¹¶åˆ‡æ¢çŠ¶æ€
+    agent.isStopped = false;
+    currentState = EnemyState.Chasing; // åˆ‡æ¢åˆ°è¿½é€çŠ¶æ€
+}
+
 
         private void Idle()
         {
@@ -220,7 +261,7 @@ namespace EnemyAI
             RaycastHit hit;
             if (Physics.Raycast(transform.position, agent.destination - transform.position, out hit, detectionRange))
             {
-                if (hit.collider.CompareTag("Obstacle"))
+                if (hit.collider.CompareTag("Passable"))
                 {
                     return true;
                 }
@@ -231,9 +272,9 @@ namespace EnemyAI
         private GameObject CheckForDestroyableObstacle()
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, agent.destination - transform.position, out hit, destroyRange))
+            if (Physics.Raycast(transform.position, agent.destination - transform.position, out hit, attackRange))
             {
-                if (hit.collider.CompareTag("DestroyableObstacle"))
+                if (hit.collider.CompareTag("Passable"))
                 {
                     return hit.collider.gameObject;
                 }
@@ -245,7 +286,7 @@ namespace EnemyAI
         {
             if (patrolMode == PatrolMode.RandomCircle)
             {
-                // Ñ¡Ôñ·¶Î§Ñ²ÂßÄ£Ê½ÏÂµÄËæ»úµã£¨Ô²ĞÎ£©
+                // Ñ¡ï¿½ï¿½Î§Ñ²ï¿½ï¿½Ä£Ê½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ã£¨Ô²ï¿½Î£ï¿½
                 float randomAngle = Random.Range(0f, 360f);
                 float randomRadius = Random.Range(0f, patrolRange);
 
@@ -256,52 +297,97 @@ namespace EnemyAI
             }
             else if (patrolMode == PatrolMode.RandomRectangle)
             {
-                // ¾ØĞÎ·¶Î§Ñ²ÂßµÄËæ»úµã
+                // ï¿½ï¿½ï¿½Î·ï¿½Î§Ñ²ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 float randomX = Random.Range(-patrolWidth / 2f, patrolWidth / 2f);
                 float randomZ = Random.Range(-patrolHeight / 2f, patrolHeight / 2f);
 
                 return new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
             }
 
-            return transform.position; // Ä¬ÈÏ·µ»Øµ±Ç°Î»ÖÃ
+            return transform.position; // Ä¬ï¿½Ï·ï¿½ï¿½Øµï¿½Ç°Î»ï¿½ï¿½
         }
 
         private bool PlayerInSight()
+{
+    foreach (GameObject player in players)
+    {
+        Vector3 toPlayer = player.transform.position - transform.position;
+
+        // Get the horizontal direction vector (ignore the vertical component)
+        Vector3 horizontalToPlayer = Vector3.ProjectOnPlane(toPlayer, Vector3.up);
+        
+        // Calculate the horizontal and vertical angles between the enemy and the player
+        float horizontalAngle = Vector3.Angle(transform.forward, horizontalToPlayer);
+        float verticalAngle = Vector3.Angle(toPlayer, horizontalToPlayer);
+
+        // Check if the player is within the field of view angle (both horizontal and vertical)
+        if (horizontalAngle < fieldOfViewAngleHorizontal / 2 && verticalAngle < fieldOfViewAngleVertical / 2)
         {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            foreach (GameObject player in players)
+            // Perform a SphereCast for ball-shaped detection range
+            RaycastHit hit;
+            if (Physics.SphereCast(transform.position, sensingRadius, toPlayer.normalized, out hit, detectionRange))
             {
-                Vector3 toPlayer = player.transform.position - transform.position;
-
-                // »ñÈ¡Ä¿±ê·½ÏòÏòÁ¿ÔÚË®Æ½ÃæÉÏµÄÍ¶Ó°ÏòÁ¿
-                Vector3 horizontalToPlayer = Vector3.ProjectOnPlane(toPlayer, Vector3.up);
-                // ¼ÆËãË®Æ½ÃæÉÏµÄ¼Ğ½Ç
-                float horizontalAngle = Vector3.Angle(transform.forward, horizontalToPlayer);
-                // ¼ÆËã¸©Ñö½Ç¶È
-                float verticalAngle = Vector3.Angle(toPlayer, horizontalToPlayer);
-
-                // ÅĞ¶ÏÊÇ·ñÔÚË®Æ½ºÍ´¹Ö±ÊÓÒ°½Ç¶È·¶Î§ÄÚ
-                if (horizontalAngle < fieldOfViewAngleHorizontal / 2 && verticalAngle < fieldOfViewAngleVertical / 2)
+                // Check if the SphereCast hit the player
+                if (hit.collider.gameObject == player)
                 {
-                    RaycastHit hit;
-                    // Ê¹ÓÃSphereCast½øĞĞ3DÊÓÒ°·¶Î§µÄÉäÏß¼ì²â
-                    if (Physics.SphereCast(transform.position, sphereRadius, toPlayer.normalized, out hit, detectionRange))
+                    targetPlayer = player; // Set the target player
+                    return true; // Player is detected
+                }
+            }
+
+            // Additionally, perform a cone-shaped detection (like the camera's field of view)
+            float coneAngle = Mathf.Deg2Rad * fieldOfViewAngleHorizontal / 2;
+            float distanceToPlayer = toPlayer.magnitude;
+
+            // Check if the player is within the detection cone using the dot product
+            if (Vector3.Angle(transform.forward, horizontalToPlayer) <= fieldOfViewAngleHorizontal / 2)
+            {
+                // Check if the player is within a spherical detection range
+                if (distanceToPlayer <= detectionRange)
+                {
+                    // Use a trigger zone (Sphere) detection if player enters range
+                    if (Physics.CheckSphere(player.transform.position, sensingRadius))
                     {
-                        if (hit.collider.gameObject == player)
-                        {
-                            targetPlayer = player; // ½«·¢ÏÖµÄÍæ¼Ò¸³Öµ¸øÄ¿±êÍæ¼Ò±äÁ¿
-                            return true; // Èç¹ûÓĞÈÎÒâÒ»¸öÍæ¼ÒÔÚÊÓÒ°ÄÚ¾Í·µ»Øtrue
-                        }
+                        targetPlayer = player; // Set the target player
+                        return true; // Player detected within cone and sphere range
                     }
                 }
             }
-            return false;
         }
+    }
 
+    return false; // No player detected
+}
+
+public void TakeDamage(float damage)
+{
+    if (currentState != EnemyState.Dead)
+    {
+            Debug.Log("Hit!");
+        health -= damage; // å‡å°‘ç”Ÿå‘½å€¼
+        currentState = EnemyState.BeingAttacked; // è¿›å…¥è¢«æ”»å‡»çŠ¶æ€
+       animator.SetTrigger("Hit");
+
+        if (health <= 0)
+        {
+            currentState = EnemyState.Dead; // è¿›å…¥æ­»äº¡çŠ¶æ€
+            agent.isStopped = true; // åœæ­¢ç§»åŠ¨
+        }
+    }
+}
+
+private void Dead()
+{
+    agent.isStopped = true; 
+    animator.SetBool("IsDead", true);
+    Rigidbody rb = GetComponent<Rigidbody>();
+    rb.isKinematic = false;
+    rb.useGravity = true;
+}
 
         private void RotateTowards(Vector3 target)
         {
-            // ¼ÆËãÄ¿±ê·½Ïò²¢ÈÃµĞÈË³¯ÏòÄ¿±ê
+            // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ê·½ï¿½ï¿½ï¿½Ãµï¿½ï¿½Ë³ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½
             Vector3 direction = (target - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
@@ -309,39 +395,40 @@ namespace EnemyAI
 
         private void PlayAnimation(string animationName, bool isLooping)
         {
-            // ¸ù¾İ×´Ì¬²¥·ÅÏàÓ¦µÄ¶¯»­
+            // ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ä¶ï¿½ï¿½ï¿½
             if (animator != null)
             {
-                // ÉèÖÃ²¼¶û²ÎÊıÀ´¿ØÖÆÑ­»·¶¯»­
+                // ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 animator.SetBool("IsPatrolling", isLooping && animationName == "FlyStationary");
                 animator.SetBool("IsChasing", isLooping && animationName == "FlyForwardSlow");
                 animator.SetBool("IsIdle", isLooping && animationName == "FlyStationary");
                 animator.SetBool("IsDestroying", !isLooping && animationName == "BiteAttack1");
+                animator.SetBool("IsDead", !isLooping && animationName == "DeathToFalling");
             }
         }
 
         private void OnDrawGizmos()
         {
-            // »æÖÆµĞÈËÊÓÒ°·¶Î§
+            // ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½Ò°ï¿½ï¿½Î§
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, detectionRange);
 
-            // »æÖÆ3DÊÓÒ°½Ç¶È·¶Î§£¨¼òµ¥Ê¾ÒâÔ²×¶ÌåĞÎ×´£©
-            int numSegments = 20; // ÓÃÓÚ¿ØÖÆ»æÖÆÔ²×¶ÌåÔ²ÖÜµÄ·Ö¶ÎÊıÁ¿£¬¿Éµ÷ÕûÊ¹ÏÔÊ¾¸üÆ½»¬
+            // ï¿½ï¿½ï¿½ï¿½3Dï¿½ï¿½Ò°ï¿½Ç¶È·ï¿½Î§ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ô²×¶ï¿½ï¿½ï¿½ï¿½×´ï¿½ï¿½
+            int numSegments = 20; // ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½Æ»ï¿½ï¿½ï¿½Ô²×¶ï¿½ï¿½Ô²ï¿½ÜµÄ·Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Ê¾ï¿½ï¿½Æ½ï¿½ï¿½
             float angleStep = 2 * Mathf.PI / numSegments;
             for (int i = 0; i < numSegments; i++)
             {
                 float angle1 = i * angleStep;
                 float angle2 = (i + 1) * angleStep;
 
-                // ¼ÆËãÔ²×¶Ìå±íÃæÉÏµÄÁ½¸öµã×ø±ê£¨»ùÓÚË®Æ½ºÍ´¹Ö±ÊÓÒ°½Ç¶È£©
+                // ï¿½ï¿½ï¿½ï¿½Ô²×¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¨ï¿½ï¿½ï¿½ï¿½Ë®Æ½ï¿½Í´ï¿½Ö±ï¿½ï¿½Ò°ï¿½Ç¶È£ï¿½
                 Vector3 point1 = Quaternion.Euler(-fieldOfViewAngleVertical / 2, angle1, 0) * transform.forward * detectionRange;
                 Vector3 point2 = Quaternion.Euler(-fieldOfViewAngleVertical / 2, angle2, 0) * transform.forward * detectionRange;
 
                 Vector3 point3 = Quaternion.Euler(fieldOfViewAngleVertical / 2, angle1, 0) * transform.forward * detectionRange;
                 Vector3 point4 = Quaternion.Euler(fieldOfViewAngleVertical / 2, angle2, 0) * transform.forward * detectionRange;
 
-                // »æÖÆÔ²×¶Ìå±íÃæµÄÏßÌõ
+                // ï¿½ï¿½ï¿½ï¿½Ô²×¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 Gizmos.color = Color.red;
                 Gizmos.DrawLine(transform.position, transform.position + point1);
                 Gizmos.DrawLine(transform.position, transform.position + point2);
@@ -352,7 +439,7 @@ namespace EnemyAI
                 Gizmos.DrawLine(transform.position + point2, transform.position + point4);
             }
 
-            // »æÖÆÑ²Âß·¶Î§
+            // ï¿½ï¿½ï¿½ï¿½Ñ²ï¿½ß·ï¿½Î§
             if (patrolMode == PatrolMode.RandomCircle)
             {
                 Gizmos.color = Color.green;
@@ -365,4 +452,3 @@ namespace EnemyAI
             }
         }
     }
-}
