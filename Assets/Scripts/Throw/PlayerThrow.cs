@@ -1,44 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System.Security.Cryptography;
 
-public class PlayerThrow: MonoBehaviour
+public class PlayerThrow : MonoBehaviour
 {
     public Transform holdPoint;
     public float throwForceBase = 5f;
-    public float throwForceMax = 20f; 
+    public float throwForceMax = 20f;
     public float maxPickupMass = 5f;
-    public float rotateSpeed = 100f; 
+    public float rotateSpeed = 100f;
+    public float pickupSmoothDuration = 0.15f; // 平滑拿取的持续时间
 
     private Rigidbody heldObject;
     private Collider heldObjectCollider;
     private float holdDuration = 0f;
-    private bool isThrowing = false; 
-    private bool isRotating = false; 
+    private bool isThrowing = false;
+    private bool isRotating = false;
+
+    private bool isInteracting = false;
+
+    public TMPro.TextMeshProUGUI pickupErrorMessage;
 
     void Update()
     {
-       
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKey(KeyCode.E))
         {
-            if (heldObject == null)
+            holdDuration += Time.deltaTime;
+            if (holdDuration >= 1f && !isInteracting)
             {
-                TryPickup();
-            }
-            else
-            {
-                DropItem();
+                isInteracting = true;
+                if (heldObject == null)
+                {
+                    TryPickup();
+                }
+                else
+                {
+                    DropItem();
+                }
             }
         }
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            holdDuration = 0f;
+            isInteracting = false;
+        }
 
-        
         if (Input.GetMouseButton(0) && heldObject != null)
         {
             isThrowing = true;
             holdDuration += Time.deltaTime;
         }
 
-        
         if (Input.GetMouseButtonUp(0) && heldObject != null)
         {
             if (holdDuration >= 1f)
@@ -47,30 +61,27 @@ public class PlayerThrow: MonoBehaviour
             }
             else
             {
-                DropItem(); 
+                DropItem();
             }
 
             holdDuration = 0f;
             isThrowing = false;
         }
 
-        
         if (Input.GetKeyDown(KeyCode.R) && heldObject != null)
         {
-            isRotating = true; 
+            isRotating = true;
         }
         if (Input.GetKeyUp(KeyCode.R))
         {
-            isRotating = false; 
+            isRotating = false;
         }
 
-        
         if (isRotating && heldObject != null)
         {
             RotateItem();
         }
 
-        
         if (heldObject != null)
         {
             FollowPlayer();
@@ -84,31 +95,73 @@ public class PlayerThrow: MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 5f))
         {
-            Rigidbody targetRb = hit.collider.GetComponent<Rigidbody>();
-
-            if (targetRb != null && targetRb.mass <= maxPickupMass)
+            Rigidbody targetRb = hit.collider?.GetComponent<Rigidbody>();
+            if (targetRb != null)
             {
-                heldObject = targetRb;
-                heldObjectCollider = heldObject.GetComponent<Collider>();
-
-               
-                heldObject.constraints = RigidbodyConstraints.FreezeRotation;
-                heldObject.useGravity = false; 
-                heldObject.velocity = Vector3.zero;
-                heldObject.angularVelocity = Vector3.zero;
-
-                
-                if (heldObjectCollider != null)
+                if (targetRb.mass <= maxPickupMass)
                 {
-                    Physics.IgnoreCollision(heldObjectCollider, GetComponent<Collider>(), true);
-                }
+                    heldObject = targetRb;
+                    heldObjectCollider = heldObject.GetComponent<Collider>();
+                    heldObject.useGravity = false;
+                    heldObject.velocity = Vector3.zero;
+                    heldObject.angularVelocity = Vector3.zero;
 
-                
-                heldObject.transform.position = holdPoint.position;
-                heldObject.transform.rotation = holdPoint.rotation; 
-                heldObject.transform.rotation = holdPoint.rotation; 
-                heldObject.transform.parent = holdPoint; 
+                    if (heldObjectCollider != null)
+                    {
+                        Physics.IgnoreCollision(heldObjectCollider, GetComponent<Collider>(), true);
+                    }
+
+                    StartCoroutine(SmoothPickup());
+                }
+                else
+                {
+                    // 质量太大举不动时，显示提示文本
+                    pickupErrorMessage.gameObject.SetActive(true);
+                    StartCoroutine(HideErrorMessageAfterSeconds(3f));
+                }
             }
+        }
+        else
+        {
+            isInteracting = false;
+        }
+    }
+
+    private IEnumerator HideErrorMessageAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        pickupErrorMessage.gameObject.SetActive(false);
+    }
+
+    IEnumerator SmoothPickup()
+    {
+        Vector3 initialPosition = heldObject.transform.position;
+        Quaternion initialRotation = heldObject.transform.rotation;
+
+        float elapsed = 0f;
+        while (elapsed < pickupSmoothDuration)
+        {
+            if (heldObject == null)
+            {
+                yield break; 
+            }
+
+            elapsed += Time.deltaTime;
+            float t = elapsed / pickupSmoothDuration;
+
+            heldObject.transform.position = Vector3.Lerp(initialPosition, holdPoint.position, t);
+            Quaternion targetRotation = Quaternion.Euler(holdPoint.rotation.eulerAngles.x, holdPoint.rotation.eulerAngles.y, initialRotation.eulerAngles.z);
+            heldObject.transform.rotation = Quaternion.Slerp(initialRotation, targetRotation, t);
+
+            yield return null;
+        }
+
+        if (heldObject != null)
+        {
+            heldObject.transform.position = holdPoint.position;
+            heldObject.transform.rotation = Quaternion.Euler(holdPoint.rotation.eulerAngles.x, holdPoint.rotation.eulerAngles.y, initialRotation.eulerAngles.z);
+            heldObject.transform.parent = holdPoint;
+            heldObject.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
 
@@ -116,14 +169,13 @@ public class PlayerThrow: MonoBehaviour
     {
         heldObject.useGravity = true;
         heldObject.transform.parent = null;
+        isInteracting = false;
 
-        
         if (heldObjectCollider != null)
         {
             Physics.IgnoreCollision(heldObjectCollider, GetComponent<Collider>(), false);
         }
 
-        
         heldObject.constraints = RigidbodyConstraints.None;
 
         heldObject = null;
@@ -134,41 +186,34 @@ public class PlayerThrow: MonoBehaviour
         heldObject.useGravity = true;
         heldObject.transform.parent = null;
 
-        
         if (heldObjectCollider != null)
         {
             Physics.IgnoreCollision(heldObjectCollider, GetComponent<Collider>(), false);
         }
 
-        
         heldObject.constraints = RigidbodyConstraints.None;
 
-        
-        float force = Mathf.Lerp(throwForceBase, throwForceMax, chargeTime / 3f); 
+        float force = Mathf.Lerp(throwForceBase, throwForceMax, chargeTime / 5f);
         force = Mathf.Clamp(force, throwForceBase, throwForceMax);
 
-       
         heldObject.AddForce(Camera.main.transform.forward * force, ForceMode.Impulse);
 
         heldObject = null;
+        isInteracting = false;
     }
 
     void RotateItem()
     {
         heldObject.constraints = RigidbodyConstraints.None;
-        heldObject.transform.Rotate(Vector3.right, rotateSpeed * Time.deltaTime, Space.Self); 
-        heldObject.transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime, Space.Self); 
-        heldObject.transform.Rotate(Vector3.forward, rotateSpeed * Time.deltaTime, Space.Self); 
+        heldObject.transform.Rotate(Vector3.forward, rotateSpeed * Time.deltaTime, Space.Self);
     }
 
     void FollowPlayer()
     {
-       
         heldObject.transform.position = holdPoint.position;
         if (!isRotating)
         {
-            heldObject.transform.rotation = holdPoint.rotation;
+            heldObject.transform.rotation = Quaternion.Euler(holdPoint.rotation.eulerAngles.x, holdPoint.rotation.eulerAngles.y, heldObject.transform.rotation.eulerAngles.z);
         }
-        //heldObject.transform.rotation = holdPoint.rotation;
     }
 }

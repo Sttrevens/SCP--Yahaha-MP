@@ -106,7 +106,9 @@ namespace LPSurvivalEngine
                 hit.collider.GetComponent<Resources>().Gather(hit.point, hit.normal);
             }
 
-                if (doesDealDamage && hit.collider.GetComponent<Destructible>() != null)
+                if (doesDealDamage)
+                {
+                if (hit.collider.GetComponent<Destructible>() != null)
                 {
                     if (wieldableType == WieldableType.BluntMelee)
                     {
@@ -119,7 +121,13 @@ namespace LPSurvivalEngine
                     DestructibleBarController.Instance.UpdateHealthBar(hit.collider.GetComponent<Destructible>().CurrentHitPoints, hit.collider.GetComponent<Destructible>().TotalHitPoints);
                 }
 
+                if (hit.collider.GetComponent<EnemyAI>() != null)
+                {
+                    hit.collider.GetComponent<EnemyAI>().TakeDamage(damage);
+                }
+
             }
+        }
     }
     
 }
