@@ -12,33 +12,31 @@ namespace LPSurvivalEngine
 {
     public class Inventory : MonoBehaviour
     {
-        [Space]
-        [Header("Inventory System")]
-        [Space]
+        public static Inventory instance{get;private set;}
 
-        public ItemSlotUI[] IventorySlots;
+        public GameObject bagPanel; //包含物品槽的背包父物体
+        private ItemSlotUI[] InventorySlots;
         public ItemSlot[] slots;
 
-        [Space]
-        [Header("Assignments")]
-        [Space]
 
+        [Header("Assignments")]
         public GameObject inventoryWindow;
+        public GameObject containerUIWindow;
         public Transform dropPosition;
 
-        [Space]
-        [Header("UI")]
-        [Space]
-        [Header("Texts")]
-        public TextMeshProUGUI selectedItemName;
-        public TextMeshProUGUI selectedItemDescription;
+        // [Space]
+        // [Header("UI")]
+        // [Space]
+        // [Header("Texts")]
+        // public TextMeshProUGUI selectedItemName;
+        // public TextMeshProUGUI selectedItemDescription;
 
-        [Space]
-        [Header("Buttons")]
-        public GameObject useButton;
-        public GameObject equipButton;
-        public GameObject dropItemButton;
-        public GameObject dropButton;
+        // [Space]
+        // [Header("Buttons")]
+        // public GameObject useButton;
+        // public GameObject equipButton;
+        // public GameObject dropItemButton;
+        // public GameObject dropButton;
 
         [Space]
         [Header("Events")]
@@ -50,37 +48,47 @@ namespace LPSurvivalEngine
         private PlayerController playerController;
         private HealthSystem vitals;
         private ItemSlot selectedItem;
-        public static Inventory instance;
 
-        // �������������ӵ���Ʒ��
+
         public ContainerInventory containerInventory;
         private int currentWieldableIndex;
-        public GameObject containerUIWindow;
         public ItemSlotUI[] containerSlots;// UI���ڣ���ʾ���Ӻͱ�������Ʒ
 
         private void Awake()
         {
-            instance = this;
-            playerController = GetComponent<PlayerController>();
-            vitals = GetComponent<HealthSystem>();
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(this);
+            }
+            else
+            {
+                Destroy(gameObject); 
+            }
         }
 
         private void Start()
         {
             inventoryWindow.SetActive(false);
-            slots = new ItemSlot[IventorySlots.Length];
+            InventorySlots = bagPanel.GetComponentsInChildren<ItemSlotUI>();
+
+            slots = new ItemSlot[InventorySlots.Length];
 
             for (int x = 0; x < slots.Length; x++)
             {
                 slots[x] = new ItemSlot();
-                IventorySlots[x].index = x;
-                IventorySlots[x].Clear();
+                InventorySlots[x].index = x;
+                InventorySlots[x].Clear();
             }
-            ClearSelectedItemWindow();
+            //ClearSelectedItemWindow();
+
+            playerController = PlayerController.instance;
+            vitals = HealthSystem.instance;
         }
 
         public void OnInventoryButton(InputAction.CallbackContext context)
         {
+            Debug.Log("OnInventoryButton triggered by: " + context.action.name);
             if (context.phase == InputActionPhase.Started)
             {
                 Toggle();
@@ -105,7 +113,7 @@ namespace LPSurvivalEngine
             {
                 inventoryWindow.SetActive(true);
                 onOpenInventory.Invoke();
-                ClearSelectedItemWindow();
+                //ClearSelectedItemWindow();
                 playerController.ToggleCursor(true);
             }
         }
@@ -153,17 +161,17 @@ namespace LPSurvivalEngine
             {
                 if (slots[x].item != null)
                 {
-                    IventorySlots[x].Set(slots[x]);
+                    InventorySlots[x].Set(slots[x]);
                 }
                 else
                 {
-                    IventorySlots[x].Clear();
+                    InventorySlots[x].Clear();
                 }
             }
         }
 
-        // ����Ʒ��ջ�л�ȡ�ղ�
-        ItemSlot GetItemstack(ItemDatabase item) // TODO: 能否改成map，提高查找效率
+
+        ItemSlot GetItemstack(ItemDatabase item) 
         {
             for (int x = 0; x < slots.Length; x++)
             {
@@ -175,7 +183,7 @@ namespace LPSurvivalEngine
             return null;
         }
 
-        // ��ȡ�յ���Ʒ��
+
         ItemSlot GetEmptySlot()
         {
             for (int x = 0; x < slots.Length; x++)
@@ -188,7 +196,7 @@ namespace LPSurvivalEngine
             return null;
         }
 
-        // ѡ����Ʒ
+       
         public void SelectItem(int index)
         {
             if (slots[index].item == null)
@@ -197,48 +205,48 @@ namespace LPSurvivalEngine
             selectedItem = slots[index];
             selectedItemIndex = index;
 
-            selectedItemName.text = selectedItem.item.displayName;
-            selectedItemDescription.text = selectedItem.item.description;
+            // selectedItemName.text = selectedItem.item.displayName;
+            // selectedItemDescription.text = selectedItem.item.description;
 
-            useButton.SetActive(selectedItem.item.type == ItemType.Consumable);
-            equipButton.SetActive(selectedItem.item.type == ItemType.Wieldable && !IventorySlots[index].equipped);
-            dropItemButton.SetActive(selectedItem.item.type == ItemType.Wieldable && IventorySlots[index].equipped);
-            dropButton.SetActive(true);
+            // useButton.SetActive(selectedItem.item.type == ItemType.Consumable);
+            // equipButton.SetActive(selectedItem.item.type == ItemType.Wieldable && !InventorySlots[index].equipped);
+            // dropItemButton.SetActive(selectedItem.item.type == ItemType.Wieldable && InventorySlots[index].equipped);
+            // dropButton.SetActive(true);
         }
 
-        void ClearSelectedItemWindow()
-        {
-            selectedItem = null;
-            selectedItemName.text = string.Empty;
-            selectedItemDescription.text = string.Empty;
+        // void ClearSelectedItemWindow()
+        // {
+        //     selectedItem = null;
+        //     selectedItemName.text = string.Empty;
+        //     selectedItemDescription.text = string.Empty;
 
-            useButton.SetActive(false);
-            equipButton.SetActive(false);
-            dropItemButton.SetActive(false);
-            dropButton.SetActive(false);
-        }
+        //     useButton.SetActive(false);
+        //     equipButton.SetActive(false);
+        //     dropItemButton.SetActive(false);
+        //     dropButton.SetActive(false);
+        // }
 
-        public void OnUseButton()
-        {
-            if (selectedItem.item.type == ItemType.Consumable)
-            {
-                for (int x = 0; x < selectedItem.item.consumables.Length; x++)
-                {
-                    switch (selectedItem.item.consumables[x].type)
-                    {
-                        case ConsumableType.Health: vitals.Heal(selectedItem.item.consumables[x].value); break;
-                        case ConsumableType.Hunger: vitals.Eat(selectedItem.item.consumables[x].value); break;
-                        case ConsumableType.Thirst: vitals.Drink(selectedItem.item.consumables[x].value); break;
-                        case ConsumableType.Sleep: vitals.Sleep(selectedItem.item.consumables[x].value); break;
-                    }
-                }
-            }
-            RemoveSelectedItem();
-        }
+        // public void OnUseButton()
+        // {
+        //     if (selectedItem.item.type == ItemType.Consumable)
+        //     {
+        //         for (int x = 0; x < selectedItem.item.consumables.Length; x++)
+        //         {
+        //             switch (selectedItem.item.consumables[x].type)
+        //             {
+        //                 case ConsumableType.Health: vitals.Heal(selectedItem.item.consumables[x].value); break;
+        //                 case ConsumableType.Hunger: vitals.Eat(selectedItem.item.consumables[x].value); break;
+        //                 case ConsumableType.Thirst: vitals.Drink(selectedItem.item.consumables[x].value); break;
+        //                 case ConsumableType.Sleep: vitals.Sleep(selectedItem.item.consumables[x].value); break;
+        //             }
+        //         }
+        //     }
+        //     RemoveSelectedItem();
+        // }
 
         void DisableItem(int index)
         {
-            IventorySlots[index].equipped = false;
+            InventorySlots[index].equipped = false;
 
             WieldableManager.instance.DropWieldable();
 
@@ -248,28 +256,28 @@ namespace LPSurvivalEngine
                 SelectItem(index);
         }
 
-        public void OnDisableButton()
-        {
-            DisableItem(selectedItemIndex);
-        }
+        // public void OnDisableButton()
+        // {
+        //     DisableItem(selectedItemIndex);
+        // }
 
-        public void OnDropButton()
-        {
-            ThrowItem(selectedItem.item);
-            RemoveSelectedItem();
-        }
+        // public void OnDropButton()
+        // {
+        //     ThrowItem(selectedItem.item);
+        //     RemoveSelectedItem();
+        // }
 
-        public void OnUseItemButton()
-        {
-            if (IventorySlots[currentWieldableIndex].equipped)
-                DisableItem(currentWieldableIndex);
+        // public void OnUseItemButton()
+        // {
+        //     if (InventorySlots[currentWieldableIndex].equipped)
+        //         DisableItem(currentWieldableIndex);
 
-            IventorySlots[selectedItemIndex].equipped = true;
-            currentWieldableIndex = selectedItemIndex;
-            WieldableManager.instance.EquipNewItem(selectedItem.item);
-            UpdateUI();
-            SelectItem(selectedItemIndex);
-        }
+        //     InventorySlots[selectedItemIndex].equipped = true;
+        //     currentWieldableIndex = selectedItemIndex;
+        //     WieldableManager.instance.EquipNewItem(selectedItem.item);
+        //     UpdateUI();
+        //     SelectItem(selectedItemIndex);
+        // }
 
         void RemoveSelectedItem()
         {
@@ -277,10 +285,10 @@ namespace LPSurvivalEngine
 
             if (selectedItem.quantity == 0)
             {
-                if (IventorySlots[selectedItemIndex].equipped == true)
+                if (InventorySlots[selectedItemIndex].equipped == true)
                     DisableItem(selectedItemIndex);
                 selectedItem.item = null;
-                ClearSelectedItemWindow();
+                //ClearSelectedItemWindow();
             }
             UpdateUI();
         }
@@ -295,10 +303,10 @@ namespace LPSurvivalEngine
 
                     if (slots[i].quantity == 0)
                     {
-                        if (IventorySlots[i].equipped == true)
+                        if (InventorySlots[i].equipped == true)
                             DisableItem(i);
                         slots[i].item = null;
-                        ClearSelectedItemWindow();
+                        //ClearSelectedItemWindow();
                     }
                     UpdateUI();
                     return;
@@ -321,11 +329,11 @@ namespace LPSurvivalEngine
             {
                 if (slots[i].item != null)
                 {
-                    IventorySlots[i].Set(slots[i]);
+                    InventorySlots[i].Set(slots[i]);
                 }
                 else
                 {
-                    IventorySlots[i].Clear();
+                    InventorySlots[i].Clear();
                 }
             }
 

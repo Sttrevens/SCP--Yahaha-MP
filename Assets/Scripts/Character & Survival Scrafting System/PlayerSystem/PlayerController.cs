@@ -7,40 +7,30 @@ namespace LPSurvivalEngine
 {
     public class PlayerController : MonoBehaviour
     {
-        [Space]
+        public static PlayerController instance{get;private set;}
         [Header("Player Controller")]
-        [Space]
 
         [SerializeField] private float jumpForce = 50f;
 
-        [Space]
 
-        [Space]
         [Header("Camera System")]
-        [Space]
 
         [SerializeField] private Transform CameraRoot;
         [SerializeField] private Transform Camera;
 
-        [Space]
 
         [SerializeField] private float UpperLimit = -40f;
         [SerializeField] private float BottomLimit = 70f;
         [SerializeField] private float MouseSensitivity = 1f;
 
-        [Space]
         [Header("Player Settings")]
-        [Space]
 
         [SerializeField] private float DistanceGround = 0.8f;
 
-        [Space]
 
         [SerializeField] private LayerMask GroundCheck;
 
-        [Space]
 
-        public static PlayerController instance;
         private float AnimBlendSpeed = 12f;
         private Rigidbody rig;
         private InputManager inputManager;
@@ -63,7 +53,15 @@ namespace LPSurvivalEngine
 
         private void Awake()
         {
-            instance = this;
+        if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(this);
+            }
+            else
+            {
+                Destroy(gameObject); 
+            }
         }
 
         public void ToggleCursor(bool toggle)
@@ -175,7 +173,7 @@ namespace LPSurvivalEngine
             animator.SetBool(grounding, grounded);
         }
 
-        // ¼ì²âÊÇ·ñÔÚ¹¥»÷¶¯»­ÖÐ
+        // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         public void SetIsAttacking(bool isAttacking)
         {
             this.isAttacking = isAttacking;
