@@ -205,15 +205,23 @@ public class PlayerThrow : MonoBehaviour
     void RotateItem()
     {
         heldObject.constraints = RigidbodyConstraints.None;
-        heldObject.transform.Rotate(Vector3.forward, rotateSpeed * Time.deltaTime, Space.Self);
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (Mathf.Abs(scroll) > 0f)
+        {
+            heldObject.transform.Rotate(Vector3.right, rotateSpeed * Time.deltaTime, Space.Self);
+        }
+        else
+        {
+            heldObject.transform.Rotate(Vector3.forward, rotateSpeed * Time.deltaTime, Space.Self);
+        }
     }
 
     void FollowPlayer()
     {
         heldObject.transform.position = holdPoint.position;
-        if (!isRotating)
-        {
-            heldObject.transform.rotation = Quaternion.Euler(holdPoint.rotation.eulerAngles.x, holdPoint.rotation.eulerAngles.y, heldObject.transform.rotation.eulerAngles.z);
-        }
+        //if (!isRotating)
+        //{
+           //heldObject.transform.rotation = Quaternion.Euler(holdPoint.rotation.eulerAngles.x, holdPoint.rotation.eulerAngles.y, heldObject.transform.rotation.eulerAngles.z);
+        //}
     }
 }
