@@ -101,8 +101,7 @@ private GameObject targetPlayer; // 当前追逐的玩家
 
             case EnemyState.Dead:
                 Dead();
-                yield break; // 结束协程
-                break;
+                    yield break;
 
             case EnemyState.Idle:
                 Idle();
@@ -363,29 +362,63 @@ public void TakeDamage(float damage)
 {
     if (currentState != EnemyState.Dead)
     {
+            StopAllCoroutines();
             Debug.Log("Hit!");
         health -= damage; // 减少生命值
-        currentState = EnemyState.BeingAttacked; // 进入被攻击状态
-       animator.SetTrigger("Hit");
+            animator.SetTrigger("Hit");
+            StartCoroutine(StateMachine());
+            currentState = EnemyState.BeingAttacked; 
 
         if (health <= 0)
         {
-            currentState = EnemyState.Dead; // 进入死亡状态
-            agent.isStopped = true; // 停止移动
+            currentState = EnemyState.Dead;
         }
     }
 }
 
-private void Dead()
-{
-    agent.isStopped = true; 
-    animator.SetBool("IsDead", true);
-    Rigidbody rb = GetComponent<Rigidbody>();
-    rb.isKinematic = false;
-    rb.useGravity = true;
-}
+    private void Dead()
+    {
+        animator.SetBool("IsDead", true);
+    }
 
-        private void RotateTowards(Vector3 target)
+    private void OnEnable()
+    {
+        FallingLogic.OnFallingAnimationStarted += OnFallingAnimationStartedHandler;
+    }
+
+    private void OnDisable()
+    {
+        FallingLogic.OnFallingAnimationStarted -= OnFallingAnimationStartedHandler;
+    }
+
+    private void OnFallingAnimationStartedHandler(GameObject triggeredObject)
+    {
+        if (triggeredObject == animator.gameObject)
+        {
+            HandleDeath();
+        }
+    }
+
+    private void HandleDeath()
+    {
+        Debug.Log("Fuck");
+
+        if (agent != null)
+        {
+            Destroy(agent); 
+        }
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.constraints = RigidbodyConstraints.None;
+        }
+    }
+
+
+    private void RotateTowards(Vector3 target)
         {
             // ����Ŀ�귽���õ��˳���Ŀ��
             Vector3 direction = (target - transform.position).normalized;
