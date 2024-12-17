@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9139859391859005609}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingRightF_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,10 +42,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1741383101279916694}
   - component: {fileID: 8838658910775223982}
-  - component: {fileID: 5189667377006338437}
+  - component: {fileID: 2881711990319182107}
   - component: {fileID: 1760737360189838549}
   - component: {fileID: 6985982855110214853}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 29.527, y: -0.265, z: 7.591}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1045433725114777547}
   m_Father: {fileID: 0}
@@ -90,7 +90,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5189667377006338437
+--- !u!114 &2881711990319182107
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,28 +99,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 513229352100526564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51d500943e47d7c4f83cd6450c1f86af, type: 3}
+  m_Script: {fileID: 11500000, guid: 679234a8c19216d4f8067435d611047e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
   animator: {fileID: 4549434837546348943}
+  currentPatrolIndex: 0
   detectionRange: 10
-  attackInterval: 3
-  chasingSpeed: 3.5
-  patrollingSpeed: 2
+  attackPreDelay: 1
+  attackInterval: 4.5
+  chasingSpeed: 1.5
+  patrollingSpeed: 0.7
   fieldOfViewAngleHorizontal: 90
   fieldOfViewAngleVertical: 30
-  sensingRadius: 1
+  sensingRadius: 1.5
   patrolMode: 1
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
   patrolRange: 10
   patrolWidth: 10
   patrolHeight: 10
   waitTimeAtPatrolPoint: 4
-  attackDamage: 20
-  health: 100
-  attackRange: 2
+  attackDamage: 35
+  health: 500
+  attackRange: 1.5
+  lastAttackTime: 0
+  lastAttackPreDelayTime: 0
+  targetPlayer: {fileID: 0}
 --- !u!65 &1760737360189838549
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -141,7 +145,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.8, y: 0.1, z: 3}
-  m_Center: {x: 0, y: 1.5, z: -0.7}
+  m_Center: {x: 0, y: 2, z: -0.7}
 --- !u!54 &6985982855110214853
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -150,7 +154,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 513229352100526564}
   serializedVersion: 4
-  m_Mass: 1800
+  m_Mass: 1400
   m_Drag: 0
   m_AngularDrag: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -178,7 +182,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8179900390032746160}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingRightB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6328961543595003409}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingLeftA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4810671578675956707}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingRightC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +275,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1564229045706302330}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingLeftD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5502223327248940515}
   - component: {fileID: 1669231238848277445}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: SK_Scyver_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -413,7 +417,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3639354218776275130}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +449,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 902983726253704439}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_Spine4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2969367583145045133}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingLeftF_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,7 +517,7 @@ GameObject:
   - component: {fileID: 1045433725114777547}
   - component: {fileID: 4549434837546348943}
   - component: {fileID: 7143385410809601831}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_Logic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +533,7 @@ Transform:
   m_GameObject: {fileID: 3175538669061674407}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -591,7 +595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4729850685296576300}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingRightE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -622,7 +626,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4512838867987399452}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -655,7 +659,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9179929119388653342}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingRightA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -686,7 +690,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 523732161388252247}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingLeftF_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -717,7 +721,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7315580002130751161}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingLeftF_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -749,7 +753,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7162394010534212539}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingLeftB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -780,7 +784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9178240477104720990}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -812,7 +816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8000977991392493292}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -846,7 +850,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8544662188112166528}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_Spine7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -877,7 +881,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8458890276692380036}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_Spine5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -911,7 +915,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5496127715629543038}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -943,7 +947,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4984910305172831966}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingRightF_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -974,7 +978,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5307721673204330987}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingRightF_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1006,7 +1010,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7664133223975538516}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingLeftE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1037,7 +1041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7595130850523856377}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_Spine3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1071,7 +1075,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5134713706145150600}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingRightD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1102,7 +1106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2450430298228182514}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_Spine6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1136,7 +1140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8294062026935283817}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1170,7 +1174,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2095722878899068358}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_WingLeftC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1201,7 +1205,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1253184168063408274}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Scyver_Jaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1233,7 +1237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1428134324073607642}
   - component: {fileID: 4921574029404513386}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: SK_Scyver_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

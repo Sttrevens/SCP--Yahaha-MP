@@ -94,6 +94,11 @@ namespace LPSurvivalEngine
                     hit.collider.GetComponent<Destructible>().ApplyDamage(damage);
                     DestructibleBarController.Instance.UpdateHealthBar(hit.collider.GetComponent<Destructible>().CurrentHitPoints, hit.collider.GetComponent<Destructible>().TotalHitPoints);
                 }
+
+                if (hit.collider.GetComponent<EnemyAI>() != null)
+                {
+                    hit.collider.GetComponent<EnemyAI>().TakeDamage(damage);
+                }
             }
             }
         }
