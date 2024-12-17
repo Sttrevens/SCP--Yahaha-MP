@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1615497217217999969}
   - component: {fileID: 7723779566642531927}
   - component: {fileID: 4038860237572010670}
-  - component: {fileID: 6640782563376736363}
   - component: {fileID: -2557064394528923801}
   - component: {fileID: -7345929837864375808}
+  - component: {fileID: 6805531600891876551}
   m_Layer: 0
   m_Name: Desk01
   m_TagString: Untagged
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 1fccce7c8dafc4342b9ffcb385ffb4af, type: 2}
-  - {fileID: 2100000, guid: 2ac0fd036f92c324cbe289656edc74d9, type: 2}
+  - {fileID: 2100000, guid: 533a625e75227074f8b77da4d44b7e83, type: 2}
   - {fileID: 2100000, guid: 7f4c80360ec100846bed6604c350261c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -88,27 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6640782563376736363
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2319424108263097970}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.5, y: 0.6250003, z: 0.7500001}
-  m_Center: {x: -0.00000029802322, y: 0.06250037, z: 0.37500012}
 --- !u!114 &-2557064394528923801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,10 +102,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _totalHitPoints: 80
   _currentHitPoints: 80
-  damageLevels: []
+  damageLevels:
+  - maxHitPoints: 80
+    minHitPoints: 64.1
+    healthPercent: 100
+    hasError: 0
+    visibleDamageLevel: 0
+  - maxHitPoints: 64
+    minHitPoints: 48.1
+    healthPercent: 80
+    hasError: 0
+    visibleDamageLevel: 2
+  - maxHitPoints: 48
+    minHitPoints: 32.1
+    healthPercent: 60
+    hasError: 0
+    visibleDamageLevel: 4
+  - maxHitPoints: 32
+    minHitPoints: 16.1
+    healthPercent: 40
+    hasError: 0
+    visibleDamageLevel: 6
+  - maxHitPoints: 16
+    minHitPoints: 0
+    healthPercent: 20
+    hasError: 0
+    visibleDamageLevel: 8
   destroyedPrefab: {fileID: 0}
   destroyedPrefabParent: {fileID: 0}
-  fallbackParticle: {fileID: 0}
+  fallbackParticle: {fileID: 19800004, guid: 6b46cad447c64dd48b8b715df6e3d2ad, type: 3}
   fallbackParticleMatOption: 0
   damageEffects: []
   velocityReduction: 0.5
@@ -185,3 +189,25 @@ MonoBehaviour:
   maxDropForce: 1
   spreadFactor: 1
   dropProbability: 0.5
+--- !u!64 &6805531600891876551
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2319424108263097970}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5849067389301167626, guid: 4e753f0c9cb394347b54a76e8dfdefdf, type: 3}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2552418406895306378}
   - component: {fileID: 8093120742983613043}
   - component: {fileID: 9212904771377081773}
-  - component: {fileID: 4740646539186077647}
+  - component: {fileID: -1555614672517504684}
   m_Layer: 0
   m_Name: PlasticCrate01b_Grey
   m_TagString: Untagged
@@ -93,7 +93,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7524490659654274735}
   serializedVersion: 4
-  m_Mass: 100
+  m_Mass: 300
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -112,8 +112,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &4740646539186077647
-MeshCollider:
+--- !u!65 &-1555614672517504684
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -130,7 +130,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6365515193161838543, guid: 03be437f660eb344fb5d5f51ff5ce252, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.59999996, y: 0.40000007, z: 0.19999985}
+  m_Center: {x: 0, y: 0, z: 0.09999993}

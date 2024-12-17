@@ -104,19 +104,20 @@ namespace LPSurvivalEngine
 
 
         public void OnInteractInput(InputAction.CallbackContext context)
-    {
-        if (context.phase == InputActionPhase.Started && currentInteractable != null)
         {
-            currentInteractable.OnInteract();
-            currentInteractGameObject = null;
-            currentInteractable = null;
-            interact.gameObject.SetActive(false);
-        }
-    }
-    
-}
+            if (context.phase == InputActionPhase.Canceled && currentInteractable != null)
+            {
+                currentInteractable.OnInteract(); 
 
-public interface IInteractable
+                currentInteractGameObject = null;
+                currentInteractable = null;
+                interact.gameObject.SetActive(false);
+            }
+        }
+
+    }
+
+    public interface IInteractable
 {
     string GetInteractText();   
     void OnInteract();
