@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-    public class EnemyAI : MonoBehaviour
+    public class EnemyAIOld : MonoBehaviour
     {
         private NavMeshAgent agent;
         private GameObject[] players;
