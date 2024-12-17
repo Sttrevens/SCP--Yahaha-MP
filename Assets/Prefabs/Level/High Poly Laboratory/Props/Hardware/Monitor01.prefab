@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6024050401698885428}
   - component: {fileID: 9213879924298426423}
   - component: {fileID: 5563898337793879025}
+  - component: {fileID: 5387668795998319426}
   m_Layer: 0
   m_Name: Monitor01
   m_TagString: Untagged
@@ -165,7 +166,7 @@ MonoBehaviour:
   replaceMaterials: []
   replaceParticleMats: []
   canBeDestroyed: 1
-  canBeRepaired: 0
+  canBeRepaired: 1
   debrisToReParentByName: []
   debrisToReParentIsKinematic: 0
   childrenToReParentByName: []
@@ -234,3 +235,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5387668795998319426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5145547631860760438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0908aafe702236f4191b25188680e7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticles: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  hitSound: {fileID: 0}

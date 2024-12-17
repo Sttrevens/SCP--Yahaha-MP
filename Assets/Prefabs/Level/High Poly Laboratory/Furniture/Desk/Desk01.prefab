@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -2557064394528923801}
   - component: {fileID: -7345929837864375808}
   - component: {fileID: 6805531600891876551}
+  - component: {fileID: -1703616356260207812}
   m_Layer: 0
   m_Name: Desk01
   m_TagString: Untagged
@@ -132,7 +133,18 @@ MonoBehaviour:
   destroyedPrefabParent: {fileID: 0}
   fallbackParticle: {fileID: 19800004, guid: 6b46cad447c64dd48b8b715df6e3d2ad, type: 3}
   fallbackParticleMatOption: 0
-  damageEffects: []
+  damageEffects:
+  - TriggeredAt: 0
+    Offset: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    Prefab: {fileID: 0}
+    GameObject: {fileID: 0}
+    HasStarted: 0
+    HasTagDependency: 0
+    TagDependency: 0
+    UnparentOnDestroy: 1
+    StopEmittingOnDestroy: 0
   velocityReduction: 0.5
   limitDamage: 0
   minDamage: 10
@@ -211,3 +223,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5849067389301167626, guid: 4e753f0c9cb394347b54a76e8dfdefdf, type: 3}
+--- !u!114 &-1703616356260207812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2319424108263097970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0908aafe702236f4191b25188680e7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticles: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  hitSound: {fileID: 0}

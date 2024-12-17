@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 548394834834862432}
   - component: {fileID: 4673814795535888275}
   - component: {fileID: 8111261034888758036}
+  - component: {fileID: 3721755016125353775}
   m_Layer: 13
   m_Name: Door01Window_Model
   m_TagString: Passable
@@ -324,3 +325,17 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.45000002, y: 0.025, z: 1.0500001}
   m_TimeToStationary: 0.5
+--- !u!114 &3721755016125353775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2729091079604798993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0908aafe702236f4191b25188680e7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticles: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  hitSound: {fileID: 0}

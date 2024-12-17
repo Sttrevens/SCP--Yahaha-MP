@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 2881711990319182107}
   - component: {fileID: 1760737360189838549}
   - component: {fileID: 6985982855110214853}
+  - component: {fileID: 4507690019245153522}
   m_Layer: 14
   m_Name: Scyver
   m_TagString: Untagged
@@ -173,6 +174,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &4507690019245153522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513229352100526564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0908aafe702236f4191b25188680e7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticles: {fileID: 6668225457367407552, guid: 875289d6becc47f43851330ba4d7831d, type: 3}
+  hitSound: {fileID: 0}
 --- !u!1 &962269116399748618
 GameObject:
   m_ObjectHideFlags: 0

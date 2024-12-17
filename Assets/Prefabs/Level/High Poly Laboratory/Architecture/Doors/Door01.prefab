@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1324549175184599114}
   - component: {fileID: 6585026989636706267}
   - component: {fileID: 7361789502057154683}
+  - component: {fileID: 7451421524850923658}
   m_Layer: 13
   m_Name: Door01_Model
   m_TagString: Passable
@@ -208,6 +209,20 @@ MonoBehaviour:
   maxDropForce: 5
   spreadFactor: 1
   dropProbability: 0.5
+--- !u!114 &7451421524850923658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703734767781384893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0908aafe702236f4191b25188680e7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticles: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  hitSound: {fileID: 0}
 --- !u!1 &8394890631265222934
 GameObject:
   m_ObjectHideFlags: 0

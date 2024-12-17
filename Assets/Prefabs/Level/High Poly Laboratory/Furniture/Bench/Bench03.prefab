@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 1060635625096076696}
   - component: {fileID: 2918485012412341574}
   - component: {fileID: 2255019831722370179}
+  - component: {fileID: 6243004918821516079}
   m_Layer: 0
   m_Name: Bench03
   m_TagString: Untagged
@@ -465,6 +466,20 @@ MonoBehaviour:
   maxDropForce: 1
   spreadFactor: 1
   dropProbability: 0.5
+--- !u!114 &6243004918821516079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6784206804087922528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0908aafe702236f4191b25188680e7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticles: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  hitSound: {fileID: 0}
 --- !u!1 &8240701904772767680
 GameObject:
   m_ObjectHideFlags: 0

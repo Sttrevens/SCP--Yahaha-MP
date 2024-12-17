@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 5571132799071065294}
   - component: {fileID: 3247069424992666700}
   - component: {fileID: 8991208032765174349}
+  - component: {fileID: -5400288684562828616}
   m_Layer: 0
   m_Name: Microscope01b
   m_TagString: Untagged
@@ -276,7 +277,7 @@ MonoBehaviour:
   replaceMaterials: []
   replaceParticleMats: []
   canBeDestroyed: 1
-  canBeRepaired: 0
+  canBeRepaired: 1
   debrisToReParentByName: []
   debrisToReParentIsKinematic: 0
   childrenToReParentByName: []
@@ -295,6 +296,20 @@ MonoBehaviour:
   destroyedSound: {fileID: 0}
   damagedSound: {fileID: 0}
   repairedSound: {fileID: 0}
+--- !u!114 &-5400288684562828616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218573847715964223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0908aafe702236f4191b25188680e7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticles: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  hitSound: {fileID: 0}
 --- !u!1 &7403945326614846585
 GameObject:
   m_ObjectHideFlags: 0

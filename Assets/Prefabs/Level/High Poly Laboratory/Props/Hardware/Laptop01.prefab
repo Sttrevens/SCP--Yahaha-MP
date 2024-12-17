@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4356814235778997105}
   - component: {fileID: 7825974208350912165}
   - component: {fileID: 6518624243295361046}
+  - component: {fileID: -8635478564577122751}
   m_Layer: 0
   m_Name: Laptop01
   m_TagString: Untagged
@@ -161,6 +162,20 @@ MonoBehaviour:
   maxDropForce: 0.5
   spreadFactor: 1
   dropProbability: 0.75
+--- !u!114 &-8635478564577122751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3756782026907163499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0908aafe702236f4191b25188680e7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticles: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  hitSound: {fileID: 0}
 --- !u!1 &7039339560591059950
 GameObject:
   m_ObjectHideFlags: 0

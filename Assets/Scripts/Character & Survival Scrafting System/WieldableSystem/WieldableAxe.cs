@@ -99,6 +99,18 @@ namespace LPSurvivalEngine
                 {
                     hit.collider.GetComponent<EnemyAI>().TakeDamage(damage);
                 }
+
+                if (hit.collider.GetComponent<hitEffect>() != null)
+                {
+                    if (hit.collider.GetComponent<hitEffect>().hitParticles != null)
+                    {
+                        Destroy(Instantiate(hit.collider.GetComponent<hitEffect>().hitParticles, hit.point, Unity.Mathematics.quaternion.LookRotation(hit.normal, Vector3.up)), 1.0f);
+                    }
+                    if (hit.collider.GetComponent<hitEffect>().hitSound != null)
+                    {
+                        hit.collider.GetComponent<hitEffect>().hitSound.Play();
+                    }
+                }
             }
             }
         }
