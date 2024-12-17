@@ -97,7 +97,7 @@ namespace LPSurvivalEngine
             if (cursor == true)
             {
 
-                    CamMovements();
+                CamMovements();
             }
         }
 

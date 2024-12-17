@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEngine.PlayerLoop;
+using System;
 
 namespace LPSurvivalEngine
 {
@@ -139,20 +140,23 @@ namespace LPSurvivalEngine
             }
 
             ItemSlot emptySlot = GetEmptySlot();
-            if (emptySlot != null)
+            if (emptySlot != null) //如果有空位
             {
                 emptySlot.item = item;
                 emptySlot.quantity = 1;
                 UpdateUI();
                 return;
             }
+
+            //如果物品槽已满
             ThrowItem(item);
+            Prompt.instance.CustomPrompt("Your Bag is already full!"); //显示提示
         }
 
-        // ����Ʒ����
         void ThrowItem(ItemDatabase item)
         {
-            Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360.0f));
+            Prompt.instance.CustomPrompt(String.Format("{0} has been thrown!", selectedItem.item.name)); //显示提示
+            Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * UnityEngine.Random.value * 360.0f));
         }
 
         void UpdateUI()
@@ -205,44 +209,62 @@ namespace LPSurvivalEngine
             selectedItem = slots[index];
             selectedItemIndex = index;
 
-            // selectedItemName.text = selectedItem.item.displayName;
-            // selectedItemDescription.text = selectedItem.item.description;
-
-            // useButton.SetActive(selectedItem.item.type == ItemType.Consumable);
-            // equipButton.SetActive(selectedItem.item.type == ItemType.Wieldable && !InventorySlots[index].equipped);
-            // dropItemButton.SetActive(selectedItem.item.type == ItemType.Wieldable && InventorySlots[index].equipped);
-            // dropButton.SetActive(true);
+            if (selectedItem.item.type == ItemType.Consumable) UseConsumableItem();
+            else if (selectedItem.item.type == ItemType.Wieldable) EquipWieldableItem();
+            else Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
         }
 
-        // void ClearSelectedItemWindow()
-        // {
-        //     selectedItem = null;
-        //     selectedItemName.text = string.Empty;
-        //     selectedItemDescription.text = string.Empty;
+        void UseConsumableItem()
+        {
+            Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示     
+            for (int x = 0; x < selectedItem.item.consumables.Length; x++)
+            {
+                switch (selectedItem.item.consumables[x].type)
+                {
+                    case ConsumableType.Health: vitals.Heal(selectedItem.item.consumables[x].value); break;
+                    case ConsumableType.Hunger: vitals.Eat(selectedItem.item.consumables[x].value); break;
+                    case ConsumableType.Thirst: vitals.Drink(selectedItem.item.consumables[x].value); break;
+                    case ConsumableType.Sleep: vitals.Sleep(selectedItem.item.consumables[x].value); break;
+                }
+            }
+            RemoveSelectedItem();
+            
+        }
 
-        //     useButton.SetActive(false);
-        //     equipButton.SetActive(false);
-        //     dropItemButton.SetActive(false);
-        //     dropButton.SetActive(false);
+        // public void OnDisableButton()
+        // {
+        //     DisableItem(selectedItemIndex);
         // }
 
-        // public void OnUseButton()
-        // {
-        //     if (selectedItem.item.type == ItemType.Consumable)
-        //     {
-        //         for (int x = 0; x < selectedItem.item.consumables.Length; x++)
-        //         {
-        //             switch (selectedItem.item.consumables[x].type)
-        //             {
-        //                 case ConsumableType.Health: vitals.Heal(selectedItem.item.consumables[x].value); break;
-        //                 case ConsumableType.Hunger: vitals.Eat(selectedItem.item.consumables[x].value); break;
-        //                 case ConsumableType.Thirst: vitals.Drink(selectedItem.item.consumables[x].value); break;
-        //                 case ConsumableType.Sleep: vitals.Sleep(selectedItem.item.consumables[x].value); break;
-        //             }
-        //         }
-        //     }
-        //     RemoveSelectedItem();
-        // }
+        public void OnDropButton()
+        {
+            if (selectedItem.item == null)
+                return;
+
+            ThrowItem(selectedItem.item);
+            RemoveSelectedItem();
+        }
+
+        public void EquipWieldableItem()
+        {
+            if (InventorySlots[currentWieldableIndex].equipped)
+                {
+                    DisableItem(currentWieldableIndex);
+                    if (currentWieldableIndex == selectedItemIndex)  
+                    {
+                        Prompt.instance.CustomPrompt(String.Format("{0} unequipped!", selectedItem.item.name)); //显示提示
+                        return; 
+                    }
+                }
+
+            Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
+
+            InventorySlots[selectedItemIndex].equipped = true;
+            currentWieldableIndex = selectedItemIndex;
+            WieldableManager.instance.EquipNewItem(selectedItem.item);
+            UpdateUI();
+            // SelectItem(selectedItemIndex);
+        }
 
         void DisableItem(int index)
         {
@@ -252,32 +274,9 @@ namespace LPSurvivalEngine
 
             UpdateUI();
 
-            if (selectedItemIndex == index)
-                SelectItem(index);
+            // if (selectedItemIndex == index)
+            //     SelectItem(index);
         }
-
-        // public void OnDisableButton()
-        // {
-        //     DisableItem(selectedItemIndex);
-        // }
-
-        // public void OnDropButton()
-        // {
-        //     ThrowItem(selectedItem.item);
-        //     RemoveSelectedItem();
-        // }
-
-        // public void OnUseItemButton()
-        // {
-        //     if (InventorySlots[currentWieldableIndex].equipped)
-        //         DisableItem(currentWieldableIndex);
-
-        //     InventorySlots[selectedItemIndex].equipped = true;
-        //     currentWieldableIndex = selectedItemIndex;
-        //     WieldableManager.instance.EquipNewItem(selectedItem.item);
-        //     UpdateUI();
-        //     SelectItem(selectedItemIndex);
-        // }
 
         void RemoveSelectedItem()
         {

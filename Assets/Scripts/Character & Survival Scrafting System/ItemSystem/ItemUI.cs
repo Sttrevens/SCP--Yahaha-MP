@@ -21,7 +21,7 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         
         // 调用 Tooltip 显示
         detailPanel.gameObject.SetActive(true);
-        detailPanel.ShowDetail(currentslot.item.displayName, currentslot.item.description);
+        detailPanel.ShowDetail(currentslot.item.displayName);
         
     }
 
@@ -29,7 +29,7 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (detailPanel != null)
         {
-        detailPanel.gameObject.SetActive(false);
+            detailPanel.gameObject.SetActive(false);
         }
     }
 }
