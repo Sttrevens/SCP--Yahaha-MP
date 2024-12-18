@@ -2,7 +2,9 @@ using DestroyIt;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 namespace LPSurvivalEngine
 {
@@ -108,29 +110,39 @@ namespace LPSurvivalEngine
 
                 if (doesDealDamage)
                 {
-                if (hit.collider.GetComponent<Destructible>() != null)
-                {
-                    if (wieldableType == WieldableType.BluntMelee)
+                    if (hit.collider.GetComponent<Destructible>() != null)
                     {
-                        hit.collider.GetComponent<Destructible>().ApplyDamage(damage);
+                        if (wieldableType == WieldableType.BluntMelee)
+                        {
+                            hit.collider.GetComponent<Destructible>().ApplyDamage(damage);
+                        }
+                        else
+                        {
+                            hit.collider.GetComponent<Destructible>().ApplyDamage(damage / 2);
+                        }
+                        DestructibleBarController.Instance.UpdateHealthBar(hit.collider.GetComponent<Destructible>().CurrentHitPoints, hit.collider.GetComponent<Destructible>().TotalHitPoints);
                     }
-                    else
-                    {
-                        hit.collider.GetComponent<Destructible>().ApplyDamage(damage / 2);
                     }
-                    DestructibleBarController.Instance.UpdateHealthBar(hit.collider.GetComponent<Destructible>().CurrentHitPoints, hit.collider.GetComponent<Destructible>().TotalHitPoints);
-                }
 
                 if (hit.collider.GetComponent<EnemyAI>() != null)
                 {
                     hit.collider.GetComponent<EnemyAI>().TakeDamage(damage);
                 }
 
+                if (hit.collider.GetComponent<hitEffect>() != null)
+                {
+                    if (hit.collider.GetComponent<hitEffect>().hitParticles != null)
+                    {
+                        Destroy(Instantiate(hit.collider.GetComponent<hitEffect>().hitParticles, hit.point, Unity.Mathematics.quaternion.LookRotation(hit.normal, Vector3.up)), 1.0f);
+                    }
+                    if (hit.collider.GetComponent<hitEffect>().hitSound != null)
+                    {
+                        hit.collider.GetComponent<hitEffect>().hitSound.Play();
+                    }
+                }
+
             }
         }
     }
     
-}
-
-
 }

@@ -1,0 +1,55 @@
+using UnityEngine;
+
+public class ChasingState : EnemyBaseState
+{
+    public override void EnterState(EnemyAI enemy)
+    {
+        // Set the agent speed for chasing state
+        enemy.agent.speed = enemy.chasingSpeed;
+    }
+
+    public override void UpdateState(EnemyAI enemy)
+    {
+        // Check if the enemy should attack the player
+        if (enemy.ShouldAttack(enemy))
+        {
+            // Switch to AttackingState if conditions are met
+            enemy.SwitchState(new AttackingState());
+            return; // Exit early as we've already handled the state change
+        }
+
+        // Continue chasing the player if no attack is triggered
+        if (enemy.targetPlayer != null)
+        {
+            enemy.agent.SetDestination(enemy.targetPlayer.transform.position);
+
+            // If the player is within the attack range, switch to AttackingState
+            if (enemy.ShouldAttack(enemy))
+            {
+                enemy.SwitchState(new AttackingState());
+            }
+            else if (Vector3.Distance(enemy.transform.position, enemy.targetPlayer.transform.position) > enemy.detectionRange)
+            {
+                // If the player is out of detection range, switch to PatrollingState
+                enemy.SwitchState(new PatrollingState());
+                enemy.targetPlayer = null;
+            }
+            else if (enemy.CheckForDestroyableObstacle() != null) {enemy.SwitchState(new DestroyingObstacleState());}
+        }
+        else
+        {
+            // If no player is detected, switch to PatrollingState
+            enemy.SwitchState(new PatrollingState());
+        }
+
+        // Play the chasing animation
+        enemy.PlayAnimation("IsChasing", true);
+        // Rotate towards the player's position (or the destination if no player)
+        enemy.RotateTowards(enemy.targetPlayer?.transform.position ?? enemy.agent.destination);
+    }
+
+    public override void ExitState(EnemyAI enemy)
+    {
+        // No specific exit logic needed for ChasingState
+    }
+}
