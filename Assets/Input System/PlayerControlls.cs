@@ -134,6 +134,24 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""27ed12f6-dbc3-4dcc-b6a7-5b61fbe0d911"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""c68e2936-e07f-473f-a2d1-ebe0a0e47262"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -312,6 +330,127 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aadcc494-7aab-4d6c-b29f-6acaf70209f1"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e1b6a53-4475-450e-9dda-557bf5a94b4b"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e065b250-d719-41f4-ac87-7e4851021540"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ddc7e31e-f2e0-46cb-95b0-a3e613634bb7"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""47bd50fb-f34d-4402-a99b-8e2dbf962d2b"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""695be501-1884-4750-9c88-655fd43a8c1d"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ce5dc0df-6d71-4681-86fe-557ad00d7b75"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7f7bbf0b-e3c4-4c11-9767-0524001270de"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f558d7e3-6a5e-49f1-aa94-30d564dcd3b7"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2100af33-67d6-46ca-9360-0bea1b6b6b5d"",
+                    ""path"": ""<Keyboard>/0"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff11faa3-16d1-40da-bdf2-39d826dd35b2"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -332,6 +471,8 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Main_Build = m_Main.FindAction("Build", throwIfNotFound: true);
         m_Main_CancelBuild = m_Main.FindAction("CancelBuild", throwIfNotFound: true);
         m_Main_Rotate = m_Main.FindAction("Rotate", throwIfNotFound: true);
+        m_Main_SelectSlot = m_Main.FindAction("SelectSlot", throwIfNotFound: true);
+        m_Main_Drop = m_Main.FindAction("Drop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -405,6 +546,8 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Build;
     private readonly InputAction m_Main_CancelBuild;
     private readonly InputAction m_Main_Rotate;
+    private readonly InputAction m_Main_SelectSlot;
+    private readonly InputAction m_Main_Drop;
     public struct MainActions
     {
         private @PlayerControlls m_Wrapper;
@@ -421,6 +564,8 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         public InputAction @Build => m_Wrapper.m_Main_Build;
         public InputAction @CancelBuild => m_Wrapper.m_Main_CancelBuild;
         public InputAction @Rotate => m_Wrapper.m_Main_Rotate;
+        public InputAction @SelectSlot => m_Wrapper.m_Main_SelectSlot;
+        public InputAction @Drop => m_Wrapper.m_Main_Drop;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -466,6 +611,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Rotate.started += instance.OnRotate;
             @Rotate.performed += instance.OnRotate;
             @Rotate.canceled += instance.OnRotate;
+            @SelectSlot.started += instance.OnSelectSlot;
+            @SelectSlot.performed += instance.OnSelectSlot;
+            @SelectSlot.canceled += instance.OnSelectSlot;
+            @Drop.started += instance.OnDrop;
+            @Drop.performed += instance.OnDrop;
+            @Drop.canceled += instance.OnDrop;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
@@ -506,6 +657,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Rotate.started -= instance.OnRotate;
             @Rotate.performed -= instance.OnRotate;
             @Rotate.canceled -= instance.OnRotate;
+            @SelectSlot.started -= instance.OnSelectSlot;
+            @SelectSlot.performed -= instance.OnSelectSlot;
+            @SelectSlot.canceled -= instance.OnSelectSlot;
+            @Drop.started -= instance.OnDrop;
+            @Drop.performed -= instance.OnDrop;
+            @Drop.canceled -= instance.OnDrop;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -537,5 +694,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         void OnBuild(InputAction.CallbackContext context);
         void OnCancelBuild(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+        void OnSelectSlot(InputAction.CallbackContext context);
+        void OnDrop(InputAction.CallbackContext context);
     }
 }

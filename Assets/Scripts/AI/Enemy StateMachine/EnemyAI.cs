@@ -46,7 +46,8 @@ public class EnemyAI : MonoBehaviour
     [Space]
 
     public int attackDamage = 20;
-    public float health = 100f;
+    public float maxHealth = 100f;
+    public float currentHealth = 100f;
     public float attackRange = 2f;
     [HideInInspector] public float lastAttackTime = 0f;
     [HideInInspector] public float lastAttackPreDelayTime = 0f;
@@ -69,7 +70,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
-       
+       currentHealth = maxHealth;
         SwitchState(new PatrollingState());
     }
 
@@ -179,13 +180,12 @@ public class EnemyAI : MonoBehaviour
     {
         if (!(currentState is DeadState))
         {
-            health -= damage;
-            animator.SetTrigger("Hit");
-            if (health <= 0)
+            currentHealth -= damage;
+            if (currentHealth <= 0)
             {
                 SwitchState(new DeadState());
             }
-            else
+            else if (damage >= maxHealth / 6)
             {
                 SwitchState(new BeingAttackedState());
             }
