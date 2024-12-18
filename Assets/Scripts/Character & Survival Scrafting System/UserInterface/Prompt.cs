@@ -46,7 +46,7 @@ public class Prompt : MonoBehaviour
                 break;
 
             default:
-                text = string.Format("{0} Can't be used here! (Press R to throw away)", item.name);
+                text = string.Format("{0} Can't be used here! (Press C to throw away)", item.name);
                 break;
         }
 

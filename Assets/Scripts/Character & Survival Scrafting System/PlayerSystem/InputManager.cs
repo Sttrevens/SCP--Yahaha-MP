@@ -83,8 +83,6 @@ namespace LPSurvivalEngine
         string keypressed = context.control.displayName;
     
         if(keypressed=="0") SlotIndex = 9;
-        else if(keypressed=="-") SlotIndex = 10;
-        else if(keypressed=="=") SlotIndex = 11;
         else SlotIndex = int.Parse(keypressed)-1;
 
         Inventory.instance.SelectItem(SlotIndex);
