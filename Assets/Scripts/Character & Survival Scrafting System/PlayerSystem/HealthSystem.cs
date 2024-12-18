@@ -10,44 +10,42 @@ namespace LPSurvivalEngine
 {
     public class HealthSystem : MonoBehaviour, IDamagable
     {
-    [Space]
+    public static HealthSystem instance{get;private set;}
+
     [Header("Player Vitals")]
-    [Space]
-    [Space]
 
     public Vitals health;
     public Vitals hunger;
     public Vitals thirst;
     public Vitals sleep;
 
-    [Space]
-    [Space]
     [Header("Health System")]
-    [Space]
 
     public UnityEvent onTakeDamage;
 
-    [Space]
     [Header("Vitals Settings")]
-    [Space]
-    [Space]
     
     public float hungerHealthdecay;
     public float thirstHealthdecay;
 
-    [Space]
     [Header("Assignments")]
-    [Space]
 
     public GameObject Player;
     public GameObject UIPlayer;
 
-    public static HealthSystem instance;
 
 
-    void Awake()
+    private void Awake()
     {
-        instance = this;
+        if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(this);
+            }
+            else
+            {
+                Destroy(gameObject); 
+            }
     }
 
     void Start()
