@@ -12,10 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mini Scyver
       objectReference: {fileID: 0}
-    - target: {fileID: 1045433725114777547, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1741383101279916694, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -68,33 +64,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1741383101279916694, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
+    - target: {fileID: 2881711990319182107, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: health
+      value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 1760737360189838549, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
-      propertyPath: m_Center.y
-      value: 2
+    - target: {fileID: 2881711990319182107, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: attackRange
+      value: 0.7
       objectReference: {fileID: 0}
-    - target: {fileID: 5189667377006338437, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+    - target: {fileID: 2881711990319182107, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: attackDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881711990319182107, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
       propertyPath: chasingSpeed
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 5189667377006338437, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
-      propertyPath: destroyRange
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5189667377006338437, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
-      propertyPath: patrollingSpeed
+    - target: {fileID: 2881711990319182107, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: sensingRadius
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5672404913967700989, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
-      propertyPath: m_Center.y
-      value: 2
+    - target: {fileID: 2881711990319182107, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: attackInterval
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 6985982855110214853, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
-      propertyPath: m_Mass
-      value: 1400
+    - target: {fileID: 2881711990319182107, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: patrollingSpeed
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

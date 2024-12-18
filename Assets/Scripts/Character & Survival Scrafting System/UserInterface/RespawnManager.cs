@@ -7,6 +7,9 @@ namespace LPSurvivalEngine
 {
     public class RespawnManager : MonoBehaviour
     {
+        public string showCaseScene;
+        public string demoScene;
+
         public void OnRespawnButtonShowcase()
         {
             SceneManager.LoadScene("Showcase");
