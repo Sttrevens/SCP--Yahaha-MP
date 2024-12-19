@@ -7,46 +7,39 @@ using UnityEngine.UI;
 public class InputRelaySink : MonoBehaviour
 {
     [SerializeField] RectTransform CanvasTransform;
-    
+
     GraphicRaycaster Raycaster;
-
     List<GameObject> DragTargets = new List<GameObject>();
+    GameObject lastHoveredObject = null; // Keep track of the last hovered object.
 
-    // Start is called before the first frame update
     void Start()
     {
         Raycaster = GetComponent<GraphicRaycaster>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnCursorInput(Vector2 normalisedPosition)
     {
-        // calculate the position in canvas space
+        // Calculate the position in canvas space.
         Vector3 mousePosition = new Vector3(CanvasTransform.sizeDelta.x * normalisedPosition.x,
                                             CanvasTransform.sizeDelta.y * normalisedPosition.y,
                                             0f);
 
-        // construct our pointer event
+        // Construct our pointer event.
         PointerEventData mouseEvent = new PointerEventData(EventSystem.current);
         mouseEvent.position = mousePosition;
 
-        // perform a raycast using the graphics raycaster
+        // Perform a raycast using the graphics raycaster.
         List<RaycastResult> results = new List<RaycastResult>();
         Raycaster.Raycast(mouseEvent, results);
 
         bool sendMouseDown = Input.GetMouseButtonDown(0);
-        bool sendMouseUp = Input.GetMouseButtonUp(0);   
+        bool sendMouseUp = Input.GetMouseButtonUp(0);
         bool isMouseDown = Input.GetMouseButton(0);
 
-        // send through end drag events as needed
+        // Handle end drag events.
         if (sendMouseUp)
         {
-            foreach(var target in DragTargets)
+            foreach (var target in DragTargets)
             {
                 if (ExecuteEvents.Execute(target, mouseEvent, ExecuteEvents.endDragHandler))
                     break;
@@ -54,21 +47,39 @@ public class InputRelaySink : MonoBehaviour
             DragTargets.Clear();
         }
 
-        // process the raycast results
-        foreach(var result in results)
+        // Keep track of the hovered object for pointer enter/exit events.
+        GameObject currentHoveredObject = results.Count > 0 ? results[0].gameObject : null;
+
+        if (currentHoveredObject != lastHoveredObject)
         {
-            // setup the new event data
+            // Trigger pointer exit on the last hovered object.
+            if (lastHoveredObject != null)
+            {
+                ExecuteEvents.Execute(lastHoveredObject, mouseEvent, ExecuteEvents.pointerExitHandler);
+            }
+
+            // Trigger pointer enter on the new hovered object.
+            if (currentHoveredObject != null)
+            {
+                ExecuteEvents.Execute(currentHoveredObject, mouseEvent, ExecuteEvents.pointerEnterHandler);
+            }
+
+            // Update the last hovered object.
+            lastHoveredObject = currentHoveredObject;
+        }
+
+        // Process raycast results.
+        foreach (var result in results)
+        {
             PointerEventData eventData = new PointerEventData(EventSystem.current);
             eventData.position = mousePosition;
             eventData.pointerCurrentRaycast = eventData.pointerPressRaycast = result;
 
-            // is the mouse down?
             if (isMouseDown)
                 eventData.button = PointerEventData.InputButton.Left;
 
             var slider = result.gameObject.GetComponentInParent<UnityEngine.UI.Slider>();
 
-            // potentially new drag targets?
             if (sendMouseDown)
             {
                 if (ExecuteEvents.Execute(result.gameObject, eventData, ExecuteEvents.beginDragHandler))
@@ -81,23 +92,23 @@ public class InputRelaySink : MonoBehaviour
                     if (!DragTargets.Contains(result.gameObject))
                         DragTargets.Add(result.gameObject);
                 }
-            } // need to update drag target
+            }
             else if (DragTargets.Contains(result.gameObject))
             {
                 eventData.dragging = true;
                 ExecuteEvents.Execute(result.gameObject, eventData, ExecuteEvents.dragHandler);
+
                 if (slider != null)
                 {
                     slider.OnDrag(eventData);
                 }
             }
 
-            // send a mouse down event?
             if (sendMouseDown)
             {
                 if (ExecuteEvents.Execute(result.gameObject, eventData, ExecuteEvents.pointerDownHandler))
                     break;
-            } // send a mouse up event?
+            }
             else if (sendMouseUp)
             {
                 bool didRun = ExecuteEvents.Execute(result.gameObject, eventData, ExecuteEvents.pointerUpHandler);
