@@ -15,7 +15,7 @@ public class BeingAttackedState : EnemyBaseState
     {
         yield return new WaitForSeconds(1f);
        
-        if (enemy.health > 0)
+        if (enemy.currentHealth > 0)
             enemy.SwitchState(new ChasingState());
         else
             enemy.SwitchState(new DeadState());

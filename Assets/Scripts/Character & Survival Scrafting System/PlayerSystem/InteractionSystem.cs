@@ -92,19 +92,32 @@ namespace LPSurvivalEngine
 
         void Interaction()
         {
+            if (currentInteractable == null)
+            {
+                Debug.LogWarning("No interactable object detected.");
+                return;
+            }
+
             interact.gameObject.SetActive(true);
             interactText.text = string.Format("{0}", currentInteractable.GetInteractText());
+            Debug.Log("Interaction text updated: " + currentInteractable.GetInteractText());
 
             var highlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
             if (highlightEffect != null)
             {
                 highlightEffect.highlighted = true;
             }
+            else
+            {
+                Debug.LogWarning("No HighlightEffect component found on object: " + currentInteractGameObject.name);
+            }
         }
+
 
 
         public void OnInteractInput(InputAction.CallbackContext context)
         {
+            Debug.Log("Current interactable: " + currentInteractable);
             if (context.phase == InputActionPhase.Canceled && currentInteractable != null)
             {
                 currentInteractable.OnInteract(); 
@@ -114,14 +127,12 @@ namespace LPSurvivalEngine
                 interact.gameObject.SetActive(false);
             }
         }
-
     }
+
+}
 
     public interface IInteractable
 {
     string GetInteractText();   
     void OnInteract();
-}
-
-
 }

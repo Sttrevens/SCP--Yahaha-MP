@@ -12,12 +12,12 @@ namespace LPSurvivalEngine
 
         public void OnRespawnButtonShowcase()
         {
-            SceneManager.LoadScene("Showcase");
+            SceneManager.LoadScene(showCaseScene);
         }
 
         public void OnRespawnButtonDemo()
         {
-            SceneManager.LoadScene("Demo");
+            SceneManager.LoadScene(demoScene);
         }
     }
 }
