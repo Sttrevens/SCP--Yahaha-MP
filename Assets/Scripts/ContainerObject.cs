@@ -6,20 +6,24 @@ namespace LPSurvivalEngine
 {
     public class ContainerObject : MonoBehaviour, IInteractable
     {
-        [Space]
-        [Header("Container")]
-        [Space]
-
         public ItemDatabase[] itemsInContainer;
 
         public string objectDisplayName;
 
         private ContainerInventory inventory;
+        private bool isInitialized = false;
 
-        private void Start()
+        private void Awake()
         {
-            inventory = FindObjectOfType<ContainerInventory>(true);
+            inventory = GetComponent<ContainerInventory>();
+            
+            // 如果没有挂载，则自动添加 ContainerInventory 组件
+            if (inventory == null)
+            {
+                inventory = gameObject.AddComponent<ContainerInventory>();
+            }
         }
+        
 
         public string GetInteractText()
         {
@@ -28,16 +32,18 @@ namespace LPSurvivalEngine
 
         public void OnInteract()
         {
-            if (itemsInContainer != null)
+            if (!isInitialized && itemsInContainer != null)
             {
                 foreach (var item in itemsInContainer)
                 {
                     inventory.AddItemToContainer(item);
                 }
-                Inventory.instance.InteractWithContainer();
-                GetInteractText();
             }
 
+            Inventory.instance.InteractWithContainer(inventory);
+            GetInteractText();
+
+            isInitialized = true;
         }
 
 

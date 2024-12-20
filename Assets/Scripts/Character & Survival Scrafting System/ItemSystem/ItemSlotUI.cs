@@ -10,12 +10,11 @@ namespace LPSurvivalEngine
 {
    public class ItemSlotUI : MonoBehaviour
    {
-      [Header("ItemInSlot")]
+
       public Image icon; //物品的贴图
       public TextMeshProUGUI quantityText;  //物品的数量
-
       
-      [HideInInspector]
+
       public int index;
       [HideInInspector]
       public bool equipped;
@@ -30,7 +29,7 @@ namespace LPSurvivalEngine
          currentslot = slot;
          icon.gameObject.SetActive(true);
          icon.sprite = currentslot.item.icon;
- 
+         Debug.Log(currentslot.item.name + slot.quantity);
 
          quantityText.text = slot.quantity > 1 ? slot.quantity.ToString() : string.Empty;   
       }
@@ -41,6 +40,19 @@ namespace LPSurvivalEngine
          currentslot = null;
          icon.gameObject.SetActive(false);
          quantityText.text = string.Empty;
+      }
+
+      public void OnButtonClick()
+      {
+         Debug.Log("Click Button!");
+         if(gameObject.transform.parent.CompareTag("Bag"))
+         {
+            Inventory.instance.TransferItemToContainer(index);
+         }
+         else
+         {
+            Inventory.instance.TransferItemToInventory(index);
+         }
       }
       
    }
