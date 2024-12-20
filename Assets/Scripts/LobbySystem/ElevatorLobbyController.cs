@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class ElevatorLobbyController : MonoBehaviour
 {
@@ -15,7 +16,14 @@ public class ElevatorLobbyController : MonoBehaviour
     [SerializeField] private GameObject producerListScene;
 
     [Header("Elevator Elements")]
+    [SerializeField] private Transform elevatorTransform; // 电梯 Transform
     [SerializeField] private Animation DoorsAnim;
+    [HideInInspector][SerializeField] private bool isOpen = false;
+
+    [Header("Elevator Shake Settings")]
+    [SerializeField] private AnimationCurve shakeCurve; // 控制震动幅度
+    [SerializeField] private float shakeDuration = 0.5f; // 震动持续时间
+    [SerializeField] private float shakeMagnitude = 0.1f; // 震动幅度
 
     private GameObject currentScene;
 
@@ -36,15 +44,9 @@ public class ElevatorLobbyController : MonoBehaviour
 
     private IEnumerator HandleSceneChange(string action)
     {
-        // Fade to black
-        yield return StartCoroutine(FadeToBlack());
+        // Trigger elevator shaking effect
+        yield return StartCoroutine(ShakeElevatorPerlin());
 
-        DoorsAnim [DoorsAnim.clip.name].normalizedTime = 0;
-        DoorsAnim [DoorsAnim.clip.name].speed = 1;
-        DoorsAnim.Play();
-
-        // Wait for door animation to finish (assuming 1 second for demo)
-        yield return new WaitForSeconds(1f);
 
         // Disable current scene
         if (currentScene != null)
@@ -77,9 +79,84 @@ public class ElevatorLobbyController : MonoBehaviour
             currentScene.SetActive(true);
         }
 
-        // Fade back in
-        yield return StartCoroutine(FadeFromBlack());
+        OpenElevator();
+        
     }
+
+    public void OpenElevator()
+    {
+        StartCoroutine(OpenElevatorDoors());
+    }
+
+    public IEnumerator OpenElevatorDoors()
+    {
+        if (isOpen != true)
+        {
+            // Wait for door animation to play
+            yield return new WaitForSeconds(1f);
+            DoorsAnim[DoorsAnim.clip.name].normalizedTime = 0;
+            DoorsAnim[DoorsAnim.clip.name].speed = 1;
+            DoorsAnim.Play();
+            isOpen = true;
+
+            FindFirstObjectByType<TitleScreenUI>().HandleButtonClick("Initializing...");
+
+            if (DoorsAnim[DoorsAnim.clip.name].speed > 0)
+            {
+                Invoke("DoorsClosing", 5f);
+            }
+        }
+    }
+
+    void DoorsClosing()
+    {
+        if (isOpen)
+        {
+            DoorsAnim[DoorsAnim.clip.name].normalizedTime = 1;
+            DoorsAnim[DoorsAnim.clip.name].speed = -1;
+            DoorsAnim.Play();
+
+            isOpen = false;
+
+            FindFirstObjectByType<TitleScreenUI>().ResetUI();
+        }
+        }
+
+        private IEnumerator ShakeElevatorCurve()
+    {
+        Vector3 originalPosition = elevatorTransform.localPosition;
+        float elapsed = 0f;
+
+        while (elapsed < shakeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float strength = shakeCurve.Evaluate(elapsed / shakeDuration) * shakeMagnitude;
+            elevatorTransform.localPosition = originalPosition + Random.insideUnitSphere * strength;
+            yield return null;
+        }
+
+        // Restore original position
+        elevatorTransform.localPosition = originalPosition;
+    }
+
+    private IEnumerator ShakeElevatorPerlin()
+    {
+        Vector3 originalPosition = elevatorTransform.localPosition;
+        float elapsed = 0f;
+
+        while (elapsed < shakeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float strength = (1f - (elapsed / shakeDuration)) * shakeMagnitude; // 随时间衰减
+            float xOffset = Mathf.PerlinNoise(Time.time * 50f, 0f) * 2f - 1f; // 横向随机
+            float yOffset = Mathf.PerlinNoise(0f, Time.time * 50f) * 2f - 1f; // 纵向随机
+            elevatorTransform.localPosition = originalPosition + new Vector3(xOffset, yOffset, 0f) * strength;
+            yield return null;
+        }
+
+        elevatorTransform.localPosition = originalPosition; // 复位
+    }
+
 
     private IEnumerator FadeToBlack()
     {
