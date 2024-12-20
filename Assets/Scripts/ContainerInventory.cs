@@ -7,33 +7,82 @@ namespace LPSurvivalEngine
 {
     public class ContainerInventory : MonoBehaviour
     {
-        public ItemSlot[] containerSlots; // Ïä×ÓÖÐµÄÎïÆ·²Û
+        public ItemSlot[] containerSlots; // ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½Æ·ï¿½ï¿½
+
 
         private void Start()
         {
-            containerSlots = new ItemSlot[10]; // ÀýÈç£¬Ïä×Ó×î¶àÓÐ10¸ö²ÛÎ»
+            containerSlots = new ItemSlot[9]; // ï¿½ï¿½ï¿½ç£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½10ï¿½ï¿½ï¿½ï¿½Î»
             for (int i = 0; i < containerSlots.Length; i++)
             {
                 containerSlots[i] = new ItemSlot();
+                
             }
         }
 
-        // Ìí¼ÓÎïÆ·µ½Ïä×Ó
-        public bool AddItemToContainer(ItemDatabase item)
+        public void AddItemToContainer(ItemDatabase item)
         {
-            for (int i = 0; i < containerSlots.Length; i++)
+            if (item.canStackItem)
             {
-                if (containerSlots[i].item == null)
+                ItemSlot slotToStackTo = GetItemstack(item);
+
+                if (slotToStackTo != null)
                 {
-                    containerSlots[i].item = item;
-                    containerSlots[i].quantity = 1;
-                    return true;
+                    slotToStackTo.quantity++;
+                    //Debug.Log(slotToStackTo.item.name + slotToStackTo.quantity);
+                    return;
                 }
             }
-            return false; // Ïä×ÓÒÑÂú
+
+            ItemSlot emptySlot = GetEmptySlot();
+            if (emptySlot != null) //å¦‚æžœæœ‰ç©ºä½
+            {
+                emptySlot.item = item;
+                emptySlot.quantity = 1;
+                return;
+            }
         }
 
-        // ´ÓÏä×ÓÖÐÒÆ³ýÎïÆ·
+        // public bool AddItemToContainer(ItemDatabase item)
+        // {
+        //     for (int i = 0; i < containerSlots.Length; i++)
+        //     {
+        //         if (containerSlots[i].item == null)
+        //         {
+        //             containerSlots[i].item = item;
+        //             containerSlots[i].quantity = 1;
+        //             return true;
+        //         }
+        //     }
+        //     return false; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // }
+
+         ItemSlot GetItemstack(ItemDatabase item) 
+        {
+            for (int x = 0; x < containerSlots.Length; x++)
+            {
+                if (containerSlots[x].item == item && containerSlots[x].quantity < item.maxStackamount)
+                {
+                    return containerSlots[x];
+                }
+            }
+            return null;
+        }
+
+
+        ItemSlot GetEmptySlot()
+        {
+            for (int x = 0; x < containerSlots.Length; x++)
+            {
+                if (containerSlots[x].item == null)
+                {
+                    return containerSlots[x];
+                }
+            }
+            return null;
+        }
+
+
         public void RemoveItemFromContainer(int index)
         {
             if (containerSlots[index].item != null)
