@@ -30,18 +30,13 @@ public class AnimationTrigger : MonoBehaviour
 
     public void TriggerAnimatoin()
     {
-        StartCoroutine(TriggeringAnimation());
-    }
-
-    public IEnumerator TriggeringAnimation()
-    {
+        Debug.Log("Hehe");
         if (isOpen != true)
         {
-            // Wait for door animation to play
-            yield return new WaitForSeconds(1f);
             anim[anim.clip.name].normalizedTime = 0;
             anim[anim.clip.name].speed = 1;
             anim.Play();
+            Debug.Log("Stone");
             isOpen = true;
 
             if (anim[anim.clip.name].speed > 0 && willAutoClose)
