@@ -2,6 +2,7 @@ using DestroyIt;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -195,11 +196,13 @@ public class EnemyAI : MonoBehaviour
     private void OnEnable()
     {
         FallingLogic.OnFallingAnimationStarted += OnFallingAnimationStartedHandler;
+        OnGround.OnGroundAnimationStarted += OnGroundAnimationStartedHandler;
     }
 
     private void OnDisable()
     {
         FallingLogic.OnFallingAnimationStarted -= OnFallingAnimationStartedHandler;
+        OnGround.OnGroundAnimationStarted -= OnGroundAnimationStartedHandler;
     }
 
     private void OnFallingAnimationStartedHandler(GameObject triggeredObject)
@@ -207,6 +210,14 @@ public class EnemyAI : MonoBehaviour
         if (triggeredObject == animator.gameObject)
         {
             HandleDeath();
+        }
+    }
+
+    private void OnGroundAnimationStartedHandler(GameObject triggeredObject)
+    {
+        if (triggeredObject == animator.gameObject)
+        {
+            EnableChopped();
         }
     }
 
@@ -224,6 +235,22 @@ public class EnemyAI : MonoBehaviour
             rb.useGravity = true;
             rb.constraints = RigidbodyConstraints.None;
         }
+    }
+
+    private void EnableChopped()
+    {
+
+                Destructible destructible = gameObject.AddComponent<Destructible>();
+                gameObject.AddComponent<DropItem>();
+
+                destructible.TotalHitPoints = 50f;
+                destructible.CurrentHitPoints = destructible.TotalHitPoints;
+
+        if (GetComponent<ChoppedItems>() != null && GetComponent<ChoppedItems>().destroyParticles != null)
+        {
+            destructible.destroyedPrefab = GetComponent<ChoppedItems>().destroyParticles;
+        }
+            
     }
 
     public void Idle()
