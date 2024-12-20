@@ -2,34 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace LPSurvivalEngine
 {
     public class PlayerController : MonoBehaviour
     {
-        public static PlayerController instance{get;private set;}
-        [Header("Player Controller")]
+        public static PlayerController instance { get; private set; }
 
+        [Header("Player Controller")]
         [SerializeField] private float jumpForce = 50f;
 
-
         [Header("Camera System")]
-
         [SerializeField] private Transform CameraRoot;
         [SerializeField] private Transform Camera;
-
 
         [SerializeField] private float UpperLimit = -40f;
         [SerializeField] private float BottomLimit = 70f;
         [SerializeField] private float MouseSensitivity = 1f;
 
         [Header("Player Settings")]
-
         [SerializeField] private float DistanceGround = 0.8f;
-
-
         [SerializeField] private LayerMask GroundCheck;
-
 
         private float AnimBlendSpeed = 12f;
         private Rigidbody rig;
@@ -51,16 +45,23 @@ namespace LPSurvivalEngine
 
         private bool isAttacking = false;
 
+        // 新增：用于记录下蹲状态
+        private bool isCrouching = false;
+        // 新增：下蹲时摄像机下移的距离
+        private float crouchCameraOffset = 0.5f;
+        // 新增：下蹲时的移动速度系数，这里设置为0.5表示速度变慢一倍
+        private float crouchSpeedModifier = 0.5f;
+
         private void Awake()
         {
-        if (instance == null)
+            if (instance == null)
             {
                 instance = this;
                 DontDestroyOnLoad(this);
             }
             else
             {
-                Destroy(gameObject); 
+                Destroy(gameObject);
             }
         }
 
@@ -90,13 +91,14 @@ namespace LPSurvivalEngine
             Grounding();
             Movement();
             Jumping();
+            // 新增：处理下蹲逻辑
+            Crouching();
         }
 
         private void LateUpdate()
         {
             if (cursor == true)
             {
-
                 CamMovements();
             }
         }
@@ -105,7 +107,8 @@ namespace LPSurvivalEngine
         {
             if (!hasAnimator) return;
 
-            float targetSpeed = inputManager.Run ? runSpeed : walkSpeed;
+            // 新增：根据下蹲状态调整目标速度
+            float targetSpeed = isCrouching ? runSpeed * crouchSpeedModifier : (inputManager.Run ? runSpeed : walkSpeed);
             if (inputManager.Move == Vector2.zero) targetSpeed = 0;
 
             currentVelocity.x = Mathf.Lerp(currentVelocity.x, inputManager.Move.x * targetSpeed, AnimBlendSpeed * Time.fixedDeltaTime);
@@ -128,7 +131,8 @@ namespace LPSurvivalEngine
             var MouseY = inputManager.Look.y;
             if (!isAttacking)
             {
-                Camera.position = CameraRoot.position;
+                // 新增：根据下蹲状态调整摄像机位置
+                Camera.position = CameraRoot.position + (isCrouching ? Vector3.down * crouchCameraOffset : Vector3.zero);
             }
 
             xRotation -= MouseY * MouseSensitivity * Time.smoothDeltaTime;
@@ -173,11 +177,23 @@ namespace LPSurvivalEngine
             animator.SetBool(grounding, grounded);
         }
 
-        // ����Ƿ��ڹ���������
+        // 判断是否正在攻击
         public void SetIsAttacking(bool isAttacking)
         {
             this.isAttacking = isAttacking;
         }
-    }
 
+        // 新增：处理下蹲的方法
+        private void Crouching()
+        {
+            if (inputManager.Crouch)
+            {
+                isCrouching = true;
+            }
+            else
+            {
+                isCrouching = false;
+            }
+        }
+    }
 }
