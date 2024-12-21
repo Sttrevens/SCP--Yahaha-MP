@@ -38,7 +38,7 @@ namespace LPSurvivalEngine
         private int selectedItemIndex;
         private PlayerController playerController;
         private HealthSystem vitals;
-        private ItemSlot selectedItem;
+        [HideInInspector]public ItemSlot selectedItem;
         private int currentWieldableIndex;
 
 

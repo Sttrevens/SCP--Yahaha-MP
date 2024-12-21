@@ -217,7 +217,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (triggeredObject == animator.gameObject)
         {
-            EnableChopped();
+            //EnableChopped();
         }
     }
 

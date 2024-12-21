@@ -120,7 +120,13 @@ namespace LPSurvivalEngine
             Debug.Log("Current interactable: " + currentInteractable);
             if (context.phase == InputActionPhase.Canceled && currentInteractable != null)
             {
-                currentInteractable.OnInteract(); 
+                var cookingSystem = currentInteractGameObject.GetComponent<CookingSystem>();
+                if (cookingSystem != null)
+                {
+                    cookingSystem.SetPlayer(this.gameObject);
+                }
+
+                currentInteractable.OnInteract();
 
                 currentInteractGameObject = null;
                 currentInteractable = null;

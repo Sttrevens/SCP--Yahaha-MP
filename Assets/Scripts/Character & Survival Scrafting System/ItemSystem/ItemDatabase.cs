@@ -51,6 +51,8 @@ namespace LPSurvivalEngine
     [Space]
 
     public ItemDataConsumable[] consumables;
+        public bool canBeCooked;
+        public ItemDatabase cookedItem;
 
     [Space]
     [Header("Wieldable")]
