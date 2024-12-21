@@ -47,7 +47,7 @@ public class TitleScreenUI : MonoBehaviour
     /// 处理按钮点击逻辑
     /// </summary>
     /// <param name="displayText">需要显示的文字</param>
-    private void HandleButtonClick(string displayText)
+    public void HandleButtonClick(string displayText)
     {
         HideAllButtons(); // 隐藏所有按钮
         ShowText(displayText); // 显示对应文字
@@ -70,4 +70,8 @@ public class TitleScreenUI : MonoBehaviour
         tmpText.text = displayText; // 设置 TMP 文字
         tmpText.gameObject.SetActive(true); // 显示 TMP 对象
     }
+
+    public void ResetUI()
+    { tmpText.gameObject.SetActive(false);
+    buttonsParent.SetActive(true);}
 }

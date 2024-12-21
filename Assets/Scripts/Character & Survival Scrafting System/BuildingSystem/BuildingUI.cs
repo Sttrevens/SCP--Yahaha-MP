@@ -59,7 +59,7 @@ namespace LPSurvivalEngine
                 resourceCosts[x].gameObject.SetActive(true);
                 resourceCosts[x].sprite = building.cost[x].item.icon;
                 resourceCosts[x].transform.GetComponentInChildren<TextMeshProUGUI>().text =
-                    building.cost[x].quantity.ToString();
+                building.cost[x].quantity.ToString();
             }
             else
             {

@@ -15,31 +15,21 @@ namespace LPSurvivalEngine
     {
         public static Inventory instance{get;private set;}
 
-        public GameObject bagPanel; //包含物品槽的背包父物体
-        private ItemSlotUI[] InventorySlots;
-        public ItemSlot[] slots;
-
 
         [Header("Assignments")]
-        public GameObject inventoryWindow;
-        public GameObject containerUIWindow;
+        public GameObject inventoryWindow; //菜单界面(InventoryCanvas)
+        public GameObject bagPanel; //背包面板（QuickSlot)
+        [HideInInspector] public ItemSlot[] slots;
+        private ItemSlotUI[] InventorySlots;
+
+        public GameObject containerUIWindow; //容器界面（ContainerCanvas)
+        public GameObject containerPanel; //容器面板（ContainerPanel)
+        private ItemSlotUI[] containerSlots;
+        private ContainerInventory currentContainerInventory;
+
         public Transform dropPosition;
 
-        // [Space]
-        // [Header("UI")]
-        // [Space]
-        // [Header("Texts")]
-        // public TextMeshProUGUI selectedItemName;
-        // public TextMeshProUGUI selectedItemDescription;
 
-        // [Space]
-        // [Header("Buttons")]
-        // public GameObject useButton;
-        // public GameObject equipButton;
-        // public GameObject dropItemButton;
-        // public GameObject dropButton;
-
-        [Space]
         [Header("Events")]
         public UnityEvent onOpenInventory;
         public UnityEvent onCloseInventory;
@@ -49,11 +39,8 @@ namespace LPSurvivalEngine
         private PlayerController playerController;
         private HealthSystem vitals;
         private ItemSlot selectedItem;
-
-
-        public ContainerInventory containerInventory;
         private int currentWieldableIndex;
-        public ItemSlotUI[] containerSlots;// UI���ڣ���ʾ���Ӻͱ�������Ʒ
+
 
         private void Awake()
         {
@@ -72,6 +59,7 @@ namespace LPSurvivalEngine
         {
             inventoryWindow.SetActive(false);
             InventorySlots = bagPanel.GetComponentsInChildren<ItemSlotUI>();
+            containerSlots = containerPanel.GetComponentsInChildren<ItemSlotUI>();
 
             slots = new ItemSlot[InventorySlots.Length];
 
@@ -98,6 +86,8 @@ namespace LPSurvivalEngine
 
         public void Toggle()
         {
+            //TODO:关闭Bag面板的交互
+            bagPanel.GetComponent<CanvasGroup>().interactable = false;
             if (inventoryWindow.activeInHierarchy)
             {
                 inventoryWindow.SetActive(false);
@@ -313,14 +303,16 @@ namespace LPSurvivalEngine
             }
         }
 
-        public void InteractWithContainer()
+        public void InteractWithContainer(ContainerInventory containerInventory)
         {
-            containerUIWindow.SetActive(true);  // ��ʾ���ӵ�UI����
-            UpdateContainerUI();  // ����UI����ʾ���Ӻͱ����е���Ʒ
+            currentContainerInventory = containerInventory;
+            containerUIWindow.SetActive(true);  
+            UpdateContainerUI();  
             playerController.ToggleCursor(true);
+            //TODO:打开Bag面板的交互
+            bagPanel.GetComponent<CanvasGroup>().interactable = true;
         }
 
-        // �������Ӻͱ�����UI
         public void UpdateContainerUI()
         {
             // ���±�������Ʒ��
@@ -337,17 +329,17 @@ namespace LPSurvivalEngine
             }
 
             // �������ӵ���Ʒ��
-            for (int i = 0; i < containerInventory.containerSlots.Length; i++)
+            for (int i = 0; i < currentContainerInventory.containerSlots.Length; i++)
             {
-                if (containerInventory.containerSlots[i].item != null)
+                if (currentContainerInventory.containerSlots[i].item != null)
                 {
                     // ��������һ�������ڱ�����λUI�������������ʾ�����е���Ʒ
-                    containerSlots[i].Set(containerInventory.containerSlots[i]);
+                    containerSlots[i].Set(currentContainerInventory.containerSlots[i]);
                 }
-                /*else
+                else
                 {
                     containerSlots[i].Clear();
-                }*/
+                }
             }
         }
 
@@ -357,36 +349,30 @@ namespace LPSurvivalEngine
             ItemSlot inventorySlot = slots[inventoryIndex];
             if (inventorySlot.item != null)
             {
-                for (int i = 0; i < containerInventory.containerSlots.Length; i++)
+                currentContainerInventory.AddItemToContainer(inventorySlot.item);
+                inventorySlot.quantity--;
+                if(inventorySlot.quantity==0)
                 {
-                    if (containerInventory.containerSlots[i].item == null)
-                    {
-                        containerInventory.containerSlots[i].item = inventorySlot.item;
-                        containerInventory.containerSlots[i].quantity = inventorySlot.quantity;
-                        inventorySlot.item = null;
-                        inventorySlot.quantity = 0;
-                        UpdateContainerUI();
-                        return;
-                    }
+                    inventorySlot.item = null;
                 }
+                UpdateContainerUI();
             }
         }
 
         // ����Ʒ������ת�Ƶ�����
         public void TransferItemToInventory(int containerIndex)
         {
-            ItemSlot containerSlot = containerInventory.containerSlots[containerIndex];
+            ItemSlot containerSlot = currentContainerInventory.containerSlots[containerIndex];
             if (containerSlot.item != null)
             {
-                ItemSlot emptySlot = GetEmptySlot();
-                if (emptySlot != null)
+                AddItem(containerSlot.item);
+                containerSlot.quantity--;
+                if(containerSlot.quantity==0)
                 {
-                    emptySlot.item = containerSlot.item;
-                    emptySlot.quantity = containerSlot.quantity;
                     containerSlot.item = null;
-                    containerSlot.quantity = 0;
-                    UpdateContainerUI();
                 }
+                
+                UpdateContainerUI();
             }
         }
 

@@ -17,7 +17,10 @@ namespace LPSurvivalEngine
 
     private void Start()
     {
-        craftingSystem = FindObjectOfType<CraftingSystem>(true);
+            if (craftingSystem == null)
+            {
+                craftingSystem = FindObjectOfType<CraftingSystem>(true);
+            }
         player = FindObjectOfType<PlayerController>();
     }
 
