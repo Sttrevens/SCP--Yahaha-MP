@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1806341704841127039
+--- !u!1 &4693495492951217074
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1322574608334274245}
-  - component: {fileID: 2735199053145452896}
-  - component: {fileID: 149065489982211498}
-  - component: {fileID: 3139781793185471536}
-  - component: {fileID: 149065489982211492}
-  - component: {fileID: 149065489982211499}
-  - component: {fileID: -3944001783464759583}
+  - component: {fileID: 5598134632830144970}
+  - component: {fileID: 503248890413427165}
+  - component: {fileID: 6612494384460410728}
+  - component: {fileID: 7535803130855173259}
+  - component: {fileID: 2179483252829127864}
+  - component: {fileID: 6519892578256527985}
+  - component: {fileID: 7698335427483524206}
   m_Layer: 6
-  m_Name: Cloth
+  m_Name: Bandage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1322574608334274245
+--- !u!4 &5598134632830144970
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806341704841127039}
+  m_GameObject: {fileID: 4693495492951217074}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 50.369102, y: 0.2724108, z: -2.614653}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2735199053145452896
+--- !u!33 &503248890413427165
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806341704841127039}
-  m_Mesh: {fileID: 4286629685936305366, guid: ad7fe6ebccdd96e46bf556bc646dd589, type: 3}
---- !u!23 &149065489982211498
+  m_GameObject: {fileID: 4693495492951217074}
+  m_Mesh: {fileID: -2842683310417224088, guid: 69de5cf452d7f1643814adf0febb69f0, type: 3}
+--- !u!23 &6612494384460410728
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806341704841127039}
+  m_GameObject: {fileID: 4693495492951217074}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 939e727662b0a5a4db486ca847ce6434, type: 2}
+  - {fileID: 3758952881610933197, guid: 38f82ad29e15fa14fb7b56de84cd7dc2, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,13 +87,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3139781793185471536
+--- !u!64 &7535803130855173259
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806341704841127039}
+  m_GameObject: {fileID: 4693495492951217074}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -108,16 +108,16 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4286629685936305366, guid: ad7fe6ebccdd96e46bf556bc646dd589, type: 3}
---- !u!54 &149065489982211492
+  m_Mesh: {fileID: -2842683310417224088, guid: 69de5cf452d7f1643814adf0febb69f0, type: 3}
+--- !u!54 &2179483252829127864
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806341704841127039}
+  m_GameObject: {fileID: 4693495492951217074}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 600
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -135,27 +135,27 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &149065489982211499
+  m_CollisionDetection: 1
+--- !u!114 &6519892578256527985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806341704841127039}
+  m_GameObject: {fileID: 4693495492951217074}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: e3fdc3434cf5545c99f1df15f7eb188c, type: 2}
---- !u!114 &-3944001783464759583
+  item: {fileID: 11400000, guid: 91e55b0e3ff8bc244a1c44bc844f484a, type: 2}
+--- !u!114 &7698335427483524206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806341704841127039}
+  m_GameObject: {fileID: 4693495492951217074}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
@@ -197,9 +197,9 @@ MonoBehaviour:
   overlayBlending: 1
   overlayTexture: {fileID: 0}
   overlayTextureScale: 1
-  outline: 1
-  outlineColor: {r: 0.047059536, g: 0, b: 1, a: 1}
-  outlineWidth: 0.45
+  outline: 0.5
+  outlineColor: {r: 0.00019741058, g: 0, b: 1, a: 1}
+  outlineWidth: 1.5
   outlineQuality: 1
   outlineDownsampling: 2
   outlineVisibility: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
   outlineBlitDebug: 0
   outlineIndependent: 0
   glow: 0
-  glowWidth: 0.4
+  glowWidth: 0.5
   glowQuality: 1
   glowDownsampling: 2
   glowHQColor: {r: 0.64, g: 1, b: 0, a: 1}
@@ -220,7 +220,19 @@ MonoBehaviour:
   glowOptimalBlit: 1
   glowBlitDebug: 0
   glowBlendPasses: 1
-  glowPasses: []
+  glowPasses:
+  - offset: 4
+    alpha: 0.1
+    color: {r: 0.64, g: 1, b: 0, a: 1}
+  - offset: 3
+    alpha: 0.2
+    color: {r: 0.64, g: 1, b: 0, a: 1}
+  - offset: 2
+    alpha: 0.3
+    color: {r: 0.64, g: 1, b: 0, a: 1}
+  - offset: 1
+    alpha: 0.4
+    color: {r: 0.64, g: 1, b: 0, a: 1}
   glowIgnoreMask: 0
   innerGlow: 0
   innerGlowWidth: 1
@@ -233,10 +245,10 @@ MonoBehaviour:
   targetFXRotationSpeed: 50
   targetFXInitialScale: 4
   targetFXEndScale: 1.5
-  targetFXScaleToRenderBounds: 1
+  targetFXScaleToRenderBounds: 0
   targetFXAlignToGround: 0
   targetFXFadePower: 32
-  targetFXGroundMaxDistance: 10
+  targetFXGroundMaxDistance: 15
   targetFXGroundLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -247,7 +259,7 @@ MonoBehaviour:
   seeThroughOccluderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  seeThroughOccluderThreshold: 0.3
+  seeThroughOccluderThreshold: 0.4
   seeThroughOccluderMaskAccurate: 0
   seeThroughOccluderCheckInterval: 1
   seeThroughOccluderCheckIndividualObjects: 0
@@ -261,8 +273,8 @@ MonoBehaviour:
   seeThroughBorderColor: {r: 0, g: 0, b: 0, a: 1}
   seeThroughBorderOnly: 0
   seeThroughBorderWidth: 0.45
-  seeThroughOrdered: 0
-  rmsCount: 0
+  seeThroughOrdered: 1
+  rmsCount: 1
   hitFxInitialIntensity: 0
   hitFxMode: 0
   hitFxFadeOutDuration: 0.25

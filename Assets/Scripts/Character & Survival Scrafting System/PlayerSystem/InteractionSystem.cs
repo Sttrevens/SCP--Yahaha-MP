@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace LPSurvivalEngine
 {
@@ -41,6 +42,10 @@ namespace LPSurvivalEngine
 
         public PlayerInput PlayerInput;
         private InputAction interactAction;
+
+        public Image crosshairImage;
+        public Sprite knifeIcon;
+        private Sprite crosshairOriginalIcon;
         private void Start()
         {
             cam = Camera.main;
@@ -48,6 +53,8 @@ namespace LPSurvivalEngine
             if (PlayerInput != null) {
                 interactAction = PlayerInput.actions.FindAction("Interact");
             }
+
+            crosshairOriginalIcon = crosshairImage.sprite;
         }
 
         private void Update()
@@ -94,6 +101,18 @@ namespace LPSurvivalEngine
                     currentInteractable = null;
                     interact.gameObject.SetActive(false);
                 }
+
+                if (Physics.Raycast(ray, out hit, maxCheckDistance))
+                {
+                    if (hit.collider.gameObject.GetComponent<ChoppedItems>() != null)
+                    {
+                        if (hit.collider.gameObject.GetComponent<ChoppedItems>().canBeChopped)
+                        {
+                            crosshairImage.sprite = knifeIcon;
+                        }
+                    }
+                }
+                else { crosshairImage.sprite = crosshairOriginalIcon; }
             }
 
             if (currentInteractGameObject != null)

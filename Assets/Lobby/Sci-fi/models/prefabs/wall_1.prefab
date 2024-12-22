@@ -12,12 +12,14 @@ GameObject:
   - component: {fileID: 33641099228200084}
   - component: {fileID: 23612634898196426}
   - component: {fileID: -6229338723439147158}
+  - component: {fileID: 8614649181373236423}
+  - component: {fileID: 5873371022317030772}
   m_Layer: 0
   m_Name: wall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4833761392833730
 Transform:
@@ -110,6 +112,44 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300016, guid: c3e97571ad4de8d478eb8cef7217d14e, type: 3}
+--- !u!114 &8614649181373236423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249779064698972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce5bf1bb224f06240abfdc6ff797d9e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOpen: 0
+  anim: {fileID: 5873371022317030772}
+  willAutoClose: 1
+  autoCloseTime: 5
+  onDoorOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  onDoorClosed:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!111 &5873371022317030772
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249779064698972}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 31c71c3f3efe80a41802a798f37ac283, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 31c71c3f3efe80a41802a798f37ac283, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1767186573239176
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +166,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4439584424728082
 Transform:
@@ -212,7 +252,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4615119240711530
 Transform:
@@ -416,7 +456,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4014203729173378
 Transform:

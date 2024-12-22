@@ -205,7 +205,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyParticles: {fileID: 7405388685258001045, guid: 63b27c7af5bf920478df24fe35614b8a, type: 3}
-  dropItems: []
+  maxFuckability: 50
+  currentFuckability: 0
+  itemsToDrop:
+  - {fileID: 8804018380547966930, guid: e4ab941d0c5467043875649033121aec, type: 3}
+  - {fileID: 8804018380547966930, guid: e4ab941d0c5467043875649033121aec, type: 3}
+  - {fileID: 8804018380547966930, guid: e4ab941d0c5467043875649033121aec, type: 3}
+  - {fileID: 8804018380547966930, guid: e4ab941d0c5467043875649033121aec, type: 3}
+  - {fileID: 8804018380547966930, guid: e4ab941d0c5467043875649033121aec, type: 3}
+  dropOffset: {x: 0, y: 0, z: 0}
+  randomizeDropPosition: 1
+  randomizeDropRotation: 1
+  minDropForce: 0.5
+  maxDropForce: 1
+  spreadFactor: 1
+  dropProbability: 0.5
 --- !u!1 &962269116399748618
 GameObject:
   m_ObjectHideFlags: 0

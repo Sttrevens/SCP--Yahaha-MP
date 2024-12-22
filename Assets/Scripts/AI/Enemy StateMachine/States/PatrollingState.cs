@@ -11,7 +11,8 @@ public class PatrollingState : EnemyBaseState
         enemy.agent.speed = enemy.patrollingSpeed;
        
         patrolLoop = enemy.StartCoroutine(PatrolLoop(enemy));
-        enemy.PlayAnimation("IsPatrolling", true);
+        if (enemy.animator != null)
+            enemy.PlayAnimation("IsPatrolling", true);
     }
 
     public override void UpdateState(EnemyAI enemy)

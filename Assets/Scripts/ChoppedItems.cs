@@ -8,6 +8,8 @@ public class ChoppedItems : MonoBehaviour
 {
     public GameObject destroyParticles;
 
+    public bool canBeChopped = false;
+
     [SerializeField] private int maxFuckability = 50;
     [SerializeField] private int currentFuckability;
 
@@ -49,6 +51,11 @@ public class ChoppedItems : MonoBehaviour
     private void Update()
     {
         if (currentFuckability <= 0 && !isChopped) { Chopped(); }
+
+        if (GetComponent<EnemyAI>() != null && GetComponent<EnemyAI>().currentState is DeadState)
+        {
+            canBeChopped = true;
+        }
     }
 
     private void Chopped()
@@ -121,7 +128,7 @@ public class ChoppedItems : MonoBehaviour
 
     public void BeingChopped(int damage)
     {
-        if (GetComponent<EnemyAI>() != null && GetComponent<EnemyAI>().currentState is DeadState)
+        if (canBeChopped)
             currentFuckability -= damage;
     }
 }

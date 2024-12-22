@@ -306,7 +306,10 @@ public class EnemyAI : MonoBehaviour
         while (obstacle != null)
         {
             Destructible destructible = obstacle.GetComponent<Destructible>();
-            animator.SetTrigger("Attack");
+            if (animator != null)
+            {
+                animator.SetTrigger("Attack");
+            }
             yield return new WaitForSeconds(1f); 
             destructible.ApplyDamage(attackDamage); 
             yield return new WaitForSeconds(attackInterval); 
@@ -351,14 +354,14 @@ public class EnemyAI : MonoBehaviour
 
     public void PlayAnimation(string animationName, bool isLooping)
     {
-        if (animator != null)
-        {
-            animator.SetBool("IsPatrolling", isLooping && animationName == "FlyStationary");
-            animator.SetBool("IsChasing", isLooping && animationName == "FlyForwardSlow");
-            animator.SetBool("IsIdle", isLooping && animationName == "FlyStationary");
-            animator.SetBool("IsDestroying", !isLooping && animationName == "BiteAttack1");
-            animator.SetBool("IsDead", !isLooping && animationName == "DeathToFalling");
-        }
+        //if (animator != null)
+        //{
+        //    animator.SetBool("IsPatrolling", isLooping && animationName == "FlyStationary");
+        //    animator.SetBool("IsChasing", isLooping && animationName == "FlyForwardSlow");
+        //    animator.SetBool("IsIdle", isLooping && animationName == "FlyStationary");
+        //    animator.SetBool("IsDestroying", !isLooping && animationName == "BiteAttack1");
+        //    animator.SetBool("IsDead", !isLooping && animationName == "DeathToFalling");
+        //}
     }
 
     private void OnDrawGizmos()
