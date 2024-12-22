@@ -10,16 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8e38498b791211488c7ec520c6450a8, type: 3}
-  m_Name: Meat
+  m_Name: Bones
   m_EditorClassIdentifier: 
-  displayName: Meat
-  description: Raw Meat
-  type: 2
+  displayName: Bones
+  description: Be Careful.... They are still moving
+  type: 1
   icon: {fileID: 0}
-  dropPrefab: {fileID: 8352550844526286471, guid: 9ef77cf7efea35a42a84bfe5032f3c94, type: 3}
-  canStackItem: 1
-  maxStackamount: 99
-  consumables:
-  - type: 2
-    value: -30
+  dropPrefab: {fileID: 0}
+  canStackItem: 0
+  maxStackamount: 0
+  consumables: []
   wieldablePrefab: {fileID: 0}
