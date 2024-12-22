@@ -28,8 +28,6 @@ public class CookingSystem : MonoBehaviour, IInteractable
 
     // Whether the cooking process is ongoing
     private bool isCooking = false;
-    // The time needed for cooking
-    private float cookingTime = 5f;
 
     // Whether the food is cooked
     private bool isCooked = false;
@@ -123,7 +121,7 @@ public class CookingSystem : MonoBehaviour, IInteractable
         Debug.Log("Playing the cooking particle effect.");
 
         // Wait for the specified cooking time
-        yield return new WaitForSeconds(cookingTime);
+        yield return new WaitForSeconds(rawFoodItem.cookTime);
         Debug.Log("Cooking time has passed.");
 
         // When cooking is completed, change the state of the food

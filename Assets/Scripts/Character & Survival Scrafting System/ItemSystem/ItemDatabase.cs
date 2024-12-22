@@ -58,6 +58,7 @@ namespace LPSurvivalEngine
 
     public ItemDataConsumable[] consumables;
         public bool canBeCooked;
+        public float cookTime = 20f;
         public ItemDatabase cookedItem;
 
     [Space]
