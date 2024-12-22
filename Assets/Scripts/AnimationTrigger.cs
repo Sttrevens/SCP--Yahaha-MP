@@ -12,8 +12,13 @@ public class AnimationTrigger : MonoBehaviour
     public bool willAutoClose = false;
     public float autoCloseTime = 5f;
 
+    public AudioClip openDoorSound;
+    public AudioClip closeDoorSound;
+
     public UnityEvent onDoorOpened;
     public UnityEvent onDoorClosed;
+
+    private AudioSource AudioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +27,8 @@ public class AnimationTrigger : MonoBehaviour
             {
                 anim = GetComponent<Animation>();
             }
+
+        AudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -61,4 +68,14 @@ public class AnimationTrigger : MonoBehaviour
             onDoorClosed.Invoke();
         }
     }    
+
+    public void PlayOpenDoorSound()
+    {
+        AudioSource.PlayOneShot(openDoorSound);
+    }
+
+    public void PlayCloseDoorSound()
+    {
+        AudioSource.PlayOneShot(closeDoorSound);
+    }
 }

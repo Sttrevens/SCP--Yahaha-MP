@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEngine.PlayerLoop;
 using System;
+using UnityEngine.SceneManagement;
 
 namespace LPSurvivalEngine
 {
@@ -55,6 +56,22 @@ namespace LPSurvivalEngine
             }
         }
 
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            selectedItem = null;
+            Debug.Log("Scene loaded and static variables reset.");
+        }
+
         private void Start()
         {
             inventoryWindow.SetActive(false);
@@ -73,6 +90,16 @@ namespace LPSurvivalEngine
 
             playerController = PlayerController.instance;
             vitals = HealthSystem.instance;
+
+            if (InventorySlots == null || InventorySlots.Length == 0)
+            {
+                Debug.LogError("InventorySlots has not been properly initialized.");
+            }
+
+            if (containerSlots == null || containerSlots.Length == 0)
+            {
+                Debug.LogError("ContainerSlots has not been properly initialized.");
+            }
         }
 
         public void OnInventoryButton(InputAction.CallbackContext context)
@@ -190,18 +217,25 @@ namespace LPSurvivalEngine
             return null;
         }
 
-       
+
         public void SelectItem(int index)
         {
+            Debug.Log("Current Selected Item: " + selectedItem);
             if (slots[index].item == null)
                 return;
 
             selectedItem = slots[index];
             selectedItemIndex = index;
 
-            if (selectedItem.item.type == ItemType.Consumable) Prompt.instance.SlotItemPrompt(selectedItem.item);
-            else if (selectedItem.item.type == ItemType.Wieldable) EquipWieldableItem();
-            else Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
+            if (selectedItem.item != null)
+            {
+                if (selectedItem.item.type == ItemType.Consumable)
+                    Prompt.instance.SlotItemPrompt(selectedItem.item);
+                else if (selectedItem.item.type == ItemType.Wieldable)
+                    EquipWieldableItem();
+                else
+                    Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
+            }
         }
 
         void UseConsumableItem()

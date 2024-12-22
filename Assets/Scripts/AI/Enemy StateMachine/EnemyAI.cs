@@ -54,6 +54,8 @@ public class EnemyAI : MonoBehaviour
     [HideInInspector] public float lastAttackPreDelayTime = 0f;
     [HideInInspector] public GameObject targetPlayer;
 
+    [SerializeField] private bool isFlyingEnemy = false;
+
     public IEnemyState currentState;
 
     private void Awake()
@@ -184,6 +186,10 @@ public class EnemyAI : MonoBehaviour
             currentHealth -= damage;
             if (currentHealth <= 0)
             {
+                if (!isFlyingEnemy)
+                {
+                    HandleDeath();
+                }
                 SwitchState(new DeadState());
             }
             else if (damage >= maxHealth / 6)
