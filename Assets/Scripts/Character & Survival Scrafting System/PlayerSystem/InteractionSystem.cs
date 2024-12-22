@@ -30,17 +30,25 @@ namespace LPSurvivalEngine
     public LayerMask layerMask;
     public GameObject interact;
     public TextMeshProUGUI interactText;
+        public TextMeshProUGUI hintObjectText;
+        public TextMeshProUGUI hintInteractText;
+        public TextMeshProUGUI hintLiftText;
 
 
-    private GameObject currentInteractGameObject;
+        private GameObject currentInteractGameObject;
     private IInteractable currentInteractable;
     private Camera cam;
 
+        public PlayerInput PlayerInput;
+        private InputAction interactAction;
+        private void Start()
+        {
+            cam = Camera.main;
 
-    private void Start()
-    {
-        cam = Camera.main;
-    }
+            if (PlayerInput != null) {
+                interactAction = PlayerInput.actions.FindAction("Interact");
+            }
+        }
 
         private void Update()
         {
@@ -87,6 +95,25 @@ namespace LPSurvivalEngine
                     interact.gameObject.SetActive(false);
                 }
             }
+
+            if (currentInteractGameObject != null)
+            {
+                if (currentInteractGameObject.GetComponent<ItemObject>() != null)
+                {
+                    hintObjectText.text = currentInteractGameObject.GetComponent<ItemObject>().name;
+                    hintInteractText.text = string.Format("Use {0} to pick up", "E");
+                }
+                if (currentInteractGameObject.GetComponent<Rigidbody>() != null)
+                {
+                    hintLiftText.text = string.Format("Hold {0} to lift", "E");
+                }
+            }
+            else
+            {
+                hintObjectText.text = "";
+                hintInteractText.text = "";
+                hintLiftText.text = "";
+            }
         }
 
 
@@ -132,6 +159,22 @@ namespace LPSurvivalEngine
                     vendingMachineController.SetPlayer(this.gameObject);
                 }
 
+                var sleepingBag = currentInteractGameObject.GetComponent<BedLikeController>();
+                if (sleepingBag != null)
+                {
+                    sleepingBag.SetPlayer(this.gameObject);
+                }
+
+                var craftBench = currentInteractGameObject.GetComponent<CraftBench>();
+                if (craftBench != null)
+                {
+                    craftBench.SetPlayer(this.GetComponent<PlayerController>());
+                }
+
+                var watchController = currentInteractGameObject.gameObject.GetComponent<WatchController>();
+                if (watchController != null)
+                {  watchController.SetPlayer(this.gameObject);}
+
                 currentInteractable.OnInteract();
 
                 currentInteractGameObject = null;
@@ -147,4 +190,5 @@ namespace LPSurvivalEngine
 {
     string GetInteractText();   
     void OnInteract();
+    //string GetObjectName();
 }

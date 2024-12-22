@@ -11,7 +11,7 @@ public class VendingMachineController : MonoBehaviour, IInteractable
     [SerializeField] private VendingMachineStuff[] vendingMachineStuffs;
 
     public ItemDatabase dollarItem;
-
+    public Transform stuffOutputPosition;
     private GameObject player;
 
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class VendingMachineController : MonoBehaviour, IInteractable
 
     public string GetInteractText()
     {
-        return "Purchase (2$)(Stock: " + vendingMachineStuffs.Length;
+        return "Purchase (2$)(Stock: " + vendingMachineStuffs.Length + ")";
     }
 
     public void OnInteract()
@@ -45,7 +45,7 @@ public class VendingMachineController : MonoBehaviour, IInteractable
                         if (vendingMachineStuffs != null && vendingMachineStuffs.Length > 0)
                         {
                             GameObject firstStuff = vendingMachineStuffs[0].stuff;
-                            Vector3 spawnPosition = transform.position;
+                            Vector3 spawnPosition = stuffOutputPosition.position;
                             GameObject newObject = Instantiate(firstStuff, spawnPosition, Quaternion.identity);
                             player.GetComponent<Inventory>().slots[i].quantity -= 2;
                             if (player.GetComponent<Inventory>().slots[i].quantity == 0)

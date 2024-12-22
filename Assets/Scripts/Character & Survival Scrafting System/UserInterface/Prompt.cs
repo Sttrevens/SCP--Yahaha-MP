@@ -51,7 +51,7 @@ public class Prompt : MonoBehaviour
         switch(item.type)
         {
             case ItemType.Consumable:
-                text = string.Format("{0} Selected, press {1} to use", item.name, actionAction.bindings[0].ToString());
+                text = string.Format("{0} Selected, press {1} to use", item.name, "Left Mouse");
                 break;
 
             case ItemType.Wieldable:
@@ -59,7 +59,7 @@ public class Prompt : MonoBehaviour
                 break;
 
             default:
-                text = string.Format("{0} Can't be used here! (Press {1} to throw away)", item.name, dropAction.bindings[0].ToDisplayString());
+                text = string.Format("{0} Can't be used here! (Press {1} to throw away)", item.name, "Q");
                 break;
         }
 

@@ -9,7 +9,7 @@ using TMPro;
 
 namespace LPSurvivalEngine
 {
-    public class SleepingBag : Buildings, IInteractable
+    public class BedLikeController : Buildings, IInteractable
     {
     [Space]
     [Header("Sleeping Bag")]
@@ -39,11 +39,7 @@ namespace LPSurvivalEngine
     private Animator anim;
     private InputManager inputManager;
 
-    
-    void Awake()
-    {
-        anim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-    }
+        private GameObject player;
 
     public string GetInteractText()
     {
@@ -52,30 +48,23 @@ namespace LPSurvivalEngine
     
     private void Start()
     {
-        SleepScreen = FindObjectOfType<RawImage>(true);
-        Message = GameObject.FindGameObjectWithTag("Message");
+        SleepScreen = player.GetComponentInChildren<RawImage>(true);
+            //Message = GameObject.FindGameObjectWithTag("Message");
         //MessageText = Message.GetComponent<TextMeshProUGUI>();
     }
 
     public void OnInteract()    
     {
-        if (CanSleep())
-        {
+            anim = player.GetComponent<Animator>();
+
             anim.SetTrigger("Pickup");
 
             SleepScreen.GetComponent<Animation>().Play("sleep");
-            
-            TimeSystem.instance.time = wakupTime;
-           
-            HealthSystem.instance.Sleep(sleepVital);
-        }
 
-        if(!CanSleep())
-        {
-            //MessageText.text = "You can only sleep at night";
-            //Message.SetActive(true);
-            //StartCoroutine(MessageTime());
-        }
+            player.GetComponent<HealthSystem>().Sleep(sleepVital);
+            
+            //TimeSystem.instance.time = wakupTime;
+          
     }
 
     /*IEnumerator MessageTime()
@@ -88,7 +77,12 @@ namespace LPSurvivalEngine
     {
         return TimeSystem.instance.time >= startSleepTime || TimeSystem.instance.time < endSleepTime;
     }
-    
-}
+
+        public void SetPlayer(GameObject player)
+        {
+            this.player = player;
+        }
+
+    }
     
 }

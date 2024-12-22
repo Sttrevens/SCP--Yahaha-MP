@@ -104,7 +104,7 @@ namespace LPSurvivalEngine
 
     public void Sleep(float amount)
     {
-        sleep.Subtrack(amount);
+        sleep.Add(amount);
     }
 
     public void TakePhysicDamage(int amount)
