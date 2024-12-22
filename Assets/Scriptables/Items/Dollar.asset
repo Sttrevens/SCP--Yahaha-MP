@@ -10,20 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8e38498b791211488c7ec520c6450a8, type: 3}
-  m_Name: FoodCan
+  m_Name: Dollar
   m_EditorClassIdentifier: 
-  displayName: Food Can
-  description: This is a large food can.
-  type: 2
-  icon: {fileID: 21300000, guid: 77a8c4ac2c3e1ea4988501b13c9c0bdf, type: 3}
-  dropPrefab: {fileID: 6376461614541169111, guid: ac5431474edf646fbbf48715ee2c24a7, type: 3}
+  displayName: Dollar
+  description: A buck.
+  type: 0
+  icon: {fileID: 21300000, guid: ac17033afc60a49e9ade6a165bc714f0, type: 3}
+  dropPrefab: {fileID: 4866105111302860302, guid: 8f59a16c7350b8342aa7e0cf9ae4dfd1, type: 3}
   canStackItem: 1
-  maxStackamount: 99
-  consumables:
-  - type: 0
-    value: 35
-  - type: 1
-    value: 4
+  maxStackamount: 9999
+  consumables: []
   canBeCooked: 0
   cookTime: 20
   cookedItem: {fileID: 0}

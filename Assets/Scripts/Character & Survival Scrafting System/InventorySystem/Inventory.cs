@@ -149,7 +149,7 @@ namespace LPSurvivalEngine
             Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * UnityEngine.Random.value * 360.0f));
         }
 
-        void UpdateUI()
+        public void UpdateUI()
         {
             for (int x = 0; x < slots.Length; x++)
             {
@@ -237,9 +237,10 @@ namespace LPSurvivalEngine
 
         public void OnUseButton()
         {
-            if (selectedItem.item.type == ItemType.Consumable)
+            if (selectedItem != null)
             {
-                UseConsumableItem();
+                if (selectedItem.item.type == ItemType.Consumable)
+                    UseConsumableItem();
             }
         }
 

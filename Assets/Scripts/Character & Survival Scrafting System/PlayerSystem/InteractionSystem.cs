@@ -126,6 +126,12 @@ namespace LPSurvivalEngine
                     cookingSystem.SetPlayer(this.gameObject);
                 }
 
+                var vendingMachineController = currentInteractGameObject.GetComponent<VendingMachineController>();
+                if (vendingMachineController != null)
+                {
+                    vendingMachineController.SetPlayer(this.gameObject);
+                }
+
                 currentInteractable.OnInteract();
 
                 currentInteractGameObject = null;
