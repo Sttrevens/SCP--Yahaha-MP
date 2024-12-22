@@ -57,17 +57,32 @@ namespace LPSurvivalEngine
     [Space]
 
     public ItemDataConsumable[] consumables;
+
+        [Space]
+        [Header("Cooking Ingrediant")]
+        [Space]
+
         public bool canBeCooked;
         public float cookTime = 20f;
         public ItemDatabase cookedItem;
 
-    [Space]
+
+        [Space]
     [Header("Wieldable")]
     [Space] 
 
     public GameObject wieldablePrefab;
+
+        [Space]
+        [Header("Cooking Pot")]
+        [Space]
+
         public bool isPot;
         public PotType potType;
+        public AudioClip startCookingSound;
+        public AudioClip cookingSound;
+        public AudioClip cookedSound;
+
     }
 
     [System.Serializable]

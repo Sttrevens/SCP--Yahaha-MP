@@ -70,6 +70,10 @@ public class Prompt : MonoBehaviour
     {
         string text = string.Format("{0} Used!", item.name);
 
+        if (StartCoroutine(ShowAndHidePrompt(text)) != null)
+        {
+            StopCoroutine(ShowAndHidePrompt(text));
+        }
         StartCoroutine(ShowAndHidePrompt(text));
     }
 

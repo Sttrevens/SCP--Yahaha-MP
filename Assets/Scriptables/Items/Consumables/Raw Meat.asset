@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8e38498b791211488c7ec520c6450a8, type: 3}
-  m_Name: Meat
+  m_Name: Raw Meat
   m_EditorClassIdentifier: 
-  displayName: Meat
-  description: This is a piece of meat.
+  displayName: Raw Meat
+  description: This is raw meat.
   type: 2
-  icon: {fileID: 21300000, guid: 17114bf2e80ec3a45843bb8a1e46fd4e, type: 3}
-  dropPrefab: {fileID: 2935456705387644987, guid: a391c2511d4d75d469a934cdd3a8b397, type: 3}
+  icon: {fileID: 21300000, guid: 28e6466b8baba814b9b9b7bf030b57cc, type: 3}
+  dropPrefab: {fileID: 8804018380547966930, guid: e4ab941d0c5467043875649033121aec, type: 3}
   canStackItem: 1
   maxStackamount: 10
   consumables:
   - type: 2
-    value: 30
+    value: -10
   - type: 0
-    value: 40
+    value: 10
   canBeCooked: 1
   cookTime: 20
-  cookedItem: {fileID: 11400000, guid: 9f59a114bce1fb943b327276cc706ee2, type: 2}
+  cookedItem: {fileID: 11400000, guid: cdfa2f18ad9e30241b7b9b84eec17ee7, type: 2}
   wieldablePrefab: {fileID: 0}
   isPot: 0
   potType: 0

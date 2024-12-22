@@ -11,11 +11,11 @@ public class CookingSystem : MonoBehaviour, IInteractable
     public GameObject foodPrefab;
     private ItemDatabase rawFoodItem;
     // The audio clip for the cooking process
-    public AudioClip cookingSound;
-    // The audio clip for when the cooking is completed
-    public AudioClip cookedSound;
+    private AudioClip startCookingSound;
+    private AudioClip cookingSound;
+    private AudioClip cookedSound;
     // The particle system for the cooking effect
-    public ParticleSystem cookingParticles;
+    private ParticleSystem cookingParticles;
     // The position of the stove
     public Transform stovePosition;
 
@@ -39,6 +39,13 @@ public class CookingSystem : MonoBehaviour, IInteractable
         audioSource = GetComponent<AudioSource>();
     }
 
+    void Update()
+    {
+        if (currentFood == null) {isCooking = false;
+            audioSource.Stop();
+        }
+    }
+
     // This method is called when the player interacts with the stove
     public void OnInteract()
     {
@@ -48,6 +55,9 @@ public class CookingSystem : MonoBehaviour, IInteractable
             {
                 potPrefab = player.GetComponent<Inventory>().selectedItem.item.dropPrefab;
                 currentPot = Instantiate(potPrefab, stovePosition.position + Vector3.up, Quaternion.identity);
+                startCookingSound = currentPot.GetComponent<ItemObject>().item.startCookingSound;
+                cookingSound = currentPot.GetComponent<ItemObject>().item.cookingSound;
+                cookedSound = currentPot.GetComponent<ItemObject>().item.cookedSound;
                 Rigidbody potRigidbody = currentPot.GetComponent<Rigidbody>();
                 potRigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                 potRigidbody.constraints |= RigidbodyConstraints.FreezeRotation;
@@ -72,22 +82,9 @@ public class CookingSystem : MonoBehaviour, IInteractable
                 potRigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                 potRigidbody.constraints |= RigidbodyConstraints.FreezeRotation;
                 player.GetComponent<Inventory>().RemoveSelectedItem();
-                StartCoroutine(CookFood());
+                StartCoroutine(CookFood(cookingSound));
             }
             }
-
-        // If the food is already cooked
-        if (isCooked)
-        {
-            if (currentFood != null)
-            {
-                Debug.Log("Food is cooked, destroying the current food object.");
-                Destroy(currentFood);
-            }
-
-            Debug.Log("Cooking is set to false as the food is cooked.");
-            isCooking = false;
-        }
     }
 
     // This method is called when the player puts food into the pot
@@ -102,12 +99,18 @@ public class CookingSystem : MonoBehaviour, IInteractable
     }
 
     // The cooking logic implemented as a coroutine
-    private IEnumerator CookFood()
+    private IEnumerator CookFood(AudioClip cookingSound)
     {
         Debug.Log("Starting the cooking process.");
-        isCooking = true;
 
-        if (cookedSound != null)
+        if (!isCooking && cookingSound != null)
+        {
+            audioSource.PlayOneShot(startCookingSound);
+            isCooking = true;
+        }
+
+        yield return new WaitForSeconds(1);
+        if (cookingSound != null)
         {
             // Play the cooking sound
             audioSource.clip = cookingSound;
@@ -125,31 +128,27 @@ public class CookingSystem : MonoBehaviour, IInteractable
         Debug.Log("Cooking time has passed.");
 
         // When cooking is completed, change the state of the food
-        if (currentFood != null && !isCooked)
+        if (currentFood != null && currentFood.GetComponent<ItemObject>().item.canBeCooked)
         {
             Debug.Log("Destroying the original food as cooking is completed.");
             Destroy(currentFood);
             Debug.Log("Instantiating the cooked version of the food.");
-            currentFood = Instantiate(rawFoodItem.cookedItem.dropPrefab, currentPot.transform.position + Vector3.up * 0.5f, Quaternion.identity);
+            currentFood = Instantiate(currentFood.GetComponent<ItemObject>().item.cookedItem.dropPrefab, currentPot.transform.position + Vector3.up * 0.5f, Quaternion.identity);
             Rigidbody potRigidbody = currentFood.GetComponent<Rigidbody>();
             potRigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
             potRigidbody.constraints |= RigidbodyConstraints.FreezeRotation;
             // Here you can modify the state of the food to set it as the cooked version (e.g., change the material or model)
         }
 
-        if (cookedSound != null)
-        {
-            // Play the sound for cooking completion
-            audioSource.clip = cookedSound;
-            audioSource.Play();
-            Debug.Log("Playing the sound for cooking completion.");
-        }
-
         // Stop the cooking particle effect
         //cookingEffect.Stop();
 
-        Debug.Log("Setting the food as cooked.");
-        isCooked = true;
+        CheckIfContinueCooking();
+    }
+
+    void CheckIfContinueCooking()
+    {
+        if (currentFood != null && currentFood.GetComponent<ItemObject>().item.canBeCooked) { StartCoroutine(CookFood(cookedSound)); }
     }
 
     // This method is used to clean up the instantiated pot and food

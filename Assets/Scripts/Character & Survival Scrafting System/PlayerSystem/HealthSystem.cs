@@ -62,6 +62,9 @@ namespace LPSurvivalEngine
         thirst.Subtrack(thirst.decayRate * Time.deltaTime);
         sleep.Subtrack(sleep.regenrate * Time.deltaTime);
 
+            if ((hunger.currentValue >= hunger.maxValue * 0.8f) && (thirst.currentValue >= thirst.maxValue * 0.8f) && (sleep.currentValue >= sleep.maxValue * 0.5f))
+                health.Add(health.regenrate * Time.deltaTime);
+
         if (hunger.currentValue == 0.0f)
         {
             health.Subtrack(hungerHealthdecay * Time.deltaTime);
