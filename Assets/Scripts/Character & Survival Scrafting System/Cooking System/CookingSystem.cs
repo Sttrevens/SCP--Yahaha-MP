@@ -44,6 +44,19 @@ public class CookingSystem : MonoBehaviour, IInteractable
     // This method is called when the player interacts with the stove
     public void OnInteract()
     {
+        if (currentPot == null)
+        {
+            if (player.GetComponent<Inventory>().selectedItem.item.isPot)
+            {
+                potPrefab = player.GetComponent<Inventory>().selectedItem.item.dropPrefab;
+                currentPot = Instantiate(potPrefab, stovePosition.position + Vector3.up, Quaternion.identity);
+                Rigidbody potRigidbody = currentPot.GetComponent<Rigidbody>();
+                potRigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                potRigidbody.constraints |= RigidbodyConstraints.FreezeRotation;
+
+                player.GetComponent<Inventory>().RemoveSelectedItem();
+            }
+        }
         if (currentPot != null && !isCooking)
         {
             Debug.Log("Food is available and cooking is not ongoing, starting to cook.");
@@ -56,17 +69,14 @@ public class CookingSystem : MonoBehaviour, IInteractable
 
             if (foodPrefab != null)
             {
-                currentFood = Instantiate(foodPrefab, stovePosition.position + Vector3.up, Quaternion.identity);
+                currentFood = Instantiate(foodPrefab, currentPot.transform.position + Vector3.up * 0.5f, Quaternion.identity);
+                Rigidbody potRigidbody = currentFood.GetComponent<Rigidbody>();
+                potRigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                potRigidbody.constraints |= RigidbodyConstraints.FreezeRotation;
+                player.GetComponent<Inventory>().RemoveSelectedItem();
                 StartCoroutine(CookFood());
             }
             }
-
-            // If there is no current pot, instantiate one and place it on the stove
-            if (currentPot == null)
-        {
-            Debug.Log("No current pot exists, instantiating a new pot.");
-            currentPot = Instantiate(potPrefab, stovePosition.position + Vector3.up, Quaternion.identity);
-        }
 
         // If the food is already cooked
         if (isCooked)
@@ -123,6 +133,9 @@ public class CookingSystem : MonoBehaviour, IInteractable
             Destroy(currentFood);
             Debug.Log("Instantiating the cooked version of the food.");
             currentFood = Instantiate(rawFoodItem.cookedItem.dropPrefab, currentPot.transform.position + Vector3.up * 0.5f, Quaternion.identity);
+            Rigidbody potRigidbody = currentFood.GetComponent<Rigidbody>();
+            potRigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            potRigidbody.constraints |= RigidbodyConstraints.FreezeRotation;
             // Here you can modify the state of the food to set it as the cooked version (e.g., change the material or model)
         }
 

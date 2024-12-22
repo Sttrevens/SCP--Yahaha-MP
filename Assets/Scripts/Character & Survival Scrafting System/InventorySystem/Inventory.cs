@@ -199,14 +199,14 @@ namespace LPSurvivalEngine
             selectedItem = slots[index];
             selectedItemIndex = index;
 
-            if (selectedItem.item.type == ItemType.Consumable) UseConsumableItem();
+            if (selectedItem.item.type == ItemType.Consumable) Prompt.instance.SlotItemPrompt(selectedItem.item);
             else if (selectedItem.item.type == ItemType.Wieldable) EquipWieldableItem();
             else Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
         }
 
         void UseConsumableItem()
         {
-            Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示     
+            Prompt.instance.UseItemPrompt(selectedItem.item); //显示提示     
             for (int x = 0; x < selectedItem.item.consumables.Length; x++)
             {
                 switch (selectedItem.item.consumables[x].type)
@@ -233,6 +233,14 @@ namespace LPSurvivalEngine
 
             ThrowItem(selectedItem.item);
             RemoveSelectedItem();
+        }
+
+        public void OnUseButton()
+        {
+            if (selectedItem.item.type == ItemType.Consumable)
+            {
+                UseConsumableItem();
+            }
         }
 
         public void EquipWieldableItem()
@@ -268,7 +276,7 @@ namespace LPSurvivalEngine
             //     SelectItem(index);
         }
 
-        void RemoveSelectedItem()
+        public void RemoveSelectedItem()
         {
             selectedItem.quantity--;
 

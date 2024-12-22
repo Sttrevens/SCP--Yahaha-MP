@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2162bb784bddbcb44903eb117db2ec59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potPrefab: {fileID: 1415471093}
+  potPrefab: {fileID: 0}
   foodPrefab: {fileID: 0}
   cookingSound: {fileID: 0}
   cookedSound: {fileID: 0}
@@ -425,63 +425,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35c3dad3f5a7c9f4896b35a4d4eabd08, type: 3}
---- !u!1001 &642700175
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1362972178149528932, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8.156189
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362972178149528932, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.0327697
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362972178149528932, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.6755714
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362972178149528932, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362972178149528932, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362972178149528932, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362972178149528932, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362972178149528932, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362972178149528932, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362972178149528932, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6310955969088921852, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-      propertyPath: m_Name
-      value: StainlessPanLarge
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
 --- !u!1001 &659421020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2983,7 +2926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2162bb784bddbcb44903eb117db2ec59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potPrefab: {fileID: 1415471093}
+  potPrefab: {fileID: 0}
   foodPrefab: {fileID: 0}
   cookingSound: {fileID: 0}
   cookedSound: {fileID: 0}
@@ -3046,11 +2989,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d26c80efcd28494da497a34381dfacf, type: 3}
---- !u!1 &1415471093 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6310955969088921852, guid: 83f548f84cd504b40a61d00827b05d43, type: 3}
-  m_PrefabInstance: {fileID: 642700175}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1448229386
 GameObject:
   m_ObjectHideFlags: 0
@@ -5648,6 +5586,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6573059241104388263, guid: c6026b5f6ef0d20469e2014a7a264527, type: 3}
   m_PrefabInstance: {fileID: 2100603985}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2471620452875524897
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4272853996267539209, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.156189
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272853996267539209, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0327697
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272853996267539209, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.6755714
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272853996267539209, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272853996267539209, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272853996267539209, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272853996267539209, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272853996267539209, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272853996267539209, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272853996267539209, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188378427867562286, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
+      propertyPath: m_Name
+      value: Stainless Pot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9cb33b5d77b1a444d87e6cd370fc12ab, type: 3}
 --- !u!1001 &4906390422521888799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6127,7 +6122,7 @@ SceneRoots:
   - {fileID: 1514540618}
   - {fileID: 1086198435}
   - {fileID: 1988970395}
-  - {fileID: 642700175}
+  - {fileID: 2471620452875524897}
   - {fileID: 2065258794}
   - {fileID: 6649510693398744177}
   - {fileID: 1724402898}

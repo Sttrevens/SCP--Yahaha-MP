@@ -19,6 +19,12 @@ namespace LPSurvivalEngine
     Sleep
     }
 
+    public enum PotType
+    {
+        Pan,
+        Saucepot
+    }
+
     [CreateAssetMenu(fileName = "Item",menuName = "GrownAssets/Create/Item")]
     public class ItemDatabase : ScriptableObject
     {
@@ -59,6 +65,8 @@ namespace LPSurvivalEngine
     [Space] 
 
     public GameObject wieldablePrefab;
+        public bool isPot;
+        public PotType potType;
     }
 
     [System.Serializable]
