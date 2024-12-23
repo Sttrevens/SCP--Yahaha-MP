@@ -54,6 +54,8 @@ public class EnemyAI : MonoBehaviour
     [HideInInspector] public float lastAttackPreDelayTime = 0f;
     [HideInInspector] public GameObject targetPlayer;
 
+    [SerializeField] private bool isFlyingEnemy = false;
+
     public IEnemyState currentState;
 
     private void Awake()
@@ -184,6 +186,10 @@ public class EnemyAI : MonoBehaviour
             currentHealth -= damage;
             if (currentHealth <= 0)
             {
+                if (!isFlyingEnemy)
+                {
+                    HandleDeath();
+                }
                 SwitchState(new DeadState());
             }
             else if (damage >= maxHealth / 6)
@@ -217,7 +223,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (triggeredObject == animator.gameObject)
         {
-            EnableChopped();
+            //EnableChopped();
         }
     }
 
@@ -306,7 +312,10 @@ public class EnemyAI : MonoBehaviour
         while (obstacle != null)
         {
             Destructible destructible = obstacle.GetComponent<Destructible>();
-            animator.SetTrigger("Attack");
+            if (animator != null)
+            {
+                animator.SetTrigger("Attack");
+            }
             yield return new WaitForSeconds(1f); 
             destructible.ApplyDamage(attackDamage); 
             yield return new WaitForSeconds(attackInterval); 
@@ -351,14 +360,14 @@ public class EnemyAI : MonoBehaviour
 
     public void PlayAnimation(string animationName, bool isLooping)
     {
-        if (animator != null)
-        {
-            animator.SetBool("IsPatrolling", isLooping && animationName == "FlyStationary");
-            animator.SetBool("IsChasing", isLooping && animationName == "FlyForwardSlow");
-            animator.SetBool("IsIdle", isLooping && animationName == "FlyStationary");
-            animator.SetBool("IsDestroying", !isLooping && animationName == "BiteAttack1");
-            animator.SetBool("IsDead", !isLooping && animationName == "DeathToFalling");
-        }
+        //if (animator != null)
+        //{
+        //    animator.SetBool("IsPatrolling", isLooping && animationName == "FlyStationary");
+        //    animator.SetBool("IsChasing", isLooping && animationName == "FlyForwardSlow");
+        //    animator.SetBool("IsIdle", isLooping && animationName == "FlyStationary");
+        //    animator.SetBool("IsDestroying", !isLooping && animationName == "BiteAttack1");
+        //    animator.SetBool("IsDead", !isLooping && animationName == "DeathToFalling");
+        //}
     }
 
     private void OnDrawGizmos()

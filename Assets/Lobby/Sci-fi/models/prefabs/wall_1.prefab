@@ -12,12 +12,14 @@ GameObject:
   - component: {fileID: 33641099228200084}
   - component: {fileID: 23612634898196426}
   - component: {fileID: -6229338723439147158}
+  - component: {fileID: 8614649181373236423}
+  - component: {fileID: 5873371022317030772}
   m_Layer: 0
   m_Name: wall_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4833761392833730
 Transform:
@@ -110,6 +112,46 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300016, guid: c3e97571ad4de8d478eb8cef7217d14e, type: 3}
+--- !u!114 &8614649181373236423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249779064698972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce5bf1bb224f06240abfdc6ff797d9e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOpen: 0
+  anim: {fileID: 5873371022317030772}
+  willAutoClose: 1
+  autoCloseTime: 5
+  openDoorSound: {fileID: 8300000, guid: a6a7e70ee4f7a6c49bcee6cde1a485bf, type: 3}
+  closeDoorSound: {fileID: 8300000, guid: ee6983d7567bbd2489ba5b81344f7d04, type: 3}
+  onDoorOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  onDoorClosed:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!111 &5873371022317030772
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249779064698972}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 31c71c3f3efe80a41802a798f37ac283, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 31c71c3f3efe80a41802a798f37ac283, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1767186573239176
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +168,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4439584424728082
 Transform:
@@ -204,12 +246,15 @@ GameObject:
   - component: {fileID: 4615119240711530}
   - component: {fileID: 33370316525376694}
   - component: {fileID: 23528476190270100}
+  - component: {fileID: 8482289912305047267}
+  - component: {fileID: 9188904465570242460}
+  - component: {fileID: 4422079611918284491}
   m_Layer: 0
   m_Name: big_door_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4615119240711530
 Transform:
@@ -276,6 +321,124 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8482289912305047267
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956552413357366}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.062128525, y: 2.760734, z: 3.8605494}
+  m_Center: {x: 0, y: 0.000000059604645, z: 0}
+--- !u!114 &9188904465570242460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956552413357366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1bbb502083c41048a8fedc6a9693be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _totalHitPoints: 40
+  _currentHitPoints: 40
+  damageLevels:
+  - maxHitPoints: 40
+    minHitPoints: 32.1
+    healthPercent: 100
+    hasError: 0
+    visibleDamageLevel: 0
+  - maxHitPoints: 32
+    minHitPoints: 24.1
+    healthPercent: 80
+    hasError: 0
+    visibleDamageLevel: 2
+  - maxHitPoints: 24
+    minHitPoints: 16.1
+    healthPercent: 60
+    hasError: 0
+    visibleDamageLevel: 4
+  - maxHitPoints: 16
+    minHitPoints: 8.099999
+    healthPercent: 40
+    hasError: 0
+    visibleDamageLevel: 6
+  - maxHitPoints: 8
+    minHitPoints: 0
+    healthPercent: 20
+    hasError: 0
+    visibleDamageLevel: 8
+  destroyedPrefab: {fileID: 0}
+  destroyedPrefabParent: {fileID: 0}
+  fallbackParticle: {fileID: 19800004, guid: 6b46cad447c64dd48b8b715df6e3d2ad, type: 3}
+  fallbackParticleMatOption: 0
+  damageEffects: []
+  velocityReduction: 0.5
+  limitDamage: 0
+  minDamage: 10
+  maxDamage: 100
+  minDamageTime: 0
+  ignoreCollisionsUnder: 2
+  unparentOnDestroy: []
+  disableKinematicOnUparentedChildren: 1
+  replaceMaterials: []
+  replaceParticleMats: []
+  canBeDestroyed: 1
+  canBeRepaired: 1
+  debrisToReParentByName: []
+  debrisToReParentIsKinematic: 0
+  childrenToReParentByName: []
+  isDebrisChipAway: 0
+  chipAwayDebrisMass: 1
+  chipAwayDebrisDrag: 0
+  chipAwayDebrisAngularDrag: 0.05
+  autoPoolDestroyedPrefab: 1
+  useFallbackParticle: 1
+  centerPointOverride: {x: 0, y: 0, z: 0}
+  fallbackParticleScale: {x: 1, y: 1, z: 1}
+  fallbackParticleParent: {fileID: 0}
+  sinkWhenDestroyed: 0
+  shouldDeactivate: 0
+  isTerrainTree: 0
+  destroyedSound: {fileID: 0}
+  damagedSound: {fileID: 0}
+  repairedSound: {fileID: 0}
+--- !u!114 &4422079611918284491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956552413357366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67843ba2e75a59e4eb4ca0a89a4169fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsToDrop:
+  - {fileID: 3423434151840272865, guid: 58c65399ed8f51b47a9556a59ee24060, type: 3}
+  - {fileID: 3423434151840272865, guid: 58c65399ed8f51b47a9556a59ee24060, type: 3}
+  dropOffset: {x: 0, y: 0, z: 0}
+  randomizeDropPosition: 1
+  randomizeDropRotation: 0
+  minDropForce: 0.5
+  maxDropForce: 1
+  spreadFactor: 1
+  dropProbability: 0.5
 --- !u!1 &1996396007164218
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,12 +450,15 @@ GameObject:
   - component: {fileID: 4014203729173378}
   - component: {fileID: 33546353235457092}
   - component: {fileID: 23078359287102650}
+  - component: {fileID: 6524492053442120261}
+  - component: {fileID: 570766764689983047}
+  - component: {fileID: 9002097874048783786}
   m_Layer: 0
   m_Name: big_door_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4014203729173378
 Transform:
@@ -359,3 +525,96 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6524492053442120261
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996396007164218}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.06212852, y: 2.760734, z: 3.8605466}
+  m_Center: {x: 0, y: 0.000000059604645, z: 0}
+--- !u!114 &570766764689983047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996396007164218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1bbb502083c41048a8fedc6a9693be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _totalHitPoints: 40
+  _currentHitPoints: 40
+  damageLevels: []
+  destroyedPrefab: {fileID: 0}
+  destroyedPrefabParent: {fileID: 0}
+  fallbackParticle: {fileID: 0}
+  fallbackParticleMatOption: 0
+  damageEffects: []
+  velocityReduction: 0.5
+  limitDamage: 0
+  minDamage: 10
+  maxDamage: 100
+  minDamageTime: 0
+  ignoreCollisionsUnder: 2
+  unparentOnDestroy: []
+  disableKinematicOnUparentedChildren: 1
+  replaceMaterials: []
+  replaceParticleMats: []
+  canBeDestroyed: 1
+  canBeRepaired: 1
+  debrisToReParentByName: []
+  debrisToReParentIsKinematic: 0
+  childrenToReParentByName: []
+  isDebrisChipAway: 0
+  chipAwayDebrisMass: 1
+  chipAwayDebrisDrag: 0
+  chipAwayDebrisAngularDrag: 0.05
+  autoPoolDestroyedPrefab: 1
+  useFallbackParticle: 1
+  centerPointOverride: {x: 0, y: 0, z: 0}
+  fallbackParticleScale: {x: 1, y: 1, z: 1}
+  fallbackParticleParent: {fileID: 0}
+  sinkWhenDestroyed: 0
+  shouldDeactivate: 0
+  isTerrainTree: 0
+  destroyedSound: {fileID: 0}
+  damagedSound: {fileID: 0}
+  repairedSound: {fileID: 0}
+--- !u!114 &9002097874048783786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996396007164218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67843ba2e75a59e4eb4ca0a89a4169fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsToDrop:
+  - {fileID: 3423434151840272865, guid: 58c65399ed8f51b47a9556a59ee24060, type: 3}
+  - {fileID: 3423434151840272865, guid: 58c65399ed8f51b47a9556a59ee24060, type: 3}
+  dropOffset: {x: 0, y: 0, z: 0}
+  randomizeDropPosition: 1
+  randomizeDropRotation: 0
+  minDropForce: 0.5
+  maxDropForce: 1
+  spreadFactor: 1
+  dropProbability: 0.5

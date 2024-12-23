@@ -6,8 +6,8 @@ public class BeingAttackedState : EnemyBaseState
 {
     public override void EnterState(EnemyAI enemy)
     {
-        
-        enemy.animator.SetTrigger("Hit");
+        if (enemy.animator != null)
+            enemy.animator.SetTrigger("Hit");
         enemy.StartCoroutine(BeingAttackedRoutine(enemy));
     }
 

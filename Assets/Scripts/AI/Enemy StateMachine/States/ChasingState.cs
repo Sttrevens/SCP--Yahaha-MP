@@ -42,8 +42,8 @@ public class ChasingState : EnemyBaseState
             enemy.SwitchState(new PatrollingState());
         }
 
-        // Play the chasing animation
-        enemy.PlayAnimation("IsChasing", true);
+        if (enemy.animator != null)
+            enemy.PlayAnimation("IsChasing", true);
         // Rotate towards the player's position (or the destination if no player)
         enemy.RotateTowards(enemy.targetPlayer?.transform.position ?? enemy.agent.destination);
     }

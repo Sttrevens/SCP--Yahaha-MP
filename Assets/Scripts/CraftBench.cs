@@ -13,13 +13,14 @@ namespace LPSurvivalEngine
 
     public CraftingSystem craftingSystem;
     private PlayerController player;
-    
+
+        [SerializeField] private string objectName;
 
     private void Start()
     {
             if (craftingSystem == null)
             {
-                craftingSystem = FindObjectOfType<CraftingSystem>(true);
+                craftingSystem = player.gameObject.GetComponent<CraftingSystem>();
             }
         player = FindObjectOfType<PlayerController>();
     }
@@ -34,6 +35,16 @@ namespace LPSurvivalEngine
         craftingSystem.gameObject.SetActive(true);
         player.ToggleCursor(true);
     }
+
+        public string GetObjectName()
+        {
+            return objectName;
+        }
+
+        public void SetPlayer(PlayerController player)
+        {
+            this.player = player;
+        }    
 }
 
 }

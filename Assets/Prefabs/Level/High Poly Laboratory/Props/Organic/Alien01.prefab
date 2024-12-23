@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8812293079227267996}
   - component: {fileID: 8503711208785788066}
   - component: {fileID: 8592152834150793831}
+  - component: {fileID: 2575014454674474833}
+  - component: {fileID: -765335842482163182}
   m_Layer: 0
   m_Name: Alien01
   m_TagString: Untagged
@@ -134,3 +136,43 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &2575014454674474833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7095240691259494208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0908aafe702236f4191b25188680e7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightHitParticles: {fileID: 7045481444794939707, guid: 7b130ae93fe829644903c771ec4cd798, type: 3}
+  heavyHitParticles: {fileID: 3120249542592838286, guid: 408753af608ed4f4a85499da924495c8, type: 3}
+  lightDamageAmountThreshold: 20
+  hitSound: {fileID: 0}
+--- !u!114 &-765335842482163182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7095240691259494208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2311b566eff9de469293387a89d0a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyParticles: {fileID: 7405388685258001045, guid: 63b27c7af5bf920478df24fe35614b8a, type: 3}
+  maxFuckability: 25
+  currentFuckability: 0
+  itemsToDrop:
+  - {fileID: 8804018380547966930, guid: e4ab941d0c5467043875649033121aec, type: 3}
+  dropOffset: {x: 0, y: 0, z: 0}
+  randomizeDropPosition: 1
+  randomizeDropRotation: 0
+  minDropForce: 0.5
+  maxDropForce: 1
+  spreadFactor: 1
+  dropProbability: 0.5

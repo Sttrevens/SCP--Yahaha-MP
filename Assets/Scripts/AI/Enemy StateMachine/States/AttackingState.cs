@@ -10,7 +10,10 @@ public class AttackingState : EnemyBaseState
         {
             enemy.lastAttackTime = Time.time;
             enemy.lastAttackPreDelayTime = Time.time;
-            enemy.animator.SetTrigger("Attack");
+            if (enemy.animator != null)
+            {
+                enemy.animator.SetTrigger("Attack");
+            }
         }
         else
         {

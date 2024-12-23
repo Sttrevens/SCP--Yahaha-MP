@@ -32,6 +32,7 @@ namespace LPSurvivalEngine
 
     public GameObject Player;
     public GameObject UIPlayer;
+        public GameObject sleepScreenAnimation;
 
 
 
@@ -61,6 +62,9 @@ namespace LPSurvivalEngine
         hunger.Subtrack(hunger.decayRate * Time.deltaTime);
         thirst.Subtrack(thirst.decayRate * Time.deltaTime);
         sleep.Subtrack(sleep.regenrate * Time.deltaTime);
+
+            if ((hunger.currentValue >= hunger.maxValue * 0.8f) && (thirst.currentValue >= thirst.maxValue * 0.8f) && (sleep.currentValue >= sleep.maxValue * 0.5f))
+                health.Add(health.regenrate * Time.deltaTime);
 
         if (hunger.currentValue == 0.0f)
         {
@@ -101,7 +105,7 @@ namespace LPSurvivalEngine
 
     public void Sleep(float amount)
     {
-        sleep.Subtrack(amount);
+        sleep.Add(amount);
     }
 
     public void TakePhysicDamage(int amount)

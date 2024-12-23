@@ -122,7 +122,15 @@ namespace LPSurvivalEngine
                         }
                         DestructibleBarController.Instance.UpdateHealthBar(hit.collider.GetComponent<Destructible>().CurrentHitPoints, hit.collider.GetComponent<Destructible>().TotalHitPoints);
                     }
+
+                    if (hit.collider.GetComponent<ChoppedItems>() != null)
+                    {
+                        if (wieldableType == WieldableType.SharpMelee)
+                        {
+                            hit.collider.GetComponent<ChoppedItems>().BeingChopped(damage);
+                        }
                     }
+                }
 
                 if (hit.collider.GetComponent<EnemyAI>() != null)
                 {

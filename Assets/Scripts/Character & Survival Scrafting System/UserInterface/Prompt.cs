@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using LPSurvivalEngine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Prompt : MonoBehaviour
 {
     public static Prompt instance{get;private set;}
     public GameObject promptPanel;
     public TextMeshProUGUI promptText;
+    public PlayerInput playerInput;
+
+    private InputAction dropAction;
+    private InputAction actionAction;
 
     void Awake()
     {
@@ -24,6 +29,14 @@ public class Prompt : MonoBehaviour
 
          promptPanel.SetActive(false);
 
+        if (playerInput != null)
+        {
+            dropAction = playerInput.actions.FindAction("Drop");
+            actionAction = playerInput.actions.FindAction("Action");
+        }
+
+        else { Debug.LogError("Player Input is null,"); }
+
     }
 
     public void CustomPrompt(string text)
@@ -38,7 +51,7 @@ public class Prompt : MonoBehaviour
         switch(item.type)
         {
             case ItemType.Consumable:
-                text = string.Format("{0} Used!", item.name);
+                text = string.Format("{0} Selected, press {1} to use", item.name, "Left Mouse");
                 break;
 
             case ItemType.Wieldable:
@@ -46,10 +59,21 @@ public class Prompt : MonoBehaviour
                 break;
 
             default:
-                text = string.Format("{0} Can't be used here! (Press C to throw away)", item.name);
+                text = string.Format("{0} Can't be used here! (Press {1} to throw away)", item.name, "Q");
                 break;
         }
 
+        StartCoroutine(ShowAndHidePrompt(text));
+    }
+
+    public void UseItemPrompt(ItemDatabase item)
+    {
+        string text = string.Format("{0} Used!", item.name);
+
+        if (StartCoroutine(ShowAndHidePrompt(text)) != null)
+        {
+            StopCoroutine(ShowAndHidePrompt(text));
+        }
         StartCoroutine(ShowAndHidePrompt(text));
     }
 

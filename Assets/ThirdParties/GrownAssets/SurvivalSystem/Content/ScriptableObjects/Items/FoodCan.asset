@@ -14,12 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Food Can
   description: This is a large food can.
-  type: 0
+  type: 2
   icon: {fileID: 21300000, guid: 77a8c4ac2c3e1ea4988501b13c9c0bdf, type: 3}
   dropPrefab: {fileID: 6376461614541169111, guid: ac5431474edf646fbbf48715ee2c24a7, type: 3}
   canStackItem: 1
   maxStackamount: 99
   consumables:
   - type: 0
-    value: 70
+    value: 35
+  - type: 1
+    value: 4
+  canBeCooked: 0
+  cookTime: 20
+  cookedItem: {fileID: 0}
   wieldablePrefab: {fileID: 0}
+  isPot: 0
+  potType: 0
+  startCookingSound: {fileID: 0}
+  cookingSound: {fileID: 0}
+  cookedSound: {fileID: 0}
