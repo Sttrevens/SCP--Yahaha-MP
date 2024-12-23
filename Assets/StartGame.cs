@@ -1,7 +1,10 @@
+using LPSurvivalEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Progress;
 
 public class StartGame : MonoBehaviour
 {
@@ -9,6 +12,7 @@ public class StartGame : MonoBehaviour
 
     public GameObject levelScene;
     public GameObject lobbyScene;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +48,13 @@ public class StartGame : MonoBehaviour
 
         lobbyScene.SetActive(false);
         levelScene.SetActive(true);
+
+        for (int i = 0; i < Inventory.instance.slots.Length; i++)
+        {
+            Inventory.instance.slots[i].item = null;
+        }
+
+        Inventory.instance.UpdateUI();
 
         StartCoroutine(FadeFromBlack());
     }
