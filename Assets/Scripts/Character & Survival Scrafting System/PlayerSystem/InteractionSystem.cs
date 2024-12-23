@@ -55,6 +55,10 @@ namespace LPSurvivalEngine
             }
 
             crosshairOriginalIcon = crosshairImage.sprite;
+
+            hintObjectText.text = "";
+            hintInteractText.text = "";
+            hintLiftText.text = "";
         }
 
         private void Update()
@@ -115,6 +119,14 @@ namespace LPSurvivalEngine
                 else { crosshairImage.sprite = crosshairOriginalIcon; }
             }
 
+            if (currentInteractGameObject.GetComponent<Rigidbody>() != null)
+            {
+                hintLiftText.text = string.Format("Hold {0} to lift", "E");
+            }
+            else
+            {
+                hintLiftText.text = "";
+            }
             if (currentInteractGameObject != null)
             {
                 if (currentInteractGameObject.GetComponent<ItemObject>() != null)
@@ -122,16 +134,14 @@ namespace LPSurvivalEngine
                     hintObjectText.text = currentInteractGameObject.GetComponent<ItemObject>().name;
                     hintInteractText.text = string.Format("Use {0} to pick up", "E");
                 }
-                if (currentInteractGameObject.GetComponent<Rigidbody>() != null)
+                else
                 {
-                    hintLiftText.text = string.Format("Hold {0} to lift", "E");
+                    hintInteractText.text = "";
                 }
             }
             else
             {
-                hintObjectText.text = "";
                 hintInteractText.text = "";
-                hintLiftText.text = "";
             }
         }
 

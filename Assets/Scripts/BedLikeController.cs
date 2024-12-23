@@ -32,7 +32,7 @@ namespace LPSurvivalEngine
     [Header("Assignments")]
     [Space]
 
-    public RawImage SleepScreen;
+    public GameObject SleepScreen;
     public GameObject Message;
     public TextMeshProUGUI MessageText;
 
@@ -48,7 +48,6 @@ namespace LPSurvivalEngine
     
     private void Start()
     {
-        SleepScreen = player.GetComponentInChildren<RawImage>(true);
             //Message = GameObject.FindGameObjectWithTag("Message");
         //MessageText = Message.GetComponent<TextMeshProUGUI>();
     }
@@ -81,6 +80,7 @@ namespace LPSurvivalEngine
         public void SetPlayer(GameObject player)
         {
             this.player = player;
+            SleepScreen = player.GetComponent<HealthSystem>().sleepScreenAnimation;
         }
 
     }

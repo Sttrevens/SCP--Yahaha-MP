@@ -32,6 +32,7 @@ namespace LPSurvivalEngine
 
     public GameObject Player;
     public GameObject UIPlayer;
+        public GameObject sleepScreenAnimation;
 
 
 
