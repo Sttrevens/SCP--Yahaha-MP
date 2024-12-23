@@ -13,7 +13,7 @@ namespace LPSurvivalEngine
         public Vector2 Look { get; private set; }
         public bool Run { get; private set; }
         public bool Jump { get; private set; }
-        // ÐÂÔö£ºÓÃÓÚ±íÊ¾ÏÂ¶××´Ì¬µÄÊôÐÔ£¬Íâ²¿½Å±¾¿É»ñÈ¡¸ÃÖµÅÐ¶ÏÊÇ·ñ°´ÏÂÁËÏÂ¶×¼ü
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½Ê¾ï¿½Â¶ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½Ô£ï¿½ï¿½â²¿ï¿½Å±ï¿½ï¿½É»ï¿½È¡ï¿½ï¿½Öµï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶×¼ï¿½
         public bool Crouch { get; private set; }
         public bool AttackTwoHand { get; private set; }
         public bool AttackOneHand { get; private set; }
@@ -27,8 +27,10 @@ namespace LPSurvivalEngine
         private InputAction slotSelectAction;
         private InputAction attackActionTwoHand;
         private InputAction attackActionOneHand;
-        // ÐÂÔö£ºÓÃÓÚ»ñÈ¡ÏÂ¶×°´¼üÊäÈëµÄInputAction
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú»ï¿½È¡ï¿½Â¶×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½InputAction
         private InputAction crouchAction;
+        private InputAction dropAction;
+        private InputAction useAction;
 
         public bool SendDamage;
 
@@ -43,8 +45,9 @@ namespace LPSurvivalEngine
             slotSelectAction = currentMap.FindAction("SelectSlot");
             attackActionTwoHand = currentMap.FindAction("TwoHandAttack");
             attackActionOneHand = currentMap.FindAction("OneHandAttack");
-
             crouchAction = currentMap.FindAction("Crouch");
+            dropAction = currentMap.FindAction("Drop");
+            useAction = currentMap.FindAction("Action");
 
             moveAction.performed += onMove;
             lookAction.performed += onLook;
@@ -52,6 +55,8 @@ namespace LPSurvivalEngine
             jumpAction.performed += onJump;
             slotSelectAction.performed += OnSelectSlot;
 
+            dropAction.started += OnDrop;
+            useAction.started += OnUse;
             crouchAction.performed += onCrouch;
             crouchAction.canceled += onCrouch;
 
@@ -60,6 +65,7 @@ namespace LPSurvivalEngine
             runAction.canceled += onRun;
             jumpAction.canceled += onJump;
         }
+
 
         private void onMove(InputAction.CallbackContext context)
         {
@@ -81,7 +87,7 @@ namespace LPSurvivalEngine
             Jump = context.ReadValueAsButton();
         }
 
-        // ÐÂÔö£º´¦ÀíÏÂ¶×°´¼üÊäÈëµÄ·½·¨
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
         private void onCrouch(InputAction.CallbackContext context)
         {
             Crouch = context.ReadValueAsButton();
@@ -95,6 +101,16 @@ namespace LPSurvivalEngine
             else SlotIndex = int.Parse(keypressed) - 1;
 
             Inventory.instance.SelectItem(SlotIndex);
+        }
+
+        private void OnUse(InputAction.CallbackContext context)
+        {
+            Inventory.instance.UseItem();
+        }
+
+        private void OnDrop(InputAction.CallbackContext context)
+        {
+            Inventory.instance.DropItem();    
         }
 
         void AttackEvent()

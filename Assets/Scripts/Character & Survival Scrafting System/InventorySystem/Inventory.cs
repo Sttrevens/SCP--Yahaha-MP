@@ -220,7 +220,7 @@ namespace LPSurvivalEngine
 
         public void SelectItem(int index)
         {
-            Debug.Log("Current Selected Item: " + selectedItem);
+            //Debug.Log("Current Selected Item: " + selectedItem);
             if (slots[index].item == null)
                 return;
 
@@ -260,22 +260,23 @@ namespace LPSurvivalEngine
         //     DisableItem(selectedItemIndex);
         // }
 
-        public void OnDropButton()
+        public void DropItem()
         {
-            if (selectedItem.item == null)
+            if (selectedItem== null || selectedItem.item == null)
                 return;
 
             ThrowItem(selectedItem.item);
             RemoveSelectedItem();
         }
 
-        public void OnUseButton()
+        public void UseItem()
         {
-            if (selectedItem != null)
-            {
-                if (selectedItem.item.type == ItemType.Consumable)
-                    UseConsumableItem();
-            }
+            if (selectedItem== null || selectedItem.item == null)
+                return;
+
+            if (selectedItem.item.type == ItemType.Consumable)
+                UseConsumableItem();
+            
         }
 
         public void EquipWieldableItem()
