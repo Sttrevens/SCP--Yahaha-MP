@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
 using static UnityEditor.Progress;
+#endif
 
 public class StartGame : MonoBehaviour
 {
