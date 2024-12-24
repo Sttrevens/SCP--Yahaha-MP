@@ -31,6 +31,7 @@ namespace LPSurvivalEngine
         private InputAction crouchAction;
         private InputAction dropAction;
         private InputAction useAction;
+        private InputAction exitAction;
 
         public bool SendDamage;
 
@@ -48,6 +49,7 @@ namespace LPSurvivalEngine
             crouchAction = currentMap.FindAction("Crouch");
             dropAction = currentMap.FindAction("Drop");
             useAction = currentMap.FindAction("Action");
+            exitAction = currentMap.FindAction("Escape");
 
             moveAction.performed += onMove;
             lookAction.performed += onLook;
@@ -57,6 +59,7 @@ namespace LPSurvivalEngine
 
             dropAction.started += OnDrop;
             useAction.started += OnUse;
+            exitAction.started += OnExit;
             crouchAction.performed += onCrouch;
             crouchAction.canceled += onCrouch;
 
@@ -66,7 +69,7 @@ namespace LPSurvivalEngine
             jumpAction.canceled += onJump;
         }
 
-
+        //Gameplay related
         private void onMove(InputAction.CallbackContext context)
         {
             Move = context.ReadValue<Vector2>();
@@ -87,7 +90,6 @@ namespace LPSurvivalEngine
             Jump = context.ReadValueAsButton();
         }
 
-        // �����������¶װ�������ķ���
         private void onCrouch(InputAction.CallbackContext context)
         {
             Crouch = context.ReadValueAsButton();
@@ -116,6 +118,21 @@ namespace LPSurvivalEngine
         void AttackEvent()
         {
             SendDamage = true;
+        }
+
+        //Menu Related
+        private void OnExit(InputAction.CallbackContext context)
+        {
+            if (!ExitMenu.instance.isPaused)
+            {
+            Debug.Log("Click Escape");
+            ExitMenu.instance.ShowExitMenu();
+                ExitMenu.instance.isPaused = true;
+        }
+            else
+            {
+                ExitMenu.instance.HideExitMenu();
+            }
         }
 
         private void OnEnable()
