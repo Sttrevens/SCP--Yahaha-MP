@@ -72,7 +72,7 @@ namespace LPSurvivalEngine
 
                 if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
                 {
-                    // Èç¹ûÐÂµÄ½»»¥ÎïÌåºÍµ±Ç°ÎïÌå²»Í¬£¬È¡Ïûµ±Ç°ÎïÌåµÄ¸ßÁÁ
+                    // ï¿½ï¿½ï¿½ï¿½ÂµÄ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½Ç°ï¿½ï¿½ï¿½å²»Í¬ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½
                     if (hit.collider.gameObject != currentInteractGameObject)
                     {
                         if (currentInteractGameObject != null)
@@ -80,7 +80,7 @@ namespace LPSurvivalEngine
                             var previousHighlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
                             if (previousHighlightEffect != null)
                             {
-                                previousHighlightEffect.highlighted = false; // È¡Ïû¸ßÁÁ
+                                previousHighlightEffect.highlighted = false; // È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                             }
                         }
 
@@ -91,13 +91,13 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    // Èç¹ûÃ»ÓÐÃüÖÐÈÎºÎÎïÌå£¬È¡Ïûµ±Ç°ÎïÌåµÄ¸ßÁÁ
+                    // ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½å£¬È¡ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½
                     if (currentInteractGameObject != null)
                     {
                         var previousHighlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
                         if (previousHighlightEffect != null)
                         {
-                            previousHighlightEffect.highlighted = false; // È¡Ïû¸ßÁÁ
+                            previousHighlightEffect.highlighted = false; // È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                         }
                     }
 
@@ -119,7 +119,7 @@ namespace LPSurvivalEngine
                 else { crosshairImage.sprite = crosshairOriginalIcon; }
             }
 
-            if (currentInteractGameObject.GetComponent<Rigidbody>() != null)
+            if (currentInteractGameObject && currentInteractGameObject.GetComponent<Rigidbody>() != null)
             {
                 hintLiftText.text = string.Format("Hold {0} to lift", "E");
             }
@@ -127,6 +127,7 @@ namespace LPSurvivalEngine
             {
                 hintLiftText.text = "";
             }
+
             if (currentInteractGameObject != null)
             {
                 if (currentInteractGameObject.GetComponent<ItemObject>() != null)
