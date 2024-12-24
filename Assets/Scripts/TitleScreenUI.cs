@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleScreenUI : MonoBehaviour
 {
-    [SerializeField] private GameObject buttonsParent; 
+    [SerializeField] private GameObject buttonsParent;
     [SerializeField] private TextMeshProUGUI tmpText; // 显示文字的 TMP 对象
+    [SerializeField] private TMP_InputField inputFieldTMP;
 
     // 各按钮对应的文字
     private const string creatingGameText = "Creating a Game...";
     private const string joiningGameText = "Joining a Game...";
     private const string destinationText = "Going to the Destination...";
+    public static string roomName;
 
     // 初始化
     void Start()
@@ -54,6 +55,8 @@ public class TitleScreenUI : MonoBehaviour
     {
         HideAllButtons(); // 隐藏所有按钮
         ShowText(displayText); // 显示对应文字
+        roomName = inputFieldTMP.text;
+        SceneManager.LoadScene("[YiFan]PreDesignedLevel");
     }
 
     /// <summary>
@@ -75,6 +78,8 @@ public class TitleScreenUI : MonoBehaviour
     }
 
     public void ResetUI()
-    { tmpText.gameObject.SetActive(false);
-    buttonsParent.SetActive(true);}
+    {
+        tmpText.gameObject.SetActive(false);
+        buttonsParent.SetActive(true);
+    }
 }

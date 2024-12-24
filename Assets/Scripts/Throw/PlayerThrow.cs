@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using System.Security.Cryptography;
 
 public class PlayerThrow : MonoBehaviour
 {
+    public GameObject UIPlayer;
     public Transform holdPoint;
     public float throwForceBase = 5f;
     public float throwForceMax = 20f;
@@ -22,6 +24,12 @@ public class PlayerThrow : MonoBehaviour
     private bool isInteracting = false;
 
     public TMPro.TextMeshProUGUI pickupErrorMessage;
+
+    private void Awake()
+    {
+        UIPlayer = GameObject.Find("UIPlayer");
+        pickupErrorMessage = UIPlayer.transform.Find("UI/PickupErrorMessage").GetComponent<TextMeshProUGUI>();
+    }
 
     void Update()
     {
