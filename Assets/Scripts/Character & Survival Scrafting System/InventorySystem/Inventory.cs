@@ -1,12 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEditor;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-using UnityEngine.PlayerLoop;
 using System;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +8,7 @@ namespace LPSurvivalEngine
 {
     public class Inventory : MonoBehaviour
     {
+        public GameObject UIPlayer;
         public static Inventory instance{get;private set;}
 
 
@@ -45,6 +40,12 @@ namespace LPSurvivalEngine
 
         private void Awake()
         {
+            UIPlayer = GameObject.Find("UIPlayer");
+            inventoryWindow = UIPlayer.transform.Find("Inventory").gameObject;
+            bagPanel = inventoryWindow.transform.Find("BagPanel").gameObject;
+            containerUIWindow = inventoryWindow.transform.Find("Container").gameObject;
+            containerPanel = containerUIWindow.transform.Find("ContainerPanel").gameObject;
+            
             if (instance == null)
             {
                 instance = this;
@@ -140,8 +141,7 @@ namespace LPSurvivalEngine
         {
             return inventoryWindow.activeInHierarchy;
         }
-
-        // ������Ʒ������
+        
         public void AddItem(ItemDatabase item)
         {
             if (item.canStackItem)
@@ -282,14 +282,14 @@ namespace LPSurvivalEngine
         public void EquipWieldableItem()
         {
             if (InventorySlots[currentWieldableIndex].equipped)
+            {
+                DisableItem(currentWieldableIndex);
+                if (currentWieldableIndex == selectedItemIndex)  
                 {
-                    DisableItem(currentWieldableIndex);
-                    if (currentWieldableIndex == selectedItemIndex)  
-                    {
-                        Prompt.instance.CustomPrompt(String.Format("{0} unequipped!", selectedItem.item.name)); //显示提示
-                        return; 
-                    }
+                    Prompt.instance.CustomPrompt(String.Format("{0} unequipped!", selectedItem.item.name)); //显示提示
+                    return; 
                 }
+            }
 
             Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
 
@@ -371,8 +371,7 @@ namespace LPSurvivalEngine
                     InventorySlots[i].Clear();
                 }
             }
-
-            // �������ӵ���Ʒ��
+            
             for (int i = 0; i < currentContainerInventory.containerSlots.Length; i++)
             {
                 if (currentContainerInventory.containerSlots[i].item != null)
@@ -386,8 +385,7 @@ namespace LPSurvivalEngine
                 }
             }
         }
-
-        // ����Ʒ�ӱ���ת�Ƶ�����
+        
         public void TransferItemToContainer(int inventoryIndex)
         {
             ItemSlot inventorySlot = slots[inventoryIndex];
@@ -402,8 +400,7 @@ namespace LPSurvivalEngine
                 UpdateContainerUI();
             }
         }
-
-        // ����Ʒ������ת�Ƶ�����
+        
         public void TransferItemToInventory(int containerIndex)
         {
             ItemSlot containerSlot = currentContainerInventory.containerSlots[containerIndex];
