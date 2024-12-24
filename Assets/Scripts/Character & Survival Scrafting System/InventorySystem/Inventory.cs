@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEngine.PlayerLoop;
 using System;
+using UnityEngine.SceneManagement;
 
 namespace LPSurvivalEngine
 {
@@ -38,7 +39,7 @@ namespace LPSurvivalEngine
         private int selectedItemIndex;
         private PlayerController playerController;
         private HealthSystem vitals;
-        private ItemSlot selectedItem;
+        [HideInInspector]public ItemSlot selectedItem;
         private int currentWieldableIndex;
 
 
@@ -53,6 +54,22 @@ namespace LPSurvivalEngine
             {
                 Destroy(gameObject); 
             }
+        }
+
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            selectedItem = null;
+            Debug.Log("Scene loaded and static variables reset.");
         }
 
         private void Start()
@@ -73,6 +90,16 @@ namespace LPSurvivalEngine
 
             playerController = PlayerController.instance;
             vitals = HealthSystem.instance;
+
+            if (InventorySlots == null || InventorySlots.Length == 0)
+            {
+                Debug.LogError("InventorySlots has not been properly initialized.");
+            }
+
+            if (containerSlots == null || containerSlots.Length == 0)
+            {
+                Debug.LogError("ContainerSlots has not been properly initialized.");
+            }
         }
 
         public void OnInventoryButton(InputAction.CallbackContext context)
@@ -149,7 +176,7 @@ namespace LPSurvivalEngine
             Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * UnityEngine.Random.value * 360.0f));
         }
 
-        void UpdateUI()
+        public void UpdateUI()
         {
             for (int x = 0; x < slots.Length; x++)
             {
@@ -190,23 +217,30 @@ namespace LPSurvivalEngine
             return null;
         }
 
-       
+
         public void SelectItem(int index)
         {
+            //Debug.Log("Current Selected Item: " + selectedItem);
             if (slots[index].item == null)
                 return;
 
             selectedItem = slots[index];
             selectedItemIndex = index;
 
-            if (selectedItem.item.type == ItemType.Consumable) UseConsumableItem();
-            else if (selectedItem.item.type == ItemType.Wieldable) EquipWieldableItem();
-            else Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
+            if (selectedItem.item != null)
+            {
+                if (selectedItem.item.type == ItemType.Consumable)
+                    Prompt.instance.SlotItemPrompt(selectedItem.item);
+                else if (selectedItem.item.type == ItemType.Wieldable)
+                    EquipWieldableItem();
+                else
+                    Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
+            }
         }
 
         void UseConsumableItem()
         {
-            Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示     
+            Prompt.instance.UseItemPrompt(selectedItem.item); //显示提示     
             for (int x = 0; x < selectedItem.item.consumables.Length; x++)
             {
                 switch (selectedItem.item.consumables[x].type)
@@ -226,13 +260,23 @@ namespace LPSurvivalEngine
         //     DisableItem(selectedItemIndex);
         // }
 
-        public void OnDropButton()
+        public void DropItem()
         {
-            if (selectedItem.item == null)
+            if (selectedItem== null || selectedItem.item == null)
                 return;
 
             ThrowItem(selectedItem.item);
             RemoveSelectedItem();
+        }
+
+        public void UseItem()
+        {
+            if (selectedItem== null || selectedItem.item == null)
+                return;
+
+            if (selectedItem.item.type == ItemType.Consumable)
+                UseConsumableItem();
+            
         }
 
         public void EquipWieldableItem()
@@ -268,7 +312,7 @@ namespace LPSurvivalEngine
             //     SelectItem(index);
         }
 
-        void RemoveSelectedItem()
+        public void RemoveSelectedItem()
         {
             selectedItem.quantity--;
 

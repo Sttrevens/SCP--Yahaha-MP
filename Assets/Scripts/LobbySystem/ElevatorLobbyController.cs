@@ -25,6 +25,12 @@ public class ElevatorLobbyController : MonoBehaviour
     [SerializeField] private float shakeDuration = 0.5f; // 震动持续时间
     [SerializeField] private float shakeMagnitude = 0.1f; // 震动幅度
 
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip elevatorOpenSound; // 电梯开门音效
+    [SerializeField] private AudioClip elevatorCloseSound; // 电梯关门音效
+    [SerializeField] private AudioClip elevatorShakeSound; // 电梯震动音效
+    [SerializeField] private AudioSource audioSource; // 用于播放音效的音频源组件
+
     private GameObject currentScene;
 
     void Start()
@@ -35,6 +41,12 @@ public class ElevatorLobbyController : MonoBehaviour
         producerListScene.SetActive(false);
         blackScreenCanvas.alpha = 0;
         blackScreenCanvas.gameObject.SetActive(false);
+
+        // 获取或添加音频源组件
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     public void OnButtonSelect(string action)
@@ -44,9 +56,8 @@ public class ElevatorLobbyController : MonoBehaviour
 
     private IEnumerator HandleSceneChange(string action)
     {
-        // Trigger elevator shaking effect
-        yield return StartCoroutine(ShakeElevatorPerlin());
-
+        // Trigger elevator shaking effect and play the shake sound with fade in/out
+        yield return StartCoroutine(ShakeElevatorPerlinWithSound());
 
         // Disable current scene
         if (currentScene != null)
@@ -80,18 +91,20 @@ public class ElevatorLobbyController : MonoBehaviour
         }
 
         OpenElevator();
-        
+
     }
 
     public void OpenElevator()
     {
-        StartCoroutine(OpenElevatorDoors());
+        StartCoroutine(OpenElevatorDoorsWithSound());
     }
 
-    public IEnumerator OpenElevatorDoors()
+    public IEnumerator OpenElevatorDoorsWithSound()
     {
         if (isOpen != true)
         {
+            // 播放开门音效
+            audioSource.PlayOneShot(elevatorOpenSound);
             // Wait for door animation to play
             yield return new WaitForSeconds(1f);
             DoorsAnim[DoorsAnim.clip.name].normalizedTime = 0;
@@ -112,6 +125,8 @@ public class ElevatorLobbyController : MonoBehaviour
     {
         if (isOpen)
         {
+            // 播放关门音效
+            audioSource.PlayOneShot(elevatorCloseSound);
             DoorsAnim[DoorsAnim.clip.name].normalizedTime = 1;
             DoorsAnim[DoorsAnim.clip.name].speed = -1;
             DoorsAnim.Play();
@@ -120,12 +135,15 @@ public class ElevatorLobbyController : MonoBehaviour
 
             FindFirstObjectByType<TitleScreenUI>().ResetUI();
         }
-        }
+    }
 
-        private IEnumerator ShakeElevatorCurve()
+    private IEnumerator ShakeElevatorCurveWithSound()
     {
         Vector3 originalPosition = elevatorTransform.localPosition;
         float elapsed = 0f;
+
+        // 淡入音效
+        StartCoroutine(FadeInSound());
 
         while (elapsed < shakeDuration)
         {
@@ -135,14 +153,20 @@ public class ElevatorLobbyController : MonoBehaviour
             yield return null;
         }
 
+        // 淡出音效
+        StartCoroutine(FadeOutSound());
+
         // Restore original position
         elevatorTransform.localPosition = originalPosition;
     }
 
-    private IEnumerator ShakeElevatorPerlin()
+    private IEnumerator ShakeElevatorPerlinWithSound()
     {
         Vector3 originalPosition = elevatorTransform.localPosition;
         float elapsed = 0f;
+
+        // 淡入音效
+        StartCoroutine(FadeInSound());
 
         while (elapsed < shakeDuration)
         {
@@ -154,9 +178,49 @@ public class ElevatorLobbyController : MonoBehaviour
             yield return null;
         }
 
+        // 淡出音效
+        StartCoroutine(FadeOutSound());
+
         elevatorTransform.localPosition = originalPosition; // 复位
     }
 
+    private IEnumerator FadeInSound()
+    {
+        float duration = 0.5f; // 淡入时长，可根据实际调整
+        float elapsed = 0f;
+        float startVolume = 0f;
+        float targetVolume = 1f;
+
+        audioSource.volume = startVolume;
+        audioSource.Play();
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsed / duration);
+            yield return null;
+        }
+
+        audioSource.volume = targetVolume;
+    }
+
+    private IEnumerator FadeOutSound()
+    {
+        float duration = 0.5f; // 淡出时长，可根据实际调整
+        float elapsed = 0f;
+        float startVolume = audioSource.volume;
+        float targetVolume = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsed / duration);
+            yield return null;
+        }
+
+        audioSource.volume = targetVolume;
+        audioSource.Stop();
+    }
 
     private IEnumerator FadeToBlack()
     {

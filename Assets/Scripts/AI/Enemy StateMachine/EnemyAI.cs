@@ -2,6 +2,7 @@ using DestroyIt;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -52,6 +53,8 @@ public class EnemyAI : MonoBehaviour
     [HideInInspector] public float lastAttackTime = 0f;
     [HideInInspector] public float lastAttackPreDelayTime = 0f;
     [HideInInspector] public GameObject targetPlayer;
+
+    [SerializeField] private bool isFlyingEnemy = false;
 
     public IEnemyState currentState;
 
@@ -183,6 +186,10 @@ public class EnemyAI : MonoBehaviour
             currentHealth -= damage;
             if (currentHealth <= 0)
             {
+                if (!isFlyingEnemy)
+                {
+                    HandleDeath();
+                }
                 SwitchState(new DeadState());
             }
             else if (damage >= maxHealth / 6)
@@ -195,11 +202,13 @@ public class EnemyAI : MonoBehaviour
     private void OnEnable()
     {
         FallingLogic.OnFallingAnimationStarted += OnFallingAnimationStartedHandler;
+        OnGround.OnGroundAnimationStarted += OnGroundAnimationStartedHandler;
     }
 
     private void OnDisable()
     {
         FallingLogic.OnFallingAnimationStarted -= OnFallingAnimationStartedHandler;
+        OnGround.OnGroundAnimationStarted -= OnGroundAnimationStartedHandler;
     }
 
     private void OnFallingAnimationStartedHandler(GameObject triggeredObject)
@@ -207,6 +216,14 @@ public class EnemyAI : MonoBehaviour
         if (triggeredObject == animator.gameObject)
         {
             HandleDeath();
+        }
+    }
+
+    private void OnGroundAnimationStartedHandler(GameObject triggeredObject)
+    {
+        if (triggeredObject == animator.gameObject)
+        {
+            //EnableChopped();
         }
     }
 
@@ -224,6 +241,22 @@ public class EnemyAI : MonoBehaviour
             rb.useGravity = true;
             rb.constraints = RigidbodyConstraints.None;
         }
+    }
+
+    private void EnableChopped()
+    {
+
+                Destructible destructible = gameObject.AddComponent<Destructible>();
+                gameObject.AddComponent<DropItem>();
+
+                destructible.TotalHitPoints = 50f;
+                destructible.CurrentHitPoints = destructible.TotalHitPoints;
+
+        if (GetComponent<ChoppedItems>() != null && GetComponent<ChoppedItems>().destroyParticles != null)
+        {
+            destructible.destroyedPrefab = GetComponent<ChoppedItems>().destroyParticles;
+        }
+            
     }
 
     public void Idle()
@@ -279,7 +312,10 @@ public class EnemyAI : MonoBehaviour
         while (obstacle != null)
         {
             Destructible destructible = obstacle.GetComponent<Destructible>();
-            animator.SetTrigger("Attack");
+            if (animator != null)
+            {
+                animator.SetTrigger("Attack");
+            }
             yield return new WaitForSeconds(1f); 
             destructible.ApplyDamage(attackDamage); 
             yield return new WaitForSeconds(attackInterval); 
@@ -324,14 +360,14 @@ public class EnemyAI : MonoBehaviour
 
     public void PlayAnimation(string animationName, bool isLooping)
     {
-        if (animator != null)
-        {
-            animator.SetBool("IsPatrolling", isLooping && animationName == "FlyStationary");
-            animator.SetBool("IsChasing", isLooping && animationName == "FlyForwardSlow");
-            animator.SetBool("IsIdle", isLooping && animationName == "FlyStationary");
-            animator.SetBool("IsDestroying", !isLooping && animationName == "BiteAttack1");
-            animator.SetBool("IsDead", !isLooping && animationName == "DeathToFalling");
-        }
+        //if (animator != null)
+        //{
+        //    animator.SetBool("IsPatrolling", isLooping && animationName == "FlyStationary");
+        //    animator.SetBool("IsChasing", isLooping && animationName == "FlyForwardSlow");
+        //    animator.SetBool("IsIdle", isLooping && animationName == "FlyStationary");
+        //    animator.SetBool("IsDestroying", !isLooping && animationName == "BiteAttack1");
+        //    animator.SetBool("IsDead", !isLooping && animationName == "DeathToFalling");
+        //}
     }
 
     private void OnDrawGizmos()

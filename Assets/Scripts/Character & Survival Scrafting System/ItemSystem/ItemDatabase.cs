@@ -19,6 +19,12 @@ namespace LPSurvivalEngine
     Sleep
     }
 
+    public enum PotType
+    {
+        Pan,
+        Saucepot
+    }
+
     [CreateAssetMenu(fileName = "Item",menuName = "GrownAssets/Create/Item")]
     public class ItemDatabase : ScriptableObject
     {
@@ -52,11 +58,31 @@ namespace LPSurvivalEngine
 
     public ItemDataConsumable[] consumables;
 
-    [Space]
+        [Space]
+        [Header("Cooking Ingrediant")]
+        [Space]
+
+        public bool canBeCooked;
+        public float cookTime = 20f;
+        public ItemDatabase cookedItem;
+
+
+        [Space]
     [Header("Wieldable")]
     [Space] 
 
     public GameObject wieldablePrefab;
+
+        [Space]
+        [Header("Cooking Pot")]
+        [Space]
+
+        public bool isPot;
+        public PotType potType;
+        public AudioClip startCookingSound;
+        public AudioClip cookingSound;
+        public AudioClip cookedSound;
+
     }
 
     [System.Serializable]

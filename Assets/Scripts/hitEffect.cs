@@ -12,7 +12,8 @@ public class hitEffect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (hitSound == null)
+        { hitSound = GetComponent<AudioSource>(); }
     }
 
     // Update is called once per frame

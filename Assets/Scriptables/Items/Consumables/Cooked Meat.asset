@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e38498b791211488c7ec520c6450a8, type: 3}
+  m_Name: Cooked Meat
+  m_EditorClassIdentifier: 
+  displayName: Cooked Meat
+  description: This is cooked meat. It's okay, edible at least.
+  type: 2
+  icon: {fileID: 21300000, guid: 25f7a841b05fe0b4ca5767f131ff3134, type: 3}
+  dropPrefab: {fileID: 3528858062873864651, guid: 2763508f222c697489527e18bdd1b0cd, type: 3}
+  canStackItem: 1
+  maxStackamount: 10
+  consumables:
+  - type: 2
+    value: 3
+  - type: 0
+    value: 20
+  canBeCooked: 1
+  cookTime: 20
+  cookedItem: {fileID: 11400000, guid: 9f59a114bce1fb943b327276cc706ee2, type: 2}
+  wieldablePrefab: {fileID: 0}
+  isPot: 0
+  potType: 0
+  startCookingSound: {fileID: 0}
+  cookingSound: {fileID: 0}
+  cookedSound: {fileID: 0}

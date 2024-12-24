@@ -11,7 +11,7 @@ namespace LPSurvivalEngine
     [Space]
 
     public ItemDatabase item;
-
+        public bool isDisplayedItem = false;
 
     public string GetInteractText()
     {
@@ -22,7 +22,10 @@ namespace LPSurvivalEngine
     {
         Inventory.instance.AddItem(item);
         GetInteractText();
-        Destroy(gameObject);
+            if (!isDisplayedItem)
+            {
+                Destroy(gameObject);
+            }
     }
 
 }

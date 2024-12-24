@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace LPSurvivalEngine
 {
@@ -30,17 +31,35 @@ namespace LPSurvivalEngine
     public LayerMask layerMask;
     public GameObject interact;
     public TextMeshProUGUI interactText;
+        public TextMeshProUGUI hintObjectText;
+        public TextMeshProUGUI hintInteractText;
+        public TextMeshProUGUI hintLiftText;
 
 
-    private GameObject currentInteractGameObject;
+        private GameObject currentInteractGameObject;
     private IInteractable currentInteractable;
     private Camera cam;
 
+        public PlayerInput PlayerInput;
+        private InputAction interactAction;
 
-    private void Start()
-    {
-        cam = Camera.main;
-    }
+        public Image crosshairImage;
+        public Sprite knifeIcon;
+        private Sprite crosshairOriginalIcon;
+        private void Start()
+        {
+            cam = Camera.main;
+
+            if (PlayerInput != null) {
+                interactAction = PlayerInput.actions.FindAction("Interact");
+            }
+
+            crosshairOriginalIcon = crosshairImage.sprite;
+
+            hintObjectText.text = "";
+            hintInteractText.text = "";
+            hintLiftText.text = "";
+        }
 
         private void Update()
         {
@@ -56,6 +75,11 @@ namespace LPSurvivalEngine
                     // 如果新的交互物体和当前物体不同，取消当前物体的高亮
                     if (hit.collider.gameObject != currentInteractGameObject)
                     {
+                        if (hit.collider.gameObject.GetComponent<Rigidbody>() != null)
+                        {
+                            hintLiftText.text = string.Format("Hold {0} to lift", "E");
+                        }
+
                         if (currentInteractGameObject != null)
                         {
                             var previousHighlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
@@ -85,7 +109,40 @@ namespace LPSurvivalEngine
                     currentInteractGameObject = null;
                     currentInteractable = null;
                     interact.gameObject.SetActive(false);
+
+                    hintObjectText.text = "";
+                    hintInteractText.text = "";
+                    hintLiftText.text = "";
                 }
+
+                if (Physics.Raycast(ray, out hit, maxCheckDistance))
+                {
+                    if (hit.collider.gameObject.GetComponent<ChoppedItems>() != null)
+                    {
+                        if (hit.collider.gameObject.GetComponent<ChoppedItems>().canBeChopped)
+                        {
+                            crosshairImage.sprite = knifeIcon;
+                        }
+                    }
+                }
+                else { crosshairImage.sprite = crosshairOriginalIcon; }
+            }
+
+            if (currentInteractGameObject != null)
+            {
+                if (currentInteractGameObject.GetComponent<ItemObject>() != null)
+                {
+                    hintObjectText.text = currentInteractGameObject.GetComponent<ItemObject>().item.displayName;
+                    hintInteractText.text = string.Format("Use {0} to pick up", "E");
+                }
+                else
+                {
+                    hintInteractText.text = "";
+                }
+            }
+            else
+            {
+                hintInteractText.text = "";
             }
         }
 
@@ -120,7 +177,35 @@ namespace LPSurvivalEngine
             Debug.Log("Current interactable: " + currentInteractable);
             if (context.phase == InputActionPhase.Canceled && currentInteractable != null)
             {
-                currentInteractable.OnInteract(); 
+                var cookingSystem = currentInteractGameObject.GetComponent<CookingSystem>();
+                if (cookingSystem != null)
+                {
+                    cookingSystem.SetPlayer(this.gameObject);
+                }
+
+                var vendingMachineController = currentInteractGameObject.GetComponent<VendingMachineController>();
+                if (vendingMachineController != null)
+                {
+                    vendingMachineController.SetPlayer(this.gameObject);
+                }
+
+                var sleepingBag = currentInteractGameObject.GetComponent<BedLikeController>();
+                if (sleepingBag != null)
+                {
+                    sleepingBag.SetPlayer(this.gameObject);
+                }
+
+                var craftBench = currentInteractGameObject.GetComponent<CraftBench>();
+                if (craftBench != null)
+                {
+                    craftBench.SetPlayer(this.GetComponent<PlayerController>());
+                }
+
+                var watchController = currentInteractGameObject.gameObject.GetComponent<WatchController>();
+                if (watchController != null)
+                {  watchController.SetPlayer(this.gameObject);}
+
+                currentInteractable.OnInteract();
 
                 currentInteractGameObject = null;
                 currentInteractable = null;
@@ -135,4 +220,5 @@ namespace LPSurvivalEngine
 {
     string GetInteractText();   
     void OnInteract();
+    //string GetObjectName();
 }

@@ -5,7 +5,9 @@ namespace DestroyIt
 {
     public static class HideFlagsUtility
     {
+#if UNITY_EDITOR
         [MenuItem("Help/Hide Flags/Show All Objects")]
+#endif
         private static void ShowAll()
         {
             var allGameObjects = Object.FindObjectsOfType<GameObject>();

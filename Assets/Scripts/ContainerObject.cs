@@ -45,7 +45,5 @@ namespace LPSurvivalEngine
 
             isInitialized = true;
         }
-
-
     }
 }

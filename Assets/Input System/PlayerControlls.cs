@@ -152,6 +152,24 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba8642c2-cf00-4d44-b680-75efb1582a54"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d07f838-99e5-4b3f-94e5-86ec7ed1d611"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -444,11 +462,33 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ff11faa3-16d1-40da-bdf2-39d826dd35b2"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a80e82b8-0c01-42c1-9fe7-d55319ed4eb7"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba934ea4-8265-49d3-8807-e7b13890ff1a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -473,6 +513,8 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Main_Rotate = m_Main.FindAction("Rotate", throwIfNotFound: true);
         m_Main_SelectSlot = m_Main.FindAction("SelectSlot", throwIfNotFound: true);
         m_Main_Drop = m_Main.FindAction("Drop", throwIfNotFound: true);
+        m_Main_Crouch = m_Main.FindAction("Crouch", throwIfNotFound: true);
+        m_Main_Escape = m_Main.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -548,6 +590,8 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Rotate;
     private readonly InputAction m_Main_SelectSlot;
     private readonly InputAction m_Main_Drop;
+    private readonly InputAction m_Main_Crouch;
+    private readonly InputAction m_Main_Escape;
     public struct MainActions
     {
         private @PlayerControlls m_Wrapper;
@@ -566,6 +610,8 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         public InputAction @Rotate => m_Wrapper.m_Main_Rotate;
         public InputAction @SelectSlot => m_Wrapper.m_Main_SelectSlot;
         public InputAction @Drop => m_Wrapper.m_Main_Drop;
+        public InputAction @Crouch => m_Wrapper.m_Main_Crouch;
+        public InputAction @Escape => m_Wrapper.m_Main_Escape;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -617,6 +663,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Drop.started += instance.OnDrop;
             @Drop.performed += instance.OnDrop;
             @Drop.canceled += instance.OnDrop;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
+            @Escape.started += instance.OnEscape;
+            @Escape.performed += instance.OnEscape;
+            @Escape.canceled += instance.OnEscape;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
@@ -663,6 +715,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Drop.started -= instance.OnDrop;
             @Drop.performed -= instance.OnDrop;
             @Drop.canceled -= instance.OnDrop;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
+            @Escape.started -= instance.OnEscape;
+            @Escape.performed -= instance.OnEscape;
+            @Escape.canceled -= instance.OnEscape;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -696,5 +754,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         void OnRotate(InputAction.CallbackContext context);
         void OnSelectSlot(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
 }
