@@ -16,6 +16,8 @@ public class ExitMenu : MonoBehaviour
 
     public PlayerController playerController;
 
+    [HideInInspector] public bool isPaused = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -41,6 +43,8 @@ public class ExitMenu : MonoBehaviour
         exitMenuPanel.SetActive(true); 
         playerController.ToggleCursor(true);
         //Time.timeScale = 0; 
+
+        isPaused = true;
     }
 
     // 继续游戏
@@ -49,6 +53,8 @@ public class ExitMenu : MonoBehaviour
         exitMenuPanel.SetActive(false);
         playerController.ToggleCursor(false);
         //Time.timeScale = 1; 
+
+        isPaused = false;
     }
 
 

@@ -123,8 +123,16 @@ namespace LPSurvivalEngine
         //Menu Related
         private void OnExit(InputAction.CallbackContext context)
         {
+            if (!ExitMenu.instance.isPaused)
+            {
             Debug.Log("Click Escape");
             ExitMenu.instance.ShowExitMenu();
+                ExitMenu.instance.isPaused = true;
+        }
+            else
+            {
+                ExitMenu.instance.HideExitMenu();
+            }
         }
 
         private void OnEnable()
