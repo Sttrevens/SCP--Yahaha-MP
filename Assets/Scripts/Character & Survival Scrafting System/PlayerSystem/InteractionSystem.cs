@@ -1,7 +1,4 @@
 using HighlightPlus;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,34 +8,35 @@ namespace LPSurvivalEngine
 {
     public class InteractionSystem : MonoBehaviour
     {
-    [Space]
-    [Header("Interaction System")]
-    [Space]
-    [Space]
+        public GameObject UIPlayer;
+        [Space]
+        [Header("Interaction System")]
+        [Space]
+        [Space]
 
-    [Space]
-    [Header("Settings")]
-    [Space]
+        [Space]
+        [Header("Settings")]
+        [Space]
 
-    public float checkRate = 0.05f;
-    private float lastCheckTime;
-    public float maxCheckDistance;
+        public float checkRate = 0.05f;
+        private float lastCheckTime;
+        public float maxCheckDistance;
 
-    [Space]
-    [Header("Assignments")]
-    [Space]
+        [Space]
+        [Header("Assignments")]
+        [Space]
 
-    public LayerMask layerMask;
-    public GameObject interact;
-    public TextMeshProUGUI interactText;
+        public LayerMask layerMask;
+        public GameObject interact;
+        public TextMeshProUGUI interactText;
         public TextMeshProUGUI hintObjectText;
         public TextMeshProUGUI hintInteractText;
         public TextMeshProUGUI hintLiftText;
 
 
         private GameObject currentInteractGameObject;
-    private IInteractable currentInteractable;
-    private Camera cam;
+        private IInteractable currentInteractable;
+        private Camera cam;
 
         public PlayerInput PlayerInput;
         private InputAction interactAction;
@@ -48,8 +46,16 @@ namespace LPSurvivalEngine
         private Sprite crosshairOriginalIcon;
         private void Start()
         {
+            UIPlayer = GameObject.Find("UIPlayer");
+            interact = UIPlayer.transform.Find("UI/Interact").gameObject;
+            interactText = interact.transform.Find("InteractText").GetComponent<TextMeshProUGUI>();
+            GameObject background = UIPlayer.transform.Find("UI/HintPanel/Panel/Background").gameObject;
+            hintObjectText = background.transform.Find("HintObject").GetComponent<TextMeshProUGUI>();
+            hintInteractText = background.transform.Find("HintInteract").GetComponent<TextMeshProUGUI>();
+            hintLiftText = background.transform.Find("HintLift").GetComponent<TextMeshProUGUI>();
+            crosshairImage = UIPlayer.transform.Find("UI/Crosshair").GetComponent<Image>();
             cam = Camera.main;
-
+            
             if (PlayerInput != null) {
                 interactAction = PlayerInput.actions.FindAction("Interact");
             }
@@ -216,7 +222,7 @@ namespace LPSurvivalEngine
 
 }
 
-    public interface IInteractable
+public interface IInteractable
 {
     string GetInteractText();   
     void OnInteract();
