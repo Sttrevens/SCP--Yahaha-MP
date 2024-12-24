@@ -75,6 +75,11 @@ namespace LPSurvivalEngine
                     // 如果新的交互物体和当前物体不同，取消当前物体的高亮
                     if (hit.collider.gameObject != currentInteractGameObject)
                     {
+                        if (hit.collider.gameObject.GetComponent<Rigidbody>() != null)
+                        {
+                            hintLiftText.text = string.Format("Hold {0} to lift", "E");
+                        }
+
                         if (currentInteractGameObject != null)
                         {
                             var previousHighlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
@@ -104,6 +109,10 @@ namespace LPSurvivalEngine
                     currentInteractGameObject = null;
                     currentInteractable = null;
                     interact.gameObject.SetActive(false);
+
+                    hintObjectText.text = "";
+                    hintInteractText.text = "";
+                    hintLiftText.text = "";
                 }
 
                 if (Physics.Raycast(ray, out hit, maxCheckDistance))
@@ -119,19 +128,11 @@ namespace LPSurvivalEngine
                 else { crosshairImage.sprite = crosshairOriginalIcon; }
             }
 
-            if (currentInteractGameObject.GetComponent<Rigidbody>() != null)
-            {
-                hintLiftText.text = string.Format("Hold {0} to lift", "E");
-            }
-            else
-            {
-                hintLiftText.text = "";
-            }
             if (currentInteractGameObject != null)
             {
                 if (currentInteractGameObject.GetComponent<ItemObject>() != null)
                 {
-                    hintObjectText.text = currentInteractGameObject.GetComponent<ItemObject>().name;
+                    hintObjectText.text = currentInteractGameObject.GetComponent<ItemObject>().item.displayName;
                     hintInteractText.text = string.Format("Use {0} to pick up", "E");
                 }
                 else

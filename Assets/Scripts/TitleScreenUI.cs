@@ -43,6 +43,9 @@ public class TitleScreenUI : MonoBehaviour
         HandleButtonClick(destinationText);
     }
 
+    public void OnExitButton()
+    { Application.Quit(); }
+
     /// <summary>
     /// 处理按钮点击逻辑
     /// </summary>

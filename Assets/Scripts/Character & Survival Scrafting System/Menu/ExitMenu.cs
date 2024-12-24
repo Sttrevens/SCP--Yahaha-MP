@@ -1,3 +1,4 @@
+using LPSurvivalEngine;
 using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,10 +10,11 @@ public class ExitMenu : MonoBehaviour
 
     public GameObject exitMenuPanel; // 关联退出菜单的 Panel
 
-    [Header("Button")]
-    public Button continueButton;
-    public Button exitButton;
+    [Header("Assignments")]
+    public GameObject exitConfirm;
+    public GameObject allButtons;
 
+    public PlayerController playerController;
 
     private void Awake()
     {
@@ -29,9 +31,7 @@ public class ExitMenu : MonoBehaviour
 
     private void Start()
     {
-        // 动态绑定按钮事件
-        continueButton.onClick.AddListener(() => HideExitMenu());
-        exitButton.onClick.AddListener(() => ExitGame());
+        exitConfirm.SetActive(false);
     }
 
 
@@ -39,19 +39,33 @@ public class ExitMenu : MonoBehaviour
     public void ShowExitMenu()
     {
         exitMenuPanel.SetActive(true); 
-        Time.timeScale = 0; 
+        playerController.ToggleCursor(true);
+        //Time.timeScale = 0; 
     }
 
     // 继续游戏
     public void HideExitMenu()
     {
-        exitMenuPanel.SetActive(false); 
-        Time.timeScale = 1; 
+        exitMenuPanel.SetActive(false);
+        playerController.ToggleCursor(false);
+        //Time.timeScale = 1; 
     }
 
 
     // 返回主菜单
     public void ExitGame()
+    {
+        exitConfirm.SetActive(true);
+        allButtons.SetActive(false);
+    }
+
+    public void RegretExitGame()
+    {
+        allButtons.SetActive(true) ;
+        exitConfirm.SetActive(false);
+    }
+
+    public void ConfirmExitGame()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
