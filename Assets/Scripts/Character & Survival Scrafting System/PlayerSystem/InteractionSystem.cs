@@ -1,3 +1,4 @@
+using System;
 using HighlightPlus;
 using TMPro;
 using UnityEngine;
@@ -60,6 +61,7 @@ namespace LPSurvivalEngine
             
             if (PlayerInput != null) {
                 interactAction = PlayerInput.actions.FindAction("Interact");
+                interactAction.canceled += OnInteractInput;
             }
 
             crosshairOriginalIcon = crosshairImage.sprite;
@@ -150,6 +152,11 @@ namespace LPSurvivalEngine
             {
                 hintInteractText.text = "";
             }
+
+            // if (Input.GetKeyDown(KeyCode.E))
+            // {
+            //     OnInteractInput();
+            // }
         }
 
 
@@ -182,6 +189,7 @@ namespace LPSurvivalEngine
         {
             Debug.Log("Current interactable: " + currentInteractable);
             if (context.phase == InputActionPhase.Canceled && currentInteractable != null)
+            // if (currentInteractable != null)
             {
                 var cookingSystem = currentInteractGameObject.GetComponent<CookingSystem>();
                 if (cookingSystem != null)
@@ -217,6 +225,11 @@ namespace LPSurvivalEngine
                 currentInteractable = null;
                 interact.gameObject.SetActive(false);
             }
+        }
+
+        private void OnDestroy()
+        {
+            interactAction.canceled -= OnInteractInput;
         }
     }
 

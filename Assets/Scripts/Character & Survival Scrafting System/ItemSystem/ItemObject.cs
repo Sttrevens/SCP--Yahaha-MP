@@ -25,9 +25,10 @@ namespace LPSurvivalEngine
             //     // 调用物品的拾取方法
             //     pickupItem.RPC_OnPickedUp(Object.StateAuthority);
             // }
-            Inventory.instance.AddItem(item);
-            GetInteractText();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            // Inventory.instance.AddItem(item);
+            // GetInteractText();
+            // Destroy(gameObject);
         }
 
     }

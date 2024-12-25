@@ -623,19 +623,7 @@ MonoBehaviour:
     m_ActionId: f431f89f-5758-4155-a0e1-af1568908de4
     m_ActionName: Player/Inventory[/Keyboard/tab]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -6143655546310920545, guid: 16a0ef0fa65fa414baac73dc09b1c775, type: 3}
-        m_TargetAssemblyTypeName: LPSurvivalEngine.InteractionSystem, Assembly-CSharp
-        m_MethodName: OnInteractInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: e7e2af93-b23e-4bd6-94d9-35e4a9c71c54
     m_ActionName: Player/Interact[/Keyboard/e]
   - m_PersistentCalls:
@@ -1115,13 +1103,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2065669007698585286, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
+      propertyPath: Height
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8422162903330514954, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 43.5
       objectReference: {fileID: 0}
     - target: {fileID: 8422162903330514954, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.65
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8422162903330514954, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
       propertyPath: m_LocalPosition.z
