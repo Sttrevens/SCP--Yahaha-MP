@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace LPSurvivalEngine
 {
-    public class InteractionSystem : NetworkBehaviour
+    public class InteractionSystem : MonoBehaviour
     {
         public GameObject UIPlayer;
         [Space]
@@ -164,8 +164,7 @@ namespace LPSurvivalEngine
                 hintObjectText.text = "";
             }
         }
-
-
+        
         void Interaction()
         {
             if (currentInteractable == null)
@@ -188,9 +187,7 @@ namespace LPSurvivalEngine
                 Debug.LogWarning("No HighlightEffect component found on object: " + currentInteractGameObject.name);
             }
         }
-
-
-
+        
         public void OnInteractInput(InputAction.CallbackContext context)
         {
             Debug.Log("Current interactable: " + currentInteractable);
@@ -224,13 +221,13 @@ namespace LPSurvivalEngine
                 if (watchController != null)
                 {  watchController.SetPlayer(this.gameObject);}
 
-                PickupItem pickupItem = currentInteractGameObject.GetComponent<PickupItem>();
-                if (pickupItem != null && !pickupItem.IsPickedUp) // 检查物品状态
-                {
-                    Debug.Log("调用物品的拾取方法");
-                    // 调用物品的拾取方法
-                    pickupItem.RPC_OnPickedUp(Object.StateAuthority);
-                }
+                // PickupItem pickupItem = currentInteractGameObject.GetComponent<PickupItem>();
+                // if (pickupItem != null && !pickupItem.IsPickedUp) // 检查物品状态
+                // {
+                //     Debug.Log("调用物品的拾取方法");
+                //     // 调用物品的拾取方法
+                //     pickupItem.RPC_OnPickedUp(Object.StateAuthority);
+                // }
                 
                 currentInteractable.OnInteract();
 

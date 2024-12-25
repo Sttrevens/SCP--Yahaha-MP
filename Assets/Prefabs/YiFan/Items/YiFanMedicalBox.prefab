@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6647013042188780096}
   - component: {fileID: 1467006774271629345}
   - component: {fileID: 544248142821848671}
-  - component: {fileID: 8339839495983201941}
   - component: {fileID: -2180058922394626974}
   - component: {fileID: 3794624360659640620}
   m_Layer: 6
@@ -127,8 +126,8 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 8339839495983201941}
---- !u!114 &8339839495983201941
+  - {fileID: -2180058922394626974}
+--- !u!114 &-2180058922394626974
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,22 +136,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5133561880163558293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a841ea70a1c665b42a21d3c640bbad8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IsPickedUp: 0
---- !u!114 &-2180058922394626974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5133561880163558293}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsPickedUp: 0
   item: {fileID: 11400000, guid: 5c0718598897d432abb8236accb824c4, type: 2}
 --- !u!114 &3794624360659640620
 MonoBehaviour:
