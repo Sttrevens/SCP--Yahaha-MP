@@ -2651,6 +2651,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 3669219865196137581}
   - {fileID: 7877616091980868857}
+  - {fileID: 2020516845862190081}
 --- !u!114 &3669219865196137581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2706,6 +2707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 0}
+  cameraRoot: {fileID: 0}
   PlayerSpeed: 2
   JumpForce: 5
   GravityValue: -9.81
@@ -2721,6 +2723,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3193cad89ba4446b0d1b377bd20bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 50
+  CameraRoot: {fileID: 0}
+  Camera: {fileID: 0}
+  UpperLimit: -40
+  BottomLimit: 70
+  MouseSensitivity: 1
   DistanceGround: 0.8
   GroundCheck:
     serializedVersion: 2

@@ -31,7 +31,7 @@ namespace LPSurvivalEngine
         public UnityEvent onCloseContainerInventory;
         
         [Header("Input")]
-        [HideInInspector] public PlayerInput PlayerInput;
+        public PlayerInput PlayerInput;
         private InputAction inventoryAction;
 
         private int selectedItemIndex;

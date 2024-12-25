@@ -42,7 +42,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2cde719621b41af4a975907dff452dec, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7bcff6481e8b8de489024826035a1c60, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.039
   m_Pitch: 0.6
@@ -138,6 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3242658519711787909}
   - component: {fileID: 3242658519711787908}
+  - component: {fileID: 7986262439939269065}
   m_Layer: 0
   m_Name: Moon
   m_TagString: Untagged
@@ -222,6 +223,22 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &7986262439939269065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3242658519711787911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73b0a95be81246699cf0d9ecdc01863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PreferredRunner: 0
+  Components:
+  - {fileID: 3242658519711787908}
+  _guid: 782e3d2b-3f8d-4998-
 --- !u!1 &3242658520104598295
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,6 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3242658520104598293}
   - component: {fileID: 3242658520104598292}
+  - component: {fileID: 854462652299231910}
   m_Layer: 0
   m_Name: Sun
   m_TagString: Untagged
@@ -316,6 +334,22 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &854462652299231910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3242658520104598295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73b0a95be81246699cf0d9ecdc01863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PreferredRunner: 0
+  Components:
+  - {fileID: 3242658520104598292}
+  _guid: 48d2ed68-f085-42d3-
 --- !u!1 &3242658520588821953
 GameObject:
   m_ObjectHideFlags: 0

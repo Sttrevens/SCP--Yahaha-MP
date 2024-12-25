@@ -129,7 +129,7 @@ namespace LPSurvivalEngine
 
                 if (Physics.Raycast(ray, out hit, maxCheckDistance))
                 {
-                    if (hit.collider.gameObject != gameObject && hit.collider.gameObject.GetComponent<Rigidbody>() != null)
+                    if (hit.collider.gameObject.tag != "Player" && hit.collider.gameObject.GetComponent<Rigidbody>() != null)
                     {
                         hintLiftText.text = string.Format("Hold {0} to lift", "E");
                     }
@@ -150,12 +150,13 @@ namespace LPSurvivalEngine
             {
                 if (currentInteractGameObject.GetComponent<ItemObject>() != null)
                 {
-                    hintObjectText.text = currentInteractGameObject.GetComponent<ItemObject>().name;
+                    hintObjectText.text = currentInteractGameObject.GetComponent<ItemObject>().item.displayName;
                     hintInteractText.text = string.Format("Use {0} to pick up", "E");
                 }
                 else
                 {
                     hintInteractText.text = "";
+                    hintObjectText.text = "";
                 }
             }
             else

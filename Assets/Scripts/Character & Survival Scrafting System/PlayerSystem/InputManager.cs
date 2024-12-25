@@ -27,7 +27,7 @@ namespace LPSurvivalEngine
         private InputAction slotSelectAction;
         private InputAction attackActionTwoHand;
         private InputAction attackActionOneHand;
-        // ���������ڻ�ȡ�¶װ��������InputAction
+
         private InputAction crouchAction;
         private InputAction dropAction;
         private InputAction useAction;
