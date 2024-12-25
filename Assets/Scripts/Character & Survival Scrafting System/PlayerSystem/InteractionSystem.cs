@@ -162,11 +162,6 @@ namespace LPSurvivalEngine
                 hintInteractText.text = "";
                 hintObjectText.text = "";
             }
-
-            // if (Input.GetKeyDown(KeyCode.E))
-            // {
-            //     OnInteractInput();
-            // }
         }
 
 
@@ -199,7 +194,6 @@ namespace LPSurvivalEngine
         {
             Debug.Log("Current interactable: " + currentInteractable);
             if (context.phase == InputActionPhase.Canceled && currentInteractable != null)
-            // if (currentInteractable != null)
             {
                 var cookingSystem = currentInteractGameObject.GetComponent<CookingSystem>();
                 if (cookingSystem != null)

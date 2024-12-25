@@ -58,7 +58,7 @@ public class TitleScreenUI : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             roomName = inputFieldTMP.text;
-            SceneManager.LoadScene("[YiFan]PreDesignedLevel2");
+            SceneManager.LoadScene("[YiFan]PreDesignedLevel");
         }
     }
 
