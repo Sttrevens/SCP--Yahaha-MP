@@ -117,15 +117,24 @@ namespace LPSurvivalEngine
                     }
                 }
                 else { crosshairImage.sprite = crosshairOriginalIcon; }
-            }
 
-            if (currentInteractGameObject && currentInteractGameObject.GetComponent<Rigidbody>() != null)
-            {
-                hintLiftText.text = string.Format("Hold {0} to lift", "E");
-            }
-            else
-            {
-                hintLiftText.text = "";
+                if (Physics.Raycast(ray, out hit, maxCheckDistance))
+                {
+                    if (hit.collider.gameObject != gameObject && hit.collider.gameObject.GetComponent<Rigidbody>() != null)
+                    {
+                        hintLiftText.text = string.Format("Hold {0} to lift", "E");
+                    }
+                    else
+                    {
+                        hintLiftText.text = "";
+                    }
+                }
+                else
+                {
+                    hintLiftText.text = "";
+                }
+
+
             }
 
             if (currentInteractGameObject != null)
@@ -143,6 +152,7 @@ namespace LPSurvivalEngine
             else
             {
                 hintInteractText.text = "";
+                hintObjectText.text = "";
             }
         }
 
