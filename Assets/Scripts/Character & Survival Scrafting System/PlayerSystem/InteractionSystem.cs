@@ -1,4 +1,5 @@
 using System;
+using Fusion;
 using HighlightPlus;
 using TMPro;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 namespace LPSurvivalEngine
 {
-    public class InteractionSystem : MonoBehaviour
+    public class InteractionSystem : NetworkBehaviour
     {
         public GameObject UIPlayer;
         [Space]
@@ -223,6 +224,14 @@ namespace LPSurvivalEngine
                 if (watchController != null)
                 {  watchController.SetPlayer(this.gameObject);}
 
+                PickupItem pickupItem = currentInteractGameObject.GetComponent<PickupItem>();
+                if (pickupItem != null && !pickupItem.IsPickedUp) // 检查物品状态
+                {
+                    Debug.Log("调用物品的拾取方法");
+                    // 调用物品的拾取方法
+                    pickupItem.RPC_OnPickedUp(Object.StateAuthority);
+                }
+                
                 currentInteractable.OnInteract();
 
                 currentInteractGameObject = null;
