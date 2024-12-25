@@ -1,32 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace LPSurvivalEngine
 {
     public class ItemObject : MonoBehaviour, IInteractable
     {
-    [Space]
-    [Header("Item")]
-    [Space]
+        [Space]
+        [Header("Item")]
+        [Space]
 
-    public ItemDatabase item;
-        public bool isDisplayedItem = false;
+        public ItemDatabase item;
 
-    public string GetInteractText()
-    {
-        return string.Format("{0}", item.displayName);
+
+        public string GetInteractText()
+        {
+            return string.Format("{0}", item.displayName);
+        }
+
+        public void OnInteract()
+        {
+            // PickupItem pickupItem = GetComponent<PickupItem>();
+            // if (pickupItem != null && !pickupItem.IsPickedUp) // 检查物品状态
+            // {
+            //     Debug.Log("调用物品的拾取方法");
+            //     // 调用物品的拾取方法
+            //     pickupItem.RPC_OnPickedUp(Object.StateAuthority);
+            // }
+            Inventory.instance.AddItem(item);
+            GetInteractText();
+            Destroy(gameObject);
+        }
+
     }
-
-    public void OnInteract()
-    {
-        Inventory.instance.AddItem(item);
-        GetInteractText();
-            if (!isDisplayedItem)
-            {
-                Destroy(gameObject);
-            }
-    }
-
-}
 }

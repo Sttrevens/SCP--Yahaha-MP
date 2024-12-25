@@ -13,7 +13,7 @@ namespace LPSurvivalEngine
         public Vector2 Look { get; private set; }
         public bool Run { get; private set; }
         public bool Jump { get; private set; }
-        // ���������ڱ�ʾ�¶�״̬�����ԣ��ⲿ�ű��ɻ�ȡ��ֵ�ж��Ƿ������¶׼�
+        
         public bool Crouch { get; private set; }
         public bool AttackTwoHand { get; private set; }
         public bool AttackOneHand { get; private set; }
