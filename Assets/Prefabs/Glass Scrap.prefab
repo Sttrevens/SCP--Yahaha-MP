@@ -594,6 +594,7 @@ GameObject:
   - component: {fileID: 5289674032473555763}
   - component: {fileID: 5394566047872209519}
   - component: {fileID: 9002576974730729633}
+  - component: {fileID: 3467772133391781595}
   m_Layer: 6
   m_Name: Glass Scrap
   m_TagString: Untagged
@@ -690,6 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsPickedUp: 0
   item: {fileID: 11400000, guid: 75a964e9b13f5734f8232192d3329ee7, type: 2}
 --- !u!114 &9002576974730729633
 MonoBehaviour:
@@ -822,6 +824,24 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
+--- !u!114 &3467772133391781595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3423434151840272865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 4269431861
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5394566047872209519}
 --- !u!1 &4715775347299479576
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ namespace LPSurvivalEngine
         [Space]
 
         public ItemDatabase item;
-
+        public bool isDisplayedItem = false;
 
         public string GetInteractText()
         {
@@ -40,20 +40,25 @@ namespace LPSurvivalEngine
             Inventory.instance.AddItem(item);
         }
         
-        private void Update()
+        /*private void Update()
         {
             if (IsPickedUp)
             {
                 // 物体已被拾取，执行隐藏或其他逻辑
-                Destroy(gameObject);
+               
             }
-        }
+        }*/
 
         public void PickUp(PlayerRef player)
         {
             IsPickedUp = true;
             Owner = player; // 记录谁拾取了物体
             Debug.Log($"物品被 {player} 拾取");
+
+            if (!isDisplayedItem)
+            {
+                Destroy(gameObject);
+            }
         }
     
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7087057213175341905}
   - component: {fileID: 7087057213175341910}
   - component: {fileID: 2699362613048019832}
+  - component: {fileID: -9146315101337728432}
   m_Layer: 6
   m_Name: Banana
   m_TagString: Untagged
@@ -96,7 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsPickedUp: 0
   item: {fileID: 11400000, guid: 1b21240cde370864bba444a0d72887eb, type: 2}
+  isDisplayedItem: 0
 --- !u!114 &2699362613048019832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +231,24 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
+--- !u!114 &-9146315101337728432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7087057213175341911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3729787488
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 7087057213175341910}
 --- !u!1001 &7443850547748052520
 PrefabInstance:
   m_ObjectHideFlags: 0

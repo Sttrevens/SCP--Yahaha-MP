@@ -16571,6 +16571,8 @@ GameObject:
   - component: {fileID: 5656649982426528470}
   - component: {fileID: 5656649982426528471}
   - component: {fileID: 763208337303650108}
+  - component: {fileID: 6453798413958704972}
+  - component: {fileID: 7248364489009086855}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -16798,6 +16800,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ba8642c2-cf00-4d44-b680-75efb1582a54
     m_ActionName: Main/Crouch[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7d07f838-99e5-4b3f-94e5-86ec7ed1d611
+    m_ActionName: Main/Escape[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Main
@@ -16829,12 +16835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3193cad89ba4446b0d1b377bd20bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 500
-  CameraRoot: {fileID: 5480734551363081371}
-  Camera: {fileID: 5480734551038065329}
-  UpperLimit: -60
-  BottomLimit: 80
-  MouseSensitivity: 5
   DistanceGround: 1
   GroundCheck:
     serializedVersion: 2
@@ -16866,6 +16866,9 @@ MonoBehaviour:
   onCloseContainerInventory:
     m_PersistentCalls:
       m_Calls: []
+  PlayerInput: {fileID: 0}
+  playerController: {fileID: 0}
+  vitals: {fileID: 0}
 --- !u!114 &7583843462785501440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16878,6 +16881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c216bd83ef797149bd06740dc10aee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIPlayer: {fileID: 0}
   checkRate: 0.05
   maxCheckDistance: 2
   layerMask:
@@ -17076,6 +17080,41 @@ MonoBehaviour:
   rotateSpeed: 100
   pickupSmoothDuration: 0.15
   pickupErrorMessage: {fileID: 5789082961969869225}
+--- !u!114 &6453798413958704972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656649982426528465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1236573573
+  ObjectInterest: 1
+  Flags: 786433
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1122259457492835225, guid: 16a0ef0fa65fa414baac73dc09b1c775, type: 3}
+  - {fileID: 2747722033361472396, guid: 16a0ef0fa65fa414baac73dc09b1c775, type: 3}
+--- !u!114 &7248364489009086855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656649982426528465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &5686319049404588399
 GameObject:
   m_ObjectHideFlags: 0

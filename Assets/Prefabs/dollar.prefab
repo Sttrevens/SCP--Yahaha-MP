@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 4387621656170457632}
   - component: {fileID: 3407826541422958393}
   - component: {fileID: 4241340182504874493}
+  - component: {fileID: -1419908744760131639}
   m_Layer: 6
   m_Name: dollar
   m_TagString: Untagged
@@ -180,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsPickedUp: 0
   item: {fileID: 11400000, guid: 2108cf4f907ff214b9ef09816e217965, type: 2}
 --- !u!114 &4241340182504874493
 MonoBehaviour:
@@ -312,6 +314,24 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
+--- !u!114 &-1419908744760131639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4866105111302860302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1263046544
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 3407826541422958393}
 --- !u!1 &5924009337326488187
 GameObject:
   m_ObjectHideFlags: 0

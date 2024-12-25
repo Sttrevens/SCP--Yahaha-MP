@@ -10,7 +10,7 @@ namespace LPSurvivalEngine
 {
     public class HealthSystem : MonoBehaviour, IDamagable
     {
-    public static HealthSystem instance{get;private set;}
+    //public static HealthSystem instance{get;private set;}
 
     [Header("Player Vitals")]
 
@@ -34,28 +34,111 @@ namespace LPSurvivalEngine
     public GameObject UIPlayer;
         public GameObject sleepScreenAnimation;
 
+        void Start()
+        {
+            health.currentValue = health.startValue;
+            hunger.currentValue = hunger.startValue;
+            thirst.currentValue = thirst.startValue;
+            sleep.currentValue = sleep.startValue;
 
+            Player = gameObject;
+            UIPlayer = GameObject.FindGameObjectWithTag("UI Player");
 
-    private void Awake()
-    {
-        if (instance == null)
+            if (UIPlayer != null)
             {
-                instance = this;
-                DontDestroyOnLoad(this);
+                sleepScreenAnimation = FindChildRecursive(UIPlayer.transform, "SleepAnimation");
+                if (sleepScreenAnimation != null)
+                {
+                    // 这里可以添加获取到子物体后的操作
+                }
+                else
+                {
+                    Debug.Log("未找到名为SleepAnimation的子物体");
+                }
+
+                Image healthVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Health");
+                if (healthVitalBarImage != null)
+                {
+                    health.VitalBar = healthVitalBarImage;
+                }
+                else
+                {
+                    Debug.Log("未找到名为Health的子物体");
+                }
+
+                Image hungerVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Hunger");
+                if (hungerVitalBarImage != null)
+                {
+                    hunger.VitalBar = hungerVitalBarImage;
+                }
+                else
+                {
+                    Debug.Log("未找到名为Hunger的子物体");
+                }
+
+                Image thirstVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Thirst");
+                if (thirstVitalBarImage != null)
+                {
+                    thirst.VitalBar = thirstVitalBarImage;
+                }
+                else
+                {
+                    Debug.Log("未找到名为Thirst的子物体");
+                }
+
+                Image sleepVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Sleep");
+                if (sleepVitalBarImage != null)
+                {
+                    sleep.VitalBar = sleepVitalBarImage;
+                }
+                else
+                {
+                    Debug.Log("未找到名为Sleep的子物体");
+                }
             }
             else
             {
-                Destroy(gameObject); 
+                Debug.Log("未找到tag为UI Player的物体");
             }
-    }
+        }
 
-    void Start()
-    {
-        health.currentValue = health.startValue;
-        hunger.currentValue = hunger.startValue;
-        thirst.currentValue = thirst.startValue;
-        sleep.currentValue = sleep.startValue;
-    }
+        private T FindChildRecursive<T>(Transform parent, string name) where T : Component
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.name == name)
+                {
+                    T component = child.GetComponent<T>();
+                    if (component != null)
+                    {
+                        return component;
+                    }
+                }
+                T result = FindChildRecursive<T>(child, name);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            return null;
+        }
+
+        private GameObject FindChildRecursive(Transform parent, string name)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.name == name)
+                {
+                    return child.gameObject;
+                }
+                GameObject result = FindChildRecursive(child, name);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            return null;
+        }
 
     void Update()
     {
@@ -112,7 +195,25 @@ namespace LPSurvivalEngine
     {
         health.Subtrack(amount);
         onTakeDamage?.Invoke();
-    }
+            GameObject parentObject = GameObject.FindGameObjectWithTag("UI Player");
+            if (parentObject != null)
+            {
+                Transform childTransform = parentObject.transform.Find("BloodScreen");
+                if (childTransform != null)
+                {
+                    GameObject bloodScreen = childTransform.gameObject;
+                    bloodScreen.GetComponent<DamageIndicator>().Flash();
+                }
+                else
+                {
+                    Debug.Log("未找到名为的子物体");
+                }
+            }
+            else
+            {
+                Debug.Log("未找到tag为 的物体");
+            }
+        }
     
     public void Die()
     {
@@ -152,7 +253,6 @@ namespace LPSurvivalEngine
     {
         return currentValue / maxValue;
     }
-
     }
 
     public interface IDamagable

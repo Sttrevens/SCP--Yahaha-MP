@@ -50,6 +50,8 @@ namespace LPSurvivalEngine
         cam = Camera.main;
 
             placementLayerMask = LayerMask.GetMask("Terrain", "Floor");
+
+            inventory = Inventory.instance.gameObject;
         }
 
     /*void Start ()
