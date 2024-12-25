@@ -90,9 +90,13 @@ namespace LPSurvivalEngine
                 zVelocity = Animator.StringToHash("Z_Velocity");
                 jumping = Animator.StringToHash("Jump");
                 grounding = Animator.StringToHash("Grounded");
-
-                transform.position = GameObject.Find("SpawnPosition").transform.position;
             }
+        }
+
+        public void SpawnPlayer(Transform spawnPosition)
+        {
+            transform.position = spawnPosition.position;
+            transform.rotation = spawnPosition.rotation;
         }
 
         public void ToggleCursor(bool toggle)

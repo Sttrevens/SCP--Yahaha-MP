@@ -186,7 +186,19 @@ MonoBehaviour:
       m_Calls: []
   OnConnectedToServer:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6515430458572477251, guid: 16a0ef0fa65fa414baac73dc09b1c775, type: 3}
+        m_TargetAssemblyTypeName: LPSurvivalEngine.PlayerController, Assembly-CSharp
+        m_MethodName: SpawnPlayer
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1522306624}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDisconnectedFromServer:
     m_PersistentCalls:
       m_Calls: []
@@ -1325,6 +1337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1522306624}
+  - component: {fileID: 1522306625}
   m_Layer: 0
   m_Name: SpawnPosition
   m_TagString: Untagged
@@ -1347,6 +1360,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1161216551}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1522306625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522306623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f78c6bd75644367459606deffc6c4f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1573717237 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4521323671439284568, guid: 44530d49976cc6a4fb5d5f813922ecd5, type: 3}
@@ -1749,6 +1774,11 @@ PrefabInstance:
     - target: {fileID: 2495227607628814383, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940198896836578809, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
+      propertyPath: m_text
+      value: "SCP: 5000 Demo. Version 0.1.241226.01.\nFor testing purposes only.
+        \nThe final quality of the game is not represented."
       objectReference: {fileID: 0}
     - target: {fileID: 3241081266371055873, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_AnchorMax.y
