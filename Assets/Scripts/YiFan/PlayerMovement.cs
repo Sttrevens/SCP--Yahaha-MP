@@ -19,7 +19,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         _controller = GetComponent<CharacterController>();
     }
-
+    
     public override void Spawned()
     {
         if (HasStateAuthority)
