@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,99 +7,97 @@ namespace LPSurvivalEngine
 {
     public class BuildingSystem : Wieldable
     {
-        public GameObject UIPlayer;
-        [Space]
-        [Header("Building System")]
-        [Space]
+    [Space]
+    [Header("Building System")]
+    [Space]
 
-        [Space]
-        [Header("Placement Settings")]
-        [Space]
+    [Space]
+    [Header("Placement Settings")]
+    [Space]
 
-        public float placementUpdateRate = 0.03f;
-        public float placementMaxDistance = 0.1f;
-        public float rotateSpeed = 180.0f;
+    public float placementUpdateRate = 0.03f;
+    public float placementMaxDistance = 0.1f;
+    public float rotateSpeed = 180.0f;
 
-        [Space]
-        [Space]
+    [Space]
+    [Space]
 
-        public LayerMask placementLayerMask;
+    public LayerMask placementLayerMask;
     
-        [Space]
-        [Space]
+    [Space]
+    [Space]
     
-        public Vector3 placementPosition;
+    public Vector3 placementPosition;
 
-        [Space]
-        [Header("Assignments")]
-        [Space]
+    [Space]
+    [Header("Assignments")]
+    [Space]
 
-        public GameObject inventory;
+    public GameObject inventory;
     
     
-        private Building buildingObject;
-        private BuildingPlacer currentBuildingPreview;
-        private bool canPlace;
-        private float YRotation;
-        private float lastPlacementUpdateTime;
-        private Camera cam;
-        public static BuildingSystem instance;
+    private Building buildingObject;
+    private BuildingPlacer currentBuildingPreview;
+    private bool canPlace;
+    private float YRotation;
+    private float lastPlacementUpdateTime;
+    private Camera cam;
+    public static BuildingSystem instance;
     
-        void Awake ()
-        {
-            UIPlayer = GameObject.Find("UIPlayer");
-            inventory = UIPlayer.transform.Find("Menu").gameObject;
-                
-            instance = this;
-            cam = Camera.main;
+    void Awake ()
+    {
+        instance = this;
+        cam = Camera.main;
 
             placementLayerMask = LayerMask.GetMask("Terrain", "Floor");
+
+            inventory = Inventory.instance.gameObject;
         }
 
-        /*void Start ()
+    /*void Start ()
+    {
+        buildingSystem = FindObjectOfType<Inventory>(true).gameObject;
+    }*/
+
+    public void OnBuild(InputAction.CallbackContext context)
+    {
+        if(buildingObject == null || currentBuildingPreview == null || !canPlace)
+            return;
+
+        Instantiate(buildingObject.spawnPrefab, currentBuildingPreview.transform.position, currentBuildingPreview.transform.rotation);
+
+        for(int x = 0; x < buildingObject.cost.Length; x++)
         {
-            buildingSystem = FindObjectOfType<Inventory>(true).gameObject;
-        }*/
-
-        public void OnBuild(InputAction.CallbackContext context)
-        {
-            if(buildingObject == null || currentBuildingPreview == null || !canPlace)
-                return;
-
-            Instantiate(buildingObject.spawnPrefab, currentBuildingPreview.transform.position, currentBuildingPreview.transform.rotation);
-
-            for(int x = 0; x < buildingObject.cost.Length; x++)
+            for(int y = 0; y < buildingObject.cost[x].quantity; y++)
             {
-                for(int y = 0; y < buildingObject.cost[x].quantity; y++)
-                {
-                    Inventory.instance.RemoveItem(buildingObject.cost[x].item);
-                }
+                Inventory.instance.RemoveItem(buildingObject.cost[x].item);
             }
+        }
 
-            buildingObject = null;
+        buildingObject = null;
+        Destroy(currentBuildingPreview.gameObject);
+        currentBuildingPreview = null;
+        canPlace = false;
+        YRotation = 0;
+    }
+
+    public void OnBuildCancel(InputAction.CallbackContext context)
+    {
+        if (currentBuildingPreview != null)
             Destroy(currentBuildingPreview.gameObject);
-            currentBuildingPreview = null;
-            canPlace = false;
-            YRotation = 0;
-        }
 
-        public void OnBuildCancel(InputAction.CallbackContext context)
-        {
-            if (currentBuildingPreview != null)
-                Destroy(currentBuildingPreview.gameObject);
+            //inventory.GetComponent<Inventory>().Toggle();
+        //PlayerController.instance.ToggleCursor(true);
+    }
 
-            inventory.SetActive(true);
-            PlayerController.instance.ToggleCursor(true);
-        }
-
-        public void SetNewBuildingRecipe (Building item)
-        {
-            buildingObject = item;
-            inventory.SetActive(false);
+    public void SetNewBuildingRecipe (Building item)
+    {
+        buildingObject = item;
+            inventory.GetComponent<Inventory>().Toggle();
             PlayerController.instance.ToggleCursor(false);
 
-            currentBuildingPreview = Instantiate(item.previewPrefab).GetComponent<BuildingPlacer>();
-        }
+        currentBuildingPreview = Instantiate(item.previewPrefab).GetComponent<BuildingPlacer>();
+    }
 
         void Update()
         {
@@ -158,10 +158,10 @@ namespace LPSurvivalEngine
 
 
         void OnDestroy ()
-        {
-            if (currentBuildingPreview != null)
-                Destroy(currentBuildingPreview.gameObject);
-        }
+    {
+        if (currentBuildingPreview != null)
+        Destroy(currentBuildingPreview.gameObject);
     }
+}
 
 }

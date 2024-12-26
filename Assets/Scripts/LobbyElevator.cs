@@ -7,12 +7,18 @@ public class LobbyElevator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<AnimationTrigger>().TriggerAnimatoin();
+        StartCoroutine(gameStart());
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public IEnumerator gameStart()
+    {
+        yield return new WaitForSeconds(3f);
+        GetComponent<AnimationTrigger>().TriggerAnimatoin();
     }
 }

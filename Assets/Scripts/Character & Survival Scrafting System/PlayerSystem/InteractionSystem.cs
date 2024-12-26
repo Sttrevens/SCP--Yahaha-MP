@@ -1,3 +1,5 @@
+using System;
+using Fusion;
 using HighlightPlus;
 using TMPro;
 using UnityEngine;
@@ -49,15 +51,18 @@ namespace LPSurvivalEngine
             UIPlayer = GameObject.Find("UIPlayer");
             interact = UIPlayer.transform.Find("UI/Interact").gameObject;
             interactText = interact.transform.Find("InteractText").GetComponent<TextMeshProUGUI>();
-            GameObject background = UIPlayer.transform.Find("UI/HintPanel/Panel/Background").gameObject;
+            GameObject background  = UIPlayer.transform.Find("UI/HintPanel/Panel/Background").gameObject;
             hintObjectText = background.transform.Find("HintObject").GetComponent<TextMeshProUGUI>();
             hintInteractText = background.transform.Find("HintInteract").GetComponent<TextMeshProUGUI>();
             hintLiftText = background.transform.Find("HintLift").GetComponent<TextMeshProUGUI>();
             crosshairImage = UIPlayer.transform.Find("UI/Crosshair").GetComponent<Image>();
             cam = Camera.main;
             
+            PlayerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();
+            
             if (PlayerInput != null) {
                 interactAction = PlayerInput.actions.FindAction("Interact");
+                interactAction.canceled += OnInteractInput;
             }
 
             crosshairOriginalIcon = crosshairImage.sprite;
@@ -78,20 +83,14 @@ namespace LPSurvivalEngine
 
                 if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
                 {
-                    // 如果新的交互物体和当前物体不同，取消当前物体的高亮
                     if (hit.collider.gameObject != currentInteractGameObject)
                     {
-                        if (hit.collider.gameObject.GetComponent<Rigidbody>() != null)
-                        {
-                            hintLiftText.text = string.Format("Hold {0} to lift", "E");
-                        }
-
                         if (currentInteractGameObject != null)
                         {
                             var previousHighlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
                             if (previousHighlightEffect != null)
                             {
-                                previousHighlightEffect.highlighted = false; // 取消高亮
+                                previousHighlightEffect.highlighted = false; 
                             }
                         }
 
@@ -102,23 +101,18 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    // 如果没有命中任何物体，取消当前物体的高亮
                     if (currentInteractGameObject != null)
                     {
                         var previousHighlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
                         if (previousHighlightEffect != null)
                         {
-                            previousHighlightEffect.highlighted = false; // 取消高亮
+                            previousHighlightEffect.highlighted = false;
                         }
                     }
 
                     currentInteractGameObject = null;
                     currentInteractable = null;
                     interact.gameObject.SetActive(false);
-
-                    hintObjectText.text = "";
-                    hintInteractText.text = "";
-                    hintLiftText.text = "";
                 }
 
                 if (Physics.Raycast(ray, out hit, maxCheckDistance))
@@ -132,6 +126,24 @@ namespace LPSurvivalEngine
                     }
                 }
                 else { crosshairImage.sprite = crosshairOriginalIcon; }
+
+                if (Physics.Raycast(ray, out hit, maxCheckDistance))
+                {
+                    if (hit.collider.gameObject.tag != "Player" && hit.collider.gameObject.GetComponent<Rigidbody>() != null)
+                    {
+                        hintLiftText.text = string.Format("Hold {0} to lift", "E");
+                    }
+                    else
+                    {
+                        hintLiftText.text = "";
+                    }
+                }
+                else
+                {
+                    hintLiftText.text = "";
+                }
+
+
             }
 
             if (currentInteractGameObject != null)
@@ -144,15 +156,16 @@ namespace LPSurvivalEngine
                 else
                 {
                     hintInteractText.text = "";
+                    hintObjectText.text = "";
                 }
             }
             else
             {
                 hintInteractText.text = "";
+                hintObjectText.text = "";
             }
         }
-
-
+        
         void Interaction()
         {
             if (currentInteractable == null)
@@ -175,9 +188,7 @@ namespace LPSurvivalEngine
                 Debug.LogWarning("No HighlightEffect component found on object: " + currentInteractGameObject.name);
             }
         }
-
-
-
+        
         public void OnInteractInput(InputAction.CallbackContext context)
         {
             Debug.Log("Current interactable: " + currentInteractable);
@@ -211,12 +222,25 @@ namespace LPSurvivalEngine
                 if (watchController != null)
                 {  watchController.SetPlayer(this.gameObject);}
 
+                // PickupItem pickupItem = currentInteractGameObject.GetComponent<PickupItem>();
+                // if (pickupItem != null && !pickupItem.IsPickedUp) // 检查物品状态
+                // {
+                //     Debug.Log("调用物品的拾取方法");
+                //     // 调用物品的拾取方法
+                //     pickupItem.RPC_OnPickedUp(Object.StateAuthority);
+                // }
+                
                 currentInteractable.OnInteract();
 
                 currentInteractGameObject = null;
                 currentInteractable = null;
                 interact.gameObject.SetActive(false);
             }
+        }
+
+        private void OnDestroy()
+        {
+            interactAction.canceled -= OnInteractInput;
         }
     }
 

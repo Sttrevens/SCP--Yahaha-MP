@@ -17,17 +17,18 @@ public class Prompt : MonoBehaviour
 
     void Awake()
     {
-     if (instance == null)
+        playerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(this);
         }
-    else
+        else
         {
             Destroy(gameObject); 
         }
 
-         promptPanel.SetActive(false);
+        promptPanel.SetActive(false);
 
         if (playerInput != null)
         {

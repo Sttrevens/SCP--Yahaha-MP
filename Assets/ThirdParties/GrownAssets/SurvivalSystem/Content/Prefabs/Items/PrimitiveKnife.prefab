@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2643663178444052187}
   - component: {fileID: 2643663178444052184}
   - component: {fileID: -4111729443383735710}
+  - component: {fileID: 3619259134645832578}
   m_Layer: 6
   m_Name: PrimitiveKnife
   m_TagString: Untagged
@@ -148,7 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsPickedUp: 0
   item: {fileID: 11400000, guid: c8058de4624ba1146898ff25b00f9bdc, type: 2}
+  isDisplayedItem: 0
 --- !u!114 &-4111729443383735710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,3 +283,21 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
+--- !u!114 &3619259134645832578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753068617891529670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 522280009
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 2643663178444052184}

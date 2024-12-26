@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2968272487872114839}
   - component: {fileID: 7314572610024155500}
   - component: {fileID: -7006243212320591789}
+  - component: {fileID: 2043531230030855576}
   m_Layer: 6
   m_Name: Duct Tape
   m_TagString: Untagged
@@ -96,7 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsPickedUp: 0
   item: {fileID: 11400000, guid: 30d5030ecbfa0d64298aed7be881526c, type: 2}
+  isDisplayedItem: 0
 --- !u!114 &-7006243212320591789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +231,24 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
+--- !u!114 &2043531230030855576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098120819566576103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1344548220
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 7314572610024155500}
 --- !u!1 &8843178340308412944
 GameObject:
   m_ObjectHideFlags: 0

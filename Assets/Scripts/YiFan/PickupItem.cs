@@ -1,40 +1,40 @@
 using Fusion;
-using LPSurvivalEngine;
 using UnityEngine;
 
 public class PickupItem : NetworkBehaviour
 {
-    // 是否被拾取的网络同步状态
-    [Networked, OnChangedRender(nameof(IsPickedUpChanged))] public bool IsPickedUp { get; set; }
-    
-    void IsPickedUpChanged()
-    {
-        if (IsPickedUp)
-        {
-            Debug.Log("OnInteract Invoked");
-            // 物体已被拾取，执行隐藏或其他逻辑
-            GetComponent<ItemObject>().OnInteract();
-        }
-    }
+    [Networked] public bool IsPickedUp { get; set; } // 是否被拾取的网络同步状态
+    [Networked] public PlayerRef Owner { get; set; } // 当前拾取物体的玩家
+
+    // public override void Spawned()
+    // {
+    //     Debug.Log("Spawned PickupItem");
+    //     Object.RequestStateAuthority();
+    // }
 
     private void Update()
     {
         if (IsPickedUp)
         {
-            Debug.Log("OnInteract Invoked");
             // 物体已被拾取，执行隐藏或其他逻辑
-            GetComponent<ItemObject>().OnInteract();
+            Destroy(gameObject);
         }
     }
 
-    public void PickUp()
+    public void PickUp(PlayerRef player)
     {
-        Debug.Log("PickUp Invoked");
-        // if (Object.HasStateAuthority) // 确保只有 State Authority 修改状态
-        // {
-        //     IsPickedUp = true;
-        //     Owner = player; // 记录谁拾取了物体
-        // }
         IsPickedUp = true;
+        Owner = player; // 记录谁拾取了物体
+        Debug.Log($"物品被 {player} 拾取");
+    }
+    
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_OnPickedUp(PlayerRef player)
+    {
+        // 只有 StateAuthority 可以修改网络状态
+        if (Object.HasStateAuthority)
+        {
+            PickUp(player);
+        }
     }
 }

@@ -36,8 +36,8 @@ public class ElevatorLobbyController : MonoBehaviour
     void Start()
     {
         // Ensure all external scenes are disabled initially
-        createRoomScene.SetActive(false);
-        joinRoomScene.SetActive(false);
+        //createRoomScene.SetActive(false);
+        //joinRoomScene.SetActive(false);
         producerListScene.SetActive(false);
         blackScreenCanvas.alpha = 0;
         blackScreenCanvas.gameObject.SetActive(false);

@@ -35,11 +35,13 @@ namespace LPSurvivalEngine
     public GameObject SleepScreen;
     public GameObject Message;
     public TextMeshProUGUI MessageText;
-
+        public GameObject minigamepanel;
+        
     private Animator anim;
     private InputManager inputManager;
+    private MinigameController minigameController;
+    private GameObject player;
 
-        private GameObject player;
 
     public string GetInteractText()
     {
@@ -49,8 +51,14 @@ namespace LPSurvivalEngine
     private void Start()
     {
             //Message = GameObject.FindGameObjectWithTag("Message");
-        //MessageText = Message.GetComponent<TextMeshProUGUI>();
-    }
+            //MessageText = Message.GetComponent<TextMeshProUGUI>();
+            minigameController = minigamepanel.GetComponent<MinigameController>();
+            minigamepanel.SetActive(false);
+            minigameController = minigamepanel.GetComponent<MinigameController>();
+            minigameController.onMinigameEnd += OnMinigameEnd;
+            minigamepanel.SetActive(false);
+
+        }
 
     public void OnInteract()    
     {
@@ -61,9 +69,29 @@ namespace LPSurvivalEngine
             SleepScreen.GetComponent<Animation>().Play("sleep");
 
             player.GetComponent<HealthSystem>().Sleep(sleepVital);
+
             
-            //TimeSystem.instance.time = wakupTime;
+            minigamepanel.SetActive(true);
+
+           
+            if (minigameController != null)
+            {
+                minigameController.StartMinigame();
+            }
+
+    }
+
+        
+    public void OnMinigameEnd(int finalScore)
+    {
           
+            Debug.Log("小游戏结束，得分 = " + finalScore);
+
+            
+            minigamepanel.SetActive(false);
+
+           
+           
     }
 
     /*IEnumerator MessageTime()

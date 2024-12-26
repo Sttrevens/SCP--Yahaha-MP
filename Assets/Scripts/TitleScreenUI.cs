@@ -1,4 +1,5 @@
 using TMPro;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,7 @@ public class TitleScreenUI : MonoBehaviour
 {
     [SerializeField] private GameObject buttonsParent;
     [SerializeField] private TextMeshProUGUI tmpText; // 显示文字的 TMP 对象
+    [SerializeField] private TextMeshProUGUI roomNameText; // 显示房间名字的 TMP 对象
     [SerializeField] private TMP_InputField inputFieldTMP;
 
     // 各按钮对应的文字
@@ -14,9 +16,12 @@ public class TitleScreenUI : MonoBehaviour
     private const string destinationText = "Going to the Destination...";
     public static string roomName;
 
+    public string gameSceneName;
+
     // 初始化
     void Start()
     {
+        roomNameText.text = roomName;
         tmpText.gameObject.SetActive(false); // 默认隐藏 TMP 对象
     }
 
@@ -44,9 +49,6 @@ public class TitleScreenUI : MonoBehaviour
         HandleButtonClick(destinationText);
     }
 
-    public void OnExitButton()
-    { Application.Quit(); }
-
     /// <summary>
     /// 处理按钮点击逻辑
     /// </summary>
@@ -55,8 +57,11 @@ public class TitleScreenUI : MonoBehaviour
     {
         HideAllButtons(); // 隐藏所有按钮
         ShowText(displayText); // 显示对应文字
-        roomName = inputFieldTMP.text;
-        SceneManager.LoadScene("[YiFan]PreDesignedLevel");
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            roomName = inputFieldTMP.text;
+            SceneManager.LoadScene(gameSceneName);
+        }
     }
 
     /// <summary>

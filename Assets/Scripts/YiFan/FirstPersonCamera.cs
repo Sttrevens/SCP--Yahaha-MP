@@ -15,7 +15,7 @@ public class FirstPersonCamera : MonoBehaviour
         {
             return;
         }
- 
+        
         transform.position = Target.position;
         transform.position += new Vector3(0,Height,0);
  

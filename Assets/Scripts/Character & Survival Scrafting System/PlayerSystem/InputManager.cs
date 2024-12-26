@@ -13,7 +13,7 @@ namespace LPSurvivalEngine
         public Vector2 Look { get; private set; }
         public bool Run { get; private set; }
         public bool Jump { get; private set; }
-        // ���������ڱ�ʾ�¶�״̬�����ԣ��ⲿ�ű��ɻ�ȡ��ֵ�ж��Ƿ������¶׼�
+        
         public bool Crouch { get; private set; }
         public bool AttackTwoHand { get; private set; }
         public bool AttackOneHand { get; private set; }
@@ -27,7 +27,7 @@ namespace LPSurvivalEngine
         private InputAction slotSelectAction;
         private InputAction attackActionTwoHand;
         private InputAction attackActionOneHand;
-        // ���������ڻ�ȡ�¶װ��������InputAction
+
         private InputAction crouchAction;
         private InputAction dropAction;
         private InputAction useAction;
@@ -123,8 +123,16 @@ namespace LPSurvivalEngine
         //Menu Related
         private void OnExit(InputAction.CallbackContext context)
         {
+            if (!ExitMenu.instance.isPaused)
+            {
             Debug.Log("Click Escape");
             ExitMenu.instance.ShowExitMenu();
+                ExitMenu.instance.isPaused = true;
+        }
+            else
+            {
+                ExitMenu.instance.HideExitMenu();
+            }
         }
 
         private void OnEnable()
