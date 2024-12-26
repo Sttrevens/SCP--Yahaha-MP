@@ -3516,6 +3516,7 @@ GameObject:
   - component: {fileID: -505270265219327843}
   - component: {fileID: -8306276541168044105}
   - component: {fileID: 6281964538788084961}
+  - component: {fileID: 3998850611701791545}
   m_Layer: 8
   m_Name: '[YiFan]Character'
   m_TagString: Player
@@ -3828,6 +3829,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3998850611701791545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5438d3fff0b86734bbf350934e026a00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropPosition: {fileID: 3898274080246831254}
+  playerController: {fileID: 6515430458572477251}
 --- !u!1 &5424040365844731508
 GameObject:
   m_ObjectHideFlags: 0
