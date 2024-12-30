@@ -53,6 +53,8 @@ namespace LPSurvivalEngine
             DropWieldable();
             if (item.wieldablePrefab.GetComponent<Flashlight>() == null)
             {
+                GameObject player = GameObject.Find("CurrentPlayer");
+                wieldablesPosition = player.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
                 currentWieldable = Instantiate(item.wieldablePrefab, wieldablesPosition).GetComponent<Wieldable>();
                 Debug.Log("EquipNewItem : " + item.wieldablePrefab.name);
             }

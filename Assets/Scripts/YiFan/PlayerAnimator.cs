@@ -10,6 +10,7 @@ public class PlayerAnimator : NetworkBehaviour
     private int _lastVisibleJump;
     private int _lastVisiblePickup;
     private int _lastVisibleWield;
+    private int _lastVisibleTwoHandWield;
 
     // NetworkBehaviour INTERFACE
     public override void Spawned()
@@ -17,6 +18,7 @@ public class PlayerAnimator : NetworkBehaviour
         _lastVisibleJump = _animatorManager.JumpCount;
         _lastVisiblePickup = _animatorManager.PickupCount;
         _lastVisibleWield = _animatorManager.WieldCount;
+        _lastVisibleTwoHandWield = _animatorManager.TwoHandWieldCount;
     }
 
     public override void Render()
@@ -61,9 +63,19 @@ public class PlayerAnimator : NetworkBehaviour
             // Cancel Pickup
         }
         
+        if (_lastVisibleTwoHandWield < _animatorManager.TwoHandWieldCount)
+        {
+            _animator.SetTrigger("TwoHandAttack");
+        }
+        else if (_lastVisibleTwoHandWield > _animatorManager.TwoHandWieldCount)
+        {
+            // Cancel Pickup
+        }
+        
         _lastVisibleJump = _animatorManager.JumpCount;
         _lastVisiblePickup = _animatorManager.PickupCount;
         _lastVisibleWield = _animatorManager.WieldCount;
+        _lastVisibleTwoHandWield = _animatorManager.TwoHandWieldCount;
         _animator.SetFloat("Speed", _animatorManager.Speed);
     }
 }

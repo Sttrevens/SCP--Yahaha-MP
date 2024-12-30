@@ -77,7 +77,8 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    anim.SetTrigger("TwoHandAttack");
+                    // anim.SetTrigger("TwoHandAttack");
+                    player.GetComponent<AnimatorManager>().TwoHandWieldCount++;
                 }
                 Invoke("OnCanAttack", hitRate);
                 //PlayerController.instance.SetIsAttacking(true);
