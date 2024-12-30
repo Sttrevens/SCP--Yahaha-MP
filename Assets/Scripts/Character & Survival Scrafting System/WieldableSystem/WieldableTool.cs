@@ -99,6 +99,7 @@ namespace LPSurvivalEngine
 
         public void OnHit()
         {
+            Debug.Log("OnHit function is called!");
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
             RaycastHit hit;
@@ -143,6 +144,25 @@ namespace LPSurvivalEngine
                 {
                     hit.collider.GetComponent<hitEffect>().Hit(damage,hit.point,hit.normal);
                 }
+            }
+        }
+
+        private bool wasHitLastFrame = false;
+        private RaycastHit lastHit;
+
+        private void OnDrawGizmos()
+        {
+            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+            // 绘制射线（绿色表示射线本身，用于可视化射线检测的起始方向和长度）
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(ray.origin, ray.direction * hitDistance);
+
+            if (wasHitLastFrame)
+            {
+                // 在命中点绘制一个红色小球，用于标记命中的位置
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere(lastHit.point, 0.1f);
             }
         }
     }

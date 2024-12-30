@@ -9,6 +9,9 @@ public class UIAssignments : MonoBehaviour
     public Transform dropPosition;
 
     public PlayerController playerController;
+
+    public Transform wieldPostition;
+    public Transform flashlightRootPosition;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -22,6 +25,9 @@ public class UIAssignments : MonoBehaviour
         Inventory.instance.vitals = GetComponent<HealthSystem>();
 
         ExitMenu.instance.playerController = playerController;
+
+        WieldableManager.instance.wieldablesPosition = wieldPostition;
+        WieldableManager.instance.flashlightPosition = flashlightRootPosition;
     }
 
     // Update is called once per frame

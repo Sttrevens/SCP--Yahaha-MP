@@ -3537,6 +3537,7 @@ GameObject:
   - component: {fileID: -8306276541168044105}
   - component: {fileID: 7358732985660825714}
   - component: {fileID: 4082337287283386946}
+  - component: {fileID: 9088842401818056780}
   m_Layer: 8
   m_Name: '[YiFan]Character'
   m_TagString: Player
@@ -3845,6 +3846,22 @@ MonoBehaviour:
   _Speed: 0
   _PickupCount: 0
   _WieldCount: 0
+--- !u!114 &9088842401818056780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f3b221c74484a9499f7c00acb738f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropPosition: {fileID: 3898274080246831254}
+  playerController: {fileID: 6515430458572477251}
+  wieldPostition: {fileID: 5814555597588255667}
+  flashlightRootPosition: {fileID: 4692740114847110545}
 --- !u!1 &5424040365844731508
 GameObject:
   m_ObjectHideFlags: 0
