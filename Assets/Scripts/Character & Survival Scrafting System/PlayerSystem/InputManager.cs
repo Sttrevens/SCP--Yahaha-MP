@@ -55,7 +55,7 @@ namespace LPSurvivalEngine
             lookAction.performed += onLook;
             runAction.performed += onRun;
             jumpAction.performed += onJump;
-            slotSelectAction.performed += OnSelectSlot;
+            slotSelectAction.canceled += OnSelectSlot;
 
             dropAction.started += OnDrop;
             useAction.started += OnUse;

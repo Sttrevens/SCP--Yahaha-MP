@@ -27,55 +27,44 @@ namespace LPSurvivalEngine
         public bool isOneHanded;
         [Space]
 
-    [Space]
-    [Header("Hit Settings")]
-    [Space]
+        [Space]
+        [Header("Hit Settings")]
+        [Space]
 
-    public float hitRate;
+        public float hitRate;
         public float hitCoolDownTime;
-    public float hitDistance;
+        public float hitDistance;
     
-    [Space]
-    [Header("Combat")] 
-    [Space]
+        [Space]
+        [Header("Combat")] 
+        [Space]
     
-    public WieldableType wieldableType;
-    public bool doesDealDamage;
-    public int damage;
+        public WieldableType wieldableType;
+        public bool doesDealDamage;
+        public int damage;
 
-    [Space]
-    [Header("Gathering")]
-    [Space]
+        [Space]
+        [Header("Gathering")]
+        [Space]
 
-    public bool doesGatherresources;
+        public bool doesGatherresources;
 
-    [Space]
-    [Header("Assignments")]
-    [Space]
+        [Space]
+        [Header("Assignments")]
+        [Space]
     
-    public Animator anim;
-    public bool hitting;
+        public Animator anim;
+        public bool hitting;
     
-    private Camera cam;
+        private Camera cam;
+        private GameObject player;
 
-
-    private void Awake()
-    {
-            NetworkObject[] networkObjects = FindObjectsOfType<NetworkObject>();
-            foreach (NetworkObject networkObject in networkObjects)
-            {
-                if (networkObject.HasStateAuthority)
-                {
-                    // 如果该NetworkObject具有输入权限，则认为是当前操作的玩家对象
-                    GameObject currentPlayerObject = networkObject.gameObject;
-                    anim = currentPlayerObject.GetComponent<Animator>();
-                    Debug.Log("当前操作的玩家对象是：" + currentPlayerObject.name);
-                    break;
-                }
-            }
-
+        private void Awake()
+        {
+            player = GameObject.Find("CurrentPlayer");
+            anim = player.GetComponentInChildren<Animator>();
             cam = Camera.main;
-    }
+        }
 
         public override void OnAttackInput()
         {
@@ -84,7 +73,7 @@ namespace LPSurvivalEngine
                 hitting = true;
                 if (isOneHanded)
                 {
-                    anim.SetTrigger("OneHandAttack");
+                    player.GetComponent<AnimatorManager>().WieldCount++;
                 }
                 else
                 {
@@ -109,17 +98,17 @@ namespace LPSurvivalEngine
         }
 
         public void OnHit()
-    {
-        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, hitDistance))
         {
-            if (doesGatherresources && hit.collider.GetComponent<Resources>())
+            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, hitDistance))
             {
-                hit.collider.GetComponent<Resources>().Gather(hit.point, hit.normal);
-            }
+                if (doesGatherresources && hit.collider.GetComponent<Resources>())
+                {
+                    hit.collider.GetComponent<Resources>().Gather(hit.point, hit.normal);
+                }
 
                 if (doesDealDamage)
                 {

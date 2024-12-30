@@ -10,7 +10,6 @@ namespace LPSurvivalEngine
 {
     public class InteractionSystem : MonoBehaviour
     {
-        public GameObject UIPlayer;
         [Space]
         [Header("Interaction System")]
         [Space]
@@ -40,7 +39,7 @@ namespace LPSurvivalEngine
         private IInteractable currentInteractable;
         private Camera cam;
 
-        public PlayerInput PlayerInput;
+        private PlayerInput PlayerInput;
         private InputAction interactAction;
 
         public Image crosshairImage;
@@ -48,14 +47,6 @@ namespace LPSurvivalEngine
         private Sprite crosshairOriginalIcon;
         private void Start()
         {
-            UIPlayer = GameObject.Find("UIPlayer");
-            interact = UIPlayer.transform.Find("UI/Interact").gameObject;
-            interactText = interact.transform.Find("InteractText").GetComponent<TextMeshProUGUI>();
-            GameObject background  = UIPlayer.transform.Find("UI/HintPanel/Panel/Background").gameObject;
-            hintObjectText = background.transform.Find("HintObject").GetComponent<TextMeshProUGUI>();
-            hintInteractText = background.transform.Find("HintInteract").GetComponent<TextMeshProUGUI>();
-            hintLiftText = background.transform.Find("HintLift").GetComponent<TextMeshProUGUI>();
-            crosshairImage = UIPlayer.transform.Find("UI/Crosshair").GetComponent<Image>();
             cam = Camera.main;
             
             PlayerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();

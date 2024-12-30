@@ -48,12 +48,12 @@ namespace LPSurvivalEngine
         {
             Cursor.lockState = CursorLockMode.Locked;
 
-            hasAnimator = TryGetComponent<Animator>(out animator);
-            rig = GetComponent<Rigidbody>();
-            inputManager = GetComponent<InputManager>();
-            
-            jumping = Animator.StringToHash("Jump");
-            grounding = Animator.StringToHash("Grounded");
+            // hasAnimator = TryGetComponent<Animator>(out animator);
+            // rig = GetComponent<Rigidbody>();
+            // inputManager = GetComponent<InputManager>();
+            //
+            // jumping = Animator.StringToHash("Jump");
+            // grounding = Animator.StringToHash("Grounded");
         }
 
         private void SetAnimationGrounding()

@@ -3532,13 +3532,14 @@ GameObject:
   - component: {fileID: 8065060222564523672}
   - component: {fileID: 2747722033361472396}
   - component: {fileID: 6515430458572477251}
+  - component: {fileID: 6556798091325770318}
   - component: {fileID: -2697029352120812069}
   - component: {fileID: -505270265219327843}
   - component: {fileID: -8306276541168044105}
   - component: {fileID: 7358732985660825714}
   - component: {fileID: 4082337287283386946}
   m_Layer: 8
-  m_Name: '[YiFan]Character'
+  m_Name: '[YiFan]Character 1'
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3560,7 +3561,6 @@ Transform:
   - {fileID: 3898274080246831254}
   - {fileID: 4992387614600776163}
   - {fileID: 8426809253871604094}
-  - {fileID: 4799485526963543023}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7944234109867406989
@@ -3646,7 +3646,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 1236573573
+  SortKey: 3678761189
   ObjectInterest: 1
   Flags: 786433
   NestedObjects: []
@@ -3730,6 +3730,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4617
   cursor: 1
+--- !u!114 &6556798091325770318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dfaf428c0623724c8ebc2f7b95f371a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWieldable: {fileID: 0}
+  wieldablesPosition: {fileID: 5814555597588255667}
+  flashlightPosition: {fileID: 4692740114847110545}
+  PlayerInput: {fileID: 0}
 --- !u!114 &-2697029352120812069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4993,37 +5009,6 @@ Transform:
   - {fileID: 5195564354905725250}
   m_Father: {fileID: 7142360513741280629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6762424086658246913
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4799485526963543023}
-  m_Layer: 8
-  m_Name: jointItemR
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4799485526963543023
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6762424086658246913}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.68866146, y: -0.013819541, z: -0.10895967, w: 0.7167163}
-  m_LocalPosition: {x: 0.71193844, y: 1.1420323, z: -0.12479013}
-  m_LocalScale: {x: 0.80000013, y: 0.8000001, z: 0.80000013}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6059926770793324385}
-  m_LocalEulerAnglesHint: {x: -5.146, y: 155.316, z: -15.673}
 --- !u!1 &6965206743958531228
 GameObject:
   m_ObjectHideFlags: 0
@@ -6095,7 +6080,7 @@ GameObject:
   - component: {fileID: 5814555597588255667}
   m_Layer: 8
   m_Name: jointItemR
-  m_TagString: Untagged
+  m_TagString: jointItemR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

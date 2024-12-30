@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace LPSurvivalEngine
         [Space]
 
         public ItemDatabase item;
+
         // public bool isDisplayedItem = false;
 
         public string GetInteractText()
@@ -35,7 +37,7 @@ namespace LPSurvivalEngine
             {
                 Debug.Log("调用物品的拾取方法");
                 // 调用物品的拾取方法
-                RPC_OnPickedUp(Object.StateAuthority);
+                RPC_OnPickedUp(Runner.LocalPlayer);
             }
             Inventory.instance.AddItem(item);
         }
@@ -53,8 +55,11 @@ namespace LPSurvivalEngine
         {
             IsPickedUp = true;
             Owner = player; // 记录谁拾取了物体
+            if (Runner.TryGetPlayerObject(player, out var playerObject))
+            {
+                playerObject.GetComponent<AnimatorManager>().PickupCount++;
+            }
             Debug.Log($"物品被 {player} 拾取");
-
             // if (!isDisplayedItem)
             // {
             //     Destroy(gameObject);

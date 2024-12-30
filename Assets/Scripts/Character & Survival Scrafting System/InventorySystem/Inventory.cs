@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using System;
+using Fusion;
 using UnityEngine.SceneManagement;
 
 namespace LPSurvivalEngine
@@ -281,14 +282,14 @@ namespace LPSurvivalEngine
         public void EquipWieldableItem()
         {
             if (InventorySlots[currentWieldableIndex].equipped)
+            {
+                DisableItem(currentWieldableIndex);
+                if (currentWieldableIndex == selectedItemIndex)  
                 {
-                    DisableItem(currentWieldableIndex);
-                    if (currentWieldableIndex == selectedItemIndex)  
-                    {
-                        Prompt.instance.CustomPrompt(String.Format("{0} unequipped!", selectedItem.item.name)); //显示提示
-                        return; 
-                    }
+                    Prompt.instance.CustomPrompt(String.Format("{0} unequipped!", selectedItem.item.name)); //显示提示
+                    return; 
                 }
+            }
 
             Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
 
