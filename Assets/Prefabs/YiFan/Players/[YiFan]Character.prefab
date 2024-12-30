@@ -3711,9 +3711,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 0}
-  PlayerSpeed: 2
+  PlayerSpeed: 4
   JumpForce: 5
   GravityValue: -9.81
+  RotationSpeed: 5
+  cameraRoot: {fileID: 4992387614600776163}
 --- !u!114 &6515430458572477251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3846,6 +3848,7 @@ MonoBehaviour:
   _Speed: 0
   _PickupCount: 0
   _WieldCount: 0
+  _TwoHandWieldCount: 0
 --- !u!114 &9088842401818056780
 MonoBehaviour:
   m_ObjectHideFlags: 0

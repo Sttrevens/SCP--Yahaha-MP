@@ -186,19 +186,7 @@ MonoBehaviour:
       m_Calls: []
   OnConnectedToServer:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6515430458572477251, guid: 16a0ef0fa65fa414baac73dc09b1c775, type: 3}
-        m_TargetAssemblyTypeName: LPSurvivalEngine.PlayerController, Assembly-CSharp
-        m_MethodName: SpawnPlayer
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1522306624}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDisconnectedFromServer:
     m_PersistentCalls:
       m_Calls: []
@@ -592,7 +580,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2065669007698585286, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
       propertyPath: Height
-      value: 1.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8422162903330514954, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -642,12 +630,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8422162903330514957, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
+      propertyPath: m_ShowToolkit
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8422162903330514955, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
-      insertIndex: -1
+      insertIndex: 5
       addedObject: {fileID: 108215805}
   m_SourcePrefab: {fileID: 100100000, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
 --- !u!1 &399250661 stripped
@@ -1128,6 +1120,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1958575449}
+    - target: {fileID: 6276631918570832082, guid: 0934f79494a39cd4e9e37de87884fe37, type: 3}
+      propertyPath: Flags
+      value: 262145
+      objectReference: {fileID: 0}
     - target: {fileID: 6318751198806317191, guid: 0934f79494a39cd4e9e37de87884fe37, type: 3}
       propertyPath: m_Name
       value: '[Game]Lobby'
@@ -1831,6 +1827,11 @@ PrefabInstance:
     - target: {fileID: 2246569319962248407, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940198896836578809, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
+      propertyPath: m_text
+      value: "SCP: 5000 Demo. Version 0.1.241230.01.\nFor testing purposes only.
+        \nThe final quality of the game is not represented."
       objectReference: {fileID: 0}
     - target: {fileID: 3241081266371055873, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_AnchorMax.y
