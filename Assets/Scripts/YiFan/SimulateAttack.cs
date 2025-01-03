@@ -6,7 +6,7 @@ public class SimulateAttack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            GetComponent<EnemyAI>().DealDamgeRpc(10f);
+            GetComponent<EnemyAI>().TakeDamage(10f);
         }
     }
 }

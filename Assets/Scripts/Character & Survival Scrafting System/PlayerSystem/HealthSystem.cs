@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -8,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace LPSurvivalEngine
 {
-    public class HealthSystem : MonoBehaviour, IDamagable
+    public class HealthSystem : NetworkBehaviour, IDamagable
     {
         //public static HealthSystem instance{get;private set;}
 
@@ -18,6 +19,8 @@ namespace LPSurvivalEngine
         public Vitals hunger;
         public Vitals thirst;
         public Vitals sleep;
+        
+        [Networked] public float playerHealth { get; set; } = 100f;
 
         [Header("Health System")]
 
@@ -168,6 +171,10 @@ namespace LPSurvivalEngine
             hunger.VitalBar.fillAmount = hunger.GetPercentage();
             thirst.VitalBar.fillAmount = thirst.GetPercentage();
             sleep.VitalBar.fillAmount = sleep.GetPercentage();
+            if (playerHealth != health.currentValue)
+            {
+                SynchronousPlayerHealthRpc();
+            }
 
         }
 
@@ -222,12 +229,18 @@ namespace LPSurvivalEngine
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("Respawn");
         }
-     
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SynchronousPlayerHealthRpc()
+        {
+            Debug.Log("Received DealDamageRpc on StateAuthority, modifying Networked variable");
+            playerHealth = health.currentValue;
+        }
     }
 
     [System.Serializable]
     public class Vitals
-    {   
+    {
         [HideInInspector]
         public float currentValue;
         public float maxValue;

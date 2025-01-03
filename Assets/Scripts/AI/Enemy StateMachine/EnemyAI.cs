@@ -183,7 +183,7 @@ public class EnemyAI : NetworkBehaviour
         {
             // TODO:处理被击打血量同步
             // currentHealth -= damage;
-            DealDamgeRpc(damage);
+            DealDamageRpc(damage);
             if (currentHealth <= 0)
             {
                 if (!isFlyingEnemy)
@@ -419,9 +419,8 @@ public class EnemyAI : NetworkBehaviour
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void DealDamgeRpc(float damage)
+    public void DealDamageRpc(float damage)
     {
-        Debug.Log("Received DealDamageRpc on StateAuthority, modifying Networked variable");
         currentHealth -= damage;
     }
 }
