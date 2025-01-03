@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5509525190437173545}
   - component: {fileID: 5509525190437173550}
   - component: {fileID: -1840706149055924177}
+  - component: {fileID: -8504563639276482975}
   m_Layer: 6
   m_Name: MedicalBox
   m_TagString: Untagged
@@ -148,7 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsPickedUp: 0
   item: {fileID: 11400000, guid: 5c0718598897d432abb8236accb824c4, type: 2}
+  isDisplayedItem: 0
 --- !u!114 &-1840706149055924177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,7 +223,19 @@ MonoBehaviour:
   glowOptimalBlit: 1
   glowBlitDebug: 0
   glowBlendPasses: 1
-  glowPasses: []
+  glowPasses:
+  - offset: 4
+    alpha: 0.1
+    color: {r: 0.64, g: 1, b: 0, a: 1}
+  - offset: 3
+    alpha: 0.2
+    color: {r: 0.64, g: 1, b: 0, a: 1}
+  - offset: 2
+    alpha: 0.3
+    color: {r: 0.64, g: 1, b: 0, a: 1}
+  - offset: 1
+    alpha: 0.4
+    color: {r: 0.64, g: 1, b: 0, a: 1}
   glowIgnoreMask: 0
   innerGlow: 0
   innerGlowWidth: 1
@@ -268,3 +283,21 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
+--- !u!114 &-8504563639276482975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5133561880163558293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2851289199
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5509525190437173550}

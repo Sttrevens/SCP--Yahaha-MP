@@ -36,7 +36,7 @@ public class StartGame : MonoBehaviour
     {
         blackScreenCanvas.gameObject.SetActive(true);
 
-        float duration = 3f; // Fade duration in seconds
+        float duration = 2f; // Fade duration in seconds
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -57,6 +57,8 @@ public class StartGame : MonoBehaviour
         }
 
         Inventory.instance.UpdateUI();
+
+        yield return new WaitForSeconds(2f);
 
         StartCoroutine(FadeFromBlack());
     }

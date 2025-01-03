@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6441796444877781859}
   - component: {fileID: 7515638897789826584}
   - component: {fileID: 7672270754932073858}
+  - component: {fileID: 6092461652758934691}
   m_Layer: 6
   m_Name: power unit_rodin
   m_TagString: Untagged
@@ -96,7 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsPickedUp: 0
   item: {fileID: 11400000, guid: 49bc59cbc126f2e4b89ac88383c1ba34, type: 2}
+  isDisplayedItem: 0
 --- !u!114 &7672270754932073858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +231,24 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
+--- !u!114 &6092461652758934691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8440707628185488915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 4261546478
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 7515638897789826584}
 --- !u!1 &9012112716429890406
 GameObject:
   m_ObjectHideFlags: 0

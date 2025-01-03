@@ -9,41 +9,34 @@ namespace LPSurvivalEngine
 {
     public class BuildingUI : MonoBehaviour
     {
-    [Space]
-    [Header("Building UI")]
-    [Space]
-    [Space]
-    
-    [Space]
     [Header("Building")]
-    [Space]
-
+    
     public Building building;
     public Image icon;
     
-    [Space]
     [Header("Price")]
-    [Space]
 
     public Image[] resourceCosts;
 
-    [Space]
     [Header("Text Settings")]
-    [Space]
 
     public TextMeshProUGUI buildingName;
 
-    [Space]
-    [Space]
-
+    [Header("Visible Settings")]
+    public bool isUnlocked = false;
+    public GameObject ItemPanel;
+    public GameObject LockedPanel;
+    
     public Color canBuildColor;
     public Color cannotBuildColor;
 
     private bool canBuild;
-    
+
     
     void OnEnable()
     {
+        LockedPanel.SetActive(!isUnlocked);
+        ItemPanel.SetActive(isUnlocked);
         UpdateCanCraft();
     }
 
@@ -65,12 +58,12 @@ namespace LPSurvivalEngine
             {
                 resourceCosts[x].gameObject.SetActive(false);
             }
-            
         }
     }
 
     public void UpdateCanCraft()
     {
+
         canBuild = true;
 
         for (int x = 0; x < building.cost.Length; x++)
@@ -85,11 +78,11 @@ namespace LPSurvivalEngine
 
     }
 
+
     public void OnClickButton()
     {
         if (canBuild)
         {
-                Debug.Log("fake");
             BuildingSystem.instance.SetNewBuildingRecipe(building);
         }
 

@@ -39,7 +39,6 @@ public class AnimationTrigger : MonoBehaviour
 
     public void TriggerAnimatoin()
     {
-        Debug.Log("Hehe:" + isOpen);
         if (isOpen != true)
         {
             anim[anim.clip.name].normalizedTime = 0;

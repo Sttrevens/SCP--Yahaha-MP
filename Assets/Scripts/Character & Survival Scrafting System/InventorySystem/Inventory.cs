@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEditor;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-using UnityEngine.PlayerLoop;
 using System;
+using Fusion;
 using UnityEngine.SceneManagement;
 
 namespace LPSurvivalEngine
@@ -35,16 +30,25 @@ namespace LPSurvivalEngine
         public UnityEvent onOpenInventory;
         public UnityEvent onCloseInventory;
         public UnityEvent onCloseContainerInventory;
+        
+        [Header("Input")]
+        public PlayerInput PlayerInput;
+        private InputAction inventoryAction;
 
         private int selectedItemIndex;
-        private PlayerController playerController;
-        private HealthSystem vitals;
+        [HideInInspector] public PlayerController playerController;
+        [HideInInspector] public HealthSystem vitals;
         [HideInInspector]public ItemSlot selectedItem;
         private int currentWieldableIndex;
 
 
         private void Awake()
         {
+            //PlayerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();
+            
+            if (PlayerInput != null) {
+                inventoryAction = PlayerInput.actions.FindAction("Inventory");
+            }
             if (instance == null)
             {
                 instance = this;
@@ -59,11 +63,13 @@ namespace LPSurvivalEngine
         private void OnEnable()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
+            inventoryAction.started += OnInventoryButton;
         }
 
         private void OnDisable()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            inventoryAction.started -= OnInventoryButton;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -89,7 +95,6 @@ namespace LPSurvivalEngine
             //ClearSelectedItemWindow();
 
             playerController = PlayerController.instance;
-            vitals = HealthSystem.instance;
 
             if (InventorySlots == null || InventorySlots.Length == 0)
             {
@@ -140,14 +145,12 @@ namespace LPSurvivalEngine
         {
             return inventoryWindow.activeInHierarchy;
         }
-
-        // ������Ʒ������
+        
         public void AddItem(ItemDatabase item)
         {
             if (item.canStackItem)
             {
                 ItemSlot slotToStackTo = GetItemstack(item);
-
                 if (slotToStackTo != null)
                 {
                     slotToStackTo.quantity++;
@@ -191,7 +194,6 @@ namespace LPSurvivalEngine
             }
         }
 
-
         ItemSlot GetItemstack(ItemDatabase item) 
         {
             for (int x = 0; x < slots.Length; x++)
@@ -204,7 +206,6 @@ namespace LPSurvivalEngine
             return null;
         }
 
-
         ItemSlot GetEmptySlot()
         {
             for (int x = 0; x < slots.Length; x++)
@@ -216,7 +217,6 @@ namespace LPSurvivalEngine
             }
             return null;
         }
-
 
         public void SelectItem(int index)
         {
@@ -240,7 +240,6 @@ namespace LPSurvivalEngine
 
         void UseConsumableItem()
         {
-            Prompt.instance.UseItemPrompt(selectedItem.item); //显示提示     
             for (int x = 0; x < selectedItem.item.consumables.Length; x++)
             {
                 switch (selectedItem.item.consumables[x].type)
@@ -252,7 +251,8 @@ namespace LPSurvivalEngine
                 }
             }
             RemoveSelectedItem();
-            
+            Prompt.instance.UseItemPrompt(selectedItem.item);
+
         }
 
         // public void OnDisableButton()
@@ -282,14 +282,14 @@ namespace LPSurvivalEngine
         public void EquipWieldableItem()
         {
             if (InventorySlots[currentWieldableIndex].equipped)
+            {
+                DisableItem(currentWieldableIndex);
+                if (currentWieldableIndex == selectedItemIndex)  
                 {
-                    DisableItem(currentWieldableIndex);
-                    if (currentWieldableIndex == selectedItemIndex)  
-                    {
-                        Prompt.instance.CustomPrompt(String.Format("{0} unequipped!", selectedItem.item.name)); //显示提示
-                        return; 
-                    }
+                    Prompt.instance.CustomPrompt(String.Format("{0} unequipped!", selectedItem.item.name)); //显示提示
+                    return; 
                 }
+            }
 
             Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
 
@@ -359,7 +359,6 @@ namespace LPSurvivalEngine
 
         public void UpdateContainerUI()
         {
-            // ���±�������Ʒ��
             for (int i = 0; i < slots.Length; i++)
             {
                 if (slots[i].item != null)
@@ -371,13 +370,11 @@ namespace LPSurvivalEngine
                     InventorySlots[i].Clear();
                 }
             }
-
-            // �������ӵ���Ʒ��
+            
             for (int i = 0; i < currentContainerInventory.containerSlots.Length; i++)
             {
                 if (currentContainerInventory.containerSlots[i].item != null)
                 {
-                    // ��������һ�������ڱ�����λUI�������������ʾ�����е���Ʒ
                     containerSlots[i].Set(currentContainerInventory.containerSlots[i]);
                 }
                 else
@@ -386,8 +383,7 @@ namespace LPSurvivalEngine
                 }
             }
         }
-
-        // ����Ʒ�ӱ���ת�Ƶ�����
+        
         public void TransferItemToContainer(int inventoryIndex)
         {
             ItemSlot inventorySlot = slots[inventoryIndex];
@@ -402,8 +398,7 @@ namespace LPSurvivalEngine
                 UpdateContainerUI();
             }
         }
-
-        // ����Ʒ������ת�Ƶ�����
+        
         public void TransferItemToInventory(int containerIndex)
         {
             ItemSlot containerSlot = currentContainerInventory.containerSlots[containerIndex];

@@ -16,7 +16,7 @@ namespace LPSurvivalEngine
       
 
       public int index;
-      [HideInInspector]
+      
       public bool equipped;
       
       [SerializeField]
@@ -38,6 +38,7 @@ namespace LPSurvivalEngine
       public void Clear()
       {
          currentslot = null;
+         equipped = false;
          icon.gameObject.SetActive(false);
          quantityText.text = string.Empty;
       }
