@@ -50,6 +50,8 @@ namespace LPSurvivalEngine
         cam = Camera.main;
 
             placementLayerMask = LayerMask.GetMask("Terrain", "Floor");
+
+            inventory = Inventory.instance.gameObject;
         }
 
     /*void Start ()
@@ -84,15 +86,15 @@ namespace LPSurvivalEngine
         if (currentBuildingPreview != null)
             Destroy(currentBuildingPreview.gameObject);
 
-        inventory.SetActive(true);
-        PlayerController.instance.ToggleCursor(true);
+            //inventory.GetComponent<Inventory>().Toggle();
+        //PlayerController.instance.ToggleCursor(true);
     }
 
     public void SetNewBuildingRecipe (Building item)
     {
         buildingObject = item;
-        inventory.SetActive(false);
-        PlayerController.instance.ToggleCursor(false);
+            inventory.GetComponent<Inventory>().Toggle();
+            PlayerController.instance.ToggleCursor(false);
 
         currentBuildingPreview = Instantiate(item.previewPrefab).GetComponent<BuildingPlacer>();
     }

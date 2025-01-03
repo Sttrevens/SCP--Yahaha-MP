@@ -1,7 +1,6 @@
-using HighlightPlus;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Fusion;
+using HighlightPlus;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,36 +10,36 @@ namespace LPSurvivalEngine
 {
     public class InteractionSystem : MonoBehaviour
     {
-    [Space]
-    [Header("Interaction System")]
-    [Space]
-    [Space]
+        [Space]
+        [Header("Interaction System")]
+        [Space]
+        [Space]
 
-    [Space]
-    [Header("Settings")]
-    [Space]
+        [Space]
+        [Header("Settings")]
+        [Space]
 
-    public float checkRate = 0.05f;
-    private float lastCheckTime;
-    public float maxCheckDistance;
+        public float checkRate = 0.05f;
+        private float lastCheckTime;
+        public float maxCheckDistance;
 
-    [Space]
-    [Header("Assignments")]
-    [Space]
+        [Space]
+        [Header("Assignments")]
+        [Space]
 
-    public LayerMask layerMask;
-    public GameObject interact;
-    public TextMeshProUGUI interactText;
+        public LayerMask layerMask;
+        public GameObject interact;
+        public TextMeshProUGUI interactText;
         public TextMeshProUGUI hintObjectText;
         public TextMeshProUGUI hintInteractText;
         public TextMeshProUGUI hintLiftText;
 
 
         private GameObject currentInteractGameObject;
-    private IInteractable currentInteractable;
-    private Camera cam;
+        private IInteractable currentInteractable;
+        private Camera cam;
 
-        public PlayerInput PlayerInput;
+        private PlayerInput PlayerInput;
         private InputAction interactAction;
 
         public Image crosshairImage;
@@ -49,9 +48,12 @@ namespace LPSurvivalEngine
         private void Start()
         {
             cam = Camera.main;
-
+            
+            PlayerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();
+            
             if (PlayerInput != null) {
                 interactAction = PlayerInput.actions.FindAction("Interact");
+                interactAction.canceled += OnInteractInput;
             }
 
             crosshairOriginalIcon = crosshairImage.sprite;
@@ -72,7 +74,6 @@ namespace LPSurvivalEngine
 
                 if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
                 {
-                    // 如果新的交互物体和当前物体不同，取消当前物体的高亮
                     if (hit.collider.gameObject != currentInteractGameObject)
                     {
                         if (currentInteractGameObject != null)
@@ -80,7 +81,7 @@ namespace LPSurvivalEngine
                             var previousHighlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
                             if (previousHighlightEffect != null)
                             {
-                                previousHighlightEffect.highlighted = false; // 取消高亮
+                                previousHighlightEffect.highlighted = false; 
                             }
                         }
 
@@ -91,13 +92,12 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    // 如果没有命中任何物体，取消当前物体的高亮
                     if (currentInteractGameObject != null)
                     {
                         var previousHighlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
                         if (previousHighlightEffect != null)
                         {
-                            previousHighlightEffect.highlighted = false; // 取消高亮
+                            previousHighlightEffect.highlighted = false;
                         }
                     }
 
@@ -117,35 +117,46 @@ namespace LPSurvivalEngine
                     }
                 }
                 else { crosshairImage.sprite = crosshairOriginalIcon; }
+
+                if (Physics.Raycast(ray, out hit, maxCheckDistance))
+                {
+                    if (hit.collider.gameObject.tag != "Player" && hit.collider.gameObject.GetComponent<Rigidbody>() != null)
+                    {
+                        hintLiftText.text = string.Format("Hold {0} to lift", "E");
+                    }
+                    else
+                    {
+                        hintLiftText.text = "";
+                    }
+                }
+                else
+                {
+                    hintLiftText.text = "";
+                }
+
+
             }
 
-            if (currentInteractGameObject.GetComponent<Rigidbody>() != null)
-            {
-                hintLiftText.text = string.Format("Hold {0} to lift", "E");
-            }
-            else
-            {
-                hintLiftText.text = "";
-            }
             if (currentInteractGameObject != null)
             {
                 if (currentInteractGameObject.GetComponent<ItemObject>() != null)
                 {
-                    hintObjectText.text = currentInteractGameObject.GetComponent<ItemObject>().name;
+                    hintObjectText.text = currentInteractGameObject.GetComponent<ItemObject>().item.displayName;
                     hintInteractText.text = string.Format("Use {0} to pick up", "E");
                 }
                 else
                 {
                     hintInteractText.text = "";
+                    hintObjectText.text = "";
                 }
             }
             else
             {
                 hintInteractText.text = "";
+                hintObjectText.text = "";
             }
         }
-
-
+        
         void Interaction()
         {
             if (currentInteractable == null)
@@ -168,9 +179,7 @@ namespace LPSurvivalEngine
                 Debug.LogWarning("No HighlightEffect component found on object: " + currentInteractGameObject.name);
             }
         }
-
-
-
+        
         public void OnInteractInput(InputAction.CallbackContext context)
         {
             Debug.Log("Current interactable: " + currentInteractable);
@@ -204,6 +213,14 @@ namespace LPSurvivalEngine
                 if (watchController != null)
                 {  watchController.SetPlayer(this.gameObject);}
 
+                // PickupItem pickupItem = currentInteractGameObject.GetComponent<PickupItem>();
+                // if (pickupItem != null && !pickupItem.IsPickedUp) // 检查物品状态
+                // {
+                //     Debug.Log("调用物品的拾取方法");
+                //     // 调用物品的拾取方法
+                //     pickupItem.RPC_OnPickedUp(Object.StateAuthority);
+                // }
+                
                 currentInteractable.OnInteract();
 
                 currentInteractGameObject = null;
@@ -211,11 +228,16 @@ namespace LPSurvivalEngine
                 interact.gameObject.SetActive(false);
             }
         }
+
+        private void OnDestroy()
+        {
+            interactAction.canceled -= OnInteractInput;
+        }
     }
 
 }
 
-    public interface IInteractable
+public interface IInteractable
 {
     string GetInteractText();   
     void OnInteract();

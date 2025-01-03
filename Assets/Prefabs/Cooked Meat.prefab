@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8162307352574937724}
   - component: {fileID: 6228146612716651018}
   - component: {fileID: 5941951723738983923}
+  - component: {fileID: 6229621248903365303}
   m_Layer: 6
   m_Name: Cooked Meat
   m_TagString: Untagged
@@ -206,7 +207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsPickedUp: 0
   item: {fileID: 11400000, guid: cdfa2f18ad9e30241b7b9b84eec17ee7, type: 2}
+  isDisplayedItem: 0
 --- !u!65 &5941951723738983923
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -228,6 +231,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2, y: 0.05, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6229621248903365303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3528858062873864651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 133907829
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 6228146612716651018}
 --- !u!1 &6924147122108792359
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 
 public class PlayerThrow : MonoBehaviour
 {
@@ -22,6 +23,45 @@ public class PlayerThrow : MonoBehaviour
     private bool isInteracting = false;
 
     public TMPro.TextMeshProUGUI pickupErrorMessage;
+
+    void Start()
+    {
+        GameObject parentObject = GameObject.FindGameObjectWithTag("UI Player");
+        if (parentObject != null)
+        {
+            Transform targetChildTransform = FindDeepChild(parentObject.transform, "PickupErrorMessage");
+            if (targetChildTransform != null)
+            {
+                pickupErrorMessage = targetChildTransform.gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+            }
+            else
+            {
+                Debug.Log("未找到名为PickupErrorMessage的子物体");
+            }
+        }
+        else
+        {
+            Debug.Log("未找到tag为UI Player的物体");
+        }
+    }
+
+    Transform FindDeepChild(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+            {
+                return child;
+            }
+            // 递归查找
+            Transform result = FindDeepChild(child, name);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+        return null;
+    }
 
     void Update()
     {

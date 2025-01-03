@@ -1,4 +1,5 @@
 using DestroyIt;
+using Fusion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,43 +27,44 @@ namespace LPSurvivalEngine
         public bool isOneHanded;
         [Space]
 
-    [Space]
-    [Header("Hit Settings")]
-    [Space]
+        [Space]
+        [Header("Hit Settings")]
+        [Space]
 
-    public float hitRate;
+        public float hitRate;
         public float hitCoolDownTime;
-    public float hitDistance;
+        public float hitDistance;
     
-    [Space]
-    [Header("Combat")] 
-    [Space]
+        [Space]
+        [Header("Combat")] 
+        [Space]
     
-    public WieldableType wieldableType;
-    public bool doesDealDamage;
-    public int damage;
+        public WieldableType wieldableType;
+        public bool doesDealDamage;
+        public int damage;
 
-    [Space]
-    [Header("Gathering")]
-    [Space]
+        [Space]
+        [Header("Gathering")]
+        [Space]
 
-    public bool doesGatherresources;
+        public bool doesGatherresources;
 
-    [Space]
-    [Header("Assignments")]
-    [Space]
+        [Space]
+        [Header("Assignments")]
+        [Space]
     
-    public Animator anim;
-    public bool hitting;
+        public Animator anim;
+        public bool hitting;
     
-    private Camera cam;
+        private Camera cam;
+        private GameObject player;
 
-
-    private void Awake()
-    {
-        anim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-        cam = Camera.main;
-    }
+        private void Awake()
+        {
+            player = GameObject.Find("CurrentPlayer");
+            anim = player.GetComponentInChildren<Animator>();
+            cam = Camera.main;
+        }
 
         public override void OnAttackInput()
         {
@@ -71,11 +73,12 @@ namespace LPSurvivalEngine
                 hitting = true;
                 if (isOneHanded)
                 {
-                    anim.SetTrigger("OneHandAttack");
+                    player.GetComponent<AnimatorManager>().WieldCount++;
                 }
                 else
                 {
-                    anim.SetTrigger("TwoHandAttack");
+                    // anim.SetTrigger("TwoHandAttack");
+                    player.GetComponent<AnimatorManager>().TwoHandWieldCount++;
                 }
                 Invoke("OnCanAttack", hitRate);
                 //PlayerController.instance.SetIsAttacking(true);
@@ -96,17 +99,18 @@ namespace LPSurvivalEngine
         }
 
         public void OnHit()
-    {
-        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, hitDistance))
         {
-            if (doesGatherresources && hit.collider.GetComponent<Resources>())
+            Debug.Log("OnHit function is called!");
+            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, hitDistance))
             {
-                hit.collider.GetComponent<Resources>().Gather(hit.point, hit.normal);
-            }
+                if (doesGatherresources && hit.collider.GetComponent<Resources>())
+                {
+                    hit.collider.GetComponent<Resources>().Gather(hit.point, hit.normal);
+                }
 
                 if (doesDealDamage)
                 {
@@ -141,6 +145,25 @@ namespace LPSurvivalEngine
                 {
                     hit.collider.GetComponent<hitEffect>().Hit(damage,hit.point,hit.normal);
                 }
+            }
+        }
+
+        private bool wasHitLastFrame = false;
+        private RaycastHit lastHit;
+
+        private void OnDrawGizmos()
+        {
+            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+            // 绘制射线（绿色表示射线本身，用于可视化射线检测的起始方向和长度）
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(ray.origin, ray.direction * hitDistance);
+
+            if (wasHitLastFrame)
+            {
+                // 在命中点绘制一个红色小球，用于标记命中的位置
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere(lastHit.point, 0.1f);
             }
         }
     }

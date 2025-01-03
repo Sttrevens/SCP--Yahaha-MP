@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5138626996978465218}
   - component: {fileID: 5138626996978465219}
   - component: {fileID: 6220908888119028435}
+  - component: {fileID: -7580140576705626010}
   m_Layer: 6
   m_Name: Axe
   m_TagString: Untagged
@@ -96,7 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsPickedUp: 0
   item: {fileID: 11400000, guid: 1aee3fe2b6ce64f4f8732e5971cbfde0, type: 2}
+  isDisplayedItem: 0
 --- !u!114 &6220908888119028435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +231,24 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
+--- !u!114 &-7580140576705626010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5138626996978465216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3112554817
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5138626996978465219}
 --- !u!1001 &4077072081333158355
 PrefabInstance:
   m_ObjectHideFlags: 0
