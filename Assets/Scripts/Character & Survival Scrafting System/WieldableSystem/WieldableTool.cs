@@ -100,7 +100,7 @@ namespace LPSurvivalEngine
 
         public void OnHit()
         {
-            Debug.Log("OnHit function is called!");
+            // Debug.Log("OnHit function is called!");
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
             RaycastHit hit;
@@ -122,6 +122,7 @@ namespace LPSurvivalEngine
                         }
                         else
                         {
+                            Debug.Log("OnHit function is called!");
                             hit.collider.GetComponent<Destructible>().ApplyDamage(damage / 2);
                         }
                         DestructibleBarController.Instance.UpdateHealthBar(hit.collider.GetComponent<Destructible>().CurrentHitPoints, hit.collider.GetComponent<Destructible>().TotalHitPoints);
@@ -139,6 +140,7 @@ namespace LPSurvivalEngine
                 if (hit.collider.GetComponent<EnemyAI>() != null)
                 {
                     hit.collider.GetComponent<EnemyAI>().TakeDamage(damage);
+                    Debug.Log("hit.collider.GetComponent<EnemyAI>().TakeDamage(damage)");
                 }
 
                 if (hit.collider.GetComponent<hitEffect>() != null)
