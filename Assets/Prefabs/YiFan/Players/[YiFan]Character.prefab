@@ -3538,6 +3538,7 @@ GameObject:
   - component: {fileID: 7358732985660825714}
   - component: {fileID: 4082337287283386946}
   - component: {fileID: 9088842401818056780}
+  - component: {fileID: 7762305024207110889}
   m_Layer: 8
   m_Name: '[YiFan]Character'
   m_TagString: Player
@@ -3654,6 +3655,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 1122259457492835225}
   - {fileID: 2747722033361472396}
+  - {fileID: -8306276541168044105}
   - {fileID: 7358732985660825714}
   - {fileID: 4082337287283386946}
 --- !u!114 &1122259457492835225
@@ -3807,11 +3809,15 @@ MonoBehaviour:
     VitalBar: {fileID: 0}
   sleep:
     currentValue: 0
-    maxValue: 90
+    maxValue: 100
     startValue: 80
     regenrate: 0.04
     decayRate: 0
     VitalBar: {fileID: 0}
+  _playerHealth: 100
+  _playerHunger: 100
+  _playerThirst: 100
+  _playerSleep: 100
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -3865,6 +3871,18 @@ MonoBehaviour:
   playerController: {fileID: 6515430458572477251}
   wieldPostition: {fileID: 5814555597588255667}
   flashlightRootPosition: {fileID: 4692740114847110545}
+--- !u!114 &7762305024207110889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4671681657c68b40b5422823c49b855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5424040365844731508
 GameObject:
   m_ObjectHideFlags: 0

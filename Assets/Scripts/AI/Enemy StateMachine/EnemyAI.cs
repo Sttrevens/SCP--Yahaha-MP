@@ -1,14 +1,13 @@
 using DestroyIt;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting;
+using Fusion;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : NetworkBehaviour
 {
     public NavMeshAgent agent;
+    [SerializeField]
     private GameObject[] players;
     public Animator animator;
     [HideInInspector]
@@ -48,7 +47,7 @@ public class EnemyAI : MonoBehaviour
 
     public int attackDamage = 20;
     public float maxHealth = 100f;
-    public float currentHealth = 100f;
+    [Networked] public float currentHealth { get; set; } = 100f;
     public float attackRange = 2f;
     [HideInInspector] public float lastAttackTime = 0f;
     [HideInInspector] public float lastAttackPreDelayTime = 0f;
@@ -64,11 +63,16 @@ public class EnemyAI : MonoBehaviour
         {
             agent = GetComponent<NavMeshAgent>();
         }
-        players = GameObject.FindGameObjectsWithTag("Player");
+        // players = GameObject.FindGameObjectsWithTag("Player");
         if (animator == null)
         {
             animator = GetComponent<Animator>();
         }
+    }
+
+    public override void Spawned()
+    {
+        players = GameObject.FindGameObjectsWithTag("Player");
     }
 
     private void Start()
@@ -183,7 +187,9 @@ public class EnemyAI : MonoBehaviour
     {
         if (!(currentState is DeadState))
         {
-            currentHealth -= damage;
+            // TODO:处理被击打血量同步
+            // currentHealth -= damage;
+            DealDamageRpc(damage);
             if (currentHealth <= 0)
             {
                 if (!isFlyingEnemy)
@@ -416,5 +422,11 @@ public class EnemyAI : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(transform.position, new Vector3(patrolWidth, 0, patrolHeight));
         }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void DealDamageRpc(float damage)
+    {
+        currentHealth -= damage;
     }
 }

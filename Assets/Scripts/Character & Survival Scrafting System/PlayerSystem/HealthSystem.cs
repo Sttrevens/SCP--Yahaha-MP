@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -8,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace LPSurvivalEngine
 {
-    public class HealthSystem : MonoBehaviour, IDamagable
+    public class HealthSystem : NetworkBehaviour, IDamagable
     {
         //public static HealthSystem instance{get;private set;}
 
@@ -18,6 +19,11 @@ namespace LPSurvivalEngine
         public Vitals hunger;
         public Vitals thirst;
         public Vitals sleep;
+        
+        [Networked] public float playerHealth { get; set; } = 100f;
+        [Networked] public float playerHunger { get; set; } = 100f;
+        [Networked] public float playerThirst { get; set; } = 100f;
+        [Networked] public float playerSleep { get; set; } = 100f;
 
         [Header("Health System")]
 
@@ -168,6 +174,22 @@ namespace LPSurvivalEngine
             hunger.VitalBar.fillAmount = hunger.GetPercentage();
             thirst.VitalBar.fillAmount = thirst.GetPercentage();
             sleep.VitalBar.fillAmount = sleep.GetPercentage();
+            if (playerHealth != health.currentValue)
+            {
+                SynchronousPlayerHealthRpc();
+            }
+            if (playerHunger != hunger.currentValue)
+            {
+                SynchronousPlayerHungerRpc();
+            }
+            if (playerThirst != thirst.currentValue)
+            {
+                SynchronousPlayerThirstRpc();
+            }
+            if (playerSleep != sleep.currentValue)
+            {
+                SynchronousPlayerSleepRpc();
+            }
 
         }
 
@@ -222,12 +244,39 @@ namespace LPSurvivalEngine
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("Respawn");
         }
-     
+
+        #region 一凡同步角色数据函数
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SynchronousPlayerHealthRpc()
+        {
+            playerHealth = health.currentValue;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SynchronousPlayerHungerRpc()
+        {
+            playerHunger = hunger.currentValue;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SynchronousPlayerThirstRpc()
+        {
+            playerThirst = thirst.currentValue;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SynchronousPlayerSleepRpc()
+        {
+            playerSleep = sleep.currentValue;
+        }
+
+        #endregion
     }
 
     [System.Serializable]
     public class Vitals
-    {   
+    {
         [HideInInspector]
         public float currentValue;
         public float maxValue;
