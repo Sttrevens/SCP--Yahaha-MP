@@ -3785,29 +3785,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health:
+    currentValue: 0
     maxValue: 100
     startValue: 100
     regenrate: 0.1
     decayRate: 0
     VitalBar: {fileID: 0}
   hunger:
+    currentValue: 0
     maxValue: 100
     startValue: 80
     regenrate: 0
     decayRate: 0.05
     VitalBar: {fileID: 0}
   thirst:
+    currentValue: 0
     maxValue: 100
     startValue: 80
     regenrate: 0
     decayRate: 0.1
     VitalBar: {fileID: 0}
   sleep:
-    maxValue: 90
+    currentValue: 0
+    maxValue: 100
     startValue: 80
     regenrate: 0.04
     decayRate: 0
     VitalBar: {fileID: 0}
+  _playerHealth: 100
+  _playerHunger: 100
+  _playerThirst: 100
+  _playerSleep: 100
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []

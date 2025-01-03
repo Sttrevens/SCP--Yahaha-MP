@@ -868,21 +868,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cuwawa
       objectReference: {fileID: 0}
-    - target: {fileID: 5792229608619624821, guid: d52d1532694cd174a8af3249361458be, type: 3}
-      propertyPath: patrolRange
-      value: 2
+    - target: {fileID: 1634644488887489242, guid: d52d1532694cd174a8af3249361458be, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5792229608619624821, guid: d52d1532694cd174a8af3249361458be, type: 3}
-      propertyPath: patrolWidth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5792229608619624821, guid: d52d1532694cd174a8af3249361458be, type: 3}
-      propertyPath: patrolHeight
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5792229608619624821, guid: d52d1532694cd174a8af3249361458be, type: 3}
-      propertyPath: _currentHealth
-      value: 30
+    - target: {fileID: 1947025115794255472, guid: d52d1532694cd174a8af3249361458be, type: 3}
+      propertyPath: SortKey
+      value: 2410604793
       objectReference: {fileID: 0}
     - target: {fileID: 6156792538123809782, guid: d52d1532694cd174a8af3249361458be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -930,10 +922,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1634644488887489242, guid: d52d1532694cd174a8af3249361458be, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1928525299}
-    - targetCorrespondingSourceObject: {fileID: 1634644488887489242, guid: d52d1532694cd174a8af3249361458be, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1928525298}
+      addedObject: {fileID: 1928525312}
   m_SourcePrefab: {fileID: 100100000, guid: d52d1532694cd174a8af3249361458be, type: 3}
 --- !u!1001 &943285208
 PrefabInstance:
@@ -1276,10 +1265,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 80596205225906308, guid: 44530d49976cc6a4fb5d5f813922ecd5, type: 3}
+      propertyPath: SortKey
+      value: 1638293534
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991679625341152245, guid: 44530d49976cc6a4fb5d5f813922ecd5, type: 3}
+      propertyPath: SortKey
+      value: 3677258836
+      objectReference: {fileID: 0}
     - target: {fileID: 2458410470314629644, guid: 44530d49976cc6a4fb5d5f813922ecd5, type: 3}
       propertyPath: m_NavMeshData
       value: 
       objectReference: {fileID: 23800000, guid: 9ffa3b8893248ed4e887a9f695294b3f, type: 2}
+    - target: {fileID: 2485336903766000315, guid: 44530d49976cc6a4fb5d5f813922ecd5, type: 3}
+      propertyPath: SortKey
+      value: 1213428779
+      objectReference: {fileID: 0}
     - target: {fileID: 4521323671439284568, guid: 44530d49976cc6a4fb5d5f813922ecd5, type: 3}
       propertyPath: m_Name
       value: '[Game]Level'
@@ -1832,18 +1833,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1634644488887489242, guid: d52d1532694cd174a8af3249361458be, type: 3}
   m_PrefabInstance: {fileID: 854447848}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1928525292 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5792229608619624821, guid: d52d1532694cd174a8af3249361458be, type: 3}
-  m_PrefabInstance: {fileID: 854447848}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1928525285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 679234a8c19216d4f8067435d611047e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1928525298
+--- !u!114 &1928525312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1855,24 +1845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080b17acfac7c3441847922e3ea752ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1928525299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1928525285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 1752078628
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 1928525292}
 --- !u!225 &2133819805 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 154367839804379502, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}

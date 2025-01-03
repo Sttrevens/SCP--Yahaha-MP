@@ -21,6 +21,9 @@ namespace LPSurvivalEngine
         public Vitals sleep;
         
         [Networked] public float playerHealth { get; set; } = 100f;
+        [Networked] public float playerHunger { get; set; } = 100f;
+        [Networked] public float playerThirst { get; set; } = 100f;
+        [Networked] public float playerSleep { get; set; } = 100f;
 
         [Header("Health System")]
 
@@ -175,6 +178,18 @@ namespace LPSurvivalEngine
             {
                 SynchronousPlayerHealthRpc();
             }
+            if (playerHunger != hunger.currentValue)
+            {
+                SynchronousPlayerHungerRpc();
+            }
+            if (playerThirst != thirst.currentValue)
+            {
+                SynchronousPlayerThirstRpc();
+            }
+            if (playerSleep != sleep.currentValue)
+            {
+                SynchronousPlayerSleepRpc();
+            }
 
         }
 
@@ -229,13 +244,34 @@ namespace LPSurvivalEngine
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("Respawn");
         }
-        
+
+        #region 一凡同步角色数据函数
+
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void SynchronousPlayerHealthRpc()
         {
-            Debug.Log("Received DealDamageRpc on StateAuthority, modifying Networked variable");
             playerHealth = health.currentValue;
         }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SynchronousPlayerHungerRpc()
+        {
+            playerHunger = hunger.currentValue;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SynchronousPlayerThirstRpc()
+        {
+            playerThirst = thirst.currentValue;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SynchronousPlayerSleepRpc()
+        {
+            playerSleep = sleep.currentValue;
+        }
+
+        #endregion
     }
 
     [System.Serializable]

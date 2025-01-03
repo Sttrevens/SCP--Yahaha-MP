@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class EnemyAI : NetworkBehaviour
 {
     public NavMeshAgent agent;
+    [SerializeField]
     private GameObject[] players;
     public Animator animator;
     [HideInInspector]
@@ -62,11 +63,16 @@ public class EnemyAI : NetworkBehaviour
         {
             agent = GetComponent<NavMeshAgent>();
         }
-        players = GameObject.FindGameObjectsWithTag("Player");
+        // players = GameObject.FindGameObjectsWithTag("Player");
         if (animator == null)
         {
             animator = GetComponent<Animator>();
         }
+    }
+
+    public override void Spawned()
+    {
+        players = GameObject.FindGameObjectsWithTag("Player");
     }
 
     private void Start()
