@@ -27,7 +27,7 @@ namespace LPSurvivalEngine
         private InputAction slotSelectAction;
         private InputAction attackActionTwoHand;
         private InputAction attackActionOneHand;
-        // ���������ڻ�ȡ�¶װ��������InputAction
+
         private InputAction crouchAction;
         private InputAction dropAction;
         private InputAction useAction;
@@ -55,7 +55,7 @@ namespace LPSurvivalEngine
             lookAction.performed += onLook;
             runAction.performed += onRun;
             jumpAction.performed += onJump;
-            slotSelectAction.performed += OnSelectSlot;
+            slotSelectAction.canceled += OnSelectSlot;
 
             dropAction.started += OnDrop;
             useAction.started += OnUse;

@@ -20,13 +20,15 @@ GameObject:
   - component: {fileID: 7556576222996001451}
   - component: {fileID: 4766806154885811551}
   - component: {fileID: 1880702049350445356}
+  - component: {fileID: 1947025115794255472}
+  - component: {fileID: 1136943114229930395}
   m_Layer: 14
   m_Name: Cuwawa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6156792538123809782
 Transform:
   m_ObjectHideFlags: 0
@@ -154,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 8713125421001032342}
+  players: []
   animator: {fileID: 4864744980848344237}
   currentPatrolIndex: 0
   detectionRange: 10
@@ -166,13 +169,13 @@ MonoBehaviour:
   sensingRadius: 0.1
   patrolMode: 1
   patrolPoints: []
-  patrolRange: 10
-  patrolWidth: 10
-  patrolHeight: 10
+  patrolRange: 2
+  patrolWidth: 2
+  patrolHeight: 2
   waitTimeAtPatrolPoint: 2
   attackDamage: 10
   maxHealth: 30
-  currentHealth: 30
+  _currentHealth: 30
   attackRange: 0.5
   lastAttackTime: 0
   lastAttackPreDelayTime: 0
@@ -371,3 +374,38 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1947025115794255472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634644488887489242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1017594278
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5792229608619624821}
+  - {fileID: 1136943114229930395}
+--- !u!114 &1136943114229930395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634644488887489242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0

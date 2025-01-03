@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DestroyIt;
+using Fusion;
 
 namespace LPSurvivalEngine
 {
@@ -47,8 +48,19 @@ namespace LPSurvivalEngine
 
     private void Awake()
     {
-        anim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-        cam = Camera.main;
+            NetworkObject[] networkObjects = FindObjectsOfType<NetworkObject>();
+            foreach (NetworkObject networkObject in networkObjects)
+            {
+                if (networkObject.HasStateAuthority)
+                {
+                    // 如果该NetworkObject具有输入权限，则认为是当前操作的玩家对象
+                    GameObject currentPlayerObject = networkObject.gameObject;
+                    anim = currentPlayerObject.GetComponent<Animator>();
+                    Debug.Log("当前操作的玩家对象是：" + currentPlayerObject.name);
+                    break;
+                }
+            }
+            cam = Camera.main;
     }
 
     public override void OnAttackInput()

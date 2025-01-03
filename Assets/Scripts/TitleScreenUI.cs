@@ -16,6 +16,8 @@ public class TitleScreenUI : MonoBehaviour
     private const string destinationText = "Going to the Destination...";
     public static string roomName;
 
+    public string gameSceneName;
+
     // ≥ı ºªØ
     void Start()
     {
@@ -58,7 +60,7 @@ public class TitleScreenUI : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             roomName = inputFieldTMP.text;
-            SceneManager.LoadScene("[YiFan]PreDesignedLevel");
+            SceneManager.LoadScene(gameSceneName);
         }
     }
 
