@@ -66,5 +66,10 @@ namespace LPSurvivalEngine
         {
             this.isAttacking = isAttacking;
         }
+
+        public void Spawn(Transform spawnTransform)
+        {
+            transform.position = spawnTransform.position;
+        }
     }
 }

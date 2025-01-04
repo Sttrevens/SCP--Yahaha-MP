@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 {
     public GameObject PlayerPrefab;
+    public Transform spawnPoint;
     
     public void PlayerJoined(PlayerRef player)
     {
         if (player == Runner.LocalPlayer)
         {
-            NetworkObject plObject = Runner.Spawn(PlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            NetworkObject plObject = Runner.Spawn(PlayerPrefab, spawnPoint.position, Quaternion.identity);
             plObject.name = "CurrentPlayer";
             Runner.SetPlayerObject(player, plObject);
             GameObject.Find("Inventory").GetComponent<Inventory>().dropPosition =
