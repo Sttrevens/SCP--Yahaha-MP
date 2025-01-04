@@ -192,7 +192,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6515430458572477251, guid: 16a0ef0fa65fa414baac73dc09b1c775, type: 3}
         m_TargetAssemblyTypeName: LPSurvivalEngine.PlayerController, Assembly-CSharp
-        m_MethodName: SpawnPlayer
+        m_MethodName: Spawn
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -262,7 +262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b8f987a75dacf489cc30ddf1a54307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 5250024112804794185, guid: 16a0ef0fa65fa414baac73dc09b1c775, type: 3}
+  PlayerPrefab: {fileID: 5250024112804794185, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+  spawnPoint: {fileID: 0}
 --- !u!1001 &210980295845109241
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -273,7 +274,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2065669007698585286, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
       propertyPath: Height
-      value: 1.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8422162903330514954, guid: a853bb58d0e17904bba9243e4fd1c3b4, type: 3}
       propertyPath: m_LocalPosition.x
