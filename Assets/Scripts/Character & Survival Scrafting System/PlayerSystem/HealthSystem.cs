@@ -50,6 +50,8 @@ namespace LPSurvivalEngine
             Player = gameObject;
             UIPlayer = GameObject.FindGameObjectWithTag("UI Player");
 
+            Inventory.instance.vitals = this;
+
             if (UIPlayer != null)
             {
                 sleepScreenAnimation = FindChildRecursive(UIPlayer.transform, "SleepAnimation");

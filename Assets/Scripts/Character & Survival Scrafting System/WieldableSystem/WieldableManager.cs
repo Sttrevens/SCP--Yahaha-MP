@@ -10,20 +10,19 @@ namespace LPSurvivalEngine
         [Space]
         [Space]
     
-        public Wieldable currentWieldable;
+        [HideInInspector] public Wieldable currentWieldable;
         public Transform wieldablesPosition;
         public Transform flashlightPosition;
         public PlayerInput PlayerInput;
         private InputAction actionAction;
     
         public static WieldableManager instance;
-        public PlayerController controller;
+        [HideInInspector] public PlayerController controller;
 
 
         private void Awake()
         {
             instance = this;
-            controller = GetComponent<PlayerController>();
             // PlayerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();
             
             if (PlayerInput != null) {

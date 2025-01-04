@@ -48,6 +48,10 @@ namespace LPSurvivalEngine
         {
             Cursor.lockState = CursorLockMode.Locked;
 
+            Inventory.instance.playerController = this;
+            ExitMenu.instance.playerController = this;
+            WieldableManager.instance.controller = this;
+
             // hasAnimator = TryGetComponent<Animator>(out animator);
             // rig = GetComponent<Rigidbody>();
             // inputManager = GetComponent<InputManager>();

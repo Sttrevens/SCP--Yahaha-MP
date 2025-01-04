@@ -4,10 +4,11 @@ using UnityEngine.Events;
 using System;
 using Fusion;
 using UnityEngine.SceneManagement;
+using System.Globalization;
 
 namespace LPSurvivalEngine
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : NetworkBehaviour
     {
         public static Inventory instance{get;private set;}
 
@@ -173,10 +174,39 @@ namespace LPSurvivalEngine
             Prompt.instance.CustomPrompt("Your Bag is already full!"); //显示提示
         }
 
-        void ThrowItem(ItemDatabase item)
+        public void ThrowItem(ItemDatabase item)
         {
-            Prompt.instance.CustomPrompt(String.Format("{0} has been thrown!", selectedItem.item.name)); //显示提示
-            Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * UnityEngine.Random.value * 360.0f));
+                // 提示消息
+                Prompt.instance.CustomPrompt(string.Format("{0} has been thrown!", selectedItem.item.name));
+            throwedItem = item;
+                // 在本地实例化物品并同步
+                RPC_SpawnItem(Runner.LocalPlayer);
+        }
+
+        private ItemDatabase throwedItem;
+
+        [Networked] public PlayerRef Owner { get; set; }
+
+        // 在网络中实例化物品，并同步到所有玩家
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_SpawnItem(PlayerRef player)
+        {
+            Owner = player;
+            // 物品实例化的旋转可以根据需要调整
+            Quaternion randomRotation = Quaternion.Euler(Vector3.one * UnityEngine.Random.value * 360.0f);
+
+            // 使用 Runner.Spawn 实例化并同步物品
+            NetworkObject spawnedItem = Runner.Spawn(throwedItem.dropPrefab, dropPosition.position, randomRotation);
+
+            // 确保新生成的物品有正确的所有者
+            if (spawnedItem.TryGetComponent<ItemObject>(out var itemObject))
+            {
+                itemObject.Owner = player;  // 设置丢弃物品的所有者
+                itemObject.IsPickedUp = false;  // 丢弃物品后确保它没有被拾取
+            }
+
+            // 可选：可以通过 RPC 同步其他物品的状态
+            // 如果物品需要其他同步数据，可以在这里设置其他属性
         }
 
         public void UpdateUI()
