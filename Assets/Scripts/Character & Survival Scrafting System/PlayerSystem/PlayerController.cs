@@ -74,6 +74,7 @@ namespace LPSurvivalEngine
         public void Spawn(Transform spawnTransform)
         {
             transform.position = spawnTransform.position;
+            transform.rotation = spawnTransform.rotation;
         }
     }
 }
