@@ -52,6 +52,8 @@ namespace LPSurvivalEngine
             ExitMenu.instance.playerController = this;
             WieldableManager.instance.controller = this;
 
+            Spawn(GameObject.Find("SpawnPoint").transform);
+
             // hasAnimator = TryGetComponent<Animator>(out animator);
             // rig = GetComponent<Rigidbody>();
             // inputManager = GetComponent<InputManager>();
