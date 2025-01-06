@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 447368}
   - component: {fileID: 3326550}
   - component: {fileID: 2378338}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,11 +92,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 453522}
-  - component: {fileID: 83022766912854204}
-  - component: {fileID: 1582869463490450411}
-  - component: {fileID: -4845458112814443438}
-  m_Layer: 6
-  m_Name: CameraItem
+  m_Layer: 0
+  m_Name: camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,59 +118,6 @@ Transform:
   - {fileID: 447368}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &83022766912854204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 031cc9cf3ad9dae489a420dec09a17fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _IsPickedUp: 0
-  item: {fileID: 11400000, guid: 631b65e9d1bc51a439dd3f69eaf1aaf0, type: 2}
---- !u!114 &1582869463490450411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 3960108097
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 83022766912854204}
---- !u!65 &-4845458112814443438
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175982}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &176766
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +129,7 @@ GameObject:
   - component: {fileID: 488464}
   - component: {fileID: 3354956}
   - component: {fileID: 2391252}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +212,7 @@ GameObject:
   - component: {fileID: 434320}
   - component: {fileID: 3307978}
   - component: {fileID: 2323278}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +296,7 @@ GameObject:
   - component: {fileID: 2048862}
   - component: {fileID: 12459794}
   - component: {fileID: 8192622}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: PhotoCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}

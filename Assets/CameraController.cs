@@ -31,28 +31,15 @@ namespace LPSurvivalEngine
             }
         }
 
-        void Update()
+        public override void OnAttackInput()
         {
-            // 左键拍照
-            if (Input.GetMouseButtonDown(0)) // 0 是鼠标左键
-            {
-                TakePicture();
-            }
+            TakePicture();
+        }
 
-            // 右键按下时将相机移到主相机前
-            if (Input.GetMouseButtonDown(1)) // 1 是鼠标右键
-            {
-                isRightMouseButtonDown = true;
-                SaveOriginalCameraState();
-                MoveCameraToMainCamera();
-            }
-
-            // 右键松开时恢复相机到原来的状态
-            if (Input.GetMouseButtonUp(1)) // 1 是鼠标右键
-            {
-                isRightMouseButtonDown = false;
-                RestoreOriginalCameraState();
-            }
+        public override void OnAltAttackInput()
+        {
+            isRightMouseButtonDown = !isRightMouseButtonDown;
+            Aim();
         }
 
         // 拍照功能（左键）
@@ -83,29 +70,15 @@ namespace LPSurvivalEngine
             yield return new WaitForSeconds(0.1f); // 闪光灯持续时间
             cameraFlashLight.enabled = false;
         }
-
-        // 保存原来的相机位置和旋转
-        void SaveOriginalCameraState()
+        void Aim()
         {
-            originalPosition = transform.position;
-            originalRotation = transform.rotation;
-        }
-
-        // 恢复原来的相机位置和旋转
-        void RestoreOriginalCameraState()
-        {
-            transform.position = originalPosition;
-            transform.rotation = originalRotation;
-        }
-
-        // 将相机移到主相机前
-        void MoveCameraToMainCamera()
-        {
-            if (mainCamera != null)
+            if (isRightMouseButtonDown)
             {
-                // 这里简单地将当前相机的位置设置为主相机的位置
-                transform.position = mainCamera.transform.position + new Vector3(0, -0.1f, 0.1f);
-                transform.rotation = mainCamera.transform.rotation;
+                transform.position = WieldableManager.instance.AimPositon.position;
+            }
+            else
+            {
+                transform.position = WieldableManager.instance.cameraPositon.position;
             }
         }
     }

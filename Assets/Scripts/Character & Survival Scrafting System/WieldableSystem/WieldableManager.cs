@@ -15,6 +15,7 @@ namespace LPSurvivalEngine
         public Transform wieldablesPosition;
         public Transform flashlightPosition;
         public Transform cameraPositon;
+        public Transform AimPositon;
         public PlayerInput PlayerInput;
         private InputAction actionAction;
     
