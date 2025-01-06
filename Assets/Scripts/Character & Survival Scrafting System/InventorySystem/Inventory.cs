@@ -179,19 +179,30 @@ namespace LPSurvivalEngine
                 // 提示消息
                 Prompt.instance.CustomPrompt(string.Format("{0} has been thrown!", selectedItem.item.name));
             throwedItem = item;
-                // 在本地实例化物品并同步
-                RPC_SpawnItem(Runner.LocalPlayer);
+            // 在本地实例化物品并同步
+            RPC_RequestSpawnItem(Runner.LocalPlayer);
         }
 
         private ItemDatabase throwedItem;
 
-        [Networked] public PlayerRef Owner { get; set; }
+        [Networked] public PlayerRef Owner { get; set; } // 网络同步的物品所有者
 
-        // 在网络中实例化物品，并同步到所有玩家
+        // RPC 请求生成物品（客户端调用）
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void RPC_SpawnItem(PlayerRef player)
+        public void RPC_RequestSpawnItem(PlayerRef player)
+        {
+            // 只有 StateAuthority 才能执行 Runner.Spawn
+            if (Object.HasStateAuthority)
+            {
+                SpawnItem(player);
+            }
+        }
+
+        // 物品生成逻辑（只在 StateAuthority 执行）
+        private void SpawnItem(PlayerRef player)
         {
             Owner = player;
+
             // 物品实例化的旋转可以根据需要调整
             Quaternion randomRotation = Quaternion.Euler(Vector3.one * UnityEngine.Random.value * 360.0f);
 
@@ -204,10 +215,8 @@ namespace LPSurvivalEngine
                 itemObject.Owner = player;  // 设置丢弃物品的所有者
                 itemObject.IsPickedUp = false;  // 丢弃物品后确保它没有被拾取
             }
-
-            // 可选：可以通过 RPC 同步其他物品的状态
-            // 如果物品需要其他同步数据，可以在这里设置其他属性
         }
+
 
         public void UpdateUI()
         {
