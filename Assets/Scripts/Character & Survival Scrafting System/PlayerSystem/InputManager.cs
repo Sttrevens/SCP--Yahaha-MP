@@ -11,6 +11,7 @@ namespace LPSurvivalEngine
 
         public Vector2 Move { get; private set; }
         public Vector2 Look { get; private set; }
+        public Vector2 Scroll { get; private set; }
         public bool Run { get; private set; }
         public bool Jump { get; private set; }
         
@@ -32,11 +33,14 @@ namespace LPSurvivalEngine
         private InputAction dropAction;
         private InputAction useAction;
         private InputAction exitAction;
+        private InputAction ScrollAction;
 
         public bool SendDamage;
+        public static InputManager Instance;
 
         private void Awake()
         {
+            Instance = this;
             currentMap = PlayerInput.currentActionMap;
 
             moveAction = currentMap.FindAction("Move");
@@ -50,12 +54,15 @@ namespace LPSurvivalEngine
             dropAction = currentMap.FindAction("Drop");
             useAction = currentMap.FindAction("Action");
             exitAction = currentMap.FindAction("Escape");
+            ScrollAction = currentMap.FindAction("Zoom");
+
 
             moveAction.performed += onMove;
             lookAction.performed += onLook;
             runAction.performed += onRun;
             jumpAction.performed += onJump;
             slotSelectAction.canceled += OnSelectSlot;
+            ScrollAction.performed += onScroll;
 
             dropAction.started += OnDrop;
             useAction.started += OnUse;
@@ -80,6 +87,10 @@ namespace LPSurvivalEngine
             Look = context.ReadValue<Vector2>();
         }
 
+        private void onScroll(InputAction.CallbackContext context)
+        {
+            Scroll = context.ReadValue<Vector2>();
+        }
         private void onRun(InputAction.CallbackContext context)
         {
             Run = context.ReadValueAsButton();
