@@ -16,11 +16,11 @@ public class ConeDetection : MonoBehaviour
     public float distanceToCamera = 0f;         // [参数3] 物体中心到摄像机的距离
 
     // 摄像机组件
-    private Camera cam;
+    public Camera cam;
 
     void Start()
     {
-        cam = GetComponent<Camera>();
+        //cam = GetComponentInChildren<Camera>();
         if (cam == null)
         {
             Debug.LogError("脚本挂载的物体上没有 Camera 组件！");
