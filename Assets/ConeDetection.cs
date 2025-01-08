@@ -6,7 +6,7 @@ public class ConeDetection : MonoBehaviour
     // 需要检测的目标类（替换为你自己想要检测的脚本/类）
     // 假设你想检测场景中挂有 "TargetObject" 脚本的物体
     [SerializeField]
-    private string targetClassName = "TargetObject";
+    public string targetClassName = "TargetObject";
 
     // 供外部查看或调试
     [Header("调试信息")]
@@ -20,7 +20,7 @@ public class ConeDetection : MonoBehaviour
 
     void Start()
     {
-        cam = GetComponent<Camera>();
+        cam = GetComponentInChildren<Camera>();
         if (cam == null)
         {
             Debug.LogError("脚本挂载的物体上没有 Camera 组件！");
@@ -54,8 +54,7 @@ public class ConeDetection : MonoBehaviour
         // 如果场景中没有指定类的物体，直接退出
         if (matchedObjects.Count == 0) return;
 
-        // 这里为了演示，只检测“第一个”找到的目标物体
-        // 如果你需要检测多个，可以自行遍历所有匹配物体
+        // 这个地方需要改一下遍历的逻辑
 
         GameObject target = matchedObjects[0];
 

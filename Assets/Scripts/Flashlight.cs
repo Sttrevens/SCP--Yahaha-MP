@@ -24,7 +24,7 @@ namespace LPSurvivalEngine
 
         private Camera cam;
 
-        private bool isTorchOn = false;
+        [SerializeField] private bool isTorchOn = false;
 
         private void Awake()
         {
@@ -38,6 +38,9 @@ namespace LPSurvivalEngine
 
         public override void OnAttackInput()
         {
+            Debug.Log("调用攻击喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵");
+            //所以是这里出了问题，点击一下左键会调用两次OnAttackInput
+            //所以应该排查OnI这个逻辑
             ToggleFlashlight();
         }
 

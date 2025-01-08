@@ -29,14 +29,15 @@ namespace LPSurvivalEngine
             controller = GetComponent<PlayerController>();
             // PlayerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();
             
-            if (PlayerInput != null) {
-                actionAction = PlayerInput.actions.FindAction("Action");
-                actionAction.performed += OnAttackInput;
-            }
+            //if (PlayerInput != null) {
+            //    actionAction = PlayerInput.actions.FindAction("Action");
+            //    actionAction.performed += OnAttackInput;
+            //}
         }
 
         public void OnAttackInput(InputAction.CallbackContext context)
         {
+            Debug.Log("WieldAbleß÷");
             if (context.phase == InputActionPhase.Performed && currentWieldable != null && controller.cursor == true)
             {
                 currentWieldable.OnAttackInput();

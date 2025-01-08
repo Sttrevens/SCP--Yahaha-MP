@@ -240,6 +240,7 @@ namespace LPSurvivalEngine
 
         void UseConsumableItem()
         {
+            Debug.Log("调用Consumable喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵");
             for (int x = 0; x < selectedItem.item.consumables.Length; x++)
             {
                 switch (selectedItem.item.consumables[x].type)
