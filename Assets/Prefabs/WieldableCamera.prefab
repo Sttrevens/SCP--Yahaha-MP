@@ -154,12 +154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba98d4f347dff44fa15ef1bc17e6d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetClassName: EnemyAI
+  targetClassName: Monster
   hasTargetInView: 0
   visibleRatio: 0
   centerOffsetDistance: 0
   distanceToCamera: 0
-  cam: {fileID: 0}
 --- !u!114 &7050679032339698554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1debc202a65795b4b93d3d57d168bbc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetCamera: {fileID: 2048862}
+  targetCamera: {fileID: 0}
   targetObject: {fileID: 0}
   sampleCount: 100
 --- !u!1 &176766
