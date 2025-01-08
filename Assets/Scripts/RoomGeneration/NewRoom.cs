@@ -13,6 +13,8 @@ public class NewRoom : MonoBehaviour
     public Transform entranceGeneratedPosition;
 
     public GameObject last;
+    public bool reverted;
+    
     void Start()
     {
         isWrong = false;
@@ -22,6 +24,22 @@ public class NewRoom : MonoBehaviour
     {
         roomIndex = index;
         isWrong = false;
+        if (reverted)
+        {
+            Transform tempPosition = exitPosition.transform;
+            exitPosition.transform.position = entrancePosition.transform.position;
+            entrancePosition.transform.position = tempPosition.position;
+            entrancePosition.GetComponent<DoorCollision>().isEntrance = true;
+            exitPosition.GetComponent<DoorCollision>().isEntrance = false;
+            
+            Transform tempGeneratedPosition = exitGeneratedPosition;
+            exitGeneratedPosition = entranceGeneratedPosition;
+            entranceGeneratedPosition = tempGeneratedPosition;
+        }
+    }
+
+    public void AdjustRoom()
+    {
         if (roomIndex != 0)
         {
             isWrong = true;
@@ -30,7 +48,6 @@ public class NewRoom : MonoBehaviour
             exitPosition.transform.position = entrancePosition.transform.position;
             entrancePosition.transform.position = tempPosition.position;
         }
-        
         entrancePosition.GetComponent<DoorCollision>().isEntrance = true;
         exitPosition.GetComponent<DoorCollision>().isEntrance = false;
     }

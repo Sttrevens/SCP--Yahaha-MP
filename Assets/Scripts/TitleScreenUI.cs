@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class TitleScreenUI : MonoBehaviour
 {
     [SerializeField] private GameObject buttonsParent;
-    [SerializeField] private TextMeshProUGUI tmpText; // ÏÔÊ¾ÎÄ×ÖµÄ TMP ¶ÔÏó
-    [SerializeField] private TextMeshProUGUI roomNameText; // ÏÔÊ¾·¿¼äÃû×ÖµÄ TMP ¶ÔÏó
+    [SerializeField] private TextMeshProUGUI tmpText; // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Öµï¿½ TMP ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private TextMeshProUGUI roomNameText; // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ TMP ï¿½ï¿½ï¿½ï¿½
     [SerializeField] private TMP_InputField inputFieldTMP;
 
-    // ¸÷°´Å¥¶ÔÓ¦µÄÎÄ×Ö
+    // ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private const string creatingGameText = "Creating a Game...";
     private const string joiningGameText = "Joining a Game...";
     private const string destinationText = "Going to the Destination...";
@@ -18,15 +18,15 @@ public class TitleScreenUI : MonoBehaviour
 
     public string gameSceneName;
 
-    // ³õÊ¼»¯
+    // ï¿½ï¿½Ê¼ï¿½ï¿½
     void Start()
     {
         roomNameText.text = roomName;
-        tmpText.gameObject.SetActive(false); // Ä¬ÈÏÒþ²Ø TMP ¶ÔÏó
+        tmpText.gameObject.SetActive(false); // Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ TMP ï¿½ï¿½ï¿½ï¿½
     }
 
     /// <summary>
-    /// °´ÏÂ¡°´´½¨·¿¼ä¡±°´Å¥Ê±µ÷ÓÃ
+    /// ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ä¡±ï¿½ï¿½Å¥Ê±ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void OnCreateRoomButton()
     {
@@ -34,7 +34,7 @@ public class TitleScreenUI : MonoBehaviour
     }
 
     /// <summary>
-    /// °´ÏÂ¡°¼ÓÈë·¿¼ä¡±°´Å¥Ê±µ÷ÓÃ
+    /// ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ë·¿ï¿½ä¡±ï¿½ï¿½Å¥Ê±ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void OnJoinRoomButton()
     {
@@ -42,7 +42,7 @@ public class TitleScreenUI : MonoBehaviour
     }
 
     /// <summary>
-    /// °´ÏÂ¡°ÖÆ×÷ÈËÃûµ¥¡±°´Å¥Ê±µ÷ÓÃ
+    /// ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥Ê±ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void OnDestinationButton()
     {
@@ -50,22 +50,20 @@ public class TitleScreenUI : MonoBehaviour
     }
 
     /// <summary>
-    /// ´¦Àí°´Å¥µã»÷Âß¼­
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
     /// </summary>
-    /// <param name="displayText">ÐèÒªÏÔÊ¾µÄÎÄ×Ö</param>
+    /// <param name="displayText">ï¿½ï¿½Òªï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
     public void HandleButtonClick(string displayText)
     {
-        HideAllButtons(); // Òþ²ØËùÓÐ°´Å¥
-        ShowText(displayText); // ÏÔÊ¾¶ÔÓ¦ÎÄ×Ö
-        if (SceneManager.GetActiveScene().buildIndex == 0)
-        {
+        HideAllButtons(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð°ï¿½Å¥
+        ShowText(displayText); // ï¿½ï¿½Ê¾ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+
             roomName = inputFieldTMP.text;
             SceneManager.LoadScene(gameSceneName);
-        }
     }
 
     /// <summary>
-    /// Òþ²ØËùÓÐ°´Å¥
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð°ï¿½Å¥
     /// </summary>
     private void HideAllButtons()
     {
@@ -73,13 +71,13 @@ public class TitleScreenUI : MonoBehaviour
     }
 
     /// <summary>
-    /// ÏÔÊ¾ TMP ÎÄ×Ö
+    /// ï¿½ï¿½Ê¾ TMP ï¿½ï¿½ï¿½ï¿½
     /// </summary>
-    /// <param name="displayText">ÐèÒªÏÔÊ¾µÄÎÄ×Ö</param>
+    /// <param name="displayText">ï¿½ï¿½Òªï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
     private void ShowText(string displayText)
     {
-        tmpText.text = displayText; // ÉèÖÃ TMP ÎÄ×Ö
-        tmpText.gameObject.SetActive(true); // ÏÔÊ¾ TMP ¶ÔÏó
+        tmpText.text = displayText; // ï¿½ï¿½ï¿½ï¿½ TMP ï¿½ï¿½ï¿½ï¿½
+        tmpText.gameObject.SetActive(true); // ï¿½ï¿½Ê¾ TMP ï¿½ï¿½ï¿½ï¿½
     }
 
     public void ResetUI()

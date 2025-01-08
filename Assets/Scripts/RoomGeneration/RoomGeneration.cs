@@ -34,8 +34,12 @@ public class RoomGeneration : MonoBehaviour
     private Vector3 spawnPosition;
 
     // Keeps track of the last room's position
-    private Transform lastRoom;
-    [SerializeField]private Transform firstRoom;
+    private GameObject lastRoom;
+    private GameObject currentRoom;
+    [SerializeField]private GameObject firstRoom;
+    
+    public bool isDoorActive;
+    public bool isRoomChanging;
     
     void Start()
     {
@@ -47,11 +51,19 @@ public class RoomGeneration : MonoBehaviour
     
     private void GenerateInitialRoom()
     {
-        lastRoom = firstRoom.transform; 
+        lastRoom = firstRoom;
+        isDoorActive = true;
     }
     
-    public void GenerateNewRoom()
+    public void GenerateNewRoom(bool isEntrance)
     {
+        
+        bool isRoomWrong = GetRandomBool();
+        int roomIndex = 0;
+        if (isRoomWrong)
+        {
+            roomIndex = GetRandomNumberInRange();
+        }
         if (lastRoom.GetComponent<NewRoom>().isWrong)
         {
             spawnPosition = lastRoom.GetComponent<NewRoom>().entranceGeneratedPosition.position;
@@ -60,25 +72,30 @@ public class RoomGeneration : MonoBehaviour
         {
             spawnPosition = lastRoom.GetComponent<NewRoom>().exitGeneratedPosition.position;
         }
-        
-        GameObject newRoom = Instantiate(roomPrefab, spawnPosition, Quaternion.identity);
-        //newRoom.GetComponent<NewRoom>().last = lastRoom.gameObject;
-        //Destroy(lastRoom.GetComponent<NewRoom>().last);
-        GameObject _room = lastRoom.gameObject;
-        lastRoom = newRoom.transform;
-        //Destroy(_room);
-
-        
-        
-       
-
-        bool isRoomWrong = GetRandomBool();
-        int roomIndex = 0;
-        if (isRoomWrong)
+        //if its an entrance make the exit active
+        if(isEntrance)
         {
-            roomIndex = GetRandomNumberInRange();
+            if(currentRoom!=null) currentRoom.GetComponent<NewRoom>().AdjustRoom();
+            isDoorActive = true;
         }
-        newRoom.GetComponent<NewRoom>().MakeRoom(roomIndex);
+        //if it's an exit after walk past an entrance then generate the next room
+        if (!isEntrance && isDoorActive)
+        {
+            GameObject newRoom = Instantiate(roomPrefab, lastRoom.GetComponent<NewRoom>().exitGeneratedPosition.position, Quaternion.identity);
+            newRoom.GetComponent<NewRoom>().last = lastRoom;
+            newRoom.GetComponent<NewRoom>().MakeRoom(roomIndex);
+            isDoorActive = !isDoorActive;
+            isRoomChanging = true;
+        }
+        //if the player walks entrance/exit twice
+        else if(isRoomChanging)
+        {
+            currentRoom = Instantiate(roomPrefab, lastRoom.transform.position, Quaternion.identity);
+            currentRoom.GetComponent<NewRoom>().MakeRoom(roomIndex);
+            Destroy(lastRoom);
+            currentRoom.GetComponent<NewRoom>().last = lastRoom;
+            isRoomChanging = false;
+        }   
     }
     
     public bool GetRandomBool()

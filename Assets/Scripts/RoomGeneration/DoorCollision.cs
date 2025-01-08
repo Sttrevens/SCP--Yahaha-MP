@@ -6,7 +6,7 @@ public class DoorCollision : MonoBehaviour
 {
 
     public bool isEntrance;
-    private bool generated = false;
+    public bool generated = false;
 
     void OnTriggerEnter(Collider other)
     {
@@ -24,10 +24,9 @@ public class DoorCollision : MonoBehaviour
 
             if (!generated)
             {
-                RoomGeneration.Instance.GenerateNewRoom();
+                RoomGeneration.Instance.GenerateNewRoom(isEntrance);
                 generated = true;
             }
-            
             
         }
     }
