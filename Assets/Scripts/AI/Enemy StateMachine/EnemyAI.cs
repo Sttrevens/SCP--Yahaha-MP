@@ -73,6 +73,8 @@ public class EnemyAI : NetworkBehaviour
     public override void Spawned()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
+        currentHealth = maxHealth;
+        SwitchState(new PatrollingState());
     }
 
     private void Start()
