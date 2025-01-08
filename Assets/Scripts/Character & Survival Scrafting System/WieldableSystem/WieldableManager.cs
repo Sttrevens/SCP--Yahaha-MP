@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,8 @@ namespace LPSurvivalEngine
         [HideInInspector] public Wieldable currentWieldable;
         public Transform wieldablesPosition;
         public Transform flashlightPosition;
+        public Transform cameraPositon;
+        public Transform AimPositon;
         public PlayerInput PlayerInput;
         private InputAction actionAction;
     
@@ -50,16 +53,26 @@ namespace LPSurvivalEngine
         public void EquipNewItem(ItemDatabase item)
         {
             DropWieldable();
-            if (item.wieldablePrefab.GetComponent<Flashlight>() == null)
+            if (item.wieldablePrefab.GetComponent<Flashlight>() == null && item.wieldablePrefab.GetComponent<CameraController>() == null)
             {
                 GameObject player = GameObject.Find("CurrentPlayer");
                 wieldablesPosition = player.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
                 currentWieldable = Instantiate(item.wieldablePrefab, wieldablesPosition).GetComponent<Wieldable>();
                 Debug.Log("EquipNewItem : " + item.wieldablePrefab.name);
             }
+            else if(item.wieldablePrefab.GetComponent<Flashlight>() == null && item.wieldablePrefab.GetComponent<CameraController>() != null)
+            {
+                GameObject player = GameObject.Find("CurrentPlayer");
+                currentWieldable = Instantiate(item.wieldablePrefab, cameraPositon).GetComponent<Wieldable>();
+            }
+            else if (item.wieldablePrefab.GetComponent<Flashlight>() != null && item.wieldablePrefab.GetComponent<CameraController>() == null)
+            {
+                GameObject player = GameObject.Find("CurrentPlayer");
+                currentWieldable = Instantiate(item.wieldablePrefab, flashlightPosition).GetComponent<Wieldable>();
+            }
             else
             {
-                currentWieldable = Instantiate(item.wieldablePrefab, flashlightPosition).GetComponent<Wieldable>();
+                Debug.LogError("Unexpected item type: " + item.wieldablePrefab.name);
             }
         }
 

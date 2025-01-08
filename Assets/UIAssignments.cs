@@ -26,8 +26,8 @@ public class UIAssignments : MonoBehaviour
 
         ExitMenu.instance.playerController = playerController;
 
-        WieldableManager.instance.wieldablesPosition = wieldPostition;
-        WieldableManager.instance.flashlightPosition = flashlightRootPosition;
+        //WieldableManager.instance.wieldablesPosition = wieldPostition;
+        //WieldableManager.instance.flashlightPosition = flashlightRootPosition;
     }
 
     // Update is called once per frame

@@ -155,6 +155,25 @@ namespace LPSurvivalEngine
                 hintInteractText.text = "";
                 hintObjectText.text = "";
             }
+
+            if (currentInteractGameObject != null)
+            {
+                if (currentInteractGameObject.GetComponent<SPItemObject>() != null)
+                {
+                    hintObjectText.text = currentInteractGameObject.GetComponent<SPItemObject>().item.displayName;
+                    hintInteractText.text = string.Format("Use {0} to pick up", "E");
+                }
+                else
+                {
+                    hintInteractText.text = "";
+                    hintObjectText.text = "";
+                }
+            }
+            else
+            {
+                hintInteractText.text = "";
+                hintObjectText.text = "";
+            }
         }
         
         void Interaction()
