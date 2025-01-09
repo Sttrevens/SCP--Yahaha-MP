@@ -176,6 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5465730226223039366}
   - component: {fileID: 638636006370229917}
+  - component: {fileID: -8901287509011537673}
   m_Layer: 6
   m_Name: Wieldable_Desk Leg
   m_TagString: Untagged
@@ -224,6 +225,24 @@ MonoBehaviour:
   doesGatherresources: 0
   anim: {fileID: 0}
   hitting: 0
+--- !u!114 &-8901287509011537673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2976463804789829844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 875584992
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 638636006370229917}
 --- !u!1 &4190742480637124678
 GameObject:
   m_ObjectHideFlags: 0

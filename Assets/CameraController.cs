@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion; // 引入 Fusion 命名空间
 using LPSurvivalEngine;
 
 namespace LPSurvivalEngine
@@ -23,7 +24,7 @@ namespace LPSurvivalEngine
         public float MinFOV = 20f;
         public float MaxFOV = 60f;
 
-        [SerializeField]private bool isRightMouseButtonDown = false; // 标识右键是否按下
+        [SerializeField] private bool isRightMouseButtonDown = false; // 标识右键是否按下
 
         private void Awake()
         {
@@ -54,7 +55,8 @@ namespace LPSurvivalEngine
         public override void OnAttackInput()
         {
             Debug.Log("[CameraController] OnAttackInput - Taking Picture");
-            TakePicture();
+            // 使用 RPC 方法同步拍照逻辑
+            TakePictureRPC();
         }
 
         /// <summary>
@@ -68,9 +70,10 @@ namespace LPSurvivalEngine
         }
 
         // 拍照功能（左键）
-        void TakePicture()
+        [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+        void TakePictureRPC()
         {
-            Debug.Log("[CameraController] TakePicture - Flash On");
+            Debug.Log("[CameraController] TakePictureRPC - Flash On");
             if (cameraFlashLight != null)
             {
                 cameraFlashLight.enabled = true;
@@ -79,7 +82,7 @@ namespace LPSurvivalEngine
             if (audioSource != null && toggleSound != null)
             {
                 audioSource.PlayOneShot(toggleSound);
-                Debug.Log("[CameraController] TakePicture - Playing Sound");
+                Debug.Log("[CameraController] TakePictureRPC - Playing Sound");
             }
 
             if (cameraFlashLight != null)

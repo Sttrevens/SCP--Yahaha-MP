@@ -11,7 +11,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
     {
         if (player == Runner.LocalPlayer)
         {
-            NetworkObject plObject = Runner.Spawn(PlayerPrefab, spawnPoint.position, Quaternion.identity);
+            NetworkObject plObject = Runner.Spawn(PlayerPrefab, Vector3.zero, Quaternion.identity);
             plObject.name = "CurrentPlayer";
             Runner.SetPlayerObject(player, plObject);
             GameObject.Find("Inventory").GetComponent<Inventory>().dropPosition =

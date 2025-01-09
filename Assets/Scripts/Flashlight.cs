@@ -31,6 +31,7 @@ namespace LPSurvivalEngine
             cam = Camera.main;
             if (torchLight == null)
                 torchLight = GetComponentInChildren<Light>();  // 如果没有指定光源，自动查找子物体中的光源
+            torchLight.enabled = false;
 
             if (audioSource == null)
                 audioSource = GetComponent<AudioSource>();  // 如果没有指定音源，自动获取 AudioSource 组件

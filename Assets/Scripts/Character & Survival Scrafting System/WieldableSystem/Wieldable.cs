@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace LPSurvivalEngine
 {
-    public class Wieldable : MonoBehaviour
+    public class Wieldable : NetworkBehaviour
     {
         public virtual void OnAttackInput(){}
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 95363276851437522}
   - component: {fileID: -7472082361743517238}
   - component: {fileID: -6465537781611839740}
+  - component: {fileID: 6239035282910902763}
   m_Layer: 10
   m_Name: Wieldable_Flashlight
   m_TagString: Untagged
@@ -127,6 +128,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   toggleSound: {fileID: 0}
   offset: {x: 0, y: 0, z: 2}
+  isTorchOn: 0
 --- !u!82 &-6465537781611839740
 AudioSource:
   m_ObjectHideFlags: 0
@@ -223,6 +225,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6239035282910902763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002705123656268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2301429520
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: -7472082361743517238}
 --- !u!1 &1175331865632600
 GameObject:
   m_ObjectHideFlags: 0

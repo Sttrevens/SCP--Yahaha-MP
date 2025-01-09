@@ -3653,6 +3653,8 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 1122259457492835225}
   - {fileID: 2747722033361472396}
+  - {fileID: 6556798091325770318}
+  - {fileID: -2697029352120812069}
   - {fileID: -8306276541168044105}
   - {fileID: 7358732985660825714}
   - {fileID: 4082337287283386946}
@@ -3714,6 +3716,8 @@ MonoBehaviour:
   PlayerSpeed: 2
   JumpForce: 5
   GravityValue: -9.81
+  RotationSpeed: 5
+  cameraRoot: {fileID: 0}
 --- !u!114 &6515430458572477251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3746,6 +3750,8 @@ MonoBehaviour:
   currentWieldable: {fileID: 0}
   wieldablesPosition: {fileID: 5814555597588255667}
   flashlightPosition: {fileID: 4692740114847110545}
+  cameraPositon: {fileID: 0}
+  AimPositon: {fileID: 0}
   PlayerInput: {fileID: 0}
   controller: {fileID: 0}
 --- !u!114 &-2697029352120812069
@@ -3800,29 +3806,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health:
+    currentValue: 0
     maxValue: 100
     startValue: 100
     regenrate: 0.1
     decayRate: 0
     VitalBar: {fileID: 0}
   hunger:
+    currentValue: 0
     maxValue: 100
     startValue: 80
     regenrate: 0
     decayRate: 0.05
     VitalBar: {fileID: 0}
   thirst:
+    currentValue: 0
     maxValue: 100
     startValue: 80
     regenrate: 0
     decayRate: 0.1
     VitalBar: {fileID: 0}
   sleep:
+    currentValue: 0
     maxValue: 90
     startValue: 80
     regenrate: 0.04
     decayRate: 0
     VitalBar: {fileID: 0}
+  _playerHealth: 100
+  _playerHunger: 100
+  _playerThirst: 100
+  _playerSleep: 100
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []

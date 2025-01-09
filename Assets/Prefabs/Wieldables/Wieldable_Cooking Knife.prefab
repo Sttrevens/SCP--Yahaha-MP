@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7528454895629586459}
   - component: {fileID: 5212618780254812662}
+  - component: {fileID: -1527057319408087725}
   m_Layer: 6
   m_Name: Wieldable_Cooking Knife
   m_TagString: Untagged
@@ -138,3 +139,21 @@ MonoBehaviour:
   doesGatherresources: 0
   anim: {fileID: 0}
   hitting: 0
+--- !u!114 &-1527057319408087725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5898883812869700853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3001540197
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5212618780254812662}
