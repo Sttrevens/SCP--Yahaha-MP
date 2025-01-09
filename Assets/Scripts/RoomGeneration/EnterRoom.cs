@@ -9,9 +9,14 @@ public class EnterRoom : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isRotating)
+        if (Input.GetKeyDown(KeyCode.O) && !isRotating)
         {
             StartCoroutine(RotateGradually());
+        }
+        
+        if (Input.GetKeyDown(KeyCode.R) && isRotating)
+        {
+            GameObject.Find("CurrentPlayer").transform.position = GameObject.Find("SpawnPoint").transform.position;
         }
     }
 

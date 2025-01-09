@@ -29,73 +29,56 @@ public class RoomGeneration : MonoBehaviour
     public float point;
     
     public GameObject roomPrefab;
+    public GameObject corridorPrefab;
     [SerializeField] private GameObject[] rooms;
     
-    private Vector3 spawnPosition;
 
     // Keeps track of the last room's position
     private GameObject lastRoom;
-    private GameObject currentRoom;
-    [SerializeField]private GameObject firstRoom;
-    
-    public bool isDoorActive;
-    public bool isRoomChanging;
+    private GameObject lastCorridor;
+    private GameObject newRoom;
+    private GameObject newCorridor;
+    [SerializeField]private GameObject firstCorridor;
     
     void Start()
     {
-        spawnPosition = Vector3.zero; 
-        GenerateInitialRoom();
         point = 0;
     }
     
-    
     private void GenerateInitialRoom()
     {
-        lastRoom = firstRoom;
-        isDoorActive = true;
+        //lastRoom =  firstCorridor;
     }
     
-    public void GenerateNewRoom(bool isEntrance)
+    public void GenerateNewRoom(Transform position)
     {
-        
+        //decide which room
         bool isRoomWrong = GetRandomBool();
         int roomIndex = 0;
         if (isRoomWrong)
         {
             roomIndex = GetRandomNumberInRange();
         }
-        if (lastRoom.GetComponent<NewRoom>().isWrong)
-        {
-            spawnPosition = lastRoom.GetComponent<NewRoom>().entranceGeneratedPosition.position;
-        }
-        else
-        {
-            spawnPosition = lastRoom.GetComponent<NewRoom>().exitGeneratedPosition.position;
-        }
-        //if its an entrance make the exit active
-        if(isEntrance)
-        {
-            if(currentRoom!=null) currentRoom.GetComponent<NewRoom>().AdjustRoom();
-            isDoorActive = true;
-        }
-        //if it's an exit after walk past an entrance then generate the next room
-        if (!isEntrance && isDoorActive)
-        {
-            GameObject newRoom = Instantiate(roomPrefab, lastRoom.GetComponent<NewRoom>().exitGeneratedPosition.position, Quaternion.identity);
-            newRoom.GetComponent<NewRoom>().last = lastRoom;
-            newRoom.GetComponent<NewRoom>().MakeRoom(roomIndex);
-            isDoorActive = !isDoorActive;
-            isRoomChanging = true;
-        }
-        //if the player walks entrance/exit twice
-        else if(isRoomChanging)
-        {
-            currentRoom = Instantiate(roomPrefab, lastRoom.transform.position, Quaternion.identity);
-            currentRoom.GetComponent<NewRoom>().MakeRoom(roomIndex);
-            Destroy(lastRoom);
-            currentRoom.GetComponent<NewRoom>().last = lastRoom;
-            isRoomChanging = false;
-        }   
+        
+        //generate room and corridor
+        newRoom = Instantiate(roomPrefab, position.position, Quaternion.identity);
+        newCorridor = Instantiate(corridorPrefab, newRoom.GetComponent<NewRoom>().exitGeneratedPosition.position, Quaternion.identity);
+        newRoom.GetComponent<NewRoom>().last = lastRoom;
+
+        newRoom.GetComponent<NewRoom>().MakeRoom(roomIndex);
+    }
+
+    public void DeleteLastRoom()
+    {
+        if(lastRoom!=null)Destroy(lastRoom);
+        lastRoom = newRoom;
+
+    }
+       
+    public void DeleteLastCorridor()
+    {
+        if(lastCorridor)Destroy(lastCorridor);
+        lastCorridor = newCorridor;
     }
     
     public bool GetRandomBool()
@@ -107,4 +90,8 @@ public class RoomGeneration : MonoBehaviour
     {
         return UnityEngine.Random.Range(0, rooms.Length);
     }
+    
+    
+    
+    
 }

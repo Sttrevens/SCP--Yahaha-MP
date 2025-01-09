@@ -4,30 +4,35 @@ using UnityEngine;
 
 public class DoorCollision : MonoBehaviour
 {
-
     public bool isEntrance;
-    public bool generated = false;
+    public bool entered = false;
+    public GameObject Room;
+    private bool isFinal = false;
 
     void OnTriggerEnter(Collider other)
     {
-        print("entered");
-        if (other.CompareTag("Player")) 
+        if (!entered)
         {
+            RoomGeneration.Instance.DeleteLastRoom();
+            if (other.CompareTag("Player"))
+            {
+                entered = true;
+                Room.GetComponent<NewRoom>().AdjustRoom();
+            } 
+        }
+        else if(!isFinal)
+        {
+            isFinal = true;
             if (isEntrance)
             {
                 RoomGeneration.Instance.point = 0;
+                Room.GetComponent<NewRoom>().failed = true;
             }
             else
             {
                 RoomGeneration.Instance.point += 1;
             }
-
-            if (!generated)
-            {
-                RoomGeneration.Instance.GenerateNewRoom(isEntrance);
-                generated = true;
-            }
-            
         }
+
     }
 }
