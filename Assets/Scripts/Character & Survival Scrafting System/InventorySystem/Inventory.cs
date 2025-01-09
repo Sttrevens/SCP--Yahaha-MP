@@ -47,9 +47,9 @@ namespace LPSurvivalEngine
         {
             //PlayerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();
             
-            if (PlayerInput != null) {
+            /*if (PlayerInput != null) {
                 inventoryAction = PlayerInput.actions.FindAction("Inventory");
-            }
+            }*/
             if (instance == null)
             {
                 instance = this;
@@ -64,13 +64,13 @@ namespace LPSurvivalEngine
         private void OnEnable()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
-            inventoryAction.started += OnInventoryButton;
+            //inventoryAction.started += OnInventoryButton;
         }
 
         private void OnDisable()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
-            inventoryAction.started -= OnInventoryButton;
+            //inventoryAction.started -= OnInventoryButton;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -125,20 +125,20 @@ namespace LPSurvivalEngine
             {
                 inventoryWindow.SetActive(false);
                 onCloseInventory.Invoke();
-                playerController.ToggleCursor(false);
+                //playerController.ToggleCursor(false);
             }
             else if (containerUIWindow.activeInHierarchy)
             {
                 containerUIWindow.SetActive(false);
                 onCloseContainerInventory.Invoke();
-                playerController.ToggleCursor(false);
+                //playerController.ToggleCursor(false);
             }
             else
             {
                 inventoryWindow.SetActive(true);
                 onOpenInventory.Invoke();
                 //ClearSelectedItemWindow();
-                playerController.ToggleCursor(true);
+                //playerController.ToggleCursor(true);
             }
         }
 

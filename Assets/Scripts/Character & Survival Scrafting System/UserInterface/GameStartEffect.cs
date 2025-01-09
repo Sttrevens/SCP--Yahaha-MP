@@ -12,7 +12,7 @@ public class GameStartEffect : MonoBehaviour
         blackScreenCanvas.alpha = 1;
         blackScreenCanvas.gameObject.SetActive(true);
 
-        StartCoroutine(FadeFromBlack());
+        //StartCoroutine(FadeFromBlack());
     }
 
     // Update is called once per frame
@@ -22,7 +22,7 @@ public class GameStartEffect : MonoBehaviour
     }
 
 
-    private IEnumerator FadeFromBlack()
+    public IEnumerator FadeFromBlack()
     {
         float duration = 3f; // Fade duration in seconds
         float elapsed = 0f;

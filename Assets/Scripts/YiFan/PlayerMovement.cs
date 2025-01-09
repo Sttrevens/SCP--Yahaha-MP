@@ -33,6 +33,8 @@ public class PlayerMovement : NetworkBehaviour
         {
             Camera = Camera.main;
             Camera.GetComponent<FirstPersonCamera>().Target = cameraRoot;
+
+            StartCoroutine(FindFirstObjectByType<GameStartEffect>().FadeFromBlack());
         }
     }
 
