@@ -70,11 +70,28 @@ namespace LPSurvivalEngine
         [Rpc(RpcSources.All, RpcTargets.All)]
         public void RPC_RequestEquipItem(PlayerRef player)
         {
+            RequestStateAuthorityForEquipItem(player);
+
             //// 只有 StateAuthority 才能执行 Spawn
             //if (Object.HasStateAuthority)
             //{
-                SpawnEquippedItem(player);
+            SpawnEquippedItem(player);
             //}
+        }
+
+        private void RequestStateAuthorityForEquipItem(PlayerRef player)
+        {
+            // 如果当前客户端没有 StateAuthority，尝试请求
+            if (!HasStateAuthority)
+            {
+                // 此代码段表示此对象在当前客户端上没有控制权限
+                Debug.Log("Requesting StateAuthority for EquipItem.");
+                GetComponent<NetworkObject>().RequestStateAuthority();
+            }// 请求获取该对象的控制权限
+            else
+            {
+                Debug.Log("Already have StateAuthority.");
+            }
         }
 
         public Transform CurrentWieldableRootTransform()
