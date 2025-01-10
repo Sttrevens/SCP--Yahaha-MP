@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -7472082361743517238}
   - component: {fileID: -6465537781611839740}
   - component: {fileID: 6239035282910902763}
+  - component: {fileID: 4678705056759666512}
   m_Layer: 10
   m_Name: Wieldable_Flashlight
   m_TagString: Untagged
@@ -243,6 +244,23 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: -7472082361743517238}
+  - {fileID: 4678705056759666512}
+--- !u!114 &4678705056759666512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002705123656268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &1175331865632600
 GameObject:
   m_ObjectHideFlags: 0
