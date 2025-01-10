@@ -77,6 +77,7 @@ namespace LPSurvivalEngine
             //// 只有 StateAuthority 才能执行 Spawn
             if (Object.HasStateAuthority)
             {
+                GameObject.Find("CurrentPlayer").GetComponent<FirstPersonOptimizer>().Wield();
             SpawnEquippedItem(player);
             }
         }
