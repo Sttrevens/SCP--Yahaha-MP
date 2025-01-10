@@ -161,7 +161,11 @@ MonoBehaviour:
   visibleRatio: 0
   centerOffsetDistance: 0
   distanceToCamera: 0
+  centerOffsetWeight: 1
+  distanceToCameraWeight: 1
+  visibleRatioWeight: 0.5
   cam: {fileID: 2048862}
+  accumulatedScore: 0
 --- !u!114 &7050679032339698554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 941033920
   ObjectInterest: 1
-  Flags: 262145
+  Flags: 524289
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: -3222643352481867639}
