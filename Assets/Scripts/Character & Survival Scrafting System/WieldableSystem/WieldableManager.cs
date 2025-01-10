@@ -34,7 +34,7 @@ namespace LPSurvivalEngine
             //    actionAction.performed += OnAttackInput;
             //}
 
-            Object.ReleaseStateAuthority();
+            //Object.ReleaseStateAuthority();
         }
 
         public void OnAttackInput(InputAction.CallbackContext context)
@@ -75,10 +75,10 @@ namespace LPSurvivalEngine
         public void RPC_RequestEquipItem(PlayerRef player)
         {
             //// 只有 StateAuthority 才能执行 Spawn
-            //if (Object.HasStateAuthority)
-            //{
+            if (Object.HasStateAuthority)
+            {
             SpawnEquippedItem(player);
-            //}
+            }
         }
 
         private void RequestStateAuthorityForEquipItem(PlayerRef player)
