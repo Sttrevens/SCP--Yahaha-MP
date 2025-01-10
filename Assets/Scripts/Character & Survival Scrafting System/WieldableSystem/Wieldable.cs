@@ -7,10 +7,11 @@ namespace LPSurvivalEngine
 {
     public class Wieldable : NetworkBehaviour
     {
-        public virtual void OnAttackInput(){}
+        public virtual void OnAttackInput() { }
 
-        public virtual void OnAltAttackInput(){}
+        public virtual void OnAltAttackInput() { }
 
+        public PlayerRef player;
     }
 
 

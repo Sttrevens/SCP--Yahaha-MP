@@ -24,6 +24,11 @@ namespace LPSurvivalEngine
         public float MinFOV = 20f;
         public float MaxFOV = 60f;
 
+        private Vector3 aimPosition;
+        private Quaternion aimRotation;
+        private Vector3 cameraPosition;
+        private Quaternion cameraRotation;
+
         [SerializeField] private bool isRightMouseButtonDown = false; // 标识右键是否按下
 
         private void Awake()
@@ -47,6 +52,11 @@ namespace LPSurvivalEngine
             {
                 HandleZoom();
             }
+
+            //aimPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.position;
+            //aimRotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.rotation;
+            //cameraPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.position;
+            //cameraRotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.rotation;
         }
 
         /// <summary>
@@ -66,7 +76,7 @@ namespace LPSurvivalEngine
         {
             isRightMouseButtonDown = !isRightMouseButtonDown;
             Debug.Log("[CameraController] OnAltAttackInput - Aim State: " + isRightMouseButtonDown);
-            Aim();
+            //Aim();
         }
 
         // 拍照功能（左键）
@@ -106,12 +116,14 @@ namespace LPSurvivalEngine
         {
             if (isRightMouseButtonDown)
             {
-                transform.position = WieldableManager.instance.AimPositon.position;
+                transform.position = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.position;
+                transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.rotation;
                 Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
             }
             else
             {
-                transform.position = WieldableManager.instance.cameraPositon.position;
+                transform.position = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.position;
+                transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.rotation;
                 Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
             }
         }
@@ -125,6 +137,14 @@ namespace LPSurvivalEngine
                 float newFOV = CameraInCamera.fieldOfView - (ScrollInput * ZoomSpeed);
                 CameraInCamera.fieldOfView = Mathf.Clamp(newFOV, MinFOV, MaxFOV);
                 Debug.Log("[CameraController] HandleZoom - New FOV: " + CameraInCamera.fieldOfView);
+            }
+        }
+
+        public override void FixedUpdateNetwork()
+        {
+            if (HasStateAuthority)
+            {
+                Aim();
             }
         }
     }

@@ -18,6 +18,8 @@ public class ExitMenu : MonoBehaviour
 
     [HideInInspector] public bool isPaused = false;
 
+    public string titleMenuSceneName;
+
     private void Awake()
     {
         if (instance == null)
@@ -73,7 +75,6 @@ public class ExitMenu : MonoBehaviour
 
     public void ConfirmExitGame()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
+        SceneManager.LoadScene(titleMenuSceneName);
     }
 }

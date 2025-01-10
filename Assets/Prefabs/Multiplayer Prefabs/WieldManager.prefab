@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4177849882831191789}
   - component: {fileID: 8049269088045846543}
+  - component: {fileID: 753151317067304203}
   m_Layer: 0
   m_Name: WieldManager
   m_TagString: Untagged
@@ -47,5 +48,25 @@ MonoBehaviour:
   currentWieldable: {fileID: 0}
   wieldablesPosition: {fileID: 5814555597588255667, guid: 16a0ef0fa65fa414baac73dc09b1c775, type: 3}
   flashlightPosition: {fileID: 4692740114847110545, guid: 16a0ef0fa65fa414baac73dc09b1c775, type: 3}
+  cameraPositon: {fileID: 0}
+  AimPositon: {fileID: 0}
   PlayerInput: {fileID: 0}
   controller: {fileID: 0}
+--- !u!114 &753151317067304203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595913076367099489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 593363122
+  ObjectInterest: 1
+  Flags: 524289
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 8049269088045846543}
