@@ -179,6 +179,8 @@ namespace LPSurvivalEngine
                 // 提示消息
                 Prompt.instance.CustomPrompt(string.Format("{0} has been thrown!", selectedItem.item.name));
             throwedItem = item;
+            RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
+
             // 在本地实例化物品并同步
             RPC_RequestSpawnItem(Runner.LocalPlayer);
 
@@ -197,10 +199,34 @@ namespace LPSurvivalEngine
         public void RPC_RequestSpawnItem(PlayerRef player)
         {
             // 只有 StateAuthority 才能执行 Runner.Spawn
-            //if (Object.HasStateAuthority)
-            //{
+            if (Object.HasStateAuthority)
+            {
+                dropPosition = GameObject.Find("PublicDropBox").transform;
                 SpawnItem(player);
-            //}
+            }
+        }
+
+        private void RequestStateAuthorityForEquipItem(PlayerRef player)
+        {
+            // 如果当前客户端没有 StateAuthority，尝试请求
+            if (!HasStateAuthority)
+            {
+                // 此代码段表示此对象在当前客户端上没有控制权限
+                Debug.Log("Requesting StateAuthority for EquipItem.");
+                Object.RequestStateAuthority();
+                if (HasStateAuthority)
+                {
+                    Debug.Log($"This client has StateAuthority over {gameObject.name}");
+                }
+                else
+                {
+                    Debug.Log($"This client does not have StateAuthority over {gameObject.name}");
+                }
+            }// 请求获取该对象的控制权限
+            else
+            {
+                Debug.Log("Already have StateAuthority.");
+            }
         }
 
         // 物品生成逻辑（只在 StateAuthority 执行）

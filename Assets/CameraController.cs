@@ -66,7 +66,7 @@ namespace LPSurvivalEngine
         {
             isRightMouseButtonDown = !isRightMouseButtonDown;
             Debug.Log("[CameraController] OnAltAttackInput - Aim State: " + isRightMouseButtonDown);
-            Aim();
+            //Aim();
         }
 
         // ÅÄÕÕ¹¦ÄÜ£¨×ó¼ü£©
@@ -107,11 +107,13 @@ namespace LPSurvivalEngine
             if (isRightMouseButtonDown)
             {
                 transform.position = WieldableManager.instance.AimPositon.position;
+                transform.rotation = WieldableManager.instance.AimPositon.rotation;
                 Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
             }
             else
             {
                 transform.position = WieldableManager.instance.cameraPositon.position;
+                transform.rotation = WieldableManager.instance.cameraPositon.rotation;
                 Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
             }
         }
@@ -126,6 +128,11 @@ namespace LPSurvivalEngine
                 CameraInCamera.fieldOfView = Mathf.Clamp(newFOV, MinFOV, MaxFOV);
                 Debug.Log("[CameraController] HandleZoom - New FOV: " + CameraInCamera.fieldOfView);
             }
+        }
+
+        public override void FixedUpdateNetwork()
+        {
+            Aim();
         }
     }
 }

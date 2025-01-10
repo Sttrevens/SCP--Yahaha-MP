@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using LPSurvivalEngine;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -36,8 +37,11 @@ public class ScoreManager : MonoBehaviour
 
     void CalculateTotalScore()
     {
-        // 清空分数
-        totalScore = 0f;
+        if (cameraControllers.Count != 0)
+        {
+            // 清空分数
+            totalScore = 0f;
+        }
 
         // 获取场景中的所有 CameraController 组件
         cameraControllers.Clear();
