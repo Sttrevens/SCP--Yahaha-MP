@@ -53,10 +53,10 @@ namespace LPSurvivalEngine
                 HandleZoom();
             }
 
-            aimPosition = WieldableManager.instance.AimPositon.position;
-            aimRotation = WieldableManager.instance.AimPositon.rotation;
-            cameraPosition = WieldableManager.instance.cameraPositon.position;
-            cameraRotation = WieldableManager.instance.cameraPositon.rotation;
+            aimPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.position;
+            aimRotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.rotation;
+            cameraPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.position;
+            cameraRotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.rotation;
         }
 
         /// <summary>
@@ -142,17 +142,20 @@ namespace LPSurvivalEngine
 
         public override void FixedUpdateNetwork()
         {
-            if (isRightMouseButtonDown)
+            if (HasStateAuthority)
             {
-                transform.position = aimPosition;
-                transform.rotation = aimRotation;
-                Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
-            }
-            else
-            {
-                transform.position = cameraPosition;
-                transform.rotation = cameraRotation;
-                Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
+                if (isRightMouseButtonDown)
+                {
+                    transform.position = aimPosition;
+                    transform.rotation = aimRotation;
+                    Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
+                }
+                else
+                {
+                    transform.position = cameraPosition;
+                    transform.rotation = cameraRotation;
+                    Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
+                }
             }
         }
     }
