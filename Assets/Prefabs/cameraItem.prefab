@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: -4845458112814443438}
   - component: {fileID: 6878268625536953844}
   - component: {fileID: 5868905250710004773}
+  - component: {fileID: 2526032741598263466}
   m_Layer: 6
   m_Name: cameraItem
   m_TagString: Untagged
@@ -154,6 +155,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 83022766912854204}
+  - {fileID: 2526032741598263466}
 --- !u!65 &-4845458112814443438
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -333,6 +335,22 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
+--- !u!114 &2526032741598263466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &176766
 GameObject:
   m_ObjectHideFlags: 0
