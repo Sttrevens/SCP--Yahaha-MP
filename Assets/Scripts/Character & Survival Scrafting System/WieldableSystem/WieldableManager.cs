@@ -70,8 +70,11 @@ namespace LPSurvivalEngine
         [Rpc(RpcSources.All, RpcTargets.All)]
         public void RPC_RequestEquipItem(PlayerRef player)
         {
-            // 调用生成物品的逻辑
-            SpawnEquippedItem(player);
+            //// 只有 StateAuthority 才能执行 Spawn
+            //if (Object.HasStateAuthority)
+            //{
+                SpawnEquippedItem(player);
+            //}
         }
 
         public Transform CurrentWieldableRootTransform()
@@ -94,31 +97,49 @@ namespace LPSurvivalEngine
             return spawnPosition;
         }
 
-        // 物品生成逻辑（生成时在正确的玩家控制下执行）
+        // 物品生成逻辑（只在 StateAuthority 执行）
         private void SpawnEquippedItem(PlayerRef player)
         {
             Owner = player;
 
-            // 确保父物体设置有效
-            Transform spawnPosition = CurrentWieldableRootTransform();
-            if (spawnPosition == null)
+/*            // 根据物品类型选择生成位置
+            Transform spawnPosition = null;
+            if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() == null && equippedItem.wieldablePrefab.GetComponent<CameraController>() == null)
+            {
+                GameObject currentPlayer = GameObject.Find("CurrentPlayer");
+                spawnPosition = currentPlayer.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
+            }
+            else if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() == null && equippedItem.wieldablePrefab.GetComponent<CameraController>() != null)
+            {
+                spawnPosition = cameraPositon;
+            }
+            else if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() != null && equippedItem.wieldablePrefab.GetComponent<CameraController>() == null)
+            {
+                spawnPosition = flashlightPosition;
+            }*/
+
+            // 如果没有找到生成位置，抛出错误
+            if (CurrentWieldableRootTransform() == null)
             {
                 Debug.LogError("Unexpected item type: " + equippedItem.wieldablePrefab.name);
                 return;
             }
 
             // 使用 Runner.Spawn 实例化并同步物品
-            NetworkObject spawnedItem = Runner.Spawn(equippedItem.wieldablePrefab, spawnPosition.position, spawnPosition.rotation);
-
+            NetworkObject spawnedItem = Runner.Spawn(equippedItem.wieldablePrefab, CurrentWieldableRootTransform().position, CurrentWieldableRootTransform().rotation);
+            spawnedItem.RequestStateAuthority();
+            // 确保新生成的物品挂载到父物体
             if (spawnedItem != null)
             {
-                spawnedItem.transform.position = spawnPosition.position;
-                spawnedItem.transform.rotation = spawnPosition.rotation;
-
+                spawnedItem.transform.position = CurrentWieldableRootTransform().position;
+                spawnedItem.transform.rotation = CurrentWieldableRootTransform().rotation;
                 // 设置物品的父物体
-                spawnedItem.transform.SetParent(spawnPosition);
+                spawnedItem.transform.SetParent(CurrentWieldableRootTransform());
 
                 // 重置生成物品的本地位置和旋转
+                
+
+                // 设置为当前装备物品
                 if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
                 {
                     currentWieldable = wieldable; // 更新当前装备的物品
@@ -128,8 +149,10 @@ namespace LPSurvivalEngine
                     // 只有拥有 StateAuthority 的客户端才可以进行此操作
                     if (spawnedItem.HasStateAuthority)
                     {
-                        // 只有获得 StateAuthority 的客户端可以控制物品
-                        spawnedItem.RequestStateAuthority();  // 确保当前客户端拥有物品控制权
+                        // 设置 StateAuthority，确保物品归当前玩家控制
+                        // 这样做是确保物品的所有权被正确管理
+                        // 你可以使用 "RequestStateAuthority" 来确认物品的控制权
+                        spawnedItem.RequestStateAuthority();
                     }
 
                     currentWieldable.player = player;
@@ -150,4 +173,6 @@ namespace LPSurvivalEngine
             }
         }
     }
-}
+
+
+    }
