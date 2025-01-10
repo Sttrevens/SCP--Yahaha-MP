@@ -34,7 +34,7 @@ namespace LPSurvivalEngine
             //    actionAction.performed += OnAttackInput;
             //}
 
-            //Object.ReleaseStateAuthority();
+            Object.ReleaseStateAuthority();
         }
 
         public void OnAttackInput(InputAction.CallbackContext context)
