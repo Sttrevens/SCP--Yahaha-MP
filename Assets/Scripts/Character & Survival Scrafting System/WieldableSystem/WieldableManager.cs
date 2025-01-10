@@ -33,6 +33,8 @@ namespace LPSurvivalEngine
             //    actionAction = PlayerInput.actions.FindAction("Action");
             //    actionAction.performed += OnAttackInput;
             //}
+
+            GetComponent<NetworkObject>().ReleaseStateAuthority();
         }
 
         public void OnAttackInput(InputAction.CallbackContext context)
@@ -87,6 +89,14 @@ namespace LPSurvivalEngine
                 // 此代码段表示此对象在当前客户端上没有控制权限
                 Debug.Log("Requesting StateAuthority for EquipItem.");
                 GetComponent<NetworkObject>().RequestStateAuthority();
+                if (HasStateAuthority)
+                {
+                    Debug.Log($"This client has StateAuthority over {gameObject.name}");
+                }
+                else
+                {
+                    Debug.Log($"This client does not have StateAuthority over {gameObject.name}");
+                }
             }// 请求获取该对象的控制权限
             else
             {
