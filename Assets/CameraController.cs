@@ -53,10 +53,10 @@ namespace LPSurvivalEngine
                 HandleZoom();
             }
 
-            aimPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.position;
-            aimRotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.rotation;
-            cameraPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.position;
-            cameraRotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.rotation;
+            //aimPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.position;
+            //aimRotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.rotation;
+            //cameraPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.position;
+            //cameraRotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.rotation;
         }
 
         /// <summary>
@@ -116,14 +116,14 @@ namespace LPSurvivalEngine
         {
             if (isRightMouseButtonDown)
             {
-                transform.position = aimPosition;
-                transform.rotation = aimRotation;
+                transform.position = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.position;
+                transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.rotation;
                 Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
             }
             else
             {
-                transform.position = cameraPosition;
-                transform.rotation = cameraRotation;
+                transform.position = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.position;
+                transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.rotation;
                 Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
             }
         }
@@ -144,18 +144,7 @@ namespace LPSurvivalEngine
         {
             if (HasStateAuthority)
             {
-                if (isRightMouseButtonDown)
-                {
-                    transform.position = aimPosition;
-                    transform.rotation = aimRotation;
-                    Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
-                }
-                else
-                {
-                    transform.position = cameraPosition;
-                    transform.rotation = cameraRotation;
-                    Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
-                }
+                Aim();
             }
         }
     }

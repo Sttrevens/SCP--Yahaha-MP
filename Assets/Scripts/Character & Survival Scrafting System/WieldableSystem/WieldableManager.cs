@@ -155,33 +155,22 @@ namespace LPSurvivalEngine
 
             // 使用 Runner.Spawn 实例化并同步物品
             NetworkObject spawnedItem = Runner.Spawn(equippedItem.wieldablePrefab, CurrentWieldableRootTransform().position, CurrentWieldableRootTransform().rotation);
-            spawnedItem.RequestStateAuthority();
+            
             // 确保新生成的物品挂载到父物体
             if (spawnedItem != null)
             {
-                spawnedItem.transform.position = CurrentWieldableRootTransform().position;
-                spawnedItem.transform.rotation = CurrentWieldableRootTransform().rotation;
-                // 设置物品的父物体
-                spawnedItem.transform.SetParent(CurrentWieldableRootTransform());
+                //spawnedItem.transform.position = CurrentWieldableRootTransform().position;
+                //spawnedItem.transform.rotation = CurrentWieldableRootTransform().rotation;
+                //// 设置物品的父物体
+                //spawnedItem.transform.SetParent(CurrentWieldableRootTransform());
 
-                // 重置生成物品的本地位置和旋转
-                
+                spawnedItem.RequestStateAuthority();
 
                 // 设置为当前装备物品
                 if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
                 {
                     currentWieldable = wieldable; // 更新当前装备的物品
                     Debug.Log($"[SpawnEquippedItem] Equipped item: {equippedItem.wieldablePrefab.name} by {player}");
-
-                    // 通过 StateAuthority 设置物品的所有者
-                    // 只有拥有 StateAuthority 的客户端才可以进行此操作
-                    if (spawnedItem.HasStateAuthority)
-                    {
-                        // 设置 StateAuthority，确保物品归当前玩家控制
-                        // 这样做是确保物品的所有权被正确管理
-                        // 你可以使用 "RequestStateAuthority" 来确认物品的控制权
-                        spawnedItem.RequestStateAuthority();
-                    }
 
                     currentWieldable.player = player;
                 }
