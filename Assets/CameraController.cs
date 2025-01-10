@@ -24,6 +24,11 @@ namespace LPSurvivalEngine
         public float MinFOV = 20f;
         public float MaxFOV = 60f;
 
+        private Vector3 aimPosition;
+        private Quaternion aimRotation;
+        private Vector3 cameraPosition;
+        private Quaternion cameraRotation;
+
         [SerializeField] private bool isRightMouseButtonDown = false; // 标识右键是否按下
 
         private void Awake()
@@ -47,6 +52,11 @@ namespace LPSurvivalEngine
             {
                 HandleZoom();
             }
+
+            aimPosition = WieldableManager.instance.AimPositon.position;
+            aimRotation = WieldableManager.instance.AimPositon.rotation;
+            cameraPosition = WieldableManager.instance.cameraPositon.position;
+            cameraRotation = WieldableManager.instance.cameraPositon.rotation;
         }
 
         /// <summary>
@@ -106,14 +116,14 @@ namespace LPSurvivalEngine
         {
             if (isRightMouseButtonDown)
             {
-                transform.position = WieldableManager.instance.AimPositon.position;
-                transform.rotation = WieldableManager.instance.AimPositon.rotation;
+                transform.position = aimPosition;
+                transform.rotation = aimRotation;
                 Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
             }
             else
             {
-                transform.position = WieldableManager.instance.cameraPositon.position;
-                transform.rotation = WieldableManager.instance.cameraPositon.rotation;
+                transform.position = cameraPosition;
+                transform.rotation = cameraRotation;
                 Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
             }
         }
