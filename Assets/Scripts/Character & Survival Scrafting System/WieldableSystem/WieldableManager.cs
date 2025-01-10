@@ -59,6 +59,8 @@ namespace LPSurvivalEngine
             // 记录当前要装备的物品
             equippedItem = item;
 
+            RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
+
             // 请求服务器生成物品
             RPC_RequestEquipItem(Runner.LocalPlayer);
         }
@@ -69,11 +71,9 @@ namespace LPSurvivalEngine
         [Networked] public PlayerRef Owner { get; set; } // 网络同步的物品所有者
 
         // RPC 请求生成装备物品（客户端调用）
-        [Rpc(RpcSources.All, RpcTargets.All)]
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_RequestEquipItem(PlayerRef player)
         {
-            RequestStateAuthorityForEquipItem(player);
-
             //// 只有 StateAuthority 才能执行 Spawn
             //if (Object.HasStateAuthority)
             //{
