@@ -12,6 +12,8 @@ public class ScreenFade : MonoBehaviour
     public float fadeDuration = 2.0f; // 渐变持续时间
     public float holdSubtitleDuration = 2.0f; // 字幕持续时间
 
+    public ScoreManager scoreManager;
+
     private void Awake()
     {
         // 确保黑屏和字幕组件已被赋值
@@ -50,7 +52,14 @@ public class ScreenFade : MonoBehaviour
         yield return StartCoroutine(FadeToBlack());
 
         // 显示字幕
-        subtitleText.text = subtitle;
+        if (scoreManager.totalScore == 0)
+        {
+            subtitleText.text = subtitle;
+        }
+        else
+        {
+            subtitleText.text = "Your total viewers: " + scoreManager.totalScore.ToString("F0");
+        }
         yield return StartCoroutine(ShowSubtitle());
 
         // 逐渐恢复画面
@@ -58,6 +67,7 @@ public class ScreenFade : MonoBehaviour
 
         // 在恢复画面后清空字幕
         subtitleText.text = "";
+        scoreManager.totalScore = 0;
     }
 
     // 渐变到黑屏

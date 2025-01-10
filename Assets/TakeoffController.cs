@@ -1,17 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Fusion;
+using System.Globalization;
 
-
-public class TakeoffController : MonoBehaviour, IInteractable
+public class TakeoffController : NetworkBehaviour, IInteractable
 {
     public ScreenFade screenFade;
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
     public BoolEvent OnBoolChanged;
     public bool IsFlying = false;
-    [SerializeField]private Transform ShipTransform;
+    [SerializeField] private Transform ShipTransform;
     [SerializeField] private bool IsStarted = false; // 默认状态
     [Header("Rotation")]
     [SerializeField] private float rotationAngle = 30f; // 旋转角度
@@ -27,34 +27,48 @@ public class TakeoffController : MonoBehaviour, IInteractable
     [SerializeField] private AudioClip elevatorCloseSound; // 电梯关门音效
     [SerializeField] private AudioClip elevatorShakeSound; // 电梯震动音效
     [SerializeField] private AudioSource audioSource; // 用于播放音效的音频源组件
-    // Start is called before the first frame update
 
     void Awake()
     {
         ShipTransform = transform.parent;
         screenFade = GetComponent<ScreenFade>();
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
+
     public string GetInteractText()
     {
         return string.Format("{0}", IsStarted ? "No Way Back" : "Start Game");
     }
+
+    // RPC: 当任何客户端触发互动时，执行以下逻辑
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void Rpc_OnInteract()
+    {
+        // 触发飞行状态
+        IsFlying = true;
+
+        // 开始震动并播放音效
+        StartCoroutine(ShakeElevatorPerlinWithSound());
+
+        // 触发屏幕淡出
+        TriggerScreenFade();
+
+        // 调用 OnBoolChanged 事件（可以用于其他逻辑，比如更新UI）
+        OnBoolChanged.Invoke(IsFlying);
+    }
+
+    // 客户端调用 OnInteract 时，会触发 RPC 同步方法
     public void OnInteract()
     {
 
-        IsFlying = true;
-        StartCoroutine(ShakeElevatorPerlinWithSound());
-        //IsFlying = false;
-        TriggerScreenFade();
-        StartCoroutine(ShakeElevatorPerlinWithSound());
-        OnBoolChanged.Invoke(IsFlying);
+            Rpc_OnInteract(); // 通过 RPC 调用同步方法
     }
+
     private IEnumerator ShakeElevatorPerlinWithSound()
     {
         Vector3 originalPosition = ShipTransform.localPosition;
@@ -78,6 +92,7 @@ public class TakeoffController : MonoBehaviour, IInteractable
 
         ShipTransform.localPosition = originalPosition; // 复位
     }
+
     private IEnumerator FadeInSound()
     {
         float duration = 0.5f; // 淡入时长，可根据实际调整
@@ -97,6 +112,7 @@ public class TakeoffController : MonoBehaviour, IInteractable
 
         audioSource.volume = targetVolume;
     }
+
     private IEnumerator FadeOutSound()
     {
         float duration = 0.5f; // 淡出时长，可根据实际调整
@@ -114,9 +130,10 @@ public class TakeoffController : MonoBehaviour, IInteractable
         audioSource.volume = targetVolume;
         audioSource.Stop();
     }
+
     private void TriggerScreenFade()
     {
-        if(screenFade != null)
+        if (screenFade != null)
         {
             screenFade.StartCoroutine("FadeScreenAndShowSubtitle");
         }

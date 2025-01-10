@@ -5,7 +5,7 @@ public class EnterRoom : MonoBehaviour
 {
     [Header("Rotation Settings")]
     public float rotationSpeed = 100f;  // 每秒旋转的速度（度/秒）
-    private float rotationAmount = -74.0f;  // 目标旋转角度
+    public float rotationAmount = -80.0f;  // 目标旋转角度
 
     private bool isRotating = false;  // 是否正在旋转
     private Quaternion initialRotation;  // 初始旋转

@@ -13,7 +13,7 @@ public class ScoreManager : MonoBehaviour
     private List<ConeDetection> cameraControllers = new List<ConeDetection>();
 
     // 当前总分
-    private float totalScore = 0f;
+    public float totalScore = 0f;
 
     void Start()
     {

@@ -249,6 +249,7 @@ namespace LPSurvivalEngine
             foreach (var item in Inventory.instance.slots)
             {
                 Inventory.instance.ThrowItem(item.item);
+                item.quantity--;
             }
         }
 
