@@ -88,6 +88,8 @@ public class EnemyAI : NetworkBehaviour
         if (currentState != null)
         {
             currentState.UpdateState(this);
+
+            players = GameObject.FindGameObjectsWithTag("Player");
         }
     }
 

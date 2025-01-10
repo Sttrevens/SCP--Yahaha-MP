@@ -181,6 +181,11 @@ namespace LPSurvivalEngine
             throwedItem = item;
             // 在本地实例化物品并同步
             RPC_RequestSpawnItem(Runner.LocalPlayer);
+
+            if (item.type == ItemType.Wieldable)
+            {
+                WieldableManager.instance.DropWieldable();
+            }
         }
 
         private ItemDatabase throwedItem;
@@ -192,10 +197,10 @@ namespace LPSurvivalEngine
         public void RPC_RequestSpawnItem(PlayerRef player)
         {
             // 只有 StateAuthority 才能执行 Runner.Spawn
-            if (Object.HasStateAuthority)
-            {
+            //if (Object.HasStateAuthority)
+            //{
                 SpawnItem(player);
-            }
+            //}
         }
 
         // 物品生成逻辑（只在 StateAuthority 执行）

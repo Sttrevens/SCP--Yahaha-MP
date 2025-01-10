@@ -69,10 +69,10 @@ namespace LPSurvivalEngine
         public void RPC_OnPickedUp(PlayerRef player)
         {
             // 只有 StateAuthority 可以修改网络状态
-            if (Object.HasStateAuthority)
-            {
+            //if (Object.HasStateAuthority)
+            //{
                 PickUp(player);
-            }
+            //}
         }
     }
 }

@@ -48,6 +48,8 @@ GameObject:
   - component: {fileID: 4507690019245153522}
   - component: {fileID: 5457690532826218384}
   - component: {fileID: -3733415546217426114}
+  - component: {fileID: 7361262494600811521}
+  - component: {fileID: 8063579947087977798}
   m_Layer: 14
   m_Name: Scyver
   m_TagString: Untagged
@@ -105,27 +107,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 679234a8c19216d4f8067435d611047e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
+  agent: {fileID: 8838658910775223982}
+  players: []
   animator: {fileID: 4549434837546348943}
   currentPatrolIndex: 0
   detectionRange: 10
   attackPreDelay: 1
-  attackInterval: 4.5
-  chasingSpeed: 1.5
-  patrollingSpeed: 0.7
+  attackInterval: 3
+  chasingSpeed: 2
+  patrollingSpeed: 1
   fieldOfViewAngleHorizontal: 90
   fieldOfViewAngleVertical: 30
-  sensingRadius: 1.5
+  sensingRadius: 1
   patrolMode: 1
   patrolPoints: []
   patrolRange: 10
   patrolWidth: 10
   patrolHeight: 10
   waitTimeAtPatrolPoint: 4
-  attackDamage: 35
-  maxHealth: 500
-  currentHealth: 500
-  attackRange: 1.5
+  attackDamage: 80
+  maxHealth: 100
+  _currentHealth: 100
+  attackRange: 0.7
   lastAttackTime: 0
   lastAttackPreDelayTime: 0
   targetPlayer: {fileID: 0}
@@ -319,6 +322,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7361262494600811521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513229352100526564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3366465596
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 2881711990319182107}
+  - {fileID: 8063579947087977798}
+--- !u!114 &8063579947087977798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513229352100526564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &962269116399748618
 GameObject:
   m_ObjectHideFlags: 0

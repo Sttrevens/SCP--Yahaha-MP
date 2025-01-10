@@ -3,24 +3,31 @@ using UnityEngine;
 
 public class ConeDetection : MonoBehaviour
 {
-    // 需要检测的目标类（替换为你自己想要检测的脚本/类）
-    // 假设你想检测场景中挂有 "TargetObject" 脚本的物体
     [SerializeField]
-    private string targetClassName = "TargetObject";
+    private string targetClassName = "TargetObject";  // 目标脚本名
 
     // 供外部查看或调试
     [Header("调试信息")]
-    public bool hasTargetInView = false;        // 视锥体中是否有目标物体
-    public float visibleRatio = 0f;             // [参数1] 占屏幕比例
-    public float centerOffsetDistance = 0f;     // [参数2] 物体中心到摄像机中心射线的横向距离
-    public float distanceToCamera = 0f;         // [参数3] 物体中心到摄像机的距离
+    public bool hasTargetInView = false;  // 视锥体中是否有目标物体
+    public float visibleRatio = 0f;       // [参数1] 占屏幕比例
+    public float centerOffsetDistance = 0f;  // [参数2] 物体中心到摄像机中心射线的横向距离
+    public float distanceToCamera = 0f;  // [参数3] 物体中心到摄像机的距离
+
+    // 分数计算的权重系数
+    [Header("权重设置")]
+    public float centerOffsetWeight = 1.0f;  // 横向偏移距离的权重
+    public float distanceToCameraWeight = 1.0f;  // 到摄像机的距离权重
+    public float visibleRatioWeight = 0.5f;  // 可见比例的权重
 
     // 摄像机组件
     public Camera cam;
 
+    // 用于计算每秒分数总和
+    public float accumulatedScore = 0f;  // 累积的分数
+    private float timeAccumulator = 0f;  // 每秒计时器
+
     void Start()
     {
-        //cam = GetComponentInChildren<Camera>();
         if (cam == null)
         {
             Debug.LogError("脚本挂载的物体上没有 Camera 组件！");
@@ -31,14 +38,11 @@ public class ConeDetection : MonoBehaviour
     {
         if (cam == null) return;
 
-        // 查找所有具有指定类名的物体（脚本/组件）
-        // 注意：如果你的目标类不是脚本，而是一个具体 MonoBehaviour 类，最好使用
-        // FindObjectsOfType<TargetObject>() 这样的方式代替
+        // 查找所有目标物体
         var targetObjects = FindObjectsOfType<MonoBehaviour>();
         List<GameObject> matchedObjects = new List<GameObject>();
         foreach (var obj in targetObjects)
         {
-            // 判断脚本名是否匹配
             if (obj.GetType().Name == targetClassName)
             {
                 matchedObjects.Add(obj.gameObject);
@@ -51,30 +55,24 @@ public class ConeDetection : MonoBehaviour
         centerOffsetDistance = 0f;
         distanceToCamera = 0f;
 
-        // 如果场景中没有指定类的物体，直接退出
+        // 如果没有目标物体，直接退出
         if (matchedObjects.Count == 0) return;
 
-        // 这里为了演示，只检测“第一个”找到的目标物体
-        // 如果你需要检测多个，可以自行遍历所有匹配物体
-
+        // 只检测第一个目标物体
         GameObject target = matchedObjects[0];
-
         Renderer rend = target.GetComponentInChildren<Renderer>();
         if (rend == null)
         {
-            // 如果没有 Renderer，就无法得到 Bounds，按不在视野内处理
             hasTargetInView = false;
             return;
         }
 
-        // 获取包围盒
         Bounds bounds = rend.bounds;
 
-        // 方法A：通过GeometryUtility判断与相机六个裁剪平面是否相交
+        // 方法A：判断目标是否在视锥体内
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
         if (!GeometryUtility.TestPlanesAABB(planes, bounds))
         {
-            // 物体不在视锥体中
             hasTargetInView = false;
             return;
         }
@@ -83,91 +81,88 @@ public class ConeDetection : MonoBehaviour
             hasTargetInView = true;
         }
 
-        // -----------------------------
-        // 2) 计算 [参数1] 占屏幕的可见比例
-        // -----------------------------
-        // 将包围盒的 8 个顶点映射到屏幕坐标（pixel）或者视口坐标（0~1），
-        // 然后计算顶点中的最小与最大 x,y，从而得到屏幕覆盖的矩形区域
+        // 计算可见比例 (visibleRatio)
         Vector3[] corners = GetBoundsCorners(bounds);
         Vector2 minPos = new Vector2(float.MaxValue, float.MaxValue);
         Vector2 maxPos = new Vector2(float.MinValue, float.MinValue);
-
-        // 记录在屏幕内的顶点，用于计算可见区域
         List<Vector2> screenPoints = new List<Vector2>();
 
         foreach (var corner in corners)
         {
-            // 将世界坐标转成屏幕像素坐标
             Vector3 screenPos = cam.WorldToScreenPoint(corner);
-
-            // 如果在相机前方（z>0），才可能被看到
             if (screenPos.z > 0)
             {
                 Vector2 sp = new Vector2(screenPos.x, screenPos.y);
                 screenPoints.Add(sp);
-
-                if (sp.x < minPos.x) minPos.x = sp.x;
-                if (sp.y < minPos.y) minPos.y = sp.y;
-                if (sp.x > maxPos.x) maxPos.x = sp.x;
-                if (sp.y > maxPos.y) maxPos.y = sp.y;
+                minPos = Vector2.Min(minPos, sp);
+                maxPos = Vector2.Max(maxPos, sp);
             }
         }
 
-        // 如果完全不在屏幕内（顶点都在后面或可见数为0），判定看不到
         if (screenPoints.Count == 0)
         {
             hasTargetInView = false;
             return;
         }
 
-        // 计算屏幕上的包围盒面积 (像素)
         float objectPixelWidth = maxPos.x - minPos.x;
         float objectPixelHeight = maxPos.y - minPos.y;
         float objectArea = objectPixelWidth * objectPixelHeight;
 
-        // 屏幕总像素面积
         float screenWidth = cam.pixelWidth;
         float screenHeight = cam.pixelHeight;
         float screenArea = screenWidth * screenHeight;
 
-        // 得到物体包围盒投影占屏幕的比例
-        // （如果需要3D体积精确计算，需要额外的几何运算，这里以2D投影近似）
         visibleRatio = Mathf.Clamp01(objectArea / screenArea);
 
-        // -----------------------------
-        // 3) 计算 [参数2] 与 [参数3]
-        // -----------------------------
-        // 物体中心点
+        // 计算中心偏移距离和距离相机的距离
         Vector3 objectCenter = bounds.center;
-
-        // [参数3] 物体中心到相机的世界距离
         distanceToCamera = Vector3.Distance(cam.transform.position, objectCenter);
 
-        // [参数2] 物体中心到相机“正中心射线”（光轴）的横向距离
-        // 可以理解为：先算出物体中心在摄像机前方的投影点，然后计算这两个点的距离
         Vector3 toObject = objectCenter - cam.transform.position;
-        // 正中心射线是摄像机 forward 方向
         Vector3 forward = cam.transform.forward;
 
-        // 物体在摄像机 forward 上的投影长度
         float distForward = Vector3.Dot(toObject, forward);
-
-        // 相机位置 + forward * 投影长度 = 相机到物体中心在 forward 方向上的“投影点”
         Vector3 projectedPoint = cam.transform.position + forward * distForward;
 
-        // 物体中心与投影点的距离即为横向距离（是否拍正）
         centerOffsetDistance = Vector3.Distance(objectCenter, projectedPoint);
+
+        // 计算动态分数
+        float score = CalculateScore(centerOffsetDistance, distanceToCamera, visibleRatio) * 10;
+
+        // 每秒累计一次分数
+        timeAccumulator += Time.deltaTime;
+        if (timeAccumulator >= 1f)
+        {
+            // 每秒累加一次
+            accumulatedScore += score;
+            //Debug.Log("Accumulated Score this second: " + accumulatedScore);
+            timeAccumulator = 0f;  // 重置计时器
+        }
     }
 
-    /// <summary>
-    /// 获取包围盒 Bounds 的 8 个角点
-    /// </summary>
+    // 计算动态分数
+    private float CalculateScore(float centerOffsetDistance, float distanceToCamera, float visibleRatio)
+    {
+        // 基于权重的计算公式
+        // 防止除数为零，确保分母不为零
+        float safeCenterOffsetDistance = (centerOffsetDistance > 0f) ? centerOffsetDistance : 0.0001f;
+        float safeDistanceToCamera = (distanceToCamera > 0f) ? distanceToCamera : 0.0001f;
+
+        // 计算分数
+        float score = (centerOffsetWeight * (1f / safeCenterOffsetDistance)) +
+                      (distanceToCameraWeight * (1f / safeDistanceToCamera)) +
+                      (visibleRatioWeight * visibleRatio);
+
+        return score;
+    }
+
+    // 获取包围盒的 8 个角点
     private Vector3[] GetBoundsCorners(Bounds bounds)
     {
         Vector3 center = bounds.center;
         Vector3 extents = bounds.extents;
 
-        // 计算出 8 个角点（世界坐标）
         Vector3[] corners = new Vector3[8];
         corners[0] = center + new Vector3(+extents.x, +extents.y, +extents.z);
         corners[1] = center + new Vector3(+extents.x, +extents.y, -extents.z);

@@ -6,12 +6,12 @@ using Fusion;
 namespace LPSurvivalEngine
 {
     public class WieldableManager : NetworkBehaviour
-    {  
+    {
         [Space]
         [Header("Wieldable Manager")]
         [Space]
         [Space]
-    
+
         [HideInInspector] public Wieldable currentWieldable;
         public Transform wieldablesPosition;
         public Transform flashlightPosition;
@@ -19,7 +19,7 @@ namespace LPSurvivalEngine
         public Transform AimPositon;
         public PlayerInput PlayerInput;
         private InputAction actionAction;
-    
+
         public static WieldableManager instance;
         [HideInInspector] public PlayerController controller;
 
@@ -28,7 +28,7 @@ namespace LPSurvivalEngine
         {
             instance = this;
             // PlayerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();
-            
+
             //if (PlayerInput != null) {
             //    actionAction = PlayerInput.actions.FindAction("Action");
             //    actionAction.performed += OnAttackInput;
@@ -43,7 +43,7 @@ namespace LPSurvivalEngine
                 currentWieldable.OnAttackInput();
             }
         }
-    
+
         public void OnAltAttackInput(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Performed && currentWieldable != null && controller.cursor == true)
@@ -52,7 +52,6 @@ namespace LPSurvivalEngine
             }
         }
 
-        // 联机版 EquipNewItem 方法
         public void EquipNewItem(ItemDatabase item)
         {
             // 记录当前要装备的物品
@@ -68,14 +67,34 @@ namespace LPSurvivalEngine
         [Networked] public PlayerRef Owner { get; set; } // 网络同步的物品所有者
 
         // RPC 请求生成装备物品（客户端调用）
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.All, RpcTargets.All)]
         public void RPC_RequestEquipItem(PlayerRef player)
         {
-            // 只有 StateAuthority 才能执行 Spawn
-            if (Object.HasStateAuthority)
-            {
+            //// 只有 StateAuthority 才能执行 Spawn
+            //if (Object.HasStateAuthority)
+            //{
                 SpawnEquippedItem(player);
+            //}
+        }
+
+        public Transform CurrentWieldableRootTransform()
+        {
+            Transform spawnPosition = null;
+            if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() == null && equippedItem.wieldablePrefab.GetComponent<ConeDetection>() == null)
+            {
+                GameObject currentPlayer = GameObject.Find("CurrentPlayer");
+                spawnPosition = currentPlayer.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
             }
+            else if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() == null && equippedItem.wieldablePrefab.GetComponent<ConeDetection>() != null)
+            {
+                spawnPosition = cameraPositon;
+            }
+            else if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() != null && equippedItem.wieldablePrefab.GetComponent<ConeDetection>() == null)
+            {
+                spawnPosition = flashlightPosition;
+            }
+
+            return spawnPosition;
         }
 
         // 物品生成逻辑（只在 StateAuthority 执行）
@@ -83,7 +102,7 @@ namespace LPSurvivalEngine
         {
             Owner = player;
 
-            // 根据物品类型选择生成位置
+/*            // 根据物品类型选择生成位置
             Transform spawnPosition = null;
             if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() == null && equippedItem.wieldablePrefab.GetComponent<CameraController>() == null)
             {
@@ -97,33 +116,46 @@ namespace LPSurvivalEngine
             else if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() != null && equippedItem.wieldablePrefab.GetComponent<CameraController>() == null)
             {
                 spawnPosition = flashlightPosition;
-            }
+            }*/
 
             // 如果没有找到生成位置，抛出错误
-            if (spawnPosition == null)
+            if (CurrentWieldableRootTransform() == null)
             {
                 Debug.LogError("Unexpected item type: " + equippedItem.wieldablePrefab.name);
                 return;
             }
 
             // 使用 Runner.Spawn 实例化并同步物品
-            NetworkObject spawnedItem = Runner.Spawn(equippedItem.wieldablePrefab, spawnPosition.position, spawnPosition.rotation);
+            NetworkObject spawnedItem = Runner.Spawn(equippedItem.wieldablePrefab, CurrentWieldableRootTransform().position, CurrentWieldableRootTransform().rotation);
 
             // 确保新生成的物品挂载到父物体
             if (spawnedItem != null)
             {
+                spawnedItem.transform.position = CurrentWieldableRootTransform().position;
+                spawnedItem.transform.rotation = CurrentWieldableRootTransform().rotation;
                 // 设置物品的父物体
-                spawnedItem.transform.SetParent(spawnPosition);
+                spawnedItem.transform.SetParent(CurrentWieldableRootTransform());
 
                 // 重置生成物品的本地位置和旋转
-                spawnedItem.transform.localPosition = Vector3.zero;
-                spawnedItem.transform.localRotation = Quaternion.identity;
+                
 
                 // 设置为当前装备物品
                 if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
                 {
                     currentWieldable = wieldable; // 更新当前装备的物品
                     Debug.Log($"[SpawnEquippedItem] Equipped item: {equippedItem.wieldablePrefab.name} by {player}");
+
+                    // 通过 StateAuthority 设置物品的所有者
+                    // 只有拥有 StateAuthority 的客户端才可以进行此操作
+                    if (spawnedItem.HasStateAuthority)
+                    {
+                        // 设置 StateAuthority，确保物品归当前玩家控制
+                        // 这样做是确保物品的所有权被正确管理
+                        // 你可以使用 "RequestStateAuthority" 来确认物品的控制权
+                        spawnedItem.RequestStateAuthority();
+                    }
+
+                    currentWieldable.player = player;
                 }
             }
             else
@@ -131,7 +163,6 @@ namespace LPSurvivalEngine
                 Debug.LogError("Failed to spawn item: " + equippedItem.wieldablePrefab.name);
             }
         }
-
 
         public void DropWieldable()
         {
@@ -141,9 +172,7 @@ namespace LPSurvivalEngine
                 currentWieldable = null;
             }
         }
-    
-    
     }
 
 
-}
+    }

@@ -244,7 +244,12 @@ namespace LPSurvivalEngine
             //UIPlayer.SetActive(false);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene("Respawn");
+            GetComponent<Rigidbody>().isKinematic = false;
+            Inventory.instance.inventoryWindow.SetActive(true);
+            foreach (var item in Inventory.instance.slots)
+            {
+                Inventory.instance.ThrowItem(item.item);
+            }
         }
 
         #region 一凡同步角色数据函数

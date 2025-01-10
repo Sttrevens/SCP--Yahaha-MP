@@ -33,9 +33,18 @@ namespace LPSurvivalEngine
 
         private bool isAttacking = false;
 
+        [Header("Wieldable Manager")]
+        public Transform cameraPosition;
+        public Transform aimPosition;
+        public Transform flashlightPosition;
+
         private void Awake()
         {
             instance = this;
+
+            WieldableManager.instance.cameraPositon = cameraPosition;
+            WieldableManager.instance.AimPositon = aimPosition;
+            WieldableManager.instance.flashlightPosition = flashlightPosition;
         }
 
         public void ToggleCursor(bool toggle)
