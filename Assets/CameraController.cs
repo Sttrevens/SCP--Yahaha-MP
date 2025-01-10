@@ -142,7 +142,18 @@ namespace LPSurvivalEngine
 
         public override void FixedUpdateNetwork()
         {
-            Aim();
+            if (isRightMouseButtonDown)
+            {
+                transform.position = aimPosition;
+                transform.rotation = aimRotation;
+                Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
+            }
+            else
+            {
+                transform.position = cameraPosition;
+                transform.rotation = cameraRotation;
+                Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
+            }
         }
     }
 }
