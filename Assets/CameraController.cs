@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Fusion; // ÒýÈë Fusion ÃüÃû¿Õ¼ä
+using Fusion; // ï¿½ï¿½ï¿½ï¿½ Fusion ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½
 using LPSurvivalEngine;
 
 namespace LPSurvivalEngine
 {
     /// <summary>
-    /// Õû¸öÀàÓÃÀ´¿ØÖÆÏà»úµÄ×óÓÒ¼üÂß¼­ ¿ª¾µÊ¹ÓÃµÄÊÇÓ²±àÂë½øÐÐµÄ°ó¶¨
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ß¼ï¿½ ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ãµï¿½ï¿½ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ°ï¿½
     /// </summary>
     public class CameraController : Wieldable
     {
@@ -29,7 +29,7 @@ namespace LPSurvivalEngine
         private Vector3 cameraPosition;
         private Quaternion cameraRotation;
 
-        [SerializeField] private bool isRightMouseButtonDown = false; // ±êÊ¶ÓÒ¼üÊÇ·ñ°´ÏÂ
+        [SerializeField] private bool isRightMouseButtonDown = false; // ï¿½ï¿½Ê¶ï¿½Ò¼ï¿½ï¿½Ç·ï¿½ï¿½ï¿½
 
         private void Awake()
         {
@@ -60,26 +60,26 @@ namespace LPSurvivalEngine
         }
 
         /// <summary>
-        /// ÅÄÕÕÂß¼­
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
         /// </summary>
         public override void OnAttackInput()
         {
             Debug.Log("[CameraController] OnAttackInput - Taking Picture");
-            // Ê¹ÓÃ RPC ·½·¨Í¬²½ÅÄÕÕÂß¼­
+            // Ê¹ï¿½ï¿½ RPC ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
             TakePictureRPC();
         }
 
         /// <summary>
-        /// Ãé×¼
+        /// ï¿½ï¿½×¼
         /// </summary>
         public override void OnAltAttackInput()
         {
             isRightMouseButtonDown = !isRightMouseButtonDown;
             Debug.Log("[CameraController] OnAltAttackInput - Aim State: " + isRightMouseButtonDown);
-            //Aim();
+            Aim();
         }
 
-        // ÅÄÕÕ¹¦ÄÜ£¨×ó¼ü£©
+        // ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
         void TakePictureRPC()
         {
@@ -101,7 +101,7 @@ namespace LPSurvivalEngine
             }
         }
 
-        // ¹Ø±ÕÉÁ¹âµÆµÄÐ­³Ì
+        // ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½Ð­ï¿½ï¿½
         IEnumerator DisableFlashLight()
         {
             yield return new WaitForSeconds(0.1f);
@@ -137,14 +137,6 @@ namespace LPSurvivalEngine
                 float newFOV = CameraInCamera.fieldOfView - (ScrollInput * ZoomSpeed);
                 CameraInCamera.fieldOfView = Mathf.Clamp(newFOV, MinFOV, MaxFOV);
                 Debug.Log("[CameraController] HandleZoom - New FOV: " + CameraInCamera.fieldOfView);
-            }
-        }
-
-        public override void FixedUpdateNetwork()
-        {
-            if (HasStateAuthority)
-            {
-                Aim();
             }
         }
     }
