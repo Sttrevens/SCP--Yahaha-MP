@@ -233,10 +233,10 @@ namespace LPSurvivalEngine
                 {  watchController.SetPlayer(this.gameObject);}
 
                 // PickupItem pickupItem = currentInteractGameObject.GetComponent<PickupItem>();
-                // if (pickupItem != null && !pickupItem.IsPickedUp) // 检查物品状态
+                // if (pickupItem != null && !pickupItem.IsPickedUp) // ????????
                 // {
-                //     Debug.Log("调用物品的拾取方法");
-                //     // 调用物品的拾取方法
+                //     Debug.Log("???????????????");
+                //     // ???????????????
                 //     pickupItem.RPC_OnPickedUp(Object.StateAuthority);
                 // }
                 
