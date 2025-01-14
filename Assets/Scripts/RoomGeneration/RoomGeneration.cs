@@ -38,7 +38,7 @@ public class RoomGeneration : MonoBehaviour
     private GameObject lastCorridor;
     private GameObject newRoom;
     private GameObject newCorridor;
-    [SerializeField]private GameObject firstCorridor;
+    [SerializeField]private GameObject entrancePoint;
     
     void Start()
     {
@@ -47,7 +47,7 @@ public class RoomGeneration : MonoBehaviour
     
     private void GenerateInitialRoom()
     {
-        //lastRoom =  firstCorridor;
+        lastCorridor =  entrancePoint;
     }
     
     public void GenerateNewRoom(Transform position)
@@ -62,10 +62,13 @@ public class RoomGeneration : MonoBehaviour
         
         //generate room and corridor
         newRoom = Instantiate(roomPrefab, position.position, Quaternion.identity);
-        newCorridor = Instantiate(corridorPrefab, newRoom.GetComponent<NewRoom>().exitGeneratedPosition.position, Quaternion.identity);
         newRoom.GetComponent<NewRoom>().last = lastRoom;
-
         newRoom.GetComponent<NewRoom>().MakeRoom(roomIndex);
+    }
+    
+    public void GenerateNewCorridor(Transform position)
+    {
+        newCorridor = Instantiate(corridorPrefab, newRoom.GetComponent<NewRoom>().exitGeneratedPosition.position, Quaternion.identity);
     }
 
     public void DeleteLastRoom()

@@ -4,8 +4,10 @@ using UnityEngine.Events;
 using Fusion;
 using System.Globalization;
 
-public class TakeoffController : NetworkBehaviour, IInteractable
+public class TakeoffController : NetworkBehaviour
 {
+    public static TakeoffController Instance { get; private set; } // Singleton instance
+
     public ScreenFade screenFade;
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
@@ -13,30 +15,41 @@ public class TakeoffController : NetworkBehaviour, IInteractable
     public bool IsFlying = false;
     [SerializeField] private Transform ShipTransform;
     [SerializeField] private bool IsStarted = false;
-    
+
     [Header("Rotation")]
     [SerializeField] private float rotationAngle = 30f;
     [SerializeField] private float rotationSpeed = 100f;
     private Quaternion initialRotation;
     private bool isRotating = false;
-    
+
     [Header("Elevator Shake Settings")] 
     [SerializeField] private AnimationCurve shakeCurve;
     [SerializeField] private float shakeDuration = 2.0f;
     [SerializeField] private float shakeMagnitude = 0.1f;
-    
+
     [Header("Audio Settings")]
     [SerializeField] private AudioClip elevatorOpenSound;
     [SerializeField] private AudioClip elevatorCloseSound;
     [SerializeField] private AudioClip elevatorShakeSound;
     [SerializeField] private AudioSource audioSource;
-    
+
     private const float AUDIO_FADE_DURATION = 0.5f;
     private const float PERLIN_NOISE_SPEED = 50f;
     private const float PERLIN_NOISE_SCALE = 2f;
 
     private void Awake()
     {
+        // Singleton implementation
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); 
+        }
+
         ShipTransform = transform.parent;
         screenFade = GetComponent<ScreenFade>();
     }
@@ -53,16 +66,19 @@ public class TakeoffController : NetworkBehaviour, IInteractable
     {
         IsFlying = true;
         StartCoroutine(ShakeElevatorPerlinWithSound());
-        TriggerScreenFade();
+        //TriggerScreenFade();
         OnBoolChanged.Invoke(IsFlying);
     }
+    
+    
+    
 
-    public void OnInteract()
-    {
-        Rpc_OnInteract();
-    }
+    // public void OnInteract()
+    // {
+    //     //Rpc_OnInteract();
+    // }
 
-    private IEnumerator ShakeElevatorPerlinWithSound()
+    public IEnumerator ShakeElevatorPerlinWithSound()
     {
         Vector3 originalPosition = ShipTransform.localPosition;
         float elapsed = 0f;
@@ -82,6 +98,7 @@ public class TakeoffController : NetworkBehaviour, IInteractable
 
         StartCoroutine(FadeOutSound());
         ShipTransform.localPosition = originalPosition;
+        IsFlying = false;
     }
 
     private IEnumerator FadeInSound()
@@ -121,6 +138,7 @@ public class TakeoffController : NetworkBehaviour, IInteractable
 
     private void TriggerScreenFade()
     {
-        screenFade?.StartCoroutine("FadeScreenAndShowSubtitle");
+        screenFade.TriggerScreenFade(false);
+        //screenFade?.StartCoroutine("FadeScreenAndShowSubtitle");
     }
 }

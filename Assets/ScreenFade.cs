@@ -5,54 +5,56 @@ using System.Collections;
 
 public class ScreenFade : MonoBehaviour
 {
-    public Image blackScreenImage; // ÓÃÓÚºÚÆÁµÄ Image ×é¼þ
-    public TextMeshProUGUI subtitleText; // ÓÃÓÚÏÔÊ¾×ÖÄ»µÄ Text ×é¼þ
+    public GameObject fadeScreen;
+    public Image blackScreenImage; // ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½ï¿½ï¿½ Image ï¿½ï¿½ï¿½
+    public TextMeshProUGUI subtitleText; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ä»ï¿½ï¿½ Text ï¿½ï¿½ï¿½
 
-    public string subtitle = "May this journey lead to the stars."; // ÏÔÊ¾µÄ×ÖÄ»ÎÄ±¾
-    public float fadeDuration = 2.0f; // ½¥±ä³ÖÐøÊ±¼ä
-    public float holdSubtitleDuration = 2.0f; // ×ÖÄ»³ÖÐøÊ±¼ä
+    public string subtitle = "May this journey lead to the stars."; // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ä»ï¿½Ä±ï¿½
+    public float fadeDuration = 2.0f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    public float holdSubtitleDuration = 2.0f; // ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 
     public ScoreManager scoreManager;
 
     private void Awake()
     {
-        // È·±£ºÚÆÁºÍ×ÖÄ»×é¼þÒÑ±»¸³Öµ
+        // È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½Ñ±ï¿½ï¿½ï¿½Öµ
         if (blackScreenImage == null || subtitleText == null)
         {
-            Debug.LogError("blackScreenImage »ò subtitleText Î´ÕýÈ·¸³Öµ£¡");
+            Debug.LogError("blackScreenImage ï¿½ï¿½ subtitleText Î´ï¿½ï¿½È·ï¿½ï¿½Öµï¿½ï¿½");
             return;
         }
 
-        // ÉèÖÃºÚÆÁºÍ×ÖÄ»ÎªÈ«Í¸Ã÷²¢²»¿É¼û
-        blackScreenImage.gameObject.SetActive(true); // È·±£¶ÔÏó¼¤»î£¨±ÜÃâÖ±½ÓÐÞ¸Ä color ³ö´í£©
-        blackScreenImage.color = new Color(0, 0, 0, 0); // ÉèÖÃÎªÈ«Í¸Ã÷
+        // ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ÎªÈ«Í¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½
+        blackScreenImage.gameObject.SetActive(true); // È·ï¿½ï¿½ï¿½ï¿½ï¿½ó¼¤»î£¨ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½Þ¸ï¿½ color ï¿½ï¿½ï¿½ï¿½
+        blackScreenImage.color = new Color(0, 0, 0, 0); // ï¿½ï¿½ï¿½ï¿½ÎªÈ«Í¸ï¿½ï¿½
 
-        subtitleText.gameObject.SetActive(true); // È·±£¶ÔÏó¼¤»î
-        subtitleText.text = ""; // È·±£Ã»ÓÐÎÄ±¾ÄÚÈÝ
-        subtitleText.color = new Color(1, 1, 1, 0); // ÉèÖÃÎªÈ«Í¸Ã÷
+        subtitleText.gameObject.SetActive(true); // È·ï¿½ï¿½ï¿½ï¿½ï¿½ó¼¤»ï¿½
+        subtitleText.text = ""; // È·ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
+        subtitleText.color = new Color(1, 1, 1, 0); // ï¿½ï¿½ï¿½ï¿½ÎªÈ«Í¸ï¿½ï¿½
     }
-    private void FadeScreen()
+    // private void FadeScreen()
+    // {
+    //     // ï¿½ï¿½Ê¼Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½É¼ï¿½
+    //     blackScreenImage.gameObject.SetActive(true);
+    //     subtitleText.gameObject.SetActive(true);
+    //
+    //     blackScreenImage.color = new Color(0, 0, 0, 0); // ï¿½ï¿½Ê¼Í¸ï¿½ï¿½ï¿½ï¿½Îª0
+    //     subtitleText.text = ""; // ï¿½ï¿½Ê¼Ã»ï¿½ï¿½ï¿½ï¿½Ä»
+    //     subtitleText.color = new Color(1, 1, 1, 0); // ï¿½ï¿½Ê¼Í¸ï¿½ï¿½ï¿½ï¿½Îª0
+    //
+    //     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    //     StartCoroutine(FadeScreenAndShowSubtitle());
+    // }
+
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ä»ï¿½ï¿½Ð­ï¿½ï¿½
+    private IEnumerator FadeScreenAndShowSubtitle(bool isBack)
     {
-        // ³õÊ¼Ê±ºÚÆÁºÍ×ÖÄ»²»¿É¼û
-        blackScreenImage.gameObject.SetActive(true);
-        subtitleText.gameObject.SetActive(true);
-
-        blackScreenImage.color = new Color(0, 0, 0, 0); // ³õÊ¼Í¸Ã÷¶ÈÎª0
-        subtitleText.text = ""; // ³õÊ¼Ã»ÓÐ×ÖÄ»
-        subtitleText.color = new Color(1, 1, 1, 0); // ³õÊ¼Í¸Ã÷¶ÈÎª0
-
-        // Æô¶¯½¥±ä¹ý³Ì
-        StartCoroutine(FadeScreenAndShowSubtitle());
-    }
-
-    // ½¥±äºÚÆÁ²¢ÏÔÊ¾×ÖÄ»µÄÐ­³Ì
-    private IEnumerator FadeScreenAndShowSubtitle()
-    {
-        // Öð½¥±äºÚ
+        
+        // ï¿½ð½¥±ï¿½ï¿½
         yield return StartCoroutine(FadeToBlack());
 
-        // ÏÔÊ¾×ÖÄ»
-        if (scoreManager.totalScore == 0)
+        // ï¿½ï¿½Ê¾ï¿½ï¿½Ä»
+        if (!isBack)
         {
             subtitleText.text = subtitle;
         }
@@ -62,56 +64,63 @@ public class ScreenFade : MonoBehaviour
         }
         yield return StartCoroutine(ShowSubtitle());
 
-        // Öð½¥»Ö¸´»­Ãæ
+        // ï¿½ð½¥»Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½
         yield return StartCoroutine(FadeFromBlack());
 
-        // ÔÚ»Ö¸´»­ÃæºóÇå¿Õ×ÖÄ»
+        // ï¿½Ú»Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»
         subtitleText.text = "";
         scoreManager.totalScore = 0;
+        fadeScreen.SetActive(false);
+    }
+    
+    public void TriggerScreenFade(bool showSubtitle)
+    {
+        fadeScreen.SetActive(true);
+        StartCoroutine(FadeScreenAndShowSubtitle(showSubtitle));
     }
 
-    // ½¥±äµ½ºÚÆÁ
+    // ï¿½ï¿½ï¿½äµ½ï¿½ï¿½ï¿½ï¿½
     private IEnumerator FadeToBlack()
     {
         float timeElapsed = 0f;
         while (timeElapsed < fadeDuration)
         {
-            float alpha = Mathf.Lerp(0f, 1f, timeElapsed / fadeDuration); // ´ÓÍ¸Ã÷µ½²»Í¸Ã÷
+            float alpha = Mathf.Lerp(0f, 1f, timeElapsed / fadeDuration); // ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ï¿½
             blackScreenImage.color = new Color(0, 0, 0, alpha);
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        blackScreenImage.color = new Color(0, 0, 0, 1); // È·±£ÍêÈ«ºÚÆÁ
+        blackScreenImage.color = new Color(0, 0, 0, 1); // È·ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½
     }
 
-    // ÏÔÊ¾×ÖÄ»
+    // ï¿½ï¿½Ê¾ï¿½ï¿½Ä»
     private IEnumerator ShowSubtitle()
     {
         float timeElapsed = 0f;
         while (timeElapsed < fadeDuration)
         {
-            float alpha = Mathf.Lerp(0f, 1f, timeElapsed / fadeDuration); // ×ÖÄ»½¥ÏÔ
+            float alpha = Mathf.Lerp(0f, 1f, timeElapsed / fadeDuration); // ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½
             subtitleText.color = new Color(1, 1, 1, alpha);
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        subtitleText.color = new Color(1, 1, 1, 1); // È·±£×ÖÄ»ÍêÈ«¿É¼û
+        subtitleText.color = new Color(1, 1, 1, 1); // È·ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½È«ï¿½É¼ï¿½
 
-        // µÈ´ý×ÖÄ»³ÖÐøÊ±¼ä
+        // ï¿½È´ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
         yield return new WaitForSeconds(holdSubtitleDuration);
     }
 
-    // ½¥±ä»Ö¸´»­Ãæ
+    // ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½
     private IEnumerator FadeFromBlack()
     {
         float timeElapsed = 0f;
         while (timeElapsed < fadeDuration)
         {
-            float alpha = Mathf.Lerp(1f, 0f, timeElapsed / fadeDuration); // ´Ó²»Í¸Ã÷µ½Í¸Ã÷
+            float alpha = Mathf.Lerp(1f, 0f, timeElapsed / fadeDuration); // ï¿½Ó²ï¿½Í¸ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ï¿½
             blackScreenImage.color = new Color(0, 0, 0, alpha);
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        blackScreenImage.color = new Color(0, 0, 0, 0); // È·±£ÍêÈ«Í¸Ã÷
+        blackScreenImage.color = new Color(0, 0, 0, 0); // È·ï¿½ï¿½ï¿½ï¿½È«Í¸ï¿½ï¿½
     }
 }

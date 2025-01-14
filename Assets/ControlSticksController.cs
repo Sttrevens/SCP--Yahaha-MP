@@ -4,45 +4,142 @@ using UnityEngine.Events;
 
 public class ControlSticksController : MonoBehaviour, IInteractable
 {
+    public static ControlSticksController Instance { get; private set; } 
+    //state machine
+    public enum SpaceshipState
+    {
+        PreparingForTakeoff,
+        Landing
+    }
+    
+    public SpaceshipState CurrentState { get; private set; } = SpaceshipState.PreparingForTakeoff; 
+
     public bool ReciveIsFlying;
-    [SerializeField] private bool IsPulled = false; // 默认状态
-    public UnityEvent OnButtonPressed; // 事件在 IsPulled 为 true 时调用
-    public UnityEvent OnButtonReleased; // 事件在 IsPulled 为 false 时调用
+    [SerializeField] private bool IsPulled = false;
+    public UnityEvent OnButtonPressed;
+    public UnityEvent OnButtonReleased;
 
-    [SerializeField] private float rotationAngle = 30f; // 旋转角度
-    [SerializeField] private float rotationSpeed = 100f; // 旋转速度
+    [SerializeField] private float rotationAngle = 30f;
+    [SerializeField] private float rotationSpeed = 100f;
 
-    private Quaternion initialRotation; // 初始旋转
+    private Quaternion initialRotation;
     public bool isRotating = false;
+    
+    public ScreenFade screenFade;
+    
+
+    private void Awake()
+    {
+     
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); 
+        }
+    }
 
     void Start()
     {
-        // 记录初始旋转状态
+        CurrentState = SpaceshipState.PreparingForTakeoff;
         initialRotation = transform.localRotation;
+        IsPulled = false;
+        
     }
 
     public string GetInteractText()
     {
-        return string.Format("{0}", IsPulled ? "Close the hatch" : "Open the hatch");
+        if (LevelManager.Instance.isButtonSelected)
+        {
+            return string.Format("{0}", IsPulled ? "Close the hatch" : "Open the hatch");
+        }
+        return string.Format("{0}", "Select a level first");
     }
 
     public void OnInteract()
-    {   if (!ReciveIsFlying || isRotating) return;
-        IsPulled = !IsPulled;
+    {
+        if(LevelManager.Instance.isButtonSelected) StartCoroutine(HandleSpaceshipState());
+    }
+    
+    private IEnumerator HandleSpaceshipState()
+    {
 
-        if (IsPulled)
+
+        if (CurrentState == SpaceshipState.PreparingForTakeoff)
         {
-            StartCoroutine(RotateToAngle(rotationAngle));
-            OnButtonPressed?.Invoke();
+            
+            IsPulled = true;
+            LevelManager.Instance.LoadLevel();
+            screenFade.TriggerScreenFade(false);
+            TakeoffController.Instance.Rpc_OnInteract();
+            while (TakeoffController.Instance.IsFlying)
+            {
+                yield return null;
+            }
+
+            if (ReciveIsFlying && !isRotating)
+            {
+                
+                yield return RotateToAngle(rotationAngle);
+                OnButtonPressed?.Invoke();
+ 
+                yield return new WaitForSeconds(2f);
+                SetState(SpaceshipState.Landing);
+            }
         }
-        else
+        else if (CurrentState == SpaceshipState.Landing)
         {
-            StartCoroutine(RotateToAngle(0f)); // 复位到初始角度
-            OnButtonReleased?.Invoke();
+            if (!isRotating)
+            {
+                IsPulled = true;
+                screenFade.TriggerScreenFade(true);
+                yield return RotateToAngle(0f);
+                OnButtonReleased?.Invoke();
+                yield return new WaitForSeconds(2f);
+                
+                TakeoffController.Instance.Rpc_OnInteract();
+                while (TakeoffController.Instance.IsFlying)
+                {
+                    yield return null;
+                }
+                LevelManager.Instance.DestroyLevel();
+                SetState(SpaceshipState.PreparingForTakeoff);
+            }
         }
     }
 
-    IEnumerator RotateToAngle(float targetAngle)
+
+    // private IEnumerator WaitForIsFlyingToBeFalse()
+    // {
+    //     LevelManager.Instance.LoadLevel();
+    //     TakeoffController.Instance.Rpc_OnInteract();
+    //
+    //     // Wait until TakeoffController's IsFlying is false
+    //     while (TakeoffController.Instance.IsFlying)
+    //     {
+    //         yield return null;
+    //     }
+    //
+    //     if (!ReciveIsFlying || isRotating) yield break;
+    //
+    //     IsPulled = !IsPulled;
+    //
+    //     if (IsPulled)
+    //     {
+    //         StartCoroutine(RotateToAngle(rotationAngle));
+    //         OnButtonPressed?.Invoke();
+    //     }
+    //     else
+    //     {
+    //         StartCoroutine(RotateToAngle(0f));
+    //         OnButtonReleased?.Invoke();
+    //     }
+    // }
+
+    private IEnumerator RotateToAngle(float targetAngle)
     {
         isRotating = true;
 
@@ -50,14 +147,20 @@ public class ControlSticksController : MonoBehaviour, IInteractable
         while (Quaternion.Angle(transform.localRotation, targetRotation) > 0.1f)
         {
             transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
-            yield return null; // 等待下一帧
+            yield return null; 
         }
 
-        transform.localRotation = targetRotation; // 修正到目标角度
+        transform.localRotation = targetRotation; 
         isRotating = false;
     }
+
     public void UpdateIsFlying(bool value)
     {
-        ReciveIsFlying = value; 
+        ReciveIsFlying = value;
+    }
+    
+    private void SetState(SpaceshipState newState)
+    {
+        CurrentState = newState;
     }
 }
