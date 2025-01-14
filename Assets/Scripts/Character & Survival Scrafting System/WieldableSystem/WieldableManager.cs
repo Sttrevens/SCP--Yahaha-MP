@@ -39,7 +39,7 @@ namespace LPSurvivalEngine
 
         public void OnAttackInput(InputAction.CallbackContext context)
         {
-            Debug.Log("WieldAbleß÷");
+            Debug.Log("WieldAbleï¿½ï¿½");
             if (context.phase == InputActionPhase.Performed && currentWieldable != null && controller.cursor == true)
             {
                 currentWieldable.OnAttackInput();
@@ -56,38 +56,38 @@ namespace LPSurvivalEngine
 
         public void EquipNewItem(ItemDatabase item)
         {
-            // ¼ÇÂ¼µ±Ç°Òª×°±¸µÄÎïÆ·
+            // ï¿½ï¿½Â¼ï¿½ï¿½Ç°Òª×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
             equippedItem = item;
 
             RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
 
-            // ÇëÇó·þÎñÆ÷Éú³ÉÎïÆ·
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
             RPC_RequestEquipItem(Runner.LocalPlayer);
         }
 
-        // ¼ÇÂ¼µ±Ç°Òª×°±¸µÄÎïÆ·
+        // ï¿½ï¿½Â¼ï¿½ï¿½Ç°Òª×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
         private ItemDatabase equippedItem;
 
-        [Networked] public PlayerRef Owner { get; set; } // ÍøÂçÍ¬²½µÄÎïÆ·ËùÓÐÕß
+        [Networked] public PlayerRef Owner { get; set; } // ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-        // RPC ÇëÇóÉú³É×°±¸ÎïÆ·£¨¿Í»§¶Ëµ÷ÓÃ£©
+        // RPC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ëµï¿½ï¿½Ã£ï¿½
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_RequestEquipItem(PlayerRef player)
         {
-            //// Ö»ÓÐ StateAuthority ²ÅÄÜÖ´ÐÐ Spawn
+            //// Ö»ï¿½ï¿½ StateAuthority ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ Spawn
             if (Object.HasStateAuthority)
             {
-                GameObject.Find("CurrentPlayer").GetComponent<FirstPersonOptimizer>().Wield();
+            GameObject.Find("CurrentPlayer").GetComponent<FirstPersonOptimizer>().Wield();
             SpawnEquippedItem(player);
             }
         }
 
         private void RequestStateAuthorityForEquipItem(PlayerRef player)
         {
-            // Èç¹ûµ±Ç°¿Í»§¶ËÃ»ÓÐ StateAuthority£¬³¢ÊÔÇëÇó
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Í»ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ StateAuthorityï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (!HasStateAuthority)
             {
-                // ´Ë´úÂë¶Î±íÊ¾´Ë¶ÔÏóÔÚµ±Ç°¿Í»§¶ËÉÏÃ»ÓÐ¿ØÖÆÈ¨ÏÞ
+                // ï¿½Ë´ï¿½ï¿½ï¿½Î±ï¿½Ê¾ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½Úµï¿½Ç°ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð¿ï¿½ï¿½ï¿½È¨ï¿½ï¿½
                 Debug.Log("Requesting StateAuthority for EquipItem.");
                 Object.RequestStateAuthority();
                 if (HasStateAuthority)
@@ -98,7 +98,7 @@ namespace LPSurvivalEngine
                 {
                     Debug.Log($"This client does not have StateAuthority over {gameObject.name}");
                 }
-            }// ÇëÇó»ñÈ¡¸Ã¶ÔÏóµÄ¿ØÖÆÈ¨ÏÞ
+            }// ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ã¶ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½È¨ï¿½ï¿½
             else
             {
                 Debug.Log("Already have StateAuthority.");
@@ -125,12 +125,12 @@ namespace LPSurvivalEngine
             return spawnPosition;
         }
 
-        // ÎïÆ·Éú³ÉÂß¼­£¨Ö»ÔÚ StateAuthority Ö´ÐÐ£©
+        // ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ StateAuthority Ö´ï¿½Ð£ï¿½
         private void SpawnEquippedItem(PlayerRef player)
         {
             Owner = player;
 
-/*            // ¸ù¾ÝÎïÆ·ÀàÐÍÑ¡ÔñÉú³ÉÎ»ÖÃ
+/*            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
             Transform spawnPosition = null;
             if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() == null && equippedItem.wieldablePrefab.GetComponent<CameraController>() == null)
             {
@@ -146,30 +146,30 @@ namespace LPSurvivalEngine
                 spawnPosition = flashlightPosition;
             }*/
 
-            // Èç¹ûÃ»ÓÐÕÒµ½Éú³ÉÎ»ÖÃ£¬Å×³ö´íÎó
+            // ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã£ï¿½ï¿½×³ï¿½ï¿½ï¿½ï¿½ï¿½
             if (CurrentWieldableRootTransform() == null)
             {
                 Debug.LogError("Unexpected item type: " + equippedItem.wieldablePrefab.name);
                 return;
             }
 
-            // Ê¹ÓÃ Runner.Spawn ÊµÀý»¯²¢Í¬²½ÎïÆ·
+            // Ê¹ï¿½ï¿½ Runner.Spawn Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Æ·
             NetworkObject spawnedItem = Runner.Spawn(equippedItem.wieldablePrefab, CurrentWieldableRootTransform().position, CurrentWieldableRootTransform().rotation);
             
-            // È·±£ÐÂÉú³ÉµÄÎïÆ·¹ÒÔØµ½¸¸ÎïÌå
+            // È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (spawnedItem != null)
             {
-                //spawnedItem.transform.position = CurrentWieldableRootTransform().position;
-                //spawnedItem.transform.rotation = CurrentWieldableRootTransform().rotation;
-                //// ÉèÖÃÎïÆ·µÄ¸¸ÎïÌå
-                //spawnedItem.transform.SetParent(CurrentWieldableRootTransform());
+                //// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½
+                spawnedItem.transform.SetParent(CurrentWieldableRootTransform());
+                spawnedItem.transform.localPosition = Vector3.zero;
+                spawnedItem.transform.localRotation = Quaternion.identity;
 
                 spawnedItem.RequestStateAuthority();
 
-                // ÉèÖÃÎªµ±Ç°×°±¸ÎïÆ·
+                // ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ç°×°ï¿½ï¿½ï¿½ï¿½Æ·
                 if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
                 {
-                    currentWieldable = wieldable; // ¸üÐÂµ±Ç°×°±¸µÄÎïÆ·
+                    currentWieldable = wieldable; // ï¿½ï¿½ï¿½Âµï¿½Ç°×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
                     Debug.Log($"[SpawnEquippedItem] Equipped item: {equippedItem.wieldablePrefab.name} by {player}");
 
                     currentWieldable.player = player;
