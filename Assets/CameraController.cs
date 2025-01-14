@@ -116,14 +116,14 @@ namespace LPSurvivalEngine
         {
             if (isRightMouseButtonDown)
             {
-                transform.position = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.position;
-                transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.rotation;
+                transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.position;
+                transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.rotation;
                 Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
             }
             else
             {
-                transform.position = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.position;
-                transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/HoldCameraRoot").transform.rotation;
+                transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.position;
+                transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.rotation;
                 Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
             }
         }

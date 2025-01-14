@@ -21,6 +21,8 @@ public class PlayerMovement : NetworkBehaviour
 
     public Transform cameraRoot;
 
+    [SerializeField] private Transform upperBody;
+
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
@@ -83,6 +85,15 @@ public class PlayerMovement : NetworkBehaviour
         {
             // Only adjust the forward direction slightly based on the move direction when moving.
             transform.forward = Vector3.Slerp(transform.forward, move.normalized, 0.1f);
+        }
+
+        Quaternion bodyTargetRotation = Quaternion.Euler(0, Camera.transform.rotation.eulerAngles.y, 0);
+        transform.rotation = Quaternion.Lerp(transform.rotation, bodyTargetRotation, RotationSpeed * Runner.DeltaTime);
+
+        // 上半身/手持物品完全跟随相机旋转（包含俯仰角）
+        if (upperBody != null)
+        {
+            upperBody.rotation = Camera.transform.rotation;
         }
 
         _jumpPressed = false;
