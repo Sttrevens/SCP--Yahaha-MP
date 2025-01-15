@@ -97,4 +97,9 @@ public class LevelManager : MonoBehaviour, IInteractable
             button.UpdateButtonAppearance();
         }
     }
+
+    public void PlayButtonSound()
+    {
+        AudioManager.Instance.PlayStartButtonSound();
+    }
 }

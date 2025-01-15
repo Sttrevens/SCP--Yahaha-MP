@@ -6,7 +6,7 @@ using System.Globalization;
 
 public class TakeoffController : NetworkBehaviour
 {
-    public static TakeoffController Instance { get; private set; } // Singleton instance
+    public static TakeoffController Instance { get; private set; } 
 
     public ScreenFade screenFade;
     [System.Serializable]
@@ -28,6 +28,7 @@ public class TakeoffController : NetworkBehaviour
     [SerializeField] private float shakeMagnitude = 0.1f;
 
     [Header("Audio Settings")]
+    [SerializeField] private AudioClip StartingMenuSound;
     [SerializeField] private AudioClip elevatorOpenSound;
     [SerializeField] private AudioClip elevatorCloseSound;
     [SerializeField] private AudioClip elevatorShakeSound;

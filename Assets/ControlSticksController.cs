@@ -26,6 +26,7 @@ public class ControlSticksController : MonoBehaviour, IInteractable
     public bool isRotating = false;
     
     public ScreenFade screenFade;
+    [SerializeField] private GameObject door;
     
 
     private void Awake()
@@ -66,15 +67,13 @@ public class ControlSticksController : MonoBehaviour, IInteractable
     
     private IEnumerator HandleSpaceshipState()
     {
-
-
         if (CurrentState == SpaceshipState.PreparingForTakeoff)
         {
-            
             IsPulled = true;
             LevelManager.Instance.LoadLevel();
             screenFade.TriggerScreenFade(false);
             TakeoffController.Instance.Rpc_OnInteract();
+            AudioManager.Instance.PlayElevatorShakeSound(door);
             while (TakeoffController.Instance.IsFlying)
             {
                 yield return null;
@@ -85,7 +84,7 @@ public class ControlSticksController : MonoBehaviour, IInteractable
                 
                 yield return RotateToAngle(rotationAngle);
                 OnButtonPressed?.Invoke();
- 
+                AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
                 SetState(SpaceshipState.Landing);
             }
@@ -98,9 +97,11 @@ public class ControlSticksController : MonoBehaviour, IInteractable
                 screenFade.TriggerScreenFade(true);
                 yield return RotateToAngle(0f);
                 OnButtonReleased?.Invoke();
+                AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
                 
                 TakeoffController.Instance.Rpc_OnInteract();
+                AudioManager.Instance.PlayElevatorShakeSound(door);
                 while (TakeoffController.Instance.IsFlying)
                 {
                     yield return null;
@@ -110,34 +111,6 @@ public class ControlSticksController : MonoBehaviour, IInteractable
             }
         }
     }
-
-
-    // private IEnumerator WaitForIsFlyingToBeFalse()
-    // {
-    //     LevelManager.Instance.LoadLevel();
-    //     TakeoffController.Instance.Rpc_OnInteract();
-    //
-    //     // Wait until TakeoffController's IsFlying is false
-    //     while (TakeoffController.Instance.IsFlying)
-    //     {
-    //         yield return null;
-    //     }
-    //
-    //     if (!ReciveIsFlying || isRotating) yield break;
-    //
-    //     IsPulled = !IsPulled;
-    //
-    //     if (IsPulled)
-    //     {
-    //         StartCoroutine(RotateToAngle(rotationAngle));
-    //         OnButtonPressed?.Invoke();
-    //     }
-    //     else
-    //     {
-    //         StartCoroutine(RotateToAngle(0f));
-    //         OnButtonReleased?.Invoke();
-    //     }
-    // }
 
     private IEnumerator RotateToAngle(float targetAngle)
     {

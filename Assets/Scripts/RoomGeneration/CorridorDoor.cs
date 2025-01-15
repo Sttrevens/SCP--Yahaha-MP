@@ -6,6 +6,7 @@ public class CorridorDoor : MonoBehaviour
 {
     public bool generated = false;
     public bool shouldGenerate;
+    private bool hasReentered = false;
     public bool isEntrance;
     [SerializeField] private Transform newRoomPosition;
     [SerializeField] private Transform oldRoomPosition;
@@ -14,16 +15,30 @@ public class CorridorDoor : MonoBehaviour
     {     
         if (other.CompareTag("Player"))
         {
-            if (!generated && shouldGenerate)
+
+            if (shouldGenerate)
             {
+                //first time enter
                 if (isEntrance)
                 {
-                    RoomGeneration.Instance.GenerateNewRoom(newRoomPosition);
-                }else
-                {
-                    RoomGeneration.Instance.DeleteLastRoom();
+                    if (!generated)
+                    {
+                        RoomGeneration.Instance.GenerateNewRoom(newRoomPosition);
+                        generated = true;
+                    }
+
                 }
-                generated = true;
+                else
+                {
+                    //first time leave exit
+                    hasReentered = true;
+                    RoomGeneration.Instance.DeleteLastRoom(); 
+                }
+                if(hasReentered)//reenter
+                {
+                    RoomGeneration.Instance.ResetLastCorridor();
+                    RoomGeneration.Instance.GenerateNewRoom(oldRoomPosition);
+                }
             }
 
         }

@@ -75,12 +75,21 @@ public class RoomGeneration : MonoBehaviour
     {
         if(lastRoom!=null)Destroy(lastRoom);
         lastRoom = newRoom;
-
     }
        
     public void DeleteLastCorridor()
     {
         if(lastCorridor)Destroy(lastCorridor);
+        lastCorridor = newCorridor;
+    }
+
+    public void ResetLastRoom()
+    {
+        lastRoom = newRoom;
+    }
+
+    public void ResetLastCorridor()
+    {
         lastCorridor = newCorridor;
     }
     
