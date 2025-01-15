@@ -29,7 +29,7 @@ public class FirstPersonOptimizer : MonoBehaviour
     public void Wield()
     {
         WieldableManager.instance.cameraPositon = cameraPosition;
-        WieldableManager.instance.AimPositon = aimPosition;
+        WieldableManager.instance.aimPositon = aimPosition;
         WieldableManager.instance.flashlightPosition = flashlightPosition;
     }
 

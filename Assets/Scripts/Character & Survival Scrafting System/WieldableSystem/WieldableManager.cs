@@ -12,172 +12,162 @@ namespace LPSurvivalEngine
         [Space]
         [Space]
 
-        [HideInInspector] public Wieldable currentWieldable;
         public Transform wieldablesPosition;
         public Transform flashlightPosition;
         public Transform cameraPositon;
-        public Transform AimPositon;
-        public PlayerInput PlayerInput;
-        private InputAction actionAction;
+        public Transform aimPositon;
+        [SerializeField] private PlayerInput playerInput;
 
-        public static WieldableManager instance;
+        [HideInInspector] public Wieldable currentWieldable;
         [HideInInspector] public PlayerController controller;
+        [Networked] public PlayerRef Owner { get; set; }
 
+        private ItemDatabase equippedItem;
+        public static WieldableManager instance;
 
         private void Awake()
         {
             instance = this;
-            // PlayerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();
-
-            //if (PlayerInput != null) {
-            //    actionAction = PlayerInput.actions.FindAction("Action");
-            //    actionAction.performed += OnAttackInput;
-            //}
-
-            //Object.ReleaseStateAuthority();
         }
 
         public void OnAttackInput(InputAction.CallbackContext context)
         {
-            Debug.Log("WieldAble��");
-            if (context.phase == InputActionPhase.Performed && currentWieldable != null && controller.cursor == true)
-            {
-                currentWieldable.OnAttackInput();
-            }
+            if (!IsValidWieldableAction(context)) return;
+            
+            currentWieldable.OnAttackInput();
         }
 
-        public void OnAltAttackInput(InputAction.CallbackContext context)
+        public void OnAltAttackInput(InputAction.CallbackContext context) 
         {
-            if (context.phase == InputActionPhase.Performed && currentWieldable != null && controller.cursor == true)
-            {
-                currentWieldable.OnAltAttackInput();
-            }
+            if (!IsValidWieldableAction(context)) return;
+
+            currentWieldable.OnAltAttackInput();
+        }
+
+        private bool IsValidWieldableAction(InputAction.CallbackContext context)
+        {
+            return context.phase == InputActionPhase.Performed && 
+                   currentWieldable != null && 
+                   controller.cursor;
         }
 
         public void EquipNewItem(ItemDatabase item)
         {
-            // ��¼��ǰҪװ������Ʒ
+            Debug.Log("EquipNewItem");
             equippedItem = item;
-
             RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
-
-            // ���������������Ʒ
             RPC_RequestEquipItem(Runner.LocalPlayer);
         }
 
-        // ��¼��ǰҪװ������Ʒ
-        private ItemDatabase equippedItem;
-
-        [Networked] public PlayerRef Owner { get; set; } // ����ͬ������Ʒ������
-
-        // RPC ��������װ����Ʒ���ͻ��˵��ã�
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_RequestEquipItem(PlayerRef player)
         {
-            //// ֻ�� StateAuthority ����ִ�� Spawn
-            if (Object.HasStateAuthority)
-            {
+            if (!Object.HasStateAuthority) return;
+
             GameObject.Find("CurrentPlayer").GetComponent<FirstPersonOptimizer>().Wield();
             SpawnEquippedItem(player);
-            }
         }
 
         private void RequestStateAuthorityForEquipItem(PlayerRef player)
         {
-            // �����ǰ�ͻ���û�� StateAuthority����������
-            if (!HasStateAuthority)
-            {
-                // �˴���α�ʾ�˶����ڵ�ǰ�ͻ�����û�п���Ȩ��
-                Debug.Log("Requesting StateAuthority for EquipItem.");
-                Object.RequestStateAuthority();
-                if (HasStateAuthority)
-                {
-                    Debug.Log($"This client has StateAuthority over {gameObject.name}");
-                }
-                else
-                {
-                    Debug.Log($"This client does not have StateAuthority over {gameObject.name}");
-                }
-            }// �����ȡ�ö���Ŀ���Ȩ��
-            else
+            if (HasStateAuthority)
             {
                 Debug.Log("Already have StateAuthority.");
+                return;
             }
+
+            Debug.Log("Requesting StateAuthority for EquipItem.");
+            Object.RequestStateAuthority();
+            LogStateAuthorityStatus();
+        }
+
+        private void LogStateAuthorityStatus()
+        {
+            string status = HasStateAuthority ? "has" : "does not have";
+            Debug.Log($"This client {status} StateAuthority over {gameObject.name}");
         }
 
         public Transform CurrentWieldableRootTransform()
         {
-            Transform spawnPosition = null;
-            if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() == null && equippedItem.wieldablePrefab.GetComponent<ConeDetection>() == null)
+            if (equippedItem == null || equippedItem.wieldablePrefab == null) return null;
+
+            var prefab = equippedItem.wieldablePrefab;
+            bool hasFlashlight = prefab.GetComponent<Flashlight>() != null;
+            bool hasConeDetection = prefab.GetComponent<ConeDetection>() != null;
+
+            if (!hasFlashlight && !hasConeDetection)
             {
                 GameObject currentPlayer = GameObject.Find("CurrentPlayer");
-                spawnPosition = currentPlayer.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
+                return currentPlayer.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
             }
-            else if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() == null && equippedItem.wieldablePrefab.GetComponent<ConeDetection>() != null)
+            else if (!hasFlashlight && hasConeDetection)
             {
-                spawnPosition = cameraPositon;
+                return cameraPositon;
             }
-            else if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() != null && equippedItem.wieldablePrefab.GetComponent<ConeDetection>() == null)
+            else if (hasFlashlight && !hasConeDetection)
             {
-                spawnPosition = flashlightPosition;
+                return flashlightPosition;
             }
 
-            return spawnPosition;
+            return null;
         }
 
-        // ��Ʒ�����߼���ֻ�� StateAuthority ִ�У�
         private void SpawnEquippedItem(PlayerRef player)
         {
             Owner = player;
 
-/*            // ������Ʒ����ѡ������λ��
-            Transform spawnPosition = null;
-            if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() == null && equippedItem.wieldablePrefab.GetComponent<CameraController>() == null)
+            Transform spawnTransform = CurrentWieldableRootTransform();
+            if (spawnTransform == null)
             {
-                GameObject currentPlayer = GameObject.Find("CurrentPlayer");
-                spawnPosition = currentPlayer.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
-            }
-            else if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() == null && equippedItem.wieldablePrefab.GetComponent<CameraController>() != null)
-            {
-                spawnPosition = cameraPositon;
-            }
-            else if (equippedItem.wieldablePrefab.GetComponent<Flashlight>() != null && equippedItem.wieldablePrefab.GetComponent<CameraController>() == null)
-            {
-                spawnPosition = flashlightPosition;
-            }*/
-
-            // ���û���ҵ�����λ�ã��׳�����
-            if (CurrentWieldableRootTransform() == null)
-            {
-                Debug.LogError("Unexpected item type: " + equippedItem.wieldablePrefab.name);
+                Debug.LogError($"Unexpected item type: {equippedItem.wieldablePrefab.name}");
                 return;
             }
 
-            // ʹ�� Runner.Spawn ʵ������ͬ����Ʒ
-            NetworkObject spawnedItem = Runner.Spawn(equippedItem.wieldablePrefab, CurrentWieldableRootTransform().position, CurrentWieldableRootTransform().rotation);
-            
-            // ȷ�������ɵ���Ʒ���ص�������
-            if (spawnedItem != null)
+            NetworkObject spawnedItem = Runner.Spawn(
+                equippedItem.wieldablePrefab, 
+                spawnTransform.position, 
+                spawnTransform.rotation
+            );
+
+            if (spawnedItem == null)
             {
-                //// ������Ʒ�ĸ�����
-                spawnedItem.transform.SetParent(CurrentWieldableRootTransform());
+                Debug.LogError($"Failed to spawn item: {equippedItem.wieldablePrefab.name}");
+                return;
+            }
+
+            SetupSpawnedItem(spawnedItem, spawnTransform, player);
+        }
+
+        private void SetupSpawnedItem(NetworkObject spawnedItem, Transform parent, PlayerRef player)
+        {
+            if (Object.HasStateAuthority)
+            {
+                // Only state authority can set parent and transform
+                spawnedItem.transform.SetParent(parent);
                 spawnedItem.transform.localPosition = Vector3.zero;
                 spawnedItem.transform.localRotation = Quaternion.identity;
-
-                spawnedItem.RequestStateAuthority();
-
-                // ����Ϊ��ǰװ����Ʒ
-                if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
-                {
-                    currentWieldable = wieldable; // ���µ�ǰװ������Ʒ
-                    Debug.Log($"[SpawnEquippedItem] Equipped item: {equippedItem.wieldablePrefab.name} by {player}");
-
-                    currentWieldable.player = player;
-                }
+                
+                // Sync parent and transform across network
+                RPC_SyncSpawnedItem(spawnedItem.Id, parent.gameObject.name);
             }
-            else
+
+            if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
             {
-                Debug.LogError("Failed to spawn item: " + equippedItem.wieldablePrefab.name);
+                currentWieldable = wieldable;
+                currentWieldable.player = player;
+                Debug.Log($"[SpawnEquippedItem] Equipped item: {equippedItem.wieldablePrefab.name} by {player}");
+            }
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void RPC_SyncSpawnedItem(NetworkId itemId, string parentName)
+        {
+            if (!Object.HasStateAuthority && Runner.TryFindObject(itemId, out NetworkObject spawnedItem))
+            {
+                Transform parent = GameObject.Find(parentName).transform;
+                spawnedItem.transform.SetParent(parent);
+                spawnedItem.transform.localPosition = Vector3.zero;
+                spawnedItem.transform.localRotation = Quaternion.identity;
             }
         }
 
@@ -190,6 +180,4 @@ namespace LPSurvivalEngine
             }
         }
     }
-
-
-    }
+}
