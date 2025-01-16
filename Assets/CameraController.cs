@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion; // ���� Fusion �����ռ�
 using LPSurvivalEngine;
+using TMPro;
 
 namespace LPSurvivalEngine
 {
@@ -11,7 +12,7 @@ namespace LPSurvivalEngine
     /// </summary>
     public class CameraController : Wieldable
     {
-        [Header("")]
+        [Header("Camera")]
         [SerializeField] private Light cameraFlashLight;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip toggleSound;
@@ -29,7 +30,39 @@ namespace LPSurvivalEngine
         private Vector3 cameraPosition;
         private Quaternion cameraRotation;
 
-        [SerializeField] private bool isRightMouseButtonDown = false; // ��ʶ�Ҽ��Ƿ���
+        [SerializeField] private bool isRightMouseButtonDown = false;
+
+    [Header("Durability Settings")]
+    [SerializeField] private float durabilityDrainPerSecond = 0.2f; // 每秒消耗的耐久度
+
+        [Header("UI")]
+        public TextMeshProUGUI durabilityText;
+
+        private void DrainDurability()
+    {
+        // 通过 WieldableManager 获取当前装备的物品槽
+        ItemSlot currentSlot = WieldableManager.instance.GetCurrentWieldableSlot();
+        if (currentSlot != null)
+        {
+            // 计算这一帧要消耗的耐久度
+            float drainAmount = durabilityDrainPerSecond * Time.deltaTime;
+            
+            // 通过 Inventory 更新耐久度
+            Inventory.instance.UpdateItemDurability(WieldableManager.instance.GetCurrentWieldableIndex(), drainAmount);
+
+            if (durabilityText != null)
+            {
+                durabilityText.text = $"Camera Battery " + currentSlot.currentDurability.ToString("F0") + "%";
+            }
+
+            // 如果耐久度耗尽，收起相机
+            if (currentSlot.currentDurability <= 0)
+            {
+                Debug.Log("[CameraController] Camera battery depleted!");
+                WieldableManager.instance.DropWieldable();
+            }
+        }
+    }
 
         private void Awake()
         {
@@ -48,6 +81,12 @@ namespace LPSurvivalEngine
 
         private void Update()
         {
+            if (HasStateAuthority)  // 确保只在有状态权限的客户端上更新
+        {
+            // 消耗耐久度
+            DrainDurability();
+        }
+
             if (isRightMouseButtonDown)
             {
                 HandleZoom();

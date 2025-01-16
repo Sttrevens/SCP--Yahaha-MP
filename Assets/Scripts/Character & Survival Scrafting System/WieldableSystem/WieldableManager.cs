@@ -51,12 +51,31 @@ namespace LPSurvivalEngine
                    controller.cursor;
         }
 
+    private int currentWieldableIndex = -1;
+
+    public ItemSlot GetCurrentWieldableSlot()
+    {
+        if (currentWieldableIndex >= 0)
+        {
+            return Inventory.instance.slots[currentWieldableIndex];
+        }
+        return null;
+    }
+
+    public int GetCurrentWieldableIndex()
+    {
+        return currentWieldableIndex;
+    }
+
+
         public void EquipNewItem(ItemDatabase item)
         {
             Debug.Log("EquipNewItem");
             equippedItem = item;
             RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
             RPC_RequestEquipItem(Runner.LocalPlayer);
+
+            currentWieldableIndex = Inventory.instance.selectedItemIndex;
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

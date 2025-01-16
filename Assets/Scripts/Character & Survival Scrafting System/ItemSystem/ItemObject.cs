@@ -5,13 +5,15 @@ namespace LPSurvivalEngine
 {
     public class ItemObject : NetworkBehaviour, IInteractable
     {
-        [Networked] public bool IsPickedUp { get; set; } // ÊÇ·ñ±»Ê°È¡µÄÍøÂçÍ¬²½×´Ì¬
-        [Networked] public PlayerRef Owner { get; set; } // µ±Ç°Ê°È¡ÎïÌåµÄÍæ¼Ò
+        [Networked] public bool IsPickedUp { get; set; } // ï¿½Ç·ï¿½Ê°È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½×´Ì¬
+        [Networked] public PlayerRef Owner { get; set; } // ï¿½ï¿½Ç°Ê°È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         [Space]
         [Header("Item")]
         [Space]
 
         public ItemDatabase item;
+
+        [Networked] public float currentDurability { get; set; }
 
         // public bool isDisplayedItem = false;
 
@@ -23,29 +25,29 @@ namespace LPSurvivalEngine
         public void OnInteract()
         {
             // PickupItem pickupItem = GetComponent<PickupItem>();
-            // if (pickupItem != null && !pickupItem.IsPickedUp) // ¼ì²éÎïÆ·×´Ì¬
+            // if (pickupItem != null && !pickupItem.IsPickedUp) // ï¿½ï¿½ï¿½ï¿½ï¿½Æ·×´Ì¬
             // {
-            //     Debug.Log("µ÷ÓÃÎïÆ·µÄÊ°È¡·½·¨");
-            //     // µ÷ÓÃÎïÆ·µÄÊ°È¡·½·¨
+            //     Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Ê°È¡ï¿½ï¿½ï¿½ï¿½");
+            //     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Ê°È¡ï¿½ï¿½ï¿½ï¿½
             //     pickupItem.RPC_OnPickedUp(Object.StateAuthority);
             // }
             // Inventory.instance.AddItem(item);
             // GetInteractText();
             
-            if (!IsPickedUp) // ¼ì²éÎïÆ·×´Ì¬
+            if (!IsPickedUp) // ï¿½ï¿½ï¿½ï¿½ï¿½Æ·×´Ì¬
             {
-                Debug.Log("µ÷ÓÃÎïÆ·µÄÊ°È¡·½·¨");
-                // µ÷ÓÃÎïÆ·µÄÊ°È¡·½·¨
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Ê°È¡ï¿½ï¿½ï¿½ï¿½");
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½Ê°È¡ï¿½ï¿½ï¿½ï¿½
                 RPC_OnPickedUp(Runner.LocalPlayer);
             }
-            Inventory.instance.AddItem(item);
+            Inventory.instance.PickupItem(this);
         }
         
         private void Update()
         {
             if (IsPickedUp)
             {
-                // ÎïÌåÒÑ±»Ê°È¡£¬Ö´ÐÐÒþ²Ø»òÆäËûÂß¼­
+                // ï¿½ï¿½ï¿½ï¿½ï¿½Ñ±ï¿½Ê°È¡ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
                 Destroy(gameObject);
             }
         }
@@ -53,12 +55,12 @@ namespace LPSurvivalEngine
         public void PickUp(PlayerRef player)
         {
             IsPickedUp = true;
-            Owner = player; // ¼ÇÂ¼Ë­Ê°È¡ÁËÎïÌå
+            Owner = player; // ï¿½ï¿½Â¼Ë­Ê°È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (Runner.TryGetPlayerObject(player, out var playerObject))
             {
                 playerObject.GetComponent<AnimatorManager>().PickupCount++;
             }
-            Debug.Log($"ÎïÆ·±» {player} Ê°È¡");
+            Debug.Log($"ï¿½ï¿½Æ·ï¿½ï¿½ {player} Ê°È¡");
             // if (!isDisplayedItem)
             // {
             //     Destroy(gameObject);
@@ -68,7 +70,7 @@ namespace LPSurvivalEngine
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_OnPickedUp(PlayerRef player)
         {
-            // Ö»ÓÐ StateAuthority ¿ÉÒÔÐÞ¸ÄÍøÂç×´Ì¬
+            // Ö»ï¿½ï¿½ StateAuthority ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
             //if (Object.HasStateAuthority)
             //{
                 PickUp(player);

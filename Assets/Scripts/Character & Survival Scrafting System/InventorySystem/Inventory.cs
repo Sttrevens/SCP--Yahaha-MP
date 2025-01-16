@@ -36,7 +36,7 @@ namespace LPSurvivalEngine
         public PlayerInput PlayerInput;
         private InputAction inventoryAction;
 
-        private int selectedItemIndex;
+        public int selectedItemIndex;
         [HideInInspector] public PlayerController playerController;
         [HideInInspector] public HealthSystem vitals;
         [HideInInspector]public ItemSlot selectedItem;
@@ -146,8 +146,17 @@ namespace LPSurvivalEngine
         {
             return inventoryWindow.activeInHierarchy;
         }
+
+        // 新增：专门处理拾取物品的方法
+public void PickupItem(ItemObject itemObject)
+{
+    if (itemObject != null)
+    {
+        AddItem(itemObject.item, itemObject.currentDurability); // 确保传递当前耐久度
+    }
+}
         
-        public void AddItem(ItemDatabase item)
+        public void AddItem(ItemDatabase item, float durability = -1)
         {
             if (item.canStackItem)
             {
@@ -161,27 +170,25 @@ namespace LPSurvivalEngine
             }
 
             ItemSlot emptySlot = GetEmptySlot();
-            if (emptySlot != null) //如果有空位
+            if (emptySlot != null)
             {
                 emptySlot.item = item;
                 emptySlot.quantity = 1;
+                emptySlot.currentDurability = durability >= 0 ? durability : item.maxDurability;
                 UpdateUI();
                 return;
             }
 
-            //如果物品槽已满
             ThrowItem(item);
-            Prompt.instance.CustomPrompt("Your Bag is already full!"); //显示提示
+            Prompt.instance.CustomPrompt("Your Bag is already full!");
         }
 
         public void ThrowItem(ItemDatabase item)
         {
-                // 提示消息
-                Prompt.instance.CustomPrompt(string.Format("{0} has been thrown!", selectedItem.item.name));
+            Prompt.instance.CustomPrompt(string.Format("{0} has been thrown!", selectedItem.item.name));
             throwedItem = item;
+            currentThrowingItemDurability = selectedItem.currentDurability;
             RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
-
-            // 在本地实例化物品并同步
             RPC_RequestSpawnItem(Runner.LocalPlayer);
 
             if (item.type == ItemType.Wieldable)
@@ -243,8 +250,9 @@ namespace LPSurvivalEngine
             // 确保新生成的物品有正确的所有者
             if (spawnedItem.TryGetComponent<ItemObject>(out var itemObject))
             {
-                itemObject.Owner = player;  // 设置丢弃物品的所有者
-                itemObject.IsPickedUp = false;  // 丢弃物品后确保它没有被拾取
+                itemObject.Owner = player;
+                itemObject.IsPickedUp = false;
+                itemObject.currentDurability = currentThrowingItemDurability;
             }
         }
 
@@ -500,6 +508,29 @@ namespace LPSurvivalEngine
             }
             return false;
         }
+
+        [Networked] private float currentThrowingItemDurability { get; set; }
+
+        public void UpdateItemDurability(int slotIndex, float durabilityChange)
+        {
+            if (slots[slotIndex].item != null && slots[slotIndex].item.type == ItemType.Wieldable)
+            {
+                slots[slotIndex].currentDurability = Mathf.Max(0, slots[slotIndex].currentDurability - durabilityChange);
+                
+                // 如果耐久度降为0，可以选择销毁物品
+                if (slots[slotIndex].currentDurability <= 0)
+                {
+                    if (InventorySlots[slotIndex].equipped)
+                    {
+                        DisableItem(slotIndex);
+                    }
+                    slots[slotIndex].item = null;
+                    slots[slotIndex].quantity = 0;
+                }
+                
+                UpdateUI();
+            }
+        }
     }
 }
 
@@ -510,5 +541,6 @@ namespace LPSurvivalEngine
     {
         public ItemDatabase item;
         public int quantity;
+        public float currentDurability;
     }
 }

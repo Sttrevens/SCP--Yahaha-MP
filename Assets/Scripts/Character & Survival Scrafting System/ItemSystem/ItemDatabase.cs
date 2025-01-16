@@ -72,6 +72,7 @@ namespace LPSurvivalEngine
     [Space] 
 
     public GameObject wieldablePrefab;
+    public float maxDurability;
 
         [Space]
         [Header("Cooking Pot")]
