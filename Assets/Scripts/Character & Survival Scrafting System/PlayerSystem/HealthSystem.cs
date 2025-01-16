@@ -18,12 +18,12 @@ namespace LPSurvivalEngine
         public Vitals health;
         public Vitals hunger;
         public Vitals thirst;
-        public Vitals sleep;
+        public Vitals sanity;
         
         [Networked] public float playerHealth { get; set; } = 100f;
         [Networked] public float playerHunger { get; set; } = 100f;
         [Networked] public float playerThirst { get; set; } = 100f;
-        [Networked] public float playerSleep { get; set; } = 100f;
+        [Networked] public float playerSanity { get; set; } = 100f;
 
         [Header("Health System")]
 
@@ -45,7 +45,7 @@ namespace LPSurvivalEngine
             health.currentValue = health.startValue;
             hunger.currentValue = hunger.startValue;
             thirst.currentValue = thirst.startValue;
-            sleep.currentValue = sleep.startValue;
+            sanity.currentValue = sanity.startValue;
 
             Player = gameObject;
             UIPlayer = GameObject.FindGameObjectWithTag("UI Player");
@@ -57,11 +57,11 @@ namespace LPSurvivalEngine
                 sleepScreenAnimation = FindChildRecursive(UIPlayer.transform, "SleepAnimation");
                 if (sleepScreenAnimation != null)
                 {
-                    // ÕâÀï¿ÉÒÔÌí¼Ó»ñÈ¡µ½×ÓÎïÌåºóµÄ²Ù×÷
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªSleepAnimationµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªSleepAnimationï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
 
                 Image healthVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Health");
@@ -71,7 +71,7 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªHealthµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªHealthï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
 
                 Image hungerVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Hunger");
@@ -81,7 +81,7 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªHungerµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªHungerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
 
                 Image thirstVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Thirst");
@@ -91,22 +91,22 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªThirstµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªThirstï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
 
-                Image sleepVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Sleep");
-                if (sleepVitalBarImage != null)
+                Image sanityVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Sleep");
+                if (sanityVitalBarImage != null)
                 {
-                    sleep.VitalBar = sleepVitalBarImage;
+                    sanity.VitalBar = sanityVitalBarImage;
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªSleepµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªSleepï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
             }
             else
             {
-                Debug.Log("Î´ÕÒµ½tagÎªUI PlayerµÄÎïÌå");
+                Debug.Log("Î´ï¿½Òµï¿½tagÎªUI Playerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             }
         }
 
@@ -152,9 +152,9 @@ namespace LPSurvivalEngine
         {
             hunger.Subtrack(hunger.decayRate * Time.deltaTime);
             thirst.Subtrack(thirst.decayRate * Time.deltaTime);
-            sleep.Subtrack(sleep.regenrate * Time.deltaTime);
+            sanity.Subtrack(sanity.regenrate * Time.deltaTime);
 
-            if ((hunger.currentValue >= hunger.maxValue * 0.8f) && (thirst.currentValue >= thirst.maxValue * 0.8f) && (sleep.currentValue >= sleep.maxValue * 0.5f))
+            if ((hunger.currentValue >= hunger.maxValue * 0.8f) && (thirst.currentValue >= thirst.maxValue * 0.8f) && (sanity.currentValue >= sanity.maxValue * 0.5f))
                 health.Add(health.regenrate * Time.deltaTime);
 
             if (hunger.currentValue == 0.0f)
@@ -175,7 +175,7 @@ namespace LPSurvivalEngine
             health.VitalBar.fillAmount = health.GetPercentage();
             hunger.VitalBar.fillAmount = hunger.GetPercentage();
             thirst.VitalBar.fillAmount = thirst.GetPercentage();
-            sleep.VitalBar.fillAmount = sleep.GetPercentage();
+            sanity.VitalBar.fillAmount = sanity.GetPercentage();
             if (playerHealth != health.currentValue)
             {
                 SynchronousPlayerHealthRpc();
@@ -188,9 +188,9 @@ namespace LPSurvivalEngine
             {
                 SynchronousPlayerThirstRpc();
             }
-            if (playerSleep != sleep.currentValue)
+            if (playerSanity != sanity.currentValue)
             {
-                SynchronousPlayerSleepRpc();
+                SynchronousPlayerSanityRpc();
             }
 
         }
@@ -212,7 +212,7 @@ namespace LPSurvivalEngine
 
         public void Sleep(float amount)
         {
-            sleep.Add(amount);
+            sanity.Add(amount);
         }
 
         public void TakePhysicDamage(int amount)
@@ -229,12 +229,12 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
             }
             else
             {
-                Debug.Log("Î´ÕÒµ½tagÎª µÄÎïÌå");
+                Debug.Log("Î´ï¿½Òµï¿½tagÎª ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             }
         }
     
@@ -253,7 +253,7 @@ namespace LPSurvivalEngine
             }
         }
 
-        #region Ò»·²Í¬²½½ÇÉ«Êý¾Ýº¯Êý
+        #region Ò»ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½Ýºï¿½ï¿½ï¿½
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void SynchronousPlayerHealthRpc()
@@ -274,9 +274,9 @@ namespace LPSurvivalEngine
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void SynchronousPlayerSleepRpc()
+        public void SynchronousPlayerSanityRpc()
         {
-            playerSleep = sleep.currentValue;
+            playerSanity = sanity.currentValue;
         }
 
         #endregion
