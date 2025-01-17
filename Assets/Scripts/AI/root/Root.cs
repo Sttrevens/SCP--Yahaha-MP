@@ -15,12 +15,12 @@ public class Root : MonoBehaviour
     public float detectionRange = 10f;
 
     private RootBaseState currentStateBehavior;
-    
+
     [Header("Patrol")]
     public float fieldOfViewAngleHorizontal = 90f;
     public float fieldOfViewAngleVertical = 60f;
     public float sensingRadius = 0.1f;
-    
+
     [HideInInspector] public GameObject targetPlayer;
 
     private void Start()
@@ -40,13 +40,11 @@ public class Root : MonoBehaviour
         {
             currentStateBehavior?.UpdateState(this);
             players = GameObject.FindGameObjectsWithTag("Player");
-            //the first player
             if (players.Length > 0)
             {
                 target = players[0].transform;
             }
         }
-        
     }
 
     public void SwitchState(RootBaseState newState)
@@ -94,5 +92,23 @@ public class Root : MonoBehaviour
         }
         return false;
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+        Vector3 forward = transform.forward;
+        Vector3 right = Quaternion.Euler(0, fieldOfViewAngleHorizontal / 2, 0) * forward;
+        Vector3 left = Quaternion.Euler(0, -fieldOfViewAngleHorizontal / 2, 0) * forward;
+
+        Gizmos.DrawLine(transform.position, transform.position + right * detectionRange);
+        Gizmos.DrawLine(transform.position, transform.position + left * detectionRange);
+
+        Vector3 up = Quaternion.Euler(-fieldOfViewAngleVertical / 2, 0, 0) * forward;
+        Vector3 down = Quaternion.Euler(fieldOfViewAngleVertical / 2, 0, 0) * forward;
+
+        Gizmos.DrawLine(transform.position, transform.position + up * detectionRange);
+        Gizmos.DrawLine(transform.position, transform.position + down * detectionRange);
+    }
 }

@@ -21,6 +21,7 @@ public class EnemyShake : MonoBehaviour
         originalPosition = transform.position;
         originalScale = transform.localScale;
         originalRotation = transform.rotation;
+        
     }
 
     void Update()
@@ -43,9 +44,9 @@ public class EnemyShake : MonoBehaviour
             );
 
             transform.localScale = originalScale + new Vector3(
-                Mathf.PerlinNoise(Time.time * distortionSpeed, 0) * shakeMagnitude * 5f,
+                Mathf.PerlinNoise(Time.time * distortionSpeed, 0) * shakeMagnitude * 50f,
                 Mathf.PerlinNoise(0, Time.time * distortionSpeed) * shakeMagnitude * 5f,
-                Mathf.PerlinNoise(Time.time * distortionSpeed, Time.time * distortionSpeed) * shakeMagnitude * 5f
+                Mathf.PerlinNoise(Time.time * distortionSpeed, Time.time * distortionSpeed) * shakeMagnitude * 50f
             );
         }
     }

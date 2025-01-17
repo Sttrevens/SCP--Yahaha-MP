@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7120302254297085460}
   - component: {fileID: 6160852519842314673}
   - component: {fileID: 8258275638143978875}
+  - component: {fileID: 3715326496604526081}
+  - component: {fileID: 2830599734665176335}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -26,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7609875558787853486}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3498603, y: 0.60718787, z: 0.6508347, w: 0.2921215}
-  m_LocalPosition: {x: 8.949425, y: 5.001336, z: 21.924053}
+  m_LocalRotation: {x: 0, y: -0.34060115, z: 0, w: 0.94020796}
+  m_LocalPosition: {x: 0.0006553931, y: 0, z: -0.005028315}
   m_LocalScale: {x: 150, y: 150, z: 150}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -144.13, y: -91.26199, z: 276.517}
+  m_LocalEulerAnglesHint: {x: 0, y: -39.827, z: 0}
 --- !u!33 &6160852519842314673
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -83,3 +85,42 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3715326496604526081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609875558787853486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62857fdef3cc93f49a015acce3d12aa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: []
+  currentState: 0
+  target: {fileID: 0}
+  projectileSpawnPoint: {fileID: 7120302254297085460}
+  projectileSpeed: 10
+  detectionRange: 10
+  fieldOfViewAngleHorizontal: 60
+  fieldOfViewAngleVertical: 260.8
+  sensingRadius: 2
+  targetPlayer: {fileID: 0}
+--- !u!114 &2830599734665176335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609875558787853486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9693a2a2f5f044fbeb3de4d7ee1d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeMagnitude: 0.01
+  distortionSpeed: 2
+  shakeIncreaseRate: 0.01
+  maxShakeMagnitude: 0.1
+  shakeDuration: 5
