@@ -42,10 +42,10 @@ namespace LPSurvivalEngine
 
         void Start()
         {
-            health.currentValue = health.startValue;
-            hunger.currentValue = hunger.startValue;
-            thirst.currentValue = thirst.startValue;
-            sanity.currentValue = sanity.startValue;
+    health.currentValue = Mathf.Min(health.startValue, health.maxValue);
+    hunger.currentValue = Mathf.Min(hunger.startValue, hunger.maxValue);
+    thirst.currentValue = Mathf.Min(thirst.startValue, thirst.maxValue);
+    sanity.currentValue = Mathf.Min(sanity.startValue, sanity.maxValue);
 
             Player = gameObject;
             UIPlayer = GameObject.FindGameObjectWithTag("UI Player");
@@ -148,23 +148,24 @@ namespace LPSurvivalEngine
             return null;
         }
 
-        void Update()
+        void FixedUpdate()
         {
-            hunger.Subtrack(hunger.decayRate * Time.deltaTime);
-            thirst.Subtrack(thirst.decayRate * Time.deltaTime);
-            sanity.Subtrack(sanity.regenrate * Time.deltaTime);
+            // 使用 Time.fixedDeltaTime 替代 Time.deltaTime
+            hunger.Subtract(hunger.decayRate * Time.fixedDeltaTime);
+            thirst.Subtract(thirst.decayRate * Time.fixedDeltaTime);
+            sanity.Subtract(sanity.regenrate * Time.fixedDeltaTime);
 
             if ((hunger.currentValue >= hunger.maxValue * 0.8f) && (thirst.currentValue >= thirst.maxValue * 0.8f) && (sanity.currentValue >= sanity.maxValue * 0.5f))
-                health.Add(health.regenrate * Time.deltaTime);
+                health.Add(health.regenrate * Time.fixedDeltaTime);
 
             if (hunger.currentValue == 0.0f)
             {
-                health.Subtrack(hungerHealthdecay * Time.deltaTime);
+                health.Subtract(hungerHealthdecay * Time.fixedDeltaTime);
             }
 
             if (thirst.currentValue == 0.0f)
             {
-                health.Subtrack(thirstHealthdecay * Time.deltaTime);
+                health.Subtract(thirstHealthdecay * Time.fixedDeltaTime);
             }
         
             if (health.currentValue == 0.0f)
@@ -172,10 +173,16 @@ namespace LPSurvivalEngine
                 Die();
             }
 
+            UpdateUIAndSync();
+        }
+
+        private void UpdateUIAndSync()
+        {
             health.VitalBar.fillAmount = health.GetPercentage();
             hunger.VitalBar.fillAmount = hunger.GetPercentage();
             thirst.VitalBar.fillAmount = thirst.GetPercentage();
             sanity.VitalBar.fillAmount = sanity.GetPercentage();
+
             if (playerHealth != health.currentValue)
             {
                 SynchronousPlayerHealthRpc();
@@ -192,7 +199,6 @@ namespace LPSurvivalEngine
             {
                 SynchronousPlayerSanityRpc();
             }
-
         }
 
         public void Heal(float amount)
@@ -217,7 +223,7 @@ namespace LPSurvivalEngine
 
         public void TakePhysicDamage(int amount)
         {
-            health.Subtrack(amount);
+            health.Subtract(amount);
             onTakeDamage?.Invoke();
             GameObject parentObject = GameObject.FindGameObjectWithTag("UI Player");
             if (parentObject != null)
@@ -294,15 +300,14 @@ namespace LPSurvivalEngine
 
         public Image VitalBar;
 
-
         public void Add(float amount)
         {
-            currentValue = Mathf.Min(currentValue + amount, maxValue);
+            currentValue = Mathf.Clamp(currentValue + amount, 0, maxValue);
         }
 
-        public void Subtrack(float amount)
+        public void Subtract(float amount)
         {
-            currentValue = Mathf.Max(currentValue - amount, 0);
+            currentValue = Mathf.Clamp(currentValue - amount, 0, maxValue);
         }
     
         public float GetPercentage()

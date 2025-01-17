@@ -4,41 +4,42 @@ using UnityEngine;
 public class ConeDetection : MonoBehaviour
 {
     [SerializeField]
-    private string targetClassName = "TargetObject";  // Ä¿±ê½Å±¾Ãû
+    private string targetClassName = "TargetObject";  // Ä¿ï¿½ï¿½Å±ï¿½ï¿½ï¿½
 
-    // ¹©Íâ²¿²é¿´»òµ÷ÊÔ
-    [Header("µ÷ÊÔĞÅÏ¢")]
-    public bool hasTargetInView = false;  // ÊÓ×¶ÌåÖĞÊÇ·ñÓĞÄ¿±êÎïÌå
-    public float visibleRatio = 0f;       // [²ÎÊı1] Õ¼ÆÁÄ»±ÈÀı
-    public float centerOffsetDistance = 0f;  // [²ÎÊı2] ÎïÌåÖĞĞÄµ½ÉãÏñ»úÖĞĞÄÉäÏßµÄºáÏò¾àÀë
-    public float distanceToCamera = 0f;  // [²ÎÊı3] ÎïÌåÖĞĞÄµ½ÉãÏñ»úµÄ¾àÀë
+    // ï¿½ï¿½ï¿½â²¿ï¿½é¿´ï¿½ï¿½ï¿½ï¿½ï¿½
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢")]
+    public bool hasTargetInView = false;  // ï¿½ï¿½×¶ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float visibleRatio = 0f;       // [ï¿½ï¿½ï¿½ï¿½1] Õ¼ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½
+    public float centerOffsetDistance = 0f;  // [ï¿½ï¿½ï¿½ï¿½2] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ßµÄºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float distanceToCamera = 0f;  // [ï¿½ï¿½ï¿½ï¿½3] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
 
-    // ·ÖÊı¼ÆËãµÄÈ¨ÖØÏµÊı
-    [Header("È¨ÖØÉèÖÃ")]
-    public float centerOffsetWeight = 1.0f;  // ºáÏòÆ«ÒÆ¾àÀëµÄÈ¨ÖØ
-    public float distanceToCameraWeight = 1.0f;  // µ½ÉãÏñ»úµÄ¾àÀëÈ¨ÖØ
-    public float visibleRatioWeight = 0.5f;  // ¿É¼û±ÈÀıµÄÈ¨ÖØ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½Ïµï¿½ï¿½
+    [Header("È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    public float centerOffsetWeight = 1.0f;  // ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æ¾ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½
+    public float distanceToCameraWeight = 1.0f;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½È¨ï¿½ï¿½
+    public float visibleRatioWeight = 0.5f;  // ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½
 
-    // ÉãÏñ»ú×é¼ş
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public Camera cam;
 
-    // ÓÃÓÚ¼ÆËãÃ¿Ãë·ÖÊı×ÜºÍ
-    public float accumulatedScore = 0f;  // ÀÛ»ıµÄ·ÖÊı
-    private float timeAccumulator = 0f;  // Ã¿Ãë¼ÆÊ±Æ÷
+    // ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Üºï¿½
+    public float accumulatedScore = 0f;  // ï¿½Û»ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
+
+    [HideInInspector] public float realtimeScore = 0f;
 
     void Start()
     {
         if (cam == null)
         {
-            Debug.LogError("½Å±¾¹ÒÔØµÄÎïÌåÉÏÃ»ÓĞ Camera ×é¼ş£¡");
+            Debug.LogError("ï¿½Å±ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ Camera ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (cam == null) return;
 
-        // ²éÕÒËùÓĞÄ¿±êÎïÌå
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         var targetObjects = FindObjectsOfType<MonoBehaviour>();
         List<GameObject> matchedObjects = new List<GameObject>();
         foreach (var obj in targetObjects)
@@ -49,16 +50,16 @@ public class ConeDetection : MonoBehaviour
             }
         }
 
-        // Ä¬ÈÏÎŞÄ¿±ê
+        // Ä¬ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½
         hasTargetInView = false;
         visibleRatio = 0f;
         centerOffsetDistance = 0f;
         distanceToCamera = 0f;
 
-        // Èç¹ûÃ»ÓĞÄ¿±êÎïÌå£¬Ö±½ÓÍË³ö
+        // ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½å£¬Ö±ï¿½ï¿½ï¿½Ë³ï¿½
         if (matchedObjects.Count == 0) return;
 
-        // Ö»¼ì²âµÚÒ»¸öÄ¿±êÎïÌå
+        // Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         GameObject target = matchedObjects[0];
         Renderer rend = target.GetComponentInChildren<Renderer>();
         if (rend == null)
@@ -69,7 +70,7 @@ public class ConeDetection : MonoBehaviour
 
         Bounds bounds = rend.bounds;
 
-        // ·½·¨A£ºÅĞ¶ÏÄ¿±êÊÇ·ñÔÚÊÓ×¶ÌåÄÚ
+        // ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Ğ¶ï¿½Ä¿ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½×¶ï¿½ï¿½ï¿½ï¿½
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
         if (!GeometryUtility.TestPlanesAABB(planes, bounds))
         {
@@ -81,7 +82,7 @@ public class ConeDetection : MonoBehaviour
             hasTargetInView = true;
         }
 
-        // ¼ÆËã¿É¼û±ÈÀı (visibleRatio)
+        // ï¿½ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ (visibleRatio)
         Vector3[] corners = GetBoundsCorners(bounds);
         Vector2 minPos = new Vector2(float.MaxValue, float.MaxValue);
         Vector2 maxPos = new Vector2(float.MinValue, float.MinValue);
@@ -115,7 +116,7 @@ public class ConeDetection : MonoBehaviour
 
         visibleRatio = Mathf.Clamp01(objectArea / screenArea);
 
-        // ¼ÆËãÖĞĞÄÆ«ÒÆ¾àÀëºÍ¾àÀëÏà»úµÄ¾àÀë
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æ¾ï¿½ï¿½ï¿½Í¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
         Vector3 objectCenter = bounds.center;
         distanceToCamera = Vector3.Distance(cam.transform.position, objectCenter);
 
@@ -127,29 +128,21 @@ public class ConeDetection : MonoBehaviour
 
         centerOffsetDistance = Vector3.Distance(objectCenter, projectedPoint);
 
-        // ¼ÆËã¶¯Ì¬·ÖÊı
-        float score = CalculateScore(centerOffsetDistance, distanceToCamera, visibleRatio) * 10;
+        // ï¿½ï¿½ï¿½ã¶¯Ì¬ï¿½ï¿½ï¿½ï¿½
+        realtimeScore = CalculateScore(centerOffsetDistance, distanceToCamera, visibleRatio) * 10;
 
-        // Ã¿ÃëÀÛ¼ÆÒ»´Î·ÖÊı
-        timeAccumulator += Time.deltaTime;
-        if (timeAccumulator >= 1f)
-        {
-            // Ã¿ÃëÀÛ¼ÓÒ»´Î
-            accumulatedScore += score;
-            //Debug.Log("Accumulated Score this second: " + accumulatedScore);
-            timeAccumulator = 0f;  // ÖØÖÃ¼ÆÊ±Æ÷
-        }
+        accumulatedScore += realtimeScore;
     }
 
-    // ¼ÆËã¶¯Ì¬·ÖÊı
+    // ã¶¯Ì¬
     private float CalculateScore(float centerOffsetDistance, float distanceToCamera, float visibleRatio)
     {
-        // »ùÓÚÈ¨ÖØµÄ¼ÆËã¹«Ê½
-        // ·ÀÖ¹³ıÊıÎªÁã£¬È·±£·ÖÄ¸²»ÎªÁã
+        // ï¿½ï¿½ï¿½ï¿½È¨ï¿½ØµÄ¼ï¿½ï¿½ã¹«Ê½
+        // ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½Îªï¿½ã£¬È·ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½Îªï¿½ï¿½
         float safeCenterOffsetDistance = (centerOffsetDistance > 0f) ? centerOffsetDistance : 0.0001f;
         float safeDistanceToCamera = (distanceToCamera > 0f) ? distanceToCamera : 0.0001f;
 
-        // ¼ÆËã·ÖÊı
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         float score = (centerOffsetWeight * (1f / safeCenterOffsetDistance)) +
                       (distanceToCameraWeight * (1f / safeDistanceToCamera)) +
                       (visibleRatioWeight * visibleRatio);
@@ -157,7 +150,7 @@ public class ConeDetection : MonoBehaviour
         return score;
     }
 
-    // »ñÈ¡°üÎ§ºĞµÄ 8 ¸ö½Çµã
+    // ï¿½ï¿½È¡ï¿½ï¿½Î§ï¿½Ğµï¿½ 8 ï¿½ï¿½ï¿½Çµï¿½
     private Vector3[] GetBoundsCorners(Bounds bounds)
     {
         Vector3 center = bounds.center;

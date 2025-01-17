@@ -15,7 +15,7 @@ namespace LPSurvivalEngine
         public Vitals thirst;
         public Vitals sleep;
 
-        // ÒÆ³ýÍøÂçÏà¹ØÊôÐÔ£¬¸ÄÎªÆÕÍ¨×Ö¶Î
+        // ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½Îªï¿½ï¿½Í¨ï¿½Ö¶ï¿½
         public float playerHealth = 100f;
         public float playerHunger = 100f;
         public float playerThirst = 100f;
@@ -48,11 +48,11 @@ namespace LPSurvivalEngine
                 sleepScreenAnimation = FindChildRecursive(UIPlayer.transform, "SleepAnimation");
                 if (sleepScreenAnimation != null)
                 {
-                    // ÕâÀï¿ÉÒÔÌí¼Ó»ñÈ¡µ½×ÓÎïÌåºóµÄ²Ù×÷
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªSleepAnimationµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªSleepAnimationï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
 
                 Image healthVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Health");
@@ -62,7 +62,7 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªHealthµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªHealthï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
 
                 Image hungerVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Hunger");
@@ -72,7 +72,7 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªHungerµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªHungerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
 
                 Image thirstVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Thirst");
@@ -82,7 +82,7 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªThirstµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªThirstï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
 
                 Image sleepVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Sleep");
@@ -92,12 +92,12 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªSleepµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªSleepï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
             }
             else
             {
-                Debug.Log("Î´ÕÒµ½tagÎªUI PlayerµÄÎïÌå");
+                Debug.Log("Î´ï¿½Òµï¿½tagÎªUI Playerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             }
         }
 
@@ -141,21 +141,21 @@ namespace LPSurvivalEngine
 
         void Update()
         {
-            hunger.Subtrack(hunger.decayRate * Time.deltaTime);
-            thirst.Subtrack(thirst.decayRate * Time.deltaTime);
-            sleep.Subtrack(sleep.regenrate * Time.deltaTime);
+            hunger.Subtract(hunger.decayRate * Time.deltaTime);
+            thirst.Subtract(thirst.decayRate * Time.deltaTime);
+            sleep.Subtract(sleep.regenrate * Time.deltaTime);
 
             if ((hunger.currentValue >= hunger.maxValue * 0.8f) && (thirst.currentValue >= thirst.maxValue * 0.8f) && (sleep.currentValue >= sleep.maxValue * 0.5f))
                 health.Add(health.regenrate * Time.deltaTime);
 
             if (hunger.currentValue == 0.0f)
             {
-                health.Subtrack(hungerHealthdecay * Time.deltaTime);
+                health.Subtract(hungerHealthdecay * Time.deltaTime);
             }
 
             if (thirst.currentValue == 0.0f)
             {
-                health.Subtrack(thirstHealthdecay * Time.deltaTime);
+                health.Subtract(thirstHealthdecay * Time.deltaTime);
             }
 
             if (health.currentValue == 0.0f)
@@ -167,7 +167,7 @@ namespace LPSurvivalEngine
             hunger.VitalBar.fillAmount = hunger.GetPercentage();
             thirst.VitalBar.fillAmount = thirst.GetPercentage();
             sleep.VitalBar.fillAmount = sleep.GetPercentage();
-            // ÒÆ³ýÍ¬²½Ïà¹ØµÄÌõ¼þÅÐ¶Ï£¬ÒòÎªµ¥»ú°æ²»ÐèÒªÍøÂçÍ¬²½
+            // ï¿½Æ³ï¿½Í¬ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï£ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½æ²»ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½
         }
 
         public void Heal(float amount)
@@ -192,7 +192,7 @@ namespace LPSurvivalEngine
 
         public void TakePhysicDamage(int amount)
         {
-            health.Subtrack(amount);
+            health.Subtract(amount);
             onTakeDamage?.Invoke();
             GameObject parentObject = GameObject.FindGameObjectWithTag("UI Player");
             if (parentObject != null)
@@ -204,12 +204,12 @@ namespace LPSurvivalEngine
                 }
                 else
                 {
-                    Debug.Log("Î´ÕÒµ½ÃûÎªµÄ×ÓÎïÌå");
+                    Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 }
             }
             else
             {
-                Debug.Log("Î´ÕÒµ½tagÎª µÄÎïÌå");
+                Debug.Log("Î´ï¿½Òµï¿½tagÎª ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             }
         }
 
@@ -217,7 +217,7 @@ namespace LPSurvivalEngine
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            // ÕâÀï¼ÙÉè"Respawn"³¡¾°ÓÃÓÚÖØÉú£¬µ¥»ú°æÏÂ¿É¸ù¾ÝÊµ¼ÊÇé¿öµ÷Õû
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"Respawn"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¿É¸ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             UnityEngine.SceneManagement.SceneManager.LoadScene("Respawn");
         }
     }

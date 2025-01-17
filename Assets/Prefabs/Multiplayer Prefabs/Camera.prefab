@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2329545961156024873}
   - component: {fileID: 5939036466448783453}
   - component: {fileID: 6602188992679745129}
+  - component: {fileID: 5393705801809702274}
   m_Layer: 0
   m_Name: ConeDetection
   m_TagString: Untagged
@@ -55,6 +56,7 @@ MonoBehaviour:
   visibleRatioWeight: 0.5
   cam: {fileID: 8422162903330514959}
   accumulatedScore: 0
+  realtimeScore: 0
 --- !u!114 &6602188992679745129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +72,18 @@ MonoBehaviour:
   targetCamera: {fileID: 0}
   targetObject: {fileID: 0}
   sampleCount: 100
+--- !u!114 &5393705801809702274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533003769588647908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f64328a22185a4e9c5684669b7eb16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2610736199824487889
 GameObject:
   m_ObjectHideFlags: 0
