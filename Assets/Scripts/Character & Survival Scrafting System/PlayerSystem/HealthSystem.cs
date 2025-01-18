@@ -252,11 +252,11 @@ namespace LPSurvivalEngine
             Cursor.lockState = CursorLockMode.None;
             GetComponent<Rigidbody>().isKinematic = false;
             Inventory.instance.inventoryWindow.SetActive(true);
-            foreach (var item in Inventory.instance.slots)
-            {
-                Inventory.instance.ThrowItem(item.item);
-                item.quantity--;
-            }
+            // foreach (var item in Inventory.instance.slots)
+            // {
+            //     Inventory.instance.ThrowItem(item.item);
+            //     item.quantity--;
+            // }
         }
 
         #region һ��ͬ����ɫ���ݺ���
