@@ -17,6 +17,7 @@ namespace LPSurvivalEngine
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip toggleSound;
         [SerializeField] private Camera CameraInCamera;
+        [SerializeField] private AudioClip zoomSound;
 
         private Camera mainCamera;
         private Vector3 originalPosition;
@@ -167,6 +168,9 @@ namespace LPSurvivalEngine
             }
         }
 
+        private float lastScrollInput = 0f;
+        private float lastSoundTime = 0f;
+
         void HandleZoom()
         {
             float ScrollInput = InputManager.Instance.Scroll.y;
@@ -176,6 +180,18 @@ namespace LPSurvivalEngine
                 float newFOV = CameraInCamera.fieldOfView - (ScrollInput * ZoomSpeed);
                 CameraInCamera.fieldOfView = Mathf.Clamp(newFOV, MinFOV, MaxFOV);
                 Debug.Log("[CameraController] HandleZoom - New FOV: " + CameraInCamera.fieldOfView);
+
+                // Only play sound when scroll direction changes and enough time has passed
+                if (ScrollInput != lastScrollInput && Time.time - lastSoundTime >= 0.3f)
+                {
+                    AudioManager.Instance.PlaySFX(this.gameObject, zoomSound, 0.3f);
+                    lastScrollInput = ScrollInput;
+                    lastSoundTime = Time.time;
+                }
+            }
+            else
+            {
+                lastScrollInput = 0f; // Reset when no scrolling
             }
         }
     }

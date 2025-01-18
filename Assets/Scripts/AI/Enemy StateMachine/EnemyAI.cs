@@ -85,12 +85,12 @@ public class EnemyAI : NetworkBehaviour
 
     private void Update()
     {
-        if (currentState != null)
-        {
-            currentState.UpdateState(this);
+        // if (currentState != null)
+        // {
+        //     currentState.UpdateState(this);
 
-            players = GameObject.FindGameObjectsWithTag("Player");
-        }
+        //     players = GameObject.FindGameObjectsWithTag("Player");
+        // }
     }
 
     public void SwitchState(IEnemyState newState)
@@ -191,7 +191,7 @@ public class EnemyAI : NetworkBehaviour
     {
         if (!(currentState is DeadState))
         {
-            // TODO:´¦Àí±»»÷´òÑªÁ¿Í¬²½
+            // TODO:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½Í¬ï¿½ï¿½
             // currentHealth -= damage;
             DealDamageRpc(damage);
             if (currentHealth <= 0)
@@ -333,7 +333,7 @@ public class EnemyAI : NetworkBehaviour
             if (obstacle == null) break; 
         }
 
-        // »Ö¸´×·Öð×´Ì¬
+        // ï¿½Ö¸ï¿½×·ï¿½ï¿½×´Ì¬
         agent.isStopped = false;
         SwitchState(new ChasingState());
     }

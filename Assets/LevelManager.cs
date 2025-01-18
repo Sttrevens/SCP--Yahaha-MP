@@ -6,8 +6,9 @@ using UnityEngine.Events;
 using Fusion;
 using System.Globalization;
 using LPSurvivalEngine;
+using Unity.AI.Navigation;
 
-public class LevelManager : MonoBehaviour, IInteractable
+public class LevelManager : NetworkBehaviour, IInteractable
 {
     public static LevelManager Instance { get; private set; } 
 
@@ -20,8 +21,10 @@ public class LevelManager : MonoBehaviour, IInteractable
     //selection btn control
     [HideInInspector] public bool isButtonSelected;
     [HideInInspector] public int roomIndexSelected;
-    private GameObject currentLevel;
+    private NetworkObject currentLevel;
     private bool isLevelSelectionDisabled;
+
+     public NavMeshSurface surface;
 
     private void Awake()
     {
@@ -49,15 +52,11 @@ public class LevelManager : MonoBehaviour, IInteractable
         return string.Format("{0}", isLevelSelectionDisabled ? "level selection no longer available" : "Select level");
     }
 
-    [Rpc(RpcSources.All, RpcTargets.All)]
-
     public void OnInteract()
     {
         if(!isLevelSelectionDisabled) PauseGame();
-
     }
 
-    [Rpc(RpcSources.All, RpcTargets.All)]
     public void PauseGame()
     {
         Time.timeScale = 0;
@@ -80,13 +79,15 @@ public class LevelManager : MonoBehaviour, IInteractable
         int levelNumber = roomIndexSelected;
         GameObject level = Levels[levelNumber];
         Vector3 offset = LevelOffsets[levelNumber];
-        currentLevel = Instantiate(level, offset, Quaternion.identity);
+        currentLevel = Runner.Spawn(level, offset, Quaternion.identity);
+        StartCoroutine(BuildNavMeshAsync());
     }
 
     public void DestroyLevel()
     {
         isLevelSelectionDisabled = false;
         Destroy(currentLevel.gameObject);
+        StartCoroutine(BuildNavMeshAsync());
     }
     
     public void UpdateAllButtons()
@@ -101,5 +102,18 @@ public class LevelManager : MonoBehaviour, IInteractable
     public void PlayButtonSound()
     {
         AudioManager.Instance.PlayStartButtonSound();
+    }
+
+    IEnumerator BuildNavMeshAsync()
+    {
+        // 异步构建 NavMesh
+        if (surface != null)
+        {
+            // 在每个更新循环中分步构建 NavMesh
+            surface.BuildNavMesh();
+
+            // 等待下一个帧
+            yield return null;
+        }
     }
 }

@@ -6,31 +6,31 @@ using LPSurvivalEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    // TMP Text ÓÃÓÚÏÔÊ¾×Ü·Ö
+    // TMP Text ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ü·ï¿½
     [SerializeField] private TMP_Text scoreText;
 
-    // ´æ´¢ËùÓÐ CameraController µÄÒýÓÃ
+    // ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ CameraController ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private List<ConeDetection> cameraControllers = new List<ConeDetection>();
 
-    // µ±Ç°×Ü·Ö
+    // ï¿½ï¿½Ç°ï¿½Ü·ï¿½
     public float totalScore = 0f;
 
     void Start()
     {
-        // È·±£ Score Text ÒÑ¾­·ÖÅä
+        // È·ï¿½ï¿½ Score Text ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
         if (scoreText == null)
         {
             Debug.LogError("Score Text not assigned in ScoreManager!");
             return;
         }
 
-        // ³õÊ¼»¯·ÖÊýÏÔÊ¾
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
         UpdateScoreDisplay();
     }
 
     void Update()
     {
-        // Ã¿Ö¡¸üÐÂ×Ü·Ö
+        // Ã¿Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½Ü·ï¿½
         CalculateTotalScore();
         UpdateScoreDisplay();
     }
@@ -39,29 +39,34 @@ public class ScoreManager : MonoBehaviour
     {
         if (cameraControllers.Count != 0)
         {
-            // Çå¿Õ·ÖÊý
+            // ï¿½ï¿½Õ·ï¿½ï¿½ï¿½
             totalScore = 0f;
         }
 
-        // »ñÈ¡³¡¾°ÖÐµÄËùÓÐ CameraController ×é¼þ
+        // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ CameraController ï¿½ï¿½ï¿½
         cameraControllers.Clear();
-        cameraControllers.AddRange(FindObjectsOfType<ConeDetection>());
+        var allCameras = FindObjectsOfType<ConeDetection>();
+        foreach (var camera in allCameras) {
+            if (camera.gameObject.CompareTag("LiveCamera")) {
+                cameraControllers.Add(camera);
+            }
+        }
 
-        // ±éÀúËùÓÐ CameraController »ñÈ¡ accumulatedScore
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ CameraController ï¿½ï¿½È¡ accumulatedScore
         foreach (var cameraController in cameraControllers)
         {
-            // È·±£ CameraController ÖÐÓÐ accumulatedScore ÊôÐÔ
+            // È·ï¿½ï¿½ CameraController ï¿½ï¿½ï¿½ï¿½ accumulatedScore ï¿½ï¿½ï¿½ï¿½
             if (cameraController != null)
             {
-                totalScore += cameraController.accumulatedScore; // ¼ÙÉè accumulatedScore ÊÇ¹«¿ªµÄ
+                totalScore += cameraController.accumulatedScore; // ï¿½ï¿½ï¿½ï¿½ accumulatedScore ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½ï¿½
             }
         }
     }
 
-    // ¸üÐÂ·ÖÊýÏÔÊ¾
+    // ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
     void UpdateScoreDisplay()
     {
-        // ½«´ó·ÖÊý¸üÐÂµ½ TMP Text ÉÏ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ TMP Text ï¿½ï¿½
         scoreText.text = "Total Viewers: " + totalScore.ToString("F0");
     }
 }

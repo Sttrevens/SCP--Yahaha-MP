@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
     }
 
     private AudioSource bgmSource;
-    private AudioSource sfxSource;
+    //private AudioSource sfxSource;
     public float bgmVolume = 1f; 
     public float sfxVolume = 1f; 
 
@@ -52,10 +52,10 @@ public class AudioManager : MonoBehaviour
         bgmSource.volume = bgmVolume;
         bgmSource.playOnAwake = false;
 
-        sfxSource = gameObject.AddComponent<AudioSource>();
-        sfxSource.loop = false;
-        sfxSource.volume = sfxVolume;
-        sfxSource.playOnAwake = false;
+        // sfxSource = gameObject.AddComponent<AudioSource>();
+        // sfxSource.loop = false;
+        // sfxSource.volume = sfxVolume;
+        // sfxSource.playOnAwake = false;
 
         PlayBGM(startingMenuSound);
     }
@@ -80,7 +80,7 @@ public class AudioManager : MonoBehaviour
         bgmSource.volume = bgmVolume;
     }
 
-    public void PlaySFX(GameObject SFXobject, AudioClip sfxClip)
+    public void PlaySFX(GameObject SFXobject, AudioClip sfxClip, float volume = 1f)
     {
         AudioSource newSfxSource = SFXobject.GetComponent<AudioSource>();
 
@@ -88,9 +88,11 @@ public class AudioManager : MonoBehaviour
         {
             newSfxSource = SFXobject.AddComponent<AudioSource>();
             newSfxSource.loop = false;
-            newSfxSource.volume = sfxVolume;
             newSfxSource.playOnAwake = false;
         }
+
+        newSfxSource.volume = sfxVolume * volume;
+        newSfxSource.spatialBlend = 1;
 
         newSfxSource.PlayOneShot(sfxClip, sfxVolume);
     }
@@ -98,7 +100,6 @@ public class AudioManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         sfxVolume = Mathf.Clamp(volume, 0f, 1f);
-        sfxSource.volume = sfxVolume;
     }
 
     public void ToggleBGM()

@@ -42,6 +42,8 @@ namespace LPSurvivalEngine
         [HideInInspector]public ItemSlot selectedItem;
         private int currentWieldableIndex;
 
+        [SerializeField] private AudioClip dropSound;
+
 
         private void Awake()
         {
@@ -345,6 +347,7 @@ public void PickupItem(ItemObject itemObject)
                 return;
 
             ThrowItem(selectedItem.item);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.gameObject, dropSound);
             RemoveSelectedItem();
         }
 

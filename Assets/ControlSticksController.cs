@@ -27,7 +27,7 @@ public class ControlSticksController : MonoBehaviour, IInteractable
     
     public ScreenFade screenFade;
     [SerializeField] private GameObject door;
-    
+    [SerializeField] private GameObject spaceship;
 
     private void Awake()
     {
@@ -69,11 +69,13 @@ public class ControlSticksController : MonoBehaviour, IInteractable
     {
         if (CurrentState == SpaceshipState.PreparingForTakeoff)
         {
+            yield return RotateToAngle(rotationAngle);
             IsPulled = true;
-            LevelManager.Instance.LoadLevel();
-            screenFade.TriggerScreenFade(false);
-            TakeoffController.Instance.Rpc_OnInteract();
-            AudioManager.Instance.PlayElevatorShakeSound(door);
+            AudioManager.Instance.PlayElevatorShakeSound(spaceship);
+                yield return new WaitForSeconds(2f);
+                screenFade.TriggerScreenFade(false);
+                TakeoffController.Instance.Rpc_OnInteract();
+                LevelManager.Instance.LoadLevel();
             while (TakeoffController.Instance.IsFlying)
             {
                 yield return null;
@@ -81,8 +83,6 @@ public class ControlSticksController : MonoBehaviour, IInteractable
 
             if (ReciveIsFlying && !isRotating)
             {
-                
-                yield return RotateToAngle(rotationAngle);
                 OnButtonPressed?.Invoke();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
@@ -99,9 +99,11 @@ public class ControlSticksController : MonoBehaviour, IInteractable
                 OnButtonReleased?.Invoke();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
-                
+
+                AudioManager.Instance.PlayElevatorShakeSound(spaceship);
+                yield return new WaitForSeconds(2f);
                 TakeoffController.Instance.Rpc_OnInteract();
-                AudioManager.Instance.PlayElevatorShakeSound(door);
+                
                 while (TakeoffController.Instance.IsFlying)
                 {
                     yield return null;

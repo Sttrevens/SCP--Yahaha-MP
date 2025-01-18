@@ -12,7 +12,7 @@ namespace LPSurvivalEngine
         [Space]
 
         public ItemDatabase item;
-
+        [SerializeField] private AudioClip pickupSound;
         [Networked] public float currentDurability { get; set; }
 
         // public bool isDisplayedItem = false;
@@ -59,8 +59,9 @@ namespace LPSurvivalEngine
             if (Runner.TryGetPlayerObject(player, out var playerObject))
             {
                 playerObject.GetComponent<AnimatorManager>().PickupCount++;
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.gameObject, pickupSound);
             }
-            Debug.Log($"��Ʒ�� {player} ʰȡ");
+            Debug.Log($"Ʒ {player} ʰȡ");
             // if (!isDisplayedItem)
             // {
             //     Destroy(gameObject);
