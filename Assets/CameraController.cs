@@ -67,7 +67,7 @@ namespace LPSurvivalEngine
 
         private void Awake()
         {
-            CameraInCamera = GetComponentInChildren<Camera>();
+            //CameraInCamera = GetComponentInChildren<Camera>();
             mainCamera = Camera.main;
             if (cameraFlashLight == null)
             {
