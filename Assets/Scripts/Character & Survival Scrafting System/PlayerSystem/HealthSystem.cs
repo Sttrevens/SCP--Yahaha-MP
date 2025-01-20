@@ -251,7 +251,9 @@ namespace LPSurvivalEngine
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             GetComponent<Rigidbody>().isKinematic = false;
-            Inventory.instance.inventoryWindow.SetActive(true);
+            //Inventory.instance.inventoryWindow.SetActive(true);
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            gameObject.tag = "Untagged";
             // foreach (var item in Inventory.instance.slots)
             // {
             //     Inventory.instance.ThrowItem(item.item);

@@ -83,14 +83,14 @@ public class EnemyAI : NetworkBehaviour
         SwitchState(new PatrollingState());
     }
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
-        // if (currentState != null)
-        // {
-        //     currentState.UpdateState(this);
+        if (currentState != null)
+        {
+             currentState.UpdateState(this);
 
-        //     players = GameObject.FindGameObjectsWithTag("Player");
-        // }
+           //players = GameObject.FindGameObjectsWithTag("Player");
+        }
     }
 
     public void SwitchState(IEnemyState newState)
@@ -150,6 +150,7 @@ public class EnemyAI : NetworkBehaviour
 
     public bool PlayerInSight()
     {
+        Debug.Log("[EnemyAI] Checking for players in sight...");
         foreach (GameObject player in players)
         {
             Vector3 toPlayer = player.transform.position - transform.position;
@@ -158,25 +159,34 @@ public class EnemyAI : NetworkBehaviour
             float horizontalAngle = Vector3.Angle(transform.forward, horizontalToPlayer);
             float verticalAngle = Vector3.Angle(toPlayer, horizontalToPlayer);
 
+            Debug.Log($"[EnemyAI] Checking angles - Horizontal: {horizontalAngle}, Vertical: {verticalAngle}");
+
             if (horizontalAngle < fieldOfViewAngleHorizontal / 2 && verticalAngle < fieldOfViewAngleVertical / 2)
             {
+                Debug.Log("[EnemyAI] Player within FOV angles");
                 RaycastHit hit;
                 if (Physics.SphereCast(transform.position, sensingRadius, toPlayer.normalized, out hit, detectionRange))
                 {
                     if (hit.collider.gameObject == player)
                     {
+                        Debug.Log("[EnemyAI] Player detected via SphereCast");
                         targetPlayer = player;
                         return true;
                     }
                 }
 
                 float distanceToPlayer = toPlayer.magnitude;
+                Debug.Log($"[EnemyAI] Distance to player: {distanceToPlayer}");
+                
                 if (Vector3.Angle(transform.forward, horizontalToPlayer) <= fieldOfViewAngleHorizontal / 2)
                 {
+                    Debug.Log("[EnemyAI] Player within horizontal FOV");
                     if (distanceToPlayer <= detectionRange)
                     {
+                        Debug.Log("[EnemyAI] Player within detection range");
                         if (Physics.CheckSphere(player.transform.position, sensingRadius))
                         {
+                            Debug.Log("[EnemyAI] Player detected via CheckSphere");
                             targetPlayer = player;
                             return true;
                         }
@@ -184,6 +194,7 @@ public class EnemyAI : NetworkBehaviour
                 }
             }
         }
+        Debug.Log("[EnemyAI] No players detected in sight");
         return false;
     }
 
@@ -280,8 +291,10 @@ public class EnemyAI : NetworkBehaviour
         {
             if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) < 0.5f)
             {
+                Debug.Log($"[EnemyAI] Reached patrol point {currentPatrolIndex}, waiting {waitTimeAtPatrolPoint} seconds");
                 yield return new WaitForSeconds(waitTimeAtPatrolPoint);
                 currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+                Debug.Log($"[EnemyAI] Moving to next patrol point {currentPatrolIndex}");
             }
             agent.SetDestination(patrolPoints[currentPatrolIndex].position);
         }
@@ -289,14 +302,17 @@ public class EnemyAI : NetworkBehaviour
         {
             if (Vector3.Distance(transform.position, agent.destination) < 0.5f)
             {
+                Debug.Log("[EnemyAI] Reached random patrol point, waiting before next point");
                 yield return new WaitForSeconds(waitTimeAtPatrolPoint);
                 Vector3 randomPatrolPoint = GetRandomPatrolPoint();
                 agent.SetDestination(randomPatrolPoint);
+                Debug.Log($"[EnemyAI] Moving to new random patrol point at {randomPatrolPoint}");
             }
         }
 
         if (PlayerInSight())
         {
+            Debug.Log("[EnemyAI] Player detected while patrolling, switching to chase state");
             SwitchState(new ChasingState());
             agent.speed = chasingSpeed;
             yield break;
