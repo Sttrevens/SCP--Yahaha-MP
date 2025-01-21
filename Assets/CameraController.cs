@@ -77,21 +77,25 @@ namespace LPSurvivalEngine
             {
                 audioSource = GetComponent<AudioSource>();
             }
+
+            transform.localPosition = new Vector3(0, 0, 0);
+            transform.localRotation = new Quaternion(0, 0, 0, 0);
+
             Debug.Log("[CameraController] Awake - Components Initialized");
         }
 
-        private void Update()
+        public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority)  // 确保只在有状态权限的客户端上更新
         {
             // 消耗耐久度
             DrainDurability();
-        }
 
             if (isRightMouseButtonDown)
             {
                 HandleZoom();
             }
+        }
 
             //aimPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.position;
             //aimRotation = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.rotation;
@@ -156,43 +160,49 @@ namespace LPSurvivalEngine
         {
             if (isRightMouseButtonDown)
             {
-                transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.position;
-                transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.rotation;
-                Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
+                // transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.position;
+                // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.rotation;
+                // Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
+
+                GetComponent<NetworkMecanimAnimator>().SetTrigger("Aim");
             }
             else
             {
-                transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.position;
-                transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.rotation;
-                Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
+                // transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.position;
+                // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.rotation;
+                // Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
+
+                GetComponent<NetworkMecanimAnimator>().SetTrigger("CancelAim");
             }
         }
 
-        private float lastScrollInput = 0f;
         private float lastSoundTime = 0f;
 
-        void HandleZoom()
-        {
-            float ScrollInput = InputManager.Instance.Scroll.y;
-            Debug.Log("[CameraController] HandleZoom - Scroll Input: " + ScrollInput);
-            if (ScrollInput != 0)
-            {
-                float newFOV = CameraInCamera.fieldOfView - (ScrollInput * ZoomSpeed);
-                CameraInCamera.fieldOfView = Mathf.Clamp(newFOV, MinFOV, MaxFOV);
-                Debug.Log("[CameraController] HandleZoom - New FOV: " + CameraInCamera.fieldOfView);
+        private float lastScrollInput = 0f;
+        private float previousScrollTime = 0f;
 
-                // Only play sound when scroll direction changes and enough time has passed
-                if (ScrollInput != lastScrollInput && Time.time - lastSoundTime >= 0.3f)
-                {
-                    AudioManager.Instance.PlaySFX(this.gameObject, zoomSound, 0.3f);
-                    lastScrollInput = ScrollInput;
-                    lastSoundTime = Time.time;
-                }
-            }
-            else
-            {
-                lastScrollInput = 0f; // Reset when no scrolling
-            }
+void HandleZoom()
+{
+    float ScrollInput = InputManager.Instance.Scroll.y;
+    if (ScrollInput != 0)
+    {
+        // 使用 Lerp 实现平滑缩放
+        float targetFOV = CameraInCamera.fieldOfView - (ScrollInput * ZoomSpeed);
+        targetFOV = Mathf.Clamp(targetFOV, MinFOV, MaxFOV);
+        CameraInCamera.fieldOfView = Mathf.Lerp(CameraInCamera.fieldOfView, targetFOV, Time.deltaTime * 10f);
+
+        // 声音播放逻辑保持不变
+        if (ScrollInput != lastScrollInput && Time.time - lastSoundTime >= 0.3f)
+        {
+            AudioManager.Instance.PlaySFX(this.gameObject, zoomSound, 0.3f);
+            lastScrollInput = ScrollInput;
+            lastSoundTime = Time.time;
         }
+    }
+    else
+    {
+        lastScrollInput = 0f;
+    }
+}
     }
 }

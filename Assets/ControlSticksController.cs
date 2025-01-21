@@ -1,8 +1,9 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Fusion;
 
-public class ControlSticksController : MonoBehaviour, IInteractable
+public class ControlSticksController : NetworkBehaviour, IInteractable
 {
     public static ControlSticksController Instance { get; private set; } 
     //state machine
@@ -62,7 +63,13 @@ public class ControlSticksController : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        if(LevelManager.Instance.isButtonSelected) StartCoroutine(HandleSpaceshipState());
+        if(LevelManager.Instance.isButtonSelected) RPC_OnInteract();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_OnInteract()
+    {
+        StartCoroutine(HandleSpaceshipState());
     }
     
     private IEnumerator HandleSpaceshipState()

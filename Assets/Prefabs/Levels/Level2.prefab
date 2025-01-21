@@ -48,7 +48,7 @@ MonoBehaviour:
   roomPrefab: {fileID: 1713200538392943774, guid: bc52f61be3391dc4c80c7bf501b4668e, type: 3}
   corridorPrefab: {fileID: 745713748071835967, guid: ddbc8551a80df3c4583cdaf7c950a5aa, type: 3}
   rooms: []
-  firstCorridor: {fileID: 9129081893530914778}
+  entrancePoint: {fileID: 0}
 --- !u!1 &5695928751618981631
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,6 +58,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 73818460445321551}
+  - component: {fileID: 729419673506856385}
   m_Layer: 0
   m_Name: Level2
   m_TagString: Untagged
@@ -82,6 +83,23 @@ Transform:
   - {fileID: 4210383185493567863}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &729419673506856385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5695928751618981631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 340705581
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1001 &8424067966394312421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -142,10 +160,5 @@ PrefabInstance:
 --- !u!4 &4210383185493567863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5658214508048486290, guid: ddbc8551a80df3c4583cdaf7c950a5aa, type: 3}
-  m_PrefabInstance: {fileID: 8424067966394312421}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &9129081893530914778 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 745713748071835967, guid: ddbc8551a80df3c4583cdaf7c950a5aa, type: 3}
   m_PrefabInstance: {fileID: 8424067966394312421}
   m_PrefabAsset: {fileID: 0}

@@ -14,8 +14,22 @@ public class FirstPersonOptimizer : MonoBehaviour
         GameObject currentPlayerObject = GameObject.Find("CurrentPlayer");
         if (currentPlayerObject != null)
         {
+            // Get both SkinnedMeshRenderer and MeshRenderer components
             SkinnedMeshRenderer[] skinnedMeshRenderers = currentPlayerObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+            MeshRenderer[] meshRenderers = currentPlayerObject.GetComponentsInChildren<MeshRenderer>();
+
+            // Handle SkinnedMeshRenderers
             foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers)
+            {
+                // Set the renderer to only be invisible to the main camera
+                renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");
+                
+                // Make sure the main camera's culling mask excludes the FirstPerson layer
+                Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
+            }
+
+            // Handle MeshRenderers
+            foreach (MeshRenderer renderer in meshRenderers)
             {
                 // Set the renderer to only be invisible to the main camera
                 renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");

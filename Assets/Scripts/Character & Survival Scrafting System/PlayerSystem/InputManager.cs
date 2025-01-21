@@ -87,10 +87,27 @@ namespace LPSurvivalEngine
             Look = context.ReadValue<Vector2>();
         }
 
-        private void onScroll(InputAction.CallbackContext context)
-        {
-            Scroll = context.ReadValue<Vector2>();
-        }
+public float ScrollValue { get; private set; } 
+
+// ... existing code ...
+
+private float lastScrollResetTime = 0f;
+
+private void onScroll(InputAction.CallbackContext context)
+{
+    Scroll = context.ReadValue<Vector2>();
+    ScrollValue = Scroll.y;
+
+    // 每0.1秒重置scroll值
+    if (Time.time - lastScrollResetTime >= 0.1f)
+    {
+        Scroll = Vector2.zero;
+        ScrollValue = 0f;
+        lastScrollResetTime = Time.time;
+    }
+}
+
+// ... existing code ...
         private void onRun(InputAction.CallbackContext context)
         {
             Run = context.ReadValueAsButton();

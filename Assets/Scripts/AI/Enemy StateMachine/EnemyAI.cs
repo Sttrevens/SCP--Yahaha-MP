@@ -8,7 +8,7 @@ public class EnemyAI : NetworkBehaviour
 {
     public NavMeshAgent agent;
     [SerializeField]
-    private GameObject[] players;
+    //private GameObject[] players;
     public Animator animator;
     [HideInInspector]
     public int currentPatrolIndex = 0;
@@ -72,7 +72,7 @@ public class EnemyAI : NetworkBehaviour
 
     public override void Spawned()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
+        //players = GameObject.FindGameObjectsWithTag("Player");
         currentHealth = maxHealth;
         SwitchState(new PatrollingState());
     }
@@ -151,7 +151,7 @@ public class EnemyAI : NetworkBehaviour
     public bool PlayerInSight()
     {
         Debug.Log("[EnemyAI] Checking for players in sight...");
-        foreach (GameObject player in players)
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
             Vector3 toPlayer = player.transform.position - transform.position;
             Vector3 horizontalToPlayer = Vector3.ProjectOnPlane(toPlayer, Vector3.up);

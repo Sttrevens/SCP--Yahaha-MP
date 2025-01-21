@@ -73,21 +73,36 @@ public class LevelManager : NetworkBehaviour, IInteractable
         PlayerController.instance.ToggleCursor(false);
     }
 
-    public void LoadLevel()
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_LoadLevel()
     {
         isLevelSelectionDisabled = true;
         int levelNumber = roomIndexSelected;
         GameObject level = Levels[levelNumber];
         Vector3 offset = LevelOffsets[levelNumber];
         currentLevel = Runner.Spawn(level, offset, Quaternion.identity);
-        StartCoroutine(BuildNavMeshAsync());
+        RPC_BuildNavMesh();
+    }
+
+    public void LoadLevel()
+    {
+        RPC_LoadLevel();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_DestroyLevel()
+    {
+        isLevelSelectionDisabled = false;
+        if(currentLevel != null)
+        {
+            Runner.Despawn(currentLevel);
+        }
+        RPC_BuildNavMesh();
     }
 
     public void DestroyLevel()
     {
-        isLevelSelectionDisabled = false;
-        Destroy(currentLevel.gameObject);
-        StartCoroutine(BuildNavMeshAsync());
+        RPC_DestroyLevel();
     }
     
     public void UpdateAllButtons()
@@ -104,15 +119,17 @@ public class LevelManager : NetworkBehaviour, IInteractable
         AudioManager.Instance.PlayStartButtonSound();
     }
 
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_BuildNavMesh()
+    {
+        StartCoroutine(BuildNavMeshAsync());
+    }
+
     IEnumerator BuildNavMeshAsync()
     {
-        // 异步构建 NavMesh
         if (surface != null)
         {
-            // 在每个更新循环中分步构建 NavMesh
             surface.BuildNavMesh();
-
-            // 等待下一个帧
             yield return null;
         }
     }
