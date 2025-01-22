@@ -149,7 +149,7 @@ namespace LPSurvivalEngine
     
     NetworkObject spawnedItem = Runner.Spawn(
         equippedItem.wieldablePrefab, 
-        GameObject.Find("PublicDropBox").transform.position, 
+        GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").position, 
         spawnRotation  // 使用身份旋转
     );
 
@@ -159,7 +159,19 @@ namespace LPSurvivalEngine
         return;
     }
 
-    SetupSpawnedItem(spawnedItem, spawnTransform, player);
+    if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
+            {
+                currentWieldable = wieldable;
+                currentWieldable.player = player;
+                Debug.Log($"[SpawnEquippedItem] Equipped item: {equippedItem.wieldablePrefab.name} by {player}");
+            }
+
+            spawnedItem.transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
+            spawnedItem.transform.localPosition = Vector3.zero;
+            spawnedItem.transform.localRotation = Quaternion.identity;
+
+
+    //SetupSpawnedItem(spawnedItem, spawnTransform, player);
 }
 
         private void SetupSpawnedItem(NetworkObject spawnedItem, Transform parent, PlayerRef player)
@@ -169,7 +181,7 @@ namespace LPSurvivalEngine
         // 确保在设置父级之前重置物体的本地变换
         spawnedItem.transform.localScale = Vector3.one;
         //spawnedItem.transform.SetParent(GameObject.Find("PublicDropBox").transform);
-        //spawnedItem.transform.localPosition = Vector3.zero;
+        spawnedItem.transform.localPosition = Vector3.zero;
         spawnedItem.transform.localRotation = Quaternion.identity;
         
         //RPC_SyncSpawnedItem(spawnedItem.Id, parent.gameObject.name);
@@ -191,7 +203,7 @@ private void RPC_SyncSpawnedItem(NetworkId itemId, string parentName)
         Transform parent = GameObject.Find("PublicDropBox").transform;
         // 确保在设置父级之前重置物体的本地变换
         spawnedItem.transform.localScale = Vector3.one;
-        //spawnedItem.transform.SetParent(parent);
+        spawnedItem.transform.SetParent(parent);
         //spawnedItem.transform.localPosition = Vector3.zero;
         spawnedItem.transform.localRotation = Quaternion.identity;
     }

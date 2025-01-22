@@ -256,8 +256,6 @@ public void PickupItem(ItemObject itemObject)
                 itemObject.IsPickedUp = false;
                 itemObject.currentDurability = currentThrowingItemDurability;
             }
-
-            spawnedItem.transform.SetParent(dropPosition);
         }
 
 
