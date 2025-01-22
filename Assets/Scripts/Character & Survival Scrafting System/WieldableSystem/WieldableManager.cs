@@ -107,29 +107,31 @@ namespace LPSurvivalEngine
         }
 
         public Transform CurrentWieldableRootTransform()
-        {
-            if (equippedItem == null || equippedItem.wieldablePrefab == null) return null;
+{
+    if (equippedItem == null || equippedItem.wieldablePrefab == null) return null;
 
-            var prefab = equippedItem.wieldablePrefab;
-            bool hasFlashlight = prefab.GetComponent<Flashlight>() != null;
-            bool hasConeDetection = prefab.GetComponent<ConeDetection>() != null;
+    var prefab = equippedItem.wieldablePrefab;
+    bool hasFlashlight = prefab.GetComponent<Flashlight>() != null;
+    bool hasConeDetection = prefab.GetComponent<ConeDetection>() != null;
 
-            if (!hasFlashlight && !hasConeDetection)
-            {
-                GameObject currentPlayer = GameObject.Find("CurrentPlayer");
-                return currentPlayer.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
-            }
-            else if (!hasFlashlight && hasConeDetection)
-            {
-                return cameraPositon;
-            }
-            else if (hasFlashlight && !hasConeDetection)
-            {
-                return flashlightPosition;
-            }
+    NetworkObject playerObject = Runner.GetPlayerObject(Owner);
+    if (playerObject == null) return null;
 
-            return null;
-        }
+    if (!hasFlashlight && !hasConeDetection)
+    {
+        return playerObject.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
+    }
+    else if (!hasFlashlight && hasConeDetection)
+    {
+        return playerObject.transform.Find("UpperBody/CameraRoot/HoldCameraRoot");
+    }
+    else if (hasFlashlight && !hasConeDetection)
+    {
+        return playerObject.transform.Find("UpperBody/CameraRoot/FlashlightRoot");
+    }
+
+    return null;
+}
 
         private void SpawnEquippedItem(PlayerRef player)
 {
