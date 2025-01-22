@@ -115,6 +115,7 @@ namespace LPSurvivalEngine
     bool hasConeDetection = prefab.GetComponent<ConeDetection>() != null;
 
     NetworkObject playerObject = Runner.GetPlayerObject(Owner);
+    Debug.Log("playerObject: " + playerObject);
     if (playerObject == null) return null;
 
     if (!hasFlashlight && !hasConeDetection)

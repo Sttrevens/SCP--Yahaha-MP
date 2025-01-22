@@ -354,26 +354,29 @@ public class EnemyAI : NetworkBehaviour
         SwitchState(new ChasingState());
     }
 
-    public bool ShouldAttack(EnemyAI enemy)
+        public bool ShouldAttack(EnemyAI enemy)
     {
-        RaycastHit hit;
-        float raycastDistance = enemy.attackRange;
-        Vector3 raycastDirection = enemy.transform.forward;
-
-        // Adjust the starting position of the raycast (move it 1 unit higher in the y-axis)
-        Vector3 raycastStart = enemy.transform.position + Vector3.up; // Move 1 unit up
-
-        // Raycast to check if a player is within detection range
-        if (Physics.Raycast(raycastStart, raycastDirection, out hit, raycastDistance))
+        // First check if target player exists and is within attack range
+        if (enemy.targetPlayer != null)
         {
-            if (hit.collider.CompareTag("Player"))
+            float distanceToTarget = Vector3.Distance(enemy.transform.position, enemy.targetPlayer.transform.position);
+            if (distanceToTarget <= enemy.attackRange)
             {
-                enemy.targetPlayer = hit.collider.gameObject;
-                return true; // Player detected, ready to attack
+                // Check if there are obstacles between enemy and player
+                Vector3 directionToPlayer = (enemy.targetPlayer.transform.position - enemy.transform.position).normalized;
+                RaycastHit hit;
+                Vector3 raycastStart = enemy.transform.position + Vector3.up;
+
+                if (Physics.Raycast(raycastStart, directionToPlayer, out hit, enemy.attackRange))
+                {
+                    if (hit.collider.CompareTag("Player"))
+                    {
+                        return true;
+                    }
+                }
             }
         }
 
-        // Player is out of detection range, no attack
         return false;
     }
 
