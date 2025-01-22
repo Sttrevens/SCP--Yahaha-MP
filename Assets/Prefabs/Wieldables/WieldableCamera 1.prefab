@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d1a04b9fbdc376848b8d19f9a5d10619, type: 2}
+    - target: {fileID: 2006355904866093092, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.72974396
+      objectReference: {fileID: 0}
     - target: {fileID: 4390991463754737013, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
       propertyPath: m_Texture
       value: 
@@ -82,12 +86,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4433004144727203058, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4433004144727203058, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[2]
       value: 
       objectReference: {fileID: 4901448500593306749}
+    - target: {fileID: 4433004144727203058, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[3]
+      value: 
+      objectReference: {fileID: 3292060217923185131}
+    - target: {fileID: 4597043718064163178, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.72974396
+      objectReference: {fileID: 0}
+    - target: {fileID: 6147136758525691745, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 8400000, guid: 3c4b2cd2c7ac6634488505ed36ac646f, type: 2}
     - target: {fileID: 6624644879885053158, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
       propertyPath: m_TargetTexture
       value: 
@@ -96,11 +112,26 @@ PrefabInstance:
       propertyPath: m_Texture
       value: 
       objectReference: {fileID: 8400000, guid: b55ff6f37a2c01a47aef3e7b492a8277, type: 2}
+    - target: {fileID: 7913713291457176663, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.72974396
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
+--- !u!114 &3292060217923185131 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6339357701721924869, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
+  m_PrefabInstance: {fileID: 8815325050250202350}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4469186eff8877845ab7129e339cead7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4901448500593306749 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4490970758372663443, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}

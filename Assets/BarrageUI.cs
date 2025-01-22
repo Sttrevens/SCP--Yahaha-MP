@@ -140,14 +140,21 @@ public class BarrageUI : MonoBehaviour
     }
         //创建弹幕UI
     IEnumerator createItem(){
-        GameObject _obj;
-        _obj = GameObject.Instantiate(item);
-        _obj.SetActive(true);
-        _obj.transform.SetParent(scroll_rect.content.transform);
-        item.GetComponent<RectTransform>().localScale= Vector3.one ;
-        _obj.GetComponent<BarrageItem>().setData(curBarrage);
-        yield return new WaitForSeconds(0.1f);
-        scrollViewNevigation.Nevigate(_obj.GetComponent<RectTransform>(), Mathf.Min(0.8f, ((float)min)/2));//缓动移动到滚动区域底部
-    }
+    GameObject _obj = Instantiate(item, scroll_rect.content.transform, false);
+    _obj.SetActive(true);
+    
+    RectTransform rt = _obj.GetComponent<RectTransform>();
+    rt.anchoredPosition3D = Vector3.zero; // 重置锚点位置
+    rt.localRotation = Quaternion.identity;
+    rt.localScale = Vector3.one;
+
+    _obj.GetComponent<BarrageItem>().setData(curBarrage);
+    
+    // 强制刷新布局
+    LayoutRebuilder.ForceRebuildLayoutImmediate(scroll_rect.content);
+    
+    yield return new WaitForEndOfFrame();
+    scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, ((float)min)/2));
+}
 
 }
