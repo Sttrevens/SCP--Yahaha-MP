@@ -15,7 +15,9 @@ public class BarrageClass
             return;
         }
         instance = this;
+        Debug.Log("弹幕类初始化");
         LoadByJson();
+        Debug.Log("弹幕类加载完成mmmmmmmmmmmmmmmmmm");
         reset();
     }
     public void reset()
@@ -38,13 +40,50 @@ public class BarrageClass
         return barrageArr;
     }
     //Json转换成对应的object
-    private void LoadByJson () {
-        TextAsset text = Resources.Load<TextAsset>("Jsons/" + "Barrage");
-        barrageJson = JsonMapper.ToObject<BarrageJson[]>(text.text);
-        Debug.Log("弹幕: 原json"+text);
-        text = Resources.Load<TextAsset>("Jsons/" + "BarrageItem");
-        barrageItemsJson = JsonMapper.ToObject<BarrageItemsJson[]>(text.text);
-        Debug.Log("弹幕:"+JsonMapper.ToJson(barrageJson) + JsonMapper.ToJson(barrageItemsJson));
+    private void LoadByJson()
+    {
+        try 
+        {
+            TextAsset text = Resources.Load<TextAsset>("Jsons/" + "Barrage");
+            if (text == null)
+            {
+                Debug.LogError("弹幕配置加载失败: 未找到 Resources/Jsons/Barrage 文件");
+                return;
+            }
+            Debug.Log("弹幕配置文件内容：\n" + text.text);
+            
+            try 
+            {
+                barrageJson = JsonMapper.ToObject<BarrageJson[]>(text.text);
+                Debug.Log("弹幕配置解析结果：" + (barrageJson != null ? barrageJson.Length + "条配置" : "解析失败"));
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("弹幕配置JSON解析失败：" + e.Message);
+                return;
+            }
+
+            text = Resources.Load<TextAsset>("Jsons/" + "BarrageItem");
+            if (text == null)
+            {
+                Debug.LogError("弹幕配置加载失败: 未找到 Resources/Jsons/BarrageItem 文件");
+                return;
+            }
+            
+            try
+            {
+                barrageItemsJson = JsonMapper.ToObject<BarrageItemsJson[]>(text.text);
+                Debug.Log("弹幕项目解析结果：" + (barrageItemsJson != null ? barrageItemsJson.Length + "条配置" : "解析失败"));
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("弹幕项目JSON解析失败：" + e.Message);
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("LoadByJson整体执行失败：" + e.Message);
+        }
     }
         //获取弹幕类型;
     public BarrageJson getBarrageByType(BarrageType type){
