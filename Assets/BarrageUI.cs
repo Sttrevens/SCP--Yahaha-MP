@@ -15,16 +15,25 @@ public class BarrageUI : MonoBehaviour
     private int arrIndex = 0;//第几组弹幕
     private int index = 0;//弹幕组合里的第几条弹幕
     private BarrageClass barrageClass;//当前弹幕信息
+    private UserNameClass userNameClass;//当前用户名信息
     BarrageItemJson[] baragesArr;
     double min;//最小弹幕出现速度
     double max;//最大弹幕出现速度
-    bool isStop = true;//是否弹幕滚动停止了
+    public bool isStop = true;//是否弹幕滚动停止了
     void Start(){
         // MessageCenter.Instance.RigisterListener(MessageName.INSERT_BARRAGE, InsertBarrage);
-        // 实例化的同时就拿到弹幕信息
+        Debug.Log("弹幕UI初始化");
+        barrageClass = new BarrageClass();
+        userNameClass = new UserNameClass();
+        // 实例化的同时就拿到弹幕
         barrageClass = BarrageClass.instance;
+        Debug.Log("弹幕类:" + barrageClass);
+        Debug.Log("是否成功获取到单例: " + (barrageClass != null));
         //设置弹幕类型为新手
-        SetBarrageList(BarrageType.newbie);
+        
+    }
+    void Update(){
+        SetBarrageList(BarrageType.day);
     }
 
 
