@@ -104,11 +104,6 @@ namespace LPSurvivalEngine
         {
             string status = HasStateAuthority ? "has" : "does not have";
             Debug.Log($"This client {status} StateAuthority over {gameObject.name}");
-
-            if (!HasStateAuthority)
-            {
-                RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
-            }
         }
 
         public Transform CurrentWieldableRootTransform()
@@ -154,7 +149,7 @@ namespace LPSurvivalEngine
     
     NetworkObject spawnedItem = Runner.Spawn(
         equippedItem.wieldablePrefab, 
-        spawnTransform.position, 
+        GameObject.Find("PublicDropBox").transform.position, 
         spawnRotation  // 使用身份旋转
     );
 
@@ -173,11 +168,11 @@ namespace LPSurvivalEngine
     {
         // 确保在设置父级之前重置物体的本地变换
         spawnedItem.transform.localScale = Vector3.one;
-        spawnedItem.transform.SetParent(GameObject.Find("PublicDropBox").transform);
-        spawnedItem.transform.localPosition = Vector3.zero;
+        //spawnedItem.transform.SetParent(GameObject.Find("PublicDropBox").transform);
+        //spawnedItem.transform.localPosition = Vector3.zero;
         spawnedItem.transform.localRotation = Quaternion.identity;
         
-        RPC_SyncSpawnedItem(spawnedItem.Id, parent.gameObject.name);
+        //RPC_SyncSpawnedItem(spawnedItem.Id, parent.gameObject.name);
     }
 
             if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
@@ -196,8 +191,8 @@ private void RPC_SyncSpawnedItem(NetworkId itemId, string parentName)
         Transform parent = GameObject.Find("PublicDropBox").transform;
         // 确保在设置父级之前重置物体的本地变换
         spawnedItem.transform.localScale = Vector3.one;
-        spawnedItem.transform.SetParent(parent);
-        spawnedItem.transform.localPosition = Vector3.zero;
+        //spawnedItem.transform.SetParent(parent);
+        //spawnedItem.transform.localPosition = Vector3.zero;
         spawnedItem.transform.localRotation = Quaternion.identity;
     }
 }

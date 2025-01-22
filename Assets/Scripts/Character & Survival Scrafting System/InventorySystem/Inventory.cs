@@ -229,7 +229,6 @@ public void PickupItem(ItemObject itemObject)
                 }
                 else
                 {
-                RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
                     Debug.Log($"This client does not have StateAuthority over {gameObject.name}");
                 }
             }// 请求获取该对象的控制权限
@@ -257,6 +256,8 @@ public void PickupItem(ItemObject itemObject)
                 itemObject.IsPickedUp = false;
                 itemObject.currentDurability = currentThrowingItemDurability;
             }
+
+            spawnedItem.transform.SetParent(dropPosition);
         }
 
 

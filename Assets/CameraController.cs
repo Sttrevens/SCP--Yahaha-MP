@@ -78,9 +78,6 @@ namespace LPSurvivalEngine
                 audioSource = GetComponent<AudioSource>();
             }
 
-            transform.localPosition = new Vector3(0, 0, 0);
-            transform.localRotation = new Quaternion(0, 0, 0, 0);
-
             Debug.Log("[CameraController] Awake - Components Initialized");
         }
 
