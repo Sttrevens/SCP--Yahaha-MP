@@ -51,151 +51,126 @@ namespace LPSurvivalEngine
                    controller.cursor;
         }
 
-    private int currentWieldableIndex = -1;
+        private int currentWieldableIndex = -1;
 
-    public ItemSlot GetCurrentWieldableSlot()
-    {
-        if (currentWieldableIndex >= 0)
+        public ItemSlot GetCurrentWieldableSlot()
         {
-            return Inventory.instance.slots[currentWieldableIndex];
+            if (currentWieldableIndex >= 0)
+            {
+                return Inventory.instance.slots[currentWieldableIndex];
+            }
+            return null;
         }
-        return null;
-    }
 
-    public int GetCurrentWieldableIndex()
-    {
-        return currentWieldableIndex;
-    }
-
+        public int GetCurrentWieldableIndex()
+        {
+            return currentWieldableIndex;
+        }
 
         public void EquipNewItem(ItemDatabase item)
         {
-            Debug.Log("EquipNewItem");
+            Debug.Log($"EquipNewItem called by player {Runner.LocalPlayer}");
             equippedItem = item;
-            RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
-            RPC_RequestEquipItem(Runner.LocalPlayer);
-
             currentWieldableIndex = Inventory.instance.selectedItemIndex;
+            
+            // 直接调用RPC，不需要请求StateAuthority
+            RPC_RequestEquipItem(Runner.LocalPlayer);
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_RequestEquipItem(PlayerRef player)
         {
             if (!Object.HasStateAuthority) return;
-
-            GameObject.Find("CurrentPlayer").GetComponent<FirstPersonOptimizer>().Wield();
+            Debug.Log($"RPC_RequestEquipItem received for player {player}");
             SpawnEquippedItem(player);
         }
 
-        private void RequestStateAuthorityForEquipItem(PlayerRef player)
+        private void SpawnEquippedItem(PlayerRef player)
         {
-            if (HasStateAuthority)
+            Owner = player;
+            Debug.Log($"SpawnEquippedItem for player {player}");
+
+            Transform spawnTransform = CurrentWieldableRootTransform();
+            if (spawnTransform == null)
             {
-                Debug.Log("Already have StateAuthority.");
+                Debug.LogError($"Unexpected item type or invalid transform: {equippedItem?.wieldablePrefab?.name}");
                 return;
             }
 
-            Debug.Log("Requesting StateAuthority for EquipItem.");
-            Object.RequestStateAuthority();
-            LogStateAuthorityStatus();
+            NetworkObject spawnedItem = Runner.Spawn(
+                equippedItem.wieldablePrefab, 
+                spawnTransform.position, 
+                spawnTransform.rotation,
+                player  // 指定所有者
+            );
+
+            if (spawnedItem == null)
+            {
+                Debug.LogError($"Failed to spawn item: {equippedItem.wieldablePrefab.name}");
+                return;
+            }
+
+            SetupSpawnedItem(spawnedItem, spawnTransform, player);
         }
-
-        private void LogStateAuthorityStatus()
-        {
-            string status = HasStateAuthority ? "has" : "does not have";
-            Debug.Log($"This client {status} StateAuthority over {gameObject.name}");
-        }
-
-        public Transform CurrentWieldableRootTransform()
-{
-    if (equippedItem == null || equippedItem.wieldablePrefab == null) return null;
-
-    var prefab = equippedItem.wieldablePrefab;
-    bool hasFlashlight = prefab.GetComponent<Flashlight>() != null;
-    bool hasConeDetection = prefab.GetComponent<ConeDetection>() != null;
-
-    NetworkObject playerObject = Runner.GetPlayerObject(Owner);
-    if (playerObject == null) return null;
-
-    if (!hasFlashlight && !hasConeDetection)
-    {
-        return playerObject.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
-    }
-    else if (!hasFlashlight && hasConeDetection)
-    {
-        return playerObject.transform.Find("UpperBody/CameraRoot/HoldCameraRoot");
-    }
-    else if (hasFlashlight && !hasConeDetection)
-    {
-        return playerObject.transform.Find("UpperBody/CameraRoot/FlashlightRoot");
-    }
-
-    return null;
-}
-
-        private void SpawnEquippedItem(PlayerRef player)
-{
-    Owner = player;
-
-    Transform spawnTransform = CurrentWieldableRootTransform();
-    if (spawnTransform == null)
-    {
-        Debug.LogError($"Unexpected item type: {equippedItem.wieldablePrefab.name}");
-        return;
-    }
-
-    // 使用世界空间中的身份旋转
-    Quaternion spawnRotation = Quaternion.identity;
-    
-    NetworkObject spawnedItem = Runner.Spawn(
-        equippedItem.wieldablePrefab, 
-        spawnTransform.position, 
-        spawnRotation  // 使用身份旋转
-    );
-
-    if (spawnedItem == null)
-    {
-        Debug.LogError($"Failed to spawn item: {equippedItem.wieldablePrefab.name}");
-        return;
-    }
-
-    SetupSpawnedItem(spawnedItem, spawnTransform, player);
-}
 
         private void SetupSpawnedItem(NetworkObject spawnedItem, Transform parent, PlayerRef player)
-{
-    if (Object.HasStateAuthority)
-    {
-        // 确保在设置父级之前重置物体的本地变换
-        spawnedItem.transform.localScale = Vector3.one;
-        spawnedItem.transform.SetParent(parent);
-        spawnedItem.transform.localPosition = Vector3.zero;
-        spawnedItem.transform.localRotation = Quaternion.identity;
-        
-        RPC_SyncSpawnedItem(spawnedItem.Id, parent.gameObject.name);
-    }
+        {
+            Debug.Log($"SetupSpawnedItem for player {player}");
+            
+            // 在所有客户端上执行
+            spawnedItem.transform.SetParent(parent);
+            spawnedItem.transform.localPosition = Vector3.zero;
+            spawnedItem.transform.localRotation = Quaternion.identity;
+            spawnedItem.transform.localScale = Vector3.one;
 
             if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
             {
                 currentWieldable = wieldable;
                 currentWieldable.player = player;
-                Debug.Log($"[SpawnEquippedItem] Equipped item: {equippedItem.wieldablePrefab.name} by {player}");
+                Debug.Log($"Wieldable setup complete for player {player}");
             }
         }
 
-        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-private void RPC_SyncSpawnedItem(NetworkId itemId, string parentName)
-{
-    if (!Object.HasStateAuthority && Runner.TryFindObject(itemId, out NetworkObject spawnedItem))
-    {
-        Transform parent = GameObject.Find(parentName).transform;
-        // 确保在设置父级之前重置物体的本地变换
-        spawnedItem.transform.localScale = Vector3.one;
-        spawnedItem.transform.SetParent(parent);
-        spawnedItem.transform.localPosition = Vector3.zero;
-        spawnedItem.transform.localRotation = Quaternion.identity;
-    }
-}
+        public Transform CurrentWieldableRootTransform()
+        {
+            if (equippedItem == null || equippedItem.wieldablePrefab == null) return null;
+
+            var prefab = equippedItem.wieldablePrefab;
+            bool hasFlashlight = prefab.GetComponent<Flashlight>() != null;
+            bool hasConeDetection = prefab.GetComponent<ConeDetection>() != null;
+
+            // 获取正确的玩家对象
+            NetworkObject playerObject = Runner.GetPlayerObject(Owner);
+            if (playerObject == null)
+            {
+                Debug.LogError($"Could not find player object for Owner {Owner}");
+                return null;
+            }
+
+            Transform targetTransform = null;
+            string path = "";
+
+            if (!hasFlashlight && !hasConeDetection)
+            {
+                path = "Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR";
+            }
+            else if (!hasFlashlight && hasConeDetection)
+            {
+                path = "UpperBody/CameraRoot/HoldCameraRoot";
+            }
+            else if (hasFlashlight && !hasConeDetection)
+            {
+                path = "UpperBody/CameraRoot/FlashlightRoot";
+            }
+
+            targetTransform = playerObject.transform.Find(path);
+            if (targetTransform == null)
+            {
+                Debug.LogError($"Could not find transform at path: {path} for player {Owner}");
+            }
+
+            return targetTransform;
+        }
 
         public void DropWieldable()
         {
