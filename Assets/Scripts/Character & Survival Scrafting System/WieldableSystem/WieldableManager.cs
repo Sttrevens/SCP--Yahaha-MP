@@ -104,6 +104,11 @@ namespace LPSurvivalEngine
         {
             string status = HasStateAuthority ? "has" : "does not have";
             Debug.Log($"This client {status} StateAuthority over {gameObject.name}");
+
+            if (!HasStateAuthority)
+            {
+                RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
+            }
         }
 
         public Transform CurrentWieldableRootTransform()
