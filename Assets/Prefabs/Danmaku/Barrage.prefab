@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.009074281}
+  m_AnchoredPosition: {x: 0, y: -0.00000374905}
   m_SizeDelta: {x: -0.000030517578, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1050447077557476347
@@ -89,6 +89,8 @@ GameObject:
   - component: {fileID: 5992468279713874571}
   - component: {fileID: 271021784590165630}
   - component: {fileID: 3504926181797807131}
+  - component: {fileID: -7785758616719764082}
+  - component: {fileID: -5580505085536581932}
   m_Layer: 5
   m_Name: Barrage
   m_TagString: Untagged
@@ -184,6 +186,33 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-7785758616719764082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330187312399116500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5acc777de26bfb54d87de4988b43a9f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5580505085536581932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330187312399116500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d72f5d3abc70274d8ae37a80edeef36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scroll_rect: {fileID: 3504926181797807131}
+  scrollViewNevigation: {fileID: -7785758616719764082}
+  item: {fileID: 5698917604995582042, guid: 1fb886e808926684cbcb8305f3d2e158, type: 3}
 --- !u!1 &7525867231513893933
 GameObject:
   m_ObjectHideFlags: 0

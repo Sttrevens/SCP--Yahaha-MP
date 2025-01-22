@@ -132,43 +132,46 @@ namespace LPSurvivalEngine
         }
 
         private void SpawnEquippedItem(PlayerRef player)
-        {
-            Owner = player;
+{
+    Owner = player;
 
-            Transform spawnTransform = CurrentWieldableRootTransform();
-            if (spawnTransform == null)
-            {
-                Debug.LogError($"Unexpected item type: {equippedItem.wieldablePrefab.name}");
-                return;
-            }
+    Transform spawnTransform = CurrentWieldableRootTransform();
+    if (spawnTransform == null)
+    {
+        Debug.LogError($"Unexpected item type: {equippedItem.wieldablePrefab.name}");
+        return;
+    }
 
-            NetworkObject spawnedItem = Runner.Spawn(
-                equippedItem.wieldablePrefab, 
-                spawnTransform.position, 
-                spawnTransform.rotation
-            );
+    // 使用世界空间中的身份旋转
+    Quaternion spawnRotation = Quaternion.identity;
+    
+    NetworkObject spawnedItem = Runner.Spawn(
+        equippedItem.wieldablePrefab, 
+        spawnTransform.position, 
+        spawnRotation  // 使用身份旋转
+    );
 
-            if (spawnedItem == null)
-            {
-                Debug.LogError($"Failed to spawn item: {equippedItem.wieldablePrefab.name}");
-                return;
-            }
+    if (spawnedItem == null)
+    {
+        Debug.LogError($"Failed to spawn item: {equippedItem.wieldablePrefab.name}");
+        return;
+    }
 
-            SetupSpawnedItem(spawnedItem, spawnTransform, player);
-        }
+    SetupSpawnedItem(spawnedItem, spawnTransform, player);
+}
 
         private void SetupSpawnedItem(NetworkObject spawnedItem, Transform parent, PlayerRef player)
-        {
-            if (Object.HasStateAuthority)
-            {
-                // Only state authority can set parent and transform
-                spawnedItem.transform.SetParent(parent);
-                spawnedItem.transform.localPosition = Vector3.zero;
-                spawnedItem.transform.localRotation = Quaternion.identity;
-                
-                // Sync parent and transform across network
-                RPC_SyncSpawnedItem(spawnedItem.Id, parent.gameObject.name);
-            }
+{
+    if (Object.HasStateAuthority)
+    {
+        // 确保在设置父级之前重置物体的本地变换
+        spawnedItem.transform.localScale = Vector3.one;
+        spawnedItem.transform.SetParent(parent);
+        spawnedItem.transform.localPosition = Vector3.zero;
+        spawnedItem.transform.localRotation = Quaternion.identity;
+        
+        RPC_SyncSpawnedItem(spawnedItem.Id, parent.gameObject.name);
+    }
 
             if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
             {
@@ -179,16 +182,18 @@ namespace LPSurvivalEngine
         }
 
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-        private void RPC_SyncSpawnedItem(NetworkId itemId, string parentName)
-        {
-            if (!Object.HasStateAuthority && Runner.TryFindObject(itemId, out NetworkObject spawnedItem))
-            {
-                Transform parent = GameObject.Find(parentName).transform;
-                spawnedItem.transform.SetParent(parent);
-                spawnedItem.transform.localPosition = Vector3.zero;
-                spawnedItem.transform.localRotation = Quaternion.identity;
-            }
-        }
+private void RPC_SyncSpawnedItem(NetworkId itemId, string parentName)
+{
+    if (!Object.HasStateAuthority && Runner.TryFindObject(itemId, out NetworkObject spawnedItem))
+    {
+        Transform parent = GameObject.Find(parentName).transform;
+        // 确保在设置父级之前重置物体的本地变换
+        spawnedItem.transform.localScale = Vector3.one;
+        spawnedItem.transform.SetParent(parent);
+        spawnedItem.transform.localPosition = Vector3.zero;
+        spawnedItem.transform.localRotation = Quaternion.identity;
+    }
+}
 
         public void DropWieldable()
         {

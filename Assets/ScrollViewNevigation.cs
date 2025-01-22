@@ -41,7 +41,7 @@ public class ScrollViewNevigation : MonoBehaviour
         }
     }
 
-    public void Nevigate(RectTransform item)
+    public void Nevigate(RectTransform item, float duration)
     {
 
         Vector3 itemCurrentLocalPostion = scrollRect.GetComponent<RectTransform>().InverseTransformVector(ConvertLocalPosToWorldPos(item));
@@ -60,7 +60,7 @@ public class ScrollViewNevigation : MonoBehaviour
         newNormalizedPosition.x = Mathf.Clamp01(newNormalizedPosition.x);
         newNormalizedPosition.y = Mathf.Clamp01(newNormalizedPosition.y);
 
-        DOTween.To(() => scrollRect.GetComponent<ScrollRect>().normalizedPosition, x => scrollRect.GetComponent<ScrollRect>().normalizedPosition = x, newNormalizedPosition, 0.8f);
+        DOTween.To(() => scrollRect.GetComponent<ScrollRect>().normalizedPosition, x => scrollRect.GetComponent<ScrollRect>().normalizedPosition = x, newNormalizedPosition, duration);
     }
 
     private Vector3 ConvertLocalPosToWorldPos(RectTransform target)
