@@ -119,8 +119,7 @@ namespace LPSurvivalEngine
     bool hasFlashlight = prefab.GetComponent<Flashlight>() != null;
     bool hasConeDetection = prefab.GetComponent<ConeDetection>() != null;
 
-    NetworkObject playerObject = Runner.GetPlayerObject(Owner);
-    Debug.Log("playerObject: " + playerObject);
+    GameObject playerObject = GameObject.Find("CurrentPlayer");
     if (playerObject == null) return null;
 
     if (!hasFlashlight && !hasConeDetection)
@@ -174,7 +173,7 @@ namespace LPSurvivalEngine
     {
         // 确保在设置父级之前重置物体的本地变换
         spawnedItem.transform.localScale = Vector3.one;
-        spawnedItem.transform.SetParent(parent);
+        spawnedItem.transform.SetParent(GameObject.Find("PublicDropBox").transform);
         spawnedItem.transform.localPosition = Vector3.zero;
         spawnedItem.transform.localRotation = Quaternion.identity;
         
@@ -194,7 +193,7 @@ private void RPC_SyncSpawnedItem(NetworkId itemId, string parentName)
 {
     if (!Object.HasStateAuthority && Runner.TryFindObject(itemId, out NetworkObject spawnedItem))
     {
-        Transform parent = GameObject.Find(parentName).transform;
+        Transform parent = GameObject.Find("PublicDropBox").transform;
         // 确保在设置父级之前重置物体的本地变换
         spawnedItem.transform.localScale = Vector3.one;
         spawnedItem.transform.SetParent(parent);
