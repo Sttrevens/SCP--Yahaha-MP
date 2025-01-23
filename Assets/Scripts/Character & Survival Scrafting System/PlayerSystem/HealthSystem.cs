@@ -223,10 +223,10 @@ namespace LPSurvivalEngine
             GameObject parentObject = GameObject.FindGameObjectWithTag("UI Player");
             if (parentObject != null)
             {
-                GameObject bloodScreen = FindChildRecursive(parentObject.transform, "BloodScreen");
+                DamageIndicator bloodScreen = FindObjectOfType<DamageIndicator>();
                 if (bloodScreen != null)
                 {
-                    bloodScreen.GetComponent<DamageIndicator>().Flash();
+                    bloodScreen.Flash();
                 }
                 else
                 {

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Fusion;
 
-public class SelectionButton : MonoBehaviour
+public class SelectionButton : NetworkBehaviour
 {
     [SerializeField] private Button button;
     [SerializeField] private int index; 
@@ -13,10 +14,11 @@ public class SelectionButton : MonoBehaviour
     private void Start()
     {
         UpdateButtonAppearance();
-        button.onClick.AddListener(() => ToggleSelection(index));
+        button.onClick.AddListener(() => RPC_ToggleSelection(index));
     }
 
-    public void ToggleSelection(int index)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_ToggleSelection(int index)
     {
         AudioManager.Instance.PlayStartButtonSound();
         bool isSelected = LevelManager.Instance.roomIndexSelected == index;
