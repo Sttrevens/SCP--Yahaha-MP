@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAnimator : NetworkBehaviour
 {
+    [Header("Animator")]
+    public Transform model;
     // PRIVATE MEMBERS
     private AnimatorManager _animatorManager;
     private Animator _animator;
@@ -30,7 +32,7 @@ public class PlayerAnimator : NetworkBehaviour
     protected void Awake()
     {
         _animatorManager = GetComponent<AnimatorManager>();
-        _animator = GetComponentInChildren<Animator>();
+        _animator = model.GetComponent<Animator>();
     }
 
     // PRIVATE METHODS

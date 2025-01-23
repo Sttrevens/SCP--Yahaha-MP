@@ -170,49 +170,59 @@ namespace LPSurvivalEngine
             spawnedItem.transform.localPosition = Vector3.zero;
             spawnedItem.transform.localRotation = Quaternion.identity;
 
+            // NetworkObject playerObject = Runner.GetPlayerObject(player);
+            // if (playerObject != null)
+            // {
+            //     MaterialRenderTextureManager.Instance.AssignMaterialAndRenderTexture(playerObject);
+            // }
 
     //SetupSpawnedItem(spawnedItem, spawnTransform, player);
 }
 
-        private void SetupSpawnedItem(NetworkObject spawnedItem, Transform parent, PlayerRef player)
-{
-    if (Object.HasStateAuthority)
-    {
-        // 确保在设置父级之前重置物体的本地变换
-        spawnedItem.transform.localScale = Vector3.one;
-        //spawnedItem.transform.SetParent(GameObject.Find("PublicDropBox").transform);
-        spawnedItem.transform.localPosition = Vector3.zero;
-        spawnedItem.transform.localRotation = Quaternion.identity;
+//         private void SetupSpawnedItem(NetworkObject spawnedItem, Transform parent, PlayerRef player)
+// {
+//     if (Object.HasStateAuthority)
+//     {
+//         // 确保在设置父级之前重置物体的本地变换
+//         spawnedItem.transform.localScale = Vector3.one;
+//         //spawnedItem.transform.SetParent(GameObject.Find("PublicDropBox").transform);
+//         spawnedItem.transform.localPosition = Vector3.zero;
+//         spawnedItem.transform.localRotation = Quaternion.identity;
         
-        //RPC_SyncSpawnedItem(spawnedItem.Id, parent.gameObject.name);
-    }
+//         //RPC_SyncSpawnedItem(spawnedItem.Id, parent.gameObject.name);
+//     }
 
-            if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
-            {
-                currentWieldable = wieldable;
-                currentWieldable.player = player;
-                Debug.Log($"[SpawnEquippedItem] Equipped item: {equippedItem.wieldablePrefab.name} by {player}");
-            }
-        }
+//             if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
+//             {
+//                 currentWieldable = wieldable;
+//                 currentWieldable.player = player;
+//                 Debug.Log($"[SpawnEquippedItem] Equipped item: {equippedItem.wieldablePrefab.name} by {player}");
+//             }
+//         }
 
-        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-private void RPC_SyncSpawnedItem(NetworkId itemId, string parentName)
-{
-    if (!Object.HasStateAuthority && Runner.TryFindObject(itemId, out NetworkObject spawnedItem))
-    {
-        Transform parent = GameObject.Find("PublicDropBox").transform;
-        // 确保在设置父级之前重置物体的本地变换
-        spawnedItem.transform.localScale = Vector3.one;
-        spawnedItem.transform.SetParent(parent);
-        //spawnedItem.transform.localPosition = Vector3.zero;
-        spawnedItem.transform.localRotation = Quaternion.identity;
-    }
-}
+//         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+// private void RPC_SyncSpawnedItem(NetworkId itemId, string parentName)
+// {
+//     if (!Object.HasStateAuthority && Runner.TryFindObject(itemId, out NetworkObject spawnedItem))
+//     {
+//         Transform parent = GameObject.Find("PublicDropBox").transform;
+//         // 确保在设置父级之前重置物体的本地变换
+//         spawnedItem.transform.localScale = Vector3.one;
+//         spawnedItem.transform.SetParent(parent);
+//         //spawnedItem.transform.localPosition = Vector3.zero;
+//         spawnedItem.transform.localRotation = Quaternion.identity;
+//     }
+// }
 
-        public void DropWieldable()
+        public void DropWieldable(PlayerRef player)
         {
             if (currentWieldable != null)
             {
+            //     NetworkObject playerObject = Runner.GetPlayerObject(player);
+            // if (playerObject != null)
+            // {
+            //     MaterialRenderTextureManager.Instance.ReleaseMaterialAndRenderTexture(playerObject);
+            // }
                 Destroy(currentWieldable.gameObject);
                 currentWieldable = null;
             }

@@ -1599,6 +1599,7 @@ MonoBehaviour:
   cameraRoot: {fileID: 4992387614600776163}
   upperBodys:
   - {fileID: 3728027146099076049}
+  _upperBodyRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &6515430458572477251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1674,19 +1675,19 @@ MonoBehaviour:
     regenrate: 0.1
     decayRate: 0
     VitalBar: {fileID: 0}
-  hunger:
+  stamina:
+    currentValue: 0
+    maxValue: 100
+    startValue: 100
+    regenrate: 2
+    decayRate: 0
+    VitalBar: {fileID: 0}
+  oxygen:
     currentValue: 0
     maxValue: 100
     startValue: 80
     regenrate: 0
-    decayRate: 0.05
-    VitalBar: {fileID: 0}
-  thirst:
-    currentValue: 0
-    maxValue: 100
-    startValue: 60
-    regenrate: 0
-    decayRate: 0.1
+    decayRate: 0
     VitalBar: {fileID: 0}
   sanity:
     currentValue: 0
@@ -1696,14 +1697,14 @@ MonoBehaviour:
     decayRate: 0
     VitalBar: {fileID: 0}
   _playerHealth: 100
-  _playerHunger: 100
-  _playerThirst: 100
+  _playerStamina: 100
+  _playerOxygen: 100
   _playerSanity: 100
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
-  hungerHealthdecay: 0
-  thirstHealthdecay: 1
+  staminaHealthdecay: 0
+  oxygenHealthdecay: 1
   Player: {fileID: 0}
   UIPlayer: {fileID: 0}
   sleepScreenAnimation: {fileID: 0}
@@ -1719,6 +1720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a76c74260fdfe4581bf82199cee3af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 8426809253871604094}
 --- !u!114 &4082337287283386946
 MonoBehaviour:
   m_ObjectHideFlags: 0

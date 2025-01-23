@@ -33,11 +33,15 @@ namespace LPSurvivalEngine
 
         [SerializeField] private bool isRightMouseButtonDown = false;
 
-    [Header("Durability Settings")]
-    [SerializeField] private float durabilityDrainPerSecond = 0.2f; // 每秒消耗的耐久度
+        [Header("Durability Settings")]
+        [SerializeField] private float durabilityDrainPerSecond = 0.2f;
 
         [Header("UI")]
-        public TextMeshProUGUI durabilityText;
+        [SerializeField] private GameObject[] batteryIcons = new GameObject[3]; // 三个电池图标
+        [SerializeField] private string bobojian;
+
+        [Header("MaterialRenderTextureManager")]
+        [SerializeField] private Renderer screenRenderer;
 
         private void DrainDurability()
     {
@@ -51,19 +55,31 @@ namespace LPSurvivalEngine
             // 通过 Inventory 更新耐久度
             Inventory.instance.UpdateItemDurability(WieldableManager.instance.GetCurrentWieldableIndex(), drainAmount);
 
-            if (durabilityText != null)
-            {
-                durabilityText.text = $"Camera Battery " + currentSlot.currentDurability.ToString("F0") + "%";
-            }
+                // 更新电池图标显示
+                UpdateBatteryIcons(currentSlot.currentDurability);
 
-            // 如果耐久度耗尽，收起相机
-            if (currentSlot.currentDurability <= 0)
-            {
-                Debug.Log("[CameraController] Camera battery depleted!");
-                WieldableManager.instance.DropWieldable();
+                if (currentSlot.currentDurability <= 0)
+                {
+                    Debug.Log("[CameraController] Camera battery depleted!");
+                    CameraInCamera.enabled = false;
+                }
+                else
+                {
+                    CameraInCamera.enabled = true;
+                }
             }
         }
-    }
+
+        private void UpdateBatteryIcons(float currentDurability)
+        {
+            if (batteryIcons.Length == 3)
+            {
+                // 根据电量显示/隐藏图标
+                batteryIcons[0].SetActive(currentDurability > 66);
+                batteryIcons[1].SetActive(currentDurability > 33);
+                batteryIcons[2].SetActive(currentDurability > 0);
+            }
+        }
 
         private void Awake()
         {
@@ -81,6 +97,23 @@ namespace LPSurvivalEngine
             Debug.Log("[CameraController] Awake - Components Initialized");
         }
 
+        public override void Spawned()
+        {
+            if (GameObject.Find(bobojian) != null)
+            {
+                batteryIcons[0] = GameObject.Find(bobojian).transform.Find("BatteryIcon/BatteryContent1").gameObject;
+                batteryIcons[1] = GameObject.Find(bobojian).transform.Find("BatteryIcon/BatteryContent2").gameObject;
+                batteryIcons[2] = GameObject.Find(bobojian).transform.Find("BatteryIcon/BatteryContent3").gameObject;
+            }
+
+            if (HasStateAuthority)
+            {
+                transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.identity;
+            }
+        }
+
         public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority)  // 确保只在有状态权限的客户端上更新
@@ -91,6 +124,13 @@ namespace LPSurvivalEngine
             if (isRightMouseButtonDown)
             {
                 HandleZoom();
+            }
+
+            if (HasStateAuthority)
+            {
+                transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.identity;
             }
         }
 
@@ -201,5 +241,17 @@ void HandleZoom()
         lastScrollInput = 0f;
     }
 }
+
+public void SetMaterialAndRenderTexture(Material material, RenderTexture renderTexture)
+    {
+        if (screenRenderer != null)
+        {
+            screenRenderer.material = material;
+        }
+        if (CameraInCamera != null)
+        {
+            CameraInCamera.targetTexture = renderTexture;
+        }
+        }
     }
 }

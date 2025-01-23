@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3222643352481867639, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
+      propertyPath: bobojian
+      value: Bobojian 1
+      objectReference: {fileID: 0}
     - target: {fileID: 175982, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
       propertyPath: m_Name
       value: WieldableCamera 1
@@ -86,19 +90,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4433004144727203058, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4433004144727203058, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[2]
       value: 
       objectReference: {fileID: 4901448500593306749}
-    - target: {fileID: 4433004144727203058, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
-      propertyPath: NetworkedBehaviours.Array.data[3]
-      value: 
-      objectReference: {fileID: 3292060217923185131}
     - target: {fileID: 4597043718064163178, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.72974396
+      objectReference: {fileID: 0}
+    - target: {fileID: 6130445303531985598, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
+      propertyPath: SortKey
+      value: 3216431926
       objectReference: {fileID: 0}
     - target: {fileID: 6147136758525691745, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
       propertyPath: m_Texture
@@ -121,17 +125,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
---- !u!114 &3292060217923185131 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6339357701721924869, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}
-  m_PrefabInstance: {fileID: 8815325050250202350}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4469186eff8877845ab7129e339cead7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4901448500593306749 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4490970758372663443, guid: e3e8f15524a4a3b4e99f4310af51eb98, type: 3}

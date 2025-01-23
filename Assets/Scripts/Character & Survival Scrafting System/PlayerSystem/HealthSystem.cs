@@ -151,7 +151,7 @@ namespace LPSurvivalEngine
         void FixedUpdate()
         {
             // 使用 Time.fixedDeltaTime 替代 Time.deltaTime
-            stamina.Add(stamina.decayRate * Time.fixedDeltaTime);
+            stamina.Add(stamina.regenrate * Time.fixedDeltaTime);
             oxygen.Subtract(oxygen.decayRate * Time.fixedDeltaTime);
             sanity.Subtract(sanity.regenrate * Time.fixedDeltaTime);
 

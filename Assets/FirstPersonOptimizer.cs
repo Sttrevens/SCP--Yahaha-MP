@@ -31,11 +31,14 @@ public class FirstPersonOptimizer : MonoBehaviour
             // Handle MeshRenderers
             foreach (MeshRenderer renderer in meshRenderers)
             {
-                // Set the renderer to only be invisible to the main camera
-                renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");
-                
                 // Make sure the main camera's culling mask excludes the FirstPerson layer
                 Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
+                if (renderer.transform.parent != null && renderer.transform.parent.GetComponent<CameraController>() != null)
+                {
+                    return;
+                }
+                renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");
+                
             }
         }
     }
