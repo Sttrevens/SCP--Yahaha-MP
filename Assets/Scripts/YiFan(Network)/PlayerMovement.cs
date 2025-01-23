@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class PlayerMovement : NetworkBehaviour
 {
+    [Header("Look Animation")]
+    [SerializeField] private Transform headBone;      // 头部骨骼
+    [SerializeField] private Transform spineBone;     // 脊椎骨骼
+    [SerializeField] private float maxLookUpAngle = 45f;    // 最大抬头角度
+    [SerializeField] private float maxLookDownAngle = 45f;  // 最大低头角度
+        // 头部和脊椎的旋转比例（两者加起来为1）
+    [SerializeField] private float headRotationRatio = 0.7f;
+    [SerializeField] private float spineRotationRatio = 0.3f;
+
+    [Networked]
+    private float NetworkedLookAngle { get; set; }
     private Vector3 _velocity;
     private bool _jumpPressed;
 
@@ -11,7 +22,15 @@ public class PlayerMovement : NetworkBehaviour
     private AnimatorManager _animatorManager;
 
     public Camera Camera;
-    public float PlayerSpeed = 2f;
+    private float targetFOV = 40f;
+    private float targetSpeed = 6f;
+    private float defaultFOV = 40f;
+    private float sprintFOV = 60f;
+    private float defaultSpeed = 4f;
+    [SerializeField] private float sprintSpeed = 6f;
+    private float fovChangeSpeed = 4f;
+    private float speedChangeSpeed = 4f;
+    public float PlayerSpeed;
 
     public float JumpForce = 5f;
     public float GravityValue = -9.81f;
@@ -19,9 +38,12 @@ public class PlayerMovement : NetworkBehaviour
     // Add a variable to control the rotation speed. Adjust this value according to your actual needs.
     public float RotationSpeed = 5f;
 
+    public bool issprinting = false;
+
     public Transform cameraRoot;
 
     [SerializeField] private Transform[] upperBodys;
+    public Camera firstPersonCamera;
 
     [Networked]
     public Quaternion upperBodyRotation { get; set; }
@@ -30,6 +52,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         _controller = GetComponent<CharacterController>();
         _animatorManager = GetComponent<AnimatorManager>();
+
     }
 
     public override void Spawned()
@@ -49,6 +72,20 @@ public class PlayerMovement : NetworkBehaviour
         {
             _jumpPressed = true;
         }
+        if(Input.GetButton("Sprint")){
+                targetFOV = sprintFOV;
+                targetSpeed = sprintSpeed;
+                issprinting = true;
+            }
+            else
+            {
+                targetFOV = defaultFOV;
+                targetSpeed = defaultSpeed;
+                issprinting = false;
+            }
+
+        Camera.fieldOfView = Mathf.Lerp(Camera.fieldOfView, targetFOV, fovChangeSpeed*Time.deltaTime);
+        PlayerSpeed = Mathf.Lerp(PlayerSpeed, targetSpeed, speedChangeSpeed*Time.deltaTime);
     }
 
     public override void FixedUpdateNetwork()
@@ -118,6 +155,41 @@ public class PlayerMovement : NetworkBehaviour
                     upperBody.rotation = upperBodyRotation;
                 }
             }
+        }
+        if (HasStateAuthority && Camera != null)
+        {
+            // 获取相机俯仰角
+            float pitch = Camera.transform.eulerAngles.x;
+            if (pitch > 180) pitch -= 360;  // 转换到 -180 到 180 度范围
+
+            // 限制角度范围
+            float clampedAngle = Mathf.Clamp(pitch, -maxLookDownAngle, maxLookUpAngle);
+
+            // 同步到网络
+            NetworkedLookAngle = clampedAngle;
+        }
+         // 应用旋转
+        if (headBone != null)
+        {
+            // 获取当前的欧拉角
+            Vector3 currentRotation = headBone.localRotation.eulerAngles;
+
+            // 在原有旋转基础上修改X轴的值
+            headBone.localRotation = Quaternion.Euler(
+                currentRotation.x + (NetworkedLookAngle * headRotationRatio),
+                currentRotation.y,
+                currentRotation.z
+            );
+        }
+
+        if (spineBone != null)
+        {
+            Vector3 currentSpineRotation = spineBone.localRotation.eulerAngles;
+            spineBone.localRotation = Quaternion.Euler(
+                currentSpineRotation.x + (NetworkedLookAngle * spineRotationRatio),
+                currentSpineRotation.y,
+                currentSpineRotation.z
+            );
         }
     }
 
