@@ -969,7 +969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -999,7 +999,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4486309746648889719}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3709868549681849427}
+        m_TargetAssemblyTypeName: SelectionButton, Assembly-CSharp
+        m_MethodName: ToggleSelection
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3709868549681849427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1970,8 +1982,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22dc7e0b763f9a64c9dca238dcdd3630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _CurrentState: 0
   ReciveIsFlying: 0
-  IsPulled: 0
+  _IsPulled: 0
   OnButtonPressed:
     m_PersistentCalls:
       m_Calls:
@@ -2913,15 +2926,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiPanel: {fileID: 0}
-  IsStarted: 0
+  _IsStarted: 0
   LevelOffsets:
   - {x: -33.86, y: -2.66, z: -76.06}
   - {x: 7.83, y: -0.28, z: 4.29}
   Levels:
   - {fileID: 3421531085523382731, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
   - {fileID: 5695928751618981631, guid: 4a0d56d0ce8edd14294504042ef4039b, type: 3}
-  isButtonSelected: 0
-  roomIndexSelected: 0
+  _isButtonSelected: 0
+  _roomIndexSelected: -1
   surface: {fileID: 0}
 --- !u!114 &2421617300934638843
 MonoBehaviour:
@@ -3252,7 +3265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -3282,7 +3295,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4757133188355162624}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2394329457075092049}
+        m_TargetAssemblyTypeName: SelectionButton, Assembly-CSharp
+        m_MethodName: ToggleSelection
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2394329457075092049
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class SelectionButton : MonoBehaviour
         button.onClick.AddListener(() => ToggleSelection(index));
     }
 
-    private void ToggleSelection(int index)
+    public void ToggleSelection(int index)
     {
         AudioManager.Instance.PlayStartButtonSound();
         bool isSelected = LevelManager.Instance.roomIndexSelected == index;
