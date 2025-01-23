@@ -891,6 +891,7 @@ GameObject:
   - component: {fileID: 4486309746648889719}
   - component: {fileID: 8537192147072566545}
   - component: {fileID: 3709868549681849427}
+  - component: {fileID: 2316030785706671166}
   m_Layer: 15
   m_Name: sub level 1
   m_TagString: Untagged
@@ -1002,7 +1003,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3709868549681849427}
         m_TargetAssemblyTypeName: SelectionButton, Assembly-CSharp
-        m_MethodName: ToggleSelection
+        m_MethodName: RPC_ToggleSelection
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1028,6 +1029,23 @@ MonoBehaviour:
   index: 1
   selectedColor: {r: 0, g: 1, b: 0, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &2316030785706671166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5698992095820995258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 0
+  ObjectInterest: 1
+  Flags: 262144
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &6146819279760396025
 GameObject:
   m_ObjectHideFlags: 0
@@ -3187,6 +3205,7 @@ GameObject:
   - component: {fileID: 4757133188355162624}
   - component: {fileID: 7412268450535588241}
   - component: {fileID: 2394329457075092049}
+  - component: {fileID: 1920853195300719226}
   m_Layer: 15
   m_Name: sub level 0
   m_TagString: Untagged
@@ -3298,7 +3317,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2394329457075092049}
         m_TargetAssemblyTypeName: SelectionButton, Assembly-CSharp
-        m_MethodName: ToggleSelection
+        m_MethodName: RPC_ToggleSelection
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3324,6 +3343,23 @@ MonoBehaviour:
   index: 0
   selectedColor: {r: 0, g: 1, b: 0, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1920853195300719226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8919041286951326401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 0
+  ObjectInterest: 1
+  Flags: 262144
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &9170652377773207560
 GameObject:
   m_ObjectHideFlags: 0
