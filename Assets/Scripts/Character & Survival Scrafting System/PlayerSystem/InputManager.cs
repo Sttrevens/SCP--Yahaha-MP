@@ -153,9 +153,8 @@ private void onScroll(InputAction.CallbackContext context)
         {
             if (!ExitMenu.instance.isPaused)
             {
-            Debug.Log("Click Escape");
+            Debug.Log("OnEscape");
             ExitMenu.instance.ShowExitMenu();
-                ExitMenu.instance.isPaused = true;
         }
             else
             {
