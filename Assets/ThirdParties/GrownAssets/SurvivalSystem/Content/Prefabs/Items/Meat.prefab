@@ -99,7 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _IsPickedUp: 0
   item: {fileID: 11400000, guid: 36e4c7a11863a0a418b4e04def486ce7, type: 2}
-  isDisplayedItem: 0
+  pickupSound: {fileID: 0}
+  _currentDurability: 0
 --- !u!114 &-157526326994163364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 1931581547
   ObjectInterest: 1
-  Flags: 1
+  Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 7227698732930557204}

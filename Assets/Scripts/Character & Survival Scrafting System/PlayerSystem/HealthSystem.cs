@@ -16,13 +16,13 @@ namespace LPSurvivalEngine
         [Header("Player Vitals")]
 
         public Vitals health;
-        public Vitals hunger;
-        public Vitals thirst;
+        public Vitals stamina;
+        public Vitals oxygen;
         public Vitals sanity;
         
         [Networked] public float playerHealth { get; set; } = 100f;
-        [Networked] public float playerHunger { get; set; } = 100f;
-        [Networked] public float playerThirst { get; set; } = 100f;
+        [Networked] public float playerStamina { get; set; } = 100f;
+        [Networked] public float playerOxygen { get; set; } = 100f;
         [Networked] public float playerSanity { get; set; } = 100f;
 
         [Header("Health System")]
@@ -31,8 +31,8 @@ namespace LPSurvivalEngine
 
         [Header("Vitals Settings")]
     
-        public float hungerHealthdecay;
-        public float thirstHealthdecay;
+        public float staminaHealthdecay;
+        public float oxygenHealthdecay;
 
         [Header("Assignments")]
 
@@ -42,10 +42,10 @@ namespace LPSurvivalEngine
 
         void Start()
         {
-    health.currentValue = Mathf.Min(health.startValue, health.maxValue);
-    hunger.currentValue = Mathf.Min(hunger.startValue, hunger.maxValue);
-    thirst.currentValue = Mathf.Min(thirst.startValue, thirst.maxValue);
-    sanity.currentValue = Mathf.Min(sanity.startValue, sanity.maxValue);
+            health.currentValue = Mathf.Min(health.startValue, health.maxValue);
+            stamina.currentValue = Mathf.Min(stamina.startValue, stamina.maxValue);
+            oxygen.currentValue = Mathf.Min(oxygen.startValue, oxygen.maxValue);
+            sanity.currentValue = Mathf.Min(sanity.startValue, sanity.maxValue);
 
             Player = gameObject;
             UIPlayer = GameObject.FindGameObjectWithTag("UI Player");
@@ -74,34 +74,34 @@ namespace LPSurvivalEngine
                     Debug.Log("δ�ҵ���ΪHealth��������");
                 }
 
-                Image hungerVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Hunger");
-                if (hungerVitalBarImage != null)
+                Image staminaVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Stamina");
+                if (staminaVitalBarImage != null)
                 {
-                    hunger.VitalBar = hungerVitalBarImage;
+                    stamina.VitalBar = staminaVitalBarImage;
                 }
                 else
                 {
-                    Debug.Log("δ�ҵ���ΪHunger��������");
+                    Debug.Log("δҵΪStamina");
                 }
 
-                Image thirstVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Thirst");
-                if (thirstVitalBarImage != null)
+                Image oxygenVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Oxygen");
+                if (oxygenVitalBarImage != null)
                 {
-                    thirst.VitalBar = thirstVitalBarImage;
+                    oxygen.VitalBar = oxygenVitalBarImage;
                 }
                 else
                 {
-                    Debug.Log("δ�ҵ���ΪThirst��������");
+                    Debug.Log("δ�ҵ���ΪOxygen");
                 }
 
-                Image sanityVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Sleep");
+                Image sanityVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Sanity");
                 if (sanityVitalBarImage != null)
                 {
                     sanity.VitalBar = sanityVitalBarImage;
                 }
                 else
                 {
-                    Debug.Log("δ�ҵ���ΪSleep��������");
+                    Debug.Log("δ�ҵ���ΪSanity");
                 }
             }
             else
@@ -151,21 +151,16 @@ namespace LPSurvivalEngine
         void FixedUpdate()
         {
             // 使用 Time.fixedDeltaTime 替代 Time.deltaTime
-            hunger.Subtract(hunger.decayRate * Time.fixedDeltaTime);
-            thirst.Subtract(thirst.decayRate * Time.fixedDeltaTime);
+            stamina.Add(stamina.decayRate * Time.fixedDeltaTime);
+            oxygen.Subtract(oxygen.decayRate * Time.fixedDeltaTime);
             sanity.Subtract(sanity.regenrate * Time.fixedDeltaTime);
 
-            if ((hunger.currentValue >= hunger.maxValue * 0.8f) && (thirst.currentValue >= thirst.maxValue * 0.8f) && (sanity.currentValue >= sanity.maxValue * 0.5f))
+            if ((stamina.currentValue >= stamina.maxValue * 0.8f) && (oxygen.currentValue >= oxygen.maxValue * 0.8f) && (sanity.currentValue >= sanity.maxValue * 0.5f))
                 health.Add(health.regenrate * Time.fixedDeltaTime);
 
-            if (hunger.currentValue == 0.0f)
+            if (oxygen.currentValue == 0.0f)
             {
-                health.Subtract(hungerHealthdecay * Time.fixedDeltaTime);
-            }
-
-            if (thirst.currentValue == 0.0f)
-            {
-                health.Subtract(thirstHealthdecay * Time.fixedDeltaTime);
+                health.Subtract(oxygenHealthdecay * Time.fixedDeltaTime);
             }
         
             if (health.currentValue == 0.0f)
@@ -179,21 +174,21 @@ namespace LPSurvivalEngine
         private void UpdateUIAndSync()
         {
             health.VitalBar.fillAmount = health.GetPercentage();
-            hunger.VitalBar.fillAmount = hunger.GetPercentage();
-            thirst.VitalBar.fillAmount = thirst.GetPercentage();
+            stamina.VitalBar.fillAmount = stamina.GetPercentage();
+            oxygen.VitalBar.fillAmount = oxygen.GetPercentage();
             sanity.VitalBar.fillAmount = sanity.GetPercentage();
 
             if (playerHealth != health.currentValue)
             {
                 SynchronousPlayerHealthRpc();
             }
-            if (playerHunger != hunger.currentValue)
+            if (playerStamina != stamina.currentValue)
             {
-                SynchronousPlayerHungerRpc();
+                SynchronousPlayerStaminaRpc();
             }
-            if (playerThirst != thirst.currentValue)
+            if (playerOxygen != oxygen.currentValue)
             {
-                SynchronousPlayerThirstRpc();
+                SynchronousPlayerOxygenRpc();
             }
             if (playerSanity != sanity.currentValue)
             {
@@ -208,12 +203,12 @@ namespace LPSurvivalEngine
 
         public void Eat(float amount)
         {
-            hunger.Add(amount);
+            stamina.Add(amount);
         }
 
         public void Drink(float amount)
         {
-            thirst.Add(amount);
+            oxygen.Add(amount);
         }
 
         public void Sleep(float amount)
@@ -242,7 +237,7 @@ namespace LPSurvivalEngine
             {
                 Debug.Log("δ�ҵ�tagΪ ������");
             }
-        }
+        }   
     
         public void Die()
         {
@@ -270,15 +265,15 @@ namespace LPSurvivalEngine
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void SynchronousPlayerHungerRpc()
+        public void SynchronousPlayerStaminaRpc()
         {
-            playerHunger = hunger.currentValue;
+            playerStamina = stamina.currentValue;
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void SynchronousPlayerThirstRpc()
+        public void SynchronousPlayerOxygenRpc()
         {
-            playerThirst = thirst.currentValue;
+            playerOxygen = oxygen.currentValue;
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
