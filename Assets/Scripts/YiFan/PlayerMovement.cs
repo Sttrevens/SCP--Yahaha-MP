@@ -23,6 +23,9 @@ public class PlayerMovement : NetworkBehaviour
 
     [SerializeField] private Transform[] upperBodys;
 
+    [Networked]
+    public Quaternion upperBodyRotation { get; set; }
+
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
@@ -90,20 +93,41 @@ public class PlayerMovement : NetworkBehaviour
         Quaternion bodyTargetRotation = Quaternion.Euler(0, Camera.transform.rotation.eulerAngles.y, 0);
         transform.rotation = Quaternion.Lerp(transform.rotation, bodyTargetRotation, RotationSpeed * Runner.DeltaTime);
 
-        
-
         _jumpPressed = false;
+
+        UpdateUpperBodyRotationLocally();
     }
 
     void LateUpdate()
     {
-// 上半身/手持物品完全跟随相机旋转（包含俯仰角）
+        // 本地控制的上半身旋转，基于摄像机的旋转
         if (upperBodys != null)
         {
             foreach (Transform upperBody in upperBodys)
             {
-                upperBody.rotation = Camera.transform.rotation;
+                // 本地客户端更新上半身旋转
+                if (HasStateAuthority)
+                {
+                    upperBody.rotation = Camera.transform.rotation;
+                    // 同步上半身旋转到服务器
+                    upperBodyRotation = upperBody.rotation;
+                }
+                else
+                {
+                    // 其他客户端通过网络同步的旋转来更新
+                    upperBody.rotation = upperBodyRotation;
+                }
             }
+        }
+    }
+
+    // 用于同步上半身旋转到网络上的函数
+    private void UpdateUpperBodyRotationLocally()
+    {
+        // 在本地客户端，每帧将上半身的旋转传递到网络
+        if (upperBodys != null && upperBodys.Length > 0)
+        {
+            upperBodyRotation = upperBodys[0].rotation;  // 假设第一个上半身骨骼为主
         }
     }
 }
