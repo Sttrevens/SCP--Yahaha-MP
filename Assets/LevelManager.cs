@@ -14,13 +14,13 @@ public class LevelManager : NetworkBehaviour, IInteractable
 
     [SerializeField] private GameObject uiPanel;
     private bool isPaused = false;
-    [SerializeField] private bool IsStarted = false;
+    [Networked] public bool IsStarted { get; set; } = false;
 
     [SerializeField] private Vector3[] LevelOffsets;
     [SerializeField] private GameObject[] Levels;
     //selection btn control
-    [HideInInspector] public bool isButtonSelected;
-    [HideInInspector] public int roomIndexSelected;
+    [Networked] public bool isButtonSelected { get; set; } = false;
+    [Networked] public int roomIndexSelected { get; set; } = -1;
     private NetworkObject currentLevel;
     private bool isLevelSelectionDisabled;
 
@@ -105,7 +105,8 @@ public class LevelManager : NetworkBehaviour, IInteractable
         RPC_DestroyLevel();
     }
     
-    public void UpdateAllButtons()
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_UpdateAllButtons()
     {
         SelectionButton[] buttons = FindObjectsOfType<SelectionButton>();
         foreach (var button in buttons)

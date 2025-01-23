@@ -13,10 +13,11 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         Landing
     }
     
-    public SpaceshipState CurrentState { get; private set; } = SpaceshipState.PreparingForTakeoff; 
+    [Networked] public SpaceshipState CurrentState { get; set; } = SpaceshipState.PreparingForTakeoff; 
 
     public bool ReciveIsFlying;
-    [SerializeField] private bool IsPulled = false;
+
+    [Networked] public bool IsPulled { get; set; } = false;
     public UnityEvent OnButtonPressed;
     public UnityEvent OnButtonReleased;
 
@@ -56,7 +57,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
     {
         if (LevelManager.Instance.isButtonSelected)
         {
-            return string.Format("{0}", IsPulled ? "Close the hatch" : "Open the hatch");
+            return string.Format("{0}", IsPulled ? "Go home" : "Go to the Destination");
         }
         return string.Format("{0}", "Select a level first");
     }

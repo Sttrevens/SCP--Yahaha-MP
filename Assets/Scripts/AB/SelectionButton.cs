@@ -22,7 +22,7 @@ public class SelectionButton : MonoBehaviour
         bool isSelected = LevelManager.Instance.roomIndexSelected == index;
         LevelManager.Instance.roomIndexSelected = isSelected ? -1 : index; 
         LevelManager.Instance.isButtonSelected = !isSelected; 
-        LevelManager.Instance.UpdateAllButtons();
+        LevelManager.Instance.RPC_UpdateAllButtons();
     }
 
     public void UpdateButtonAppearance()
