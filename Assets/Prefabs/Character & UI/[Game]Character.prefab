@@ -374,6 +374,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7176491506407218905}
+  - component: {fileID: 5747793934300212977}
+  - component: {fileID: 7369226585793973340}
   m_Layer: 8
   m_Name: HoldCameraRoot
   m_TagString: Untagged
@@ -396,6 +398,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4992387614600776163}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &5747793934300212977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399892956265522581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1267354541
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 7369226585793973340}
+--- !u!114 &7369226585793973340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399892956265522581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d39e4efc6ce28d9438630882ceea999f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1500522492826011897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,7 +1561,8 @@ MonoBehaviour:
   SortKey: 595771292
   ObjectInterest: 1
   Flags: 786433
-  NestedObjects: []
+  NestedObjects:
+  - {fileID: 5747793934300212977}
   NetworkedBehaviours:
   - {fileID: 1122259457492835225}
   - {fileID: 2747722033361472396}
