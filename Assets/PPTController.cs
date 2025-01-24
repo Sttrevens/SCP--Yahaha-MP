@@ -17,16 +17,7 @@ public class SlideShowController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        // 检测鼠标点击或触摸屏幕
-        if (Input.GetMouseButtonDown(0)) // 0 表示左键点击
-        {
-            ShowNextSlide();
-        }
-    }
-
-    void ShowNextSlide()
+    public void ShowNextSlide()
     {
         if (slides.Count == 0) return;
 
