@@ -87,4 +87,9 @@ public class TitleScreenUI : MonoBehaviour
         tmpText.gameObject.SetActive(false);
         buttonsParent.SetActive(true);
     }
+
+    public void OnExitButton()
+    {
+        Application.Quit();
+    }
 }

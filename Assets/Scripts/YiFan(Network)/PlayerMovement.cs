@@ -1,6 +1,7 @@
 using System;
 using Fusion;
 using UnityEngine;
+using LPSurvivalEngine;
 
 public class PlayerMovement : NetworkBehaviour
 {
@@ -72,9 +73,16 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (Input.GetButtonDown("Jump"))
         {
-            _jumpPressed = true;
+            if (GetComponent<HealthSystem>().stamina.currentValue > 20f)
+            {
+                _jumpPressed = true;
+                if (_controller.isGrounded)
+                {
+                    GetComponent<HealthSystem>().stamina.Subtract(20f);
+                }
+            }
         }
-        if(Input.GetButton("Sprint") && isMoving){
+        if((Input.GetButton("Sprint") && isMoving) && GetComponent<HealthSystem>().stamina.currentValue > 0){
                 targetFOV = sprintFOV;
                 targetSpeed = sprintSpeed;
                 issprinting = true;

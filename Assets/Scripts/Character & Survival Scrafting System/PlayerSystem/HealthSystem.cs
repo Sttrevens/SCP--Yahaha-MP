@@ -34,6 +34,8 @@ namespace LPSurvivalEngine
         public float staminaHealthdecay;
         public float oxygenHealthdecay;
 
+        public bool isInOxygenRoom;
+
         [Header("Assignments")]
 
         public GameObject Player;
@@ -152,8 +154,21 @@ namespace LPSurvivalEngine
         {
             // 使用 Time.fixedDeltaTime 替代 Time.deltaTime
             stamina.Add(stamina.regenrate * Time.fixedDeltaTime);
-            oxygen.Subtract(oxygen.decayRate * Time.fixedDeltaTime);
+            if (isInOxygenRoom)
+            {
+                oxygen.Add(oxygen.regenrate * Time.fixedDeltaTime);
+            }
+            else
+            {
+                oxygen.Subtract(oxygen.decayRate * Time.fixedDeltaTime);
+            }
             sanity.Subtract(sanity.regenrate * Time.fixedDeltaTime);
+
+            if (GetComponent<PlayerMovement>().issprinting)
+            {
+                stamina.Subtract(stamina.decayRate * Time.fixedDeltaTime);
+                Debug.Log("subtract stamina");
+            }
 
             if ((stamina.currentValue >= stamina.maxValue * 0.8f) && (oxygen.currentValue >= oxygen.maxValue * 0.8f) && (sanity.currentValue >= sanity.maxValue * 0.5f))
                 health.Add(health.regenrate * Time.fixedDeltaTime);

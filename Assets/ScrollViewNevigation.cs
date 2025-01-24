@@ -72,6 +72,14 @@ public class ScrollViewNevigation : MonoBehaviour
 
         var localPosition = target.localPosition + pivotOffset;
 
+        if (target == null) {
+            Debug.LogError("Target RectTransform is null");
+            return Vector3.zero;
+        }
+        if (target.parent == null) {
+            Debug.LogError("Target parent is null");
+            return Vector3.zero;
+        }
         return target.parent.TransformPoint(localPosition);
     }
 }

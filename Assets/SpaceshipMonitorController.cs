@@ -74,7 +74,7 @@ public class SpaceshipMonitorController : MonoBehaviour
     {
         if (totalScoreText == null || scoreManager == null) return;
 
-        totalScoreText.text = "Total Viewers: " + scoreManager.totalScore.ToString("F0") + "\n" + "Total Income: " + "\n" + (scoreManager.totalScore / 20).ToString("F2") + " $";
+        totalScoreText.text = "Total Viewers: " + scoreManager.totalScore.ToString("F0") + "\n" + "Total Income: " + "\n" + (scoreManager.totalScore / 240).ToString("F2") + " $";
     }
 
     private void UpdateRoomName()

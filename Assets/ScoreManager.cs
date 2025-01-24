@@ -6,16 +6,26 @@ using LPSurvivalEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-
-    // �洢���� CameraController ������
+    // 洢 CameraController 
     private List<ConeDetection> cameraControllers = new List<ConeDetection>();
 
-    // ��ǰ�ܷ�
+    // ǰܷ
     public float totalScore = 0f;
+    private float timer = 0f;
 
     void Update()
     {
-        // ÿ֡�����ܷ�
+        // 每帧增加计时器
+        timer += Time.deltaTime;
+        
+        // 每秒固定增加1分
+        if (timer >= 1f)
+        {
+            totalScore += 1f;
+            timer = 0f;
+        }
+
+        // 保持原有的分数计算逻辑
         CalculateTotalScore();
     }
 
@@ -23,11 +33,11 @@ public class ScoreManager : MonoBehaviour
     {
         if (cameraControllers.Count != 0)
         {
-            // ��շ���
+            //շ
             totalScore = 0f;
         }
 
-        // ��ȡ�����е����� CameraController ���
+        // ȡе CameraController 
         cameraControllers.Clear();
         var allCameras = FindObjectsOfType<ConeDetection>();
         foreach (var camera in allCameras) {
@@ -36,15 +46,14 @@ public class ScoreManager : MonoBehaviour
             }
         }
 
-        // �������� CameraController ��ȡ accumulatedScore
+        //  CameraController ȡ accumulatedScore
         foreach (var cameraController in cameraControllers)
         {
-            // ȷ�� CameraController ���� accumulatedScore ����
+            // ȷ CameraController accumulatedScore
             if (cameraController != null)
             {
-                totalScore += cameraController.accumulatedScore; // ���� accumulatedScore �ǹ�����
+                totalScore += cameraController.accumulatedScore; // accumulatedScore ǹ
             }
         }
     }
-
 }

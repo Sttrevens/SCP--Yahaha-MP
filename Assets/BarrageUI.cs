@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Fusion;
 
-public class BarrageUI : MonoBehaviour
+public class BarrageUI : NetworkBehaviour
 {
     public ScrollRect scroll_rect;//滚动区域
     public ScrollViewNevigation scrollViewNevigation;//用于滚动缓动动画的插件
@@ -20,20 +21,22 @@ public class BarrageUI : MonoBehaviour
     double min;//最小弹幕出现速度
     double max;//最大弹幕出现速度
     public bool isStop = true;//是否弹幕滚动停止了
-    void Start(){
+    public override void Spawned(){
         // MessageCenter.Instance.RigisterListener(MessageName.INSERT_BARRAGE, InsertBarrage);
         Debug.Log("弹幕UI初始化");
-        barrageClass = new BarrageClass();
-        userNameClass = new UserNameClass();
+        //barrageClass = new BarrageClass();
+        //userNameClass = new UserNameClass();
         // 实例化的同时就拿到弹幕
-        barrageClass = BarrageClass.instance;
-        Debug.Log("弹幕类:" + barrageClass);
-        Debug.Log("是否成功获取到单例: " + (barrageClass != null));
+        //barrageClass = BarrageClass.instance;
+        //Debug.Log("弹幕类:" + barrageClass);
+        //Debug.Log("是否成功获取到单例: " + (barrageClass != null));
         //设置弹幕类型为新手
+        StartCoroutine(createItem());
         
     }
     void Update(){
-        SetBarrageList(BarrageType.day);
+        //SetBarrageList(BarrageType.day);
+        
     }
 
 
@@ -140,21 +143,23 @@ public class BarrageUI : MonoBehaviour
     }
         //创建弹幕UI
     IEnumerator createItem(){
-    GameObject _obj = Instantiate(item, scroll_rect.content.transform, false);
-    _obj.SetActive(true);
+    NetworkObject _obj = Runner.Spawn(item, scroll_rect.content.transform.position, Quaternion.identity);
+    //_obj.SetActive(true);
     
-    RectTransform rt = _obj.GetComponent<RectTransform>();
+    RectTransform rt = _obj.gameObject.GetComponent<RectTransform>();
+    rt.SetParent(scroll_rect.content.transform);
     rt.anchoredPosition3D = Vector3.zero; // 重置锚点位置
     rt.localRotation = Quaternion.identity;
     rt.localScale = Vector3.one;
 
-    _obj.GetComponent<BarrageItem>().setData(curBarrage);
+    _obj.gameObject.GetComponent<BarrageItem>().setData(curBarrage);
     
     // 强制刷新布局
     LayoutRebuilder.ForceRebuildLayoutImmediate(scroll_rect.content);
     
-    yield return new WaitForEndOfFrame();
-    scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, ((float)min)/2));
+    yield return new WaitForSeconds(3.5f);
+    scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, 3f/2));
+    StartCoroutine(createItem());
 }
 
 }

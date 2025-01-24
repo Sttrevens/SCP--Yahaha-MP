@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 585600008960489867}
   - component: {fileID: 5992168548098818249}
   - component: {fileID: 4869235440298430757}
-  m_Layer: 5
+  m_Layer: 17
   m_Name: NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 46, y: -52.5}
-  m_SizeDelta: {x: 84, y: 0}
+  m_AnchoredPosition: {x: 112, y: -77}
+  m_SizeDelta: {x: 216, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &585600008960489867
 CanvasRenderer:
@@ -68,11 +68,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 28
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 144
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -106,7 +106,9 @@ GameObject:
   - component: {fileID: 6063388908347468392}
   - component: {fileID: 7542018857763437425}
   - component: {fileID: 491615347949889802}
-  m_Layer: 5
+  - component: {fileID: 189615350198532191}
+  - component: {fileID: 618022852427730105}
+  m_Layer: 17
   m_Name: BarrageItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,6 +190,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userName: {fileID: 5992168548098818249}
   text: {fileID: 6853888268700528491}
+--- !u!114 &189615350198532191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5698917604995582042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2742503243
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 618022852427730105}
+--- !u!114 &618022852427730105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5698917604995582042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 1
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &6853414820727671880
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +236,7 @@ GameObject:
   - component: {fileID: 527599235908167894}
   - component: {fileID: 1569483322379446934}
   - component: {fileID: 6853888268700528491}
-  m_Layer: 5
+  m_Layer: 17
   m_Name: DescText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,8 +259,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 88, y: -37}
-  m_SizeDelta: {x: 56, y: 0}
+  m_AnchoredPosition: {x: 220, y: -37}
+  m_SizeDelta: {x: 144, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &527599235908167894
 MonoBehaviour:
@@ -270,11 +306,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 28
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 144
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
