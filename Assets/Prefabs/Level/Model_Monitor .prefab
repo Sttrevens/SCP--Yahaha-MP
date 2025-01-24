@@ -6401,7 +6401,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -387.7926, y: -126.326904, z: -391.92825, w: -70.308624}
+  m_margin: {x: -387.7926, y: -126.326904, z: -938.22595, w: -70.308624}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6865,6 +6865,7 @@ GameObject:
   - component: {fileID: 8620820370202928642}
   - component: {fileID: 8620820370202928653}
   - component: {fileID: 8620820370202928652}
+  - component: {fileID: 4465541948068621324}
   m_Layer: 15
   m_Name: 'Model_Monitor '
   m_TagString: Untagged
@@ -6971,6 +6972,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43073416476709516, guid: b963f5ecb5e0aec49a4f0978977466f7, type: 2}
+--- !u!114 &4465541948068621324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8620820370202928654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c8299d5f35dd1c49accd586ab00e7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNamesText: {fileID: 533617740380144538}
+  totalScoreText: {fileID: 5156724820247739610}
+  roomNameText: {fileID: 1410262912462182986}
 --- !u!1 &8620820370209862099
 GameObject:
   m_ObjectHideFlags: 0
@@ -7710,7 +7726,7 @@ MonoBehaviour:
   _IsStarted: 0
   LevelOffsets:
   - {x: -33.86, y: -2.66, z: -76.06}
-  - {x: 7.83, y: -0.28, z: 4.29}
+  - {x: -1.25, y: -0.66, z: -7.97}
   Levels:
   - {fileID: 3421531085523382731, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
   - {fileID: 5695928751618981631, guid: 4a0d56d0ce8edd14294504042ef4039b, type: 3}
