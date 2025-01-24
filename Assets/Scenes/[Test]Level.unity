@@ -416,7 +416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 87735164307631481, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Metal
       objectReference: {fileID: 0}
     - target: {fileID: 794326883087177781, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
       propertyPath: subtitleText
@@ -840,6 +840,14 @@ PrefabInstance:
       propertyPath: DefaultRoomName
       value: jiojio
       objectReference: {fileID: 0}
+    - target: {fileID: 4453793608586719008, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4453793608586719008, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4f7b0b3ef76cd8d4ebbbbc08c21daf30, type: 3}
     - target: {fileID: 4807856191276397403, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1124,7 +1132,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9163107452615118613, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: BGMClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4f7b0b3ef76cd8d4ebbbbc08c21daf30, type: 3}
+    - target: {fileID: 9163107452615118613, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: bgmVolume
+      value: 0.3
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4453793608586719008, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5570560705801825052, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}

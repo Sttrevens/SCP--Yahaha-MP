@@ -28,6 +28,7 @@ public class AudioManager : MonoBehaviour
     //private AudioSource sfxSource;
     public float bgmVolume = 1f; 
     public float sfxVolume = 1f; 
+    public AudioClip BGMClip;
 
     [SerializeField] private AudioClip startingMenuSound;
     [SerializeField] private AudioClip startButtonSound;
@@ -48,6 +49,7 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         bgmSource = gameObject.AddComponent<AudioSource>();
+        bgmSource.clip = BGMClip;
         bgmSource.loop = true;
         bgmSource.volume = bgmVolume;
         bgmSource.playOnAwake = false;
@@ -79,21 +81,31 @@ public class AudioManager : MonoBehaviour
         bgmVolume = Mathf.Clamp(volume, 0f, 1f);
         bgmSource.volume = bgmVolume;
     }
-
+    /// <summary>
+    /// 播放音效
+    /// </summary>
+    /// <param name="SFXobject"></param>
+    /// <param name="sfxClip"></param>
+    /// <param name="volume"></param>
     public void PlaySFX(GameObject SFXobject, AudioClip sfxClip, float volume = 1f)
     {
+        // 获取音效组件
         AudioSource newSfxSource = SFXobject.GetComponent<AudioSource>();
 
+        // 如果音效组件不存在，则添加一个
         if (newSfxSource == null)
         {
+            // 添加音效组件
             newSfxSource = SFXobject.AddComponent<AudioSource>();
             newSfxSource.loop = false;
             newSfxSource.playOnAwake = false;
         }
 
+        // 设置音效的音量
         newSfxSource.volume = sfxVolume * volume;
         newSfxSource.spatialBlend = 1;
 
+        // 播放音效
         newSfxSource.PlayOneShot(sfxClip, sfxVolume);
     }
 
