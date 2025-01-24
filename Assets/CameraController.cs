@@ -31,7 +31,7 @@ namespace LPSurvivalEngine
         private Vector3 cameraPosition;
         private Quaternion cameraRotation;
 
-        [SerializeField] private bool isRightMouseButtonDown = false;
+        public bool isRightMouseButtonDown = false;
 
         [Header("Durability Settings")]
         [SerializeField] private float durabilityDrainPerSecond = 0.2f;

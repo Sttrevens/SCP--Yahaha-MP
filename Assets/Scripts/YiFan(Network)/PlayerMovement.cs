@@ -24,13 +24,15 @@ public class PlayerMovement : NetworkBehaviour
     public Camera Camera;
     private float targetFOV = 40f;
     private float targetSpeed = 6f;
-    private float defaultFOV = 40f;
-    private float sprintFOV = 60f;
-    private float defaultSpeed = 4f;
+    [SerializeField] private float defaultFOV = 40f;
+    [SerializeField] private float sprintFOV = 60f;
+    [SerializeField] private float defaultSpeed = 4f;
     [SerializeField] private float sprintSpeed = 6f;
-    private float fovChangeSpeed = 4f;
-    private float speedChangeSpeed = 4f;
+    [SerializeField] private float fovChangeSpeed = 4f;
+    [SerializeField] private float speedChangeSpeed = 4f;
     public float PlayerSpeed;
+
+    private bool isMoving;
 
     public float JumpForce = 5f;
     public float GravityValue = -9.81f;
@@ -72,7 +74,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             _jumpPressed = true;
         }
-        if(Input.GetButton("Sprint")){
+        if(Input.GetButton("Sprint") && isMoving){
                 targetFOV = sprintFOV;
                 targetSpeed = sprintSpeed;
                 issprinting = true;
@@ -125,6 +127,11 @@ public class PlayerMovement : NetworkBehaviour
         {
             // Only adjust the forward direction slightly based on the move direction when moving.
             transform.forward = Vector3.Slerp(transform.forward, move.normalized, 0.1f);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
         }
 
         Quaternion bodyTargetRotation = Quaternion.Euler(0, Camera.transform.rotation.eulerAngles.y, 0);

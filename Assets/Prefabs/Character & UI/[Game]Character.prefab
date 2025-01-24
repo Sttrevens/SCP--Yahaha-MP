@@ -1467,6 +1467,7 @@ GameObject:
   - component: {fileID: 4015699918195571167}
   - component: {fileID: 64363743347778280}
   - component: {fileID: 7181534300083372722}
+  - component: {fileID: 2904240422611391486}
   m_Layer: 8
   m_Name: '[Game]Character'
   m_TagString: Player
@@ -1588,6 +1589,7 @@ MonoBehaviour:
   - {fileID: -8306276541168044105}
   - {fileID: 7358732985660825714}
   - {fileID: 4082337287283386946}
+  - {fileID: 2904240422611391486}
 --- !u!114 &1122259457492835225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1649,7 +1651,12 @@ MonoBehaviour:
   headRotationRatio: 0.7
   spineRotationRatio: 0.3
   Camera: {fileID: 0}
+  defaultFOV: 60
+  sprintFOV: 90
+  defaultSpeed: 4
   sprintSpeed: 8
+  fovChangeSpeed: 4
+  speedChangeSpeed: 4
   PlayerSpeed: 4
   JumpForce: 5
   GravityValue: -9.81
@@ -1827,7 +1834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mudFootstepClip: {fileID: 8300000, guid: d66ac1d301feeda489935172cff8ca26, type: 3}
   metalFootstepClip: {fileID: 8300000, guid: 6d096067e7c1234418d5ab1e72291c42, type: 3}
-  raycastDistance: 10.9
+  raycastDistance: 2
 --- !u!82 &7181534300083372722
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1924,6 +1931,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2904240422611391486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae50875da4898c4b9377e801b262d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PlayerName: Default Player
 --- !u!1 &5385546817467512204
 GameObject:
   m_ObjectHideFlags: 0

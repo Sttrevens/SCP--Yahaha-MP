@@ -12,12 +12,13 @@ public class SpaceshipMonitorController : MonoBehaviour
     [SerializeField] private TMP_Text roomNameText;
 
     private ScoreManager scoreManager;
-    private FusionBootstrap bootstrap;
+    private NetworkStart networkStart;
 
     void Start()
     {
         // Find required components
         scoreManager = FindObjectOfType<ScoreManager>();
+        networkStart = FindObjectOfType<NetworkStart>();
 
         // Initialize UI texts
         if (playerNamesText == null || totalScoreText == null || roomNameText == null)
@@ -35,16 +36,37 @@ public class SpaceshipMonitorController : MonoBehaviour
 
     private void UpdatePlayerNames()
     {
-        if (playerNamesText == null) return;
+        if (playerNamesText == null)
+        {
+            Debug.LogWarning("PlayerNamesText is null in SpaceshipMonitorController");
+            return;
+        }
 
         PlayerData[] players = FindObjectsOfType<PlayerData>();
+        Debug.Log($"Found {players.Length} players in the scene");
+
         string names = "";
 
         foreach (PlayerData player in players)
         {
-            names += player.PlayerName + "\n";
+            if (player == null)
+            {
+                Debug.LogWarning("Found null PlayerData object");
+                continue;
+            }
+
+            if (string.IsNullOrEmpty(player.PlayerName))
+            {
+                Debug.LogWarning("Player has empty or null name");
+                names += "Unknown Player\n";
+            }
+            else
+            {
+                names += player.PlayerName + "\n";
+            }
         }
 
+        Debug.Log($"Updating player names text with: {names}");
         playerNamesText.text = names;
     }
 
@@ -57,9 +79,34 @@ public class SpaceshipMonitorController : MonoBehaviour
 
     private void UpdateRoomName()
     {
-        if (roomNameText == null || bootstrap == null) return;
+        if (roomNameText == null)
+        {
+            Debug.LogWarning("roomNameText is null in SpaceshipMonitorController");
+            return;
+        }
 
-bootstrap = FindObjectOfType<FusionBootstrap>();
-        roomNameText.text = "Current Room Name: " + "\n" + bootstrap.DefaultRoomName;
+        if (networkStart == null)
+        {
+            Debug.Log("networkStart is null, searching for NetworkStart instance");
+            networkStart = FindObjectOfType<NetworkStart>();
+        }
+
+        if (networkStart == null)
+        {
+            Debug.LogError("Failed to find NetworkStart instance");
+            roomNameText.text = "Current Room Name: \nNot Available";
+            return;
+        }
+
+        if (string.IsNullOrEmpty(networkStart.roomName))
+        {
+            Debug.LogWarning("roomName is null or empty");
+            roomNameText.text = "Current Room Name: \nUnnamed Room";
+        }
+        else
+        {
+            Debug.Log($"Updating room name with: {networkStart.roomName}");
+            roomNameText.text = "Current Room Name: \n" + networkStart.roomName;
+        }
     }
 }

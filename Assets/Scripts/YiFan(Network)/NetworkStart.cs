@@ -5,6 +5,8 @@ public class NetworkStart : MonoBehaviour
 {
     private FusionBootstrap bootstrap;
 
+    public string roomName;
+
     private void Awake()
     {
         bootstrap = GetComponent<FusionBootstrap>();
@@ -13,6 +15,8 @@ public class NetworkStart : MonoBehaviour
         {
             bootstrap.DefaultRoomName = TitleScreenUI.roomName;
         }
+
+        roomName = bootstrap.DefaultRoomName;
         bootstrap.StartSharedClient();
     }
 }

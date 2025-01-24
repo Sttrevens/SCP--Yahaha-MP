@@ -59,7 +59,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         {
             return string.Format("{0}", IsPulled ? "Go home" : "Go to the Destination");
         }
-        return string.Format("{0}", "Select a level first");
+        return string.Format("{0}", "Select a destination first");
     }
 
     public void OnInteract()
@@ -84,7 +84,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 screenFade.TriggerScreenFade(false);
                 TakeoffController.Instance.Rpc_OnInteract();
                 LevelManager.Instance.LoadLevel();
-                yield return RotateToAngle(initialRotation.eulerAngles.x);
+                yield return RotateToAngle(19.303f);
             while (TakeoffController.Instance.IsFlying)
             {
                 yield return null;
@@ -92,7 +92,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
 
             if (ReciveIsFlying && !isRotating)
             {
-                OnButtonPressed?.Invoke();
+                door.GetComponent<EnterRoom>().StartRotation();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
                 SetState(SpaceshipState.Landing);
@@ -105,7 +105,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 IsPulled = true;
                 screenFade.TriggerScreenFade(true);
                 yield return RotateToAngle(rotationAngle);
-                OnButtonReleased?.Invoke();
+                door.GetComponent<EnterRoom>().ResetRotation();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
 
@@ -118,7 +118,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                     yield return null;
                 }
                 LevelManager.Instance.DestroyLevel();
-                yield return RotateToAngle(initialRotation.eulerAngles.x);
+                yield return RotateToAngle(19.303f);
                 SetState(SpaceshipState.PreparingForTakeoff);
             }
         }

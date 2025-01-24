@@ -4,60 +4,78 @@ using UnityEngine;
 public class EnterRoom : MonoBehaviour
 {
     [Header("Rotation Settings")]
-    public float rotationSpeed = 100f;  // Ã¿ÃëÐý×ªµÄËÙ¶È£¨¶È/Ãë£©
-    public float rotationAmount = -80.0f;  // Ä¿±êÐý×ª½Ç¶È
+    public float rotationSpeed = 100f;  // Ã¿×ªÙ¶È£/ë£©
+    public float rotationAmount = -80.0f;  // Ä¿×ªÇ¶
 
-    private bool isRotating = false;  // ÊÇ·ñÕýÔÚÐý×ª
-    private Quaternion initialRotation;  // ³õÊ¼Ðý×ª
-    private Quaternion targetRotation;   // Ä¿±êÐý×ª
+    private bool isRotating = false;  // Ç·×ª
+    private Quaternion initialRotation;  //Ê¼×ª
+    private Quaternion targetRotation;   // Ä¿×ª
 
     void Start()
     {
-        // ³õÊ¼»¯Ðý×ª×´Ì¬
+        Debug.Log("[EnterRoom] Initializing rotation settings");
+        //Ê¼×ª×´Ì¬
         initialRotation = transform.rotation;
         targetRotation = Quaternion.Euler(rotationAmount, initialRotation.eulerAngles.y, initialRotation.eulerAngles.z);
+        Debug.Log($"[EnterRoom] Initial rotation: {initialRotation.eulerAngles}, Target rotation: {targetRotation.eulerAngles}");
     }
 
     /// <summary>
-    /// Æ½»¬Ðý×ªµ½Ä¿±êÎ»ÖÃ
+    /// Æ½×ªÄ¿Î»
     /// </summary>
     public void StartRotation()
     {
+        Debug.Log("[EnterRoom] StartRotation called");
         if (!isRotating)
         {
+            Debug.Log("[EnterRoom] Starting rotation to target");
             StartCoroutine(RotateToTarget(targetRotation));
+        }
+        else
+        {
+            Debug.Log("[EnterRoom] Rotation already in progress, ignoring request");
         }
     }
 
     /// <summary>
-    /// Æ½»¬¸´Î»µ½³õÊ¼Î»ÖÃ
+    /// Æ½Î»Ê¼Î»
     /// </summary>
     public void ResetRotation()
     {
+        Debug.Log("[EnterRoom] ResetRotation called");
         if (!isRotating)
         {
+            Debug.Log("[EnterRoom] Starting rotation to initial position");
             StartCoroutine(RotateToTarget(initialRotation));
+        }
+        else
+        {
+            Debug.Log("[EnterRoom] Rotation already in progress, ignoring request");
         }
     }
 
     /// <summary>
-    /// Æ½»¬Ðý×ªµ½Ö¸¶¨Ä¿±ê
+    /// Æ½×ªÖ¸Ä¿
     /// </summary>
-    /// <param name="target">Ä¿±êÐý×ª</param>
+    /// <param name="target">Ä¿×ª</param>
     IEnumerator RotateToTarget(Quaternion target)
     {
+        Debug.Log($"[EnterRoom] Starting RotateToTarget coroutine. Target rotation: {target.eulerAngles}");
         isRotating = true;
 
-        // ÖðÖ¡²åÖµÐý×ª
+        // Ö¡Öµ×ª
         while (Quaternion.Angle(transform.rotation, target) > 0.1f)
         {
+            Debug.Log($"[EnterRoom] Current rotation: {transform.rotation.eulerAngles}, Remaining angle: {Quaternion.Angle(transform.rotation, target)}");
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed * Time.deltaTime);
-            yield return null;  // µÈ´ýÏÂÒ»Ö¡
+            yield return null;  // È´Ò»Ö¡
         }
 
-        // È·±£×îÖÕÐý×ªÍêÈ«¶ÔÆë
+        // È·×ªÈ«
         transform.rotation = target;
+        Debug.Log($"[EnterRoom] Rotation complete. Final rotation: {transform.rotation.eulerAngles}");
 
-        isRotating = false; // Ðý×ªÍê³É
+        isRotating = false; //×ª
+        Debug.Log("[EnterRoom] Rotation finished");
     }
 }

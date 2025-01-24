@@ -109,7 +109,11 @@ public class TakeoffController : NetworkBehaviour
 
     private IEnumerator FadeOutSound()
     {
-        return FadeSound(audioSource.volume, 0f, false);
+        if (audioSource != null)
+        {
+            return FadeSound(audioSource.volume, 0f, false);
+        }
+        return FadeSound(1f, 0f, false);
     }
 
     private IEnumerator FadeSound(float startVolume, float targetVolume, bool playOnStart)
