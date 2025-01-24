@@ -78,12 +78,13 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         if (CurrentState == SpaceshipState.PreparingForTakeoff)
         {
             yield return RotateToAngle(rotationAngle);
-            IsPulled = true;
+            IsPulled = false;
             AudioManager.Instance.PlayElevatorShakeSound(spaceship);
                 yield return new WaitForSeconds(2f);
                 screenFade.TriggerScreenFade(false);
                 TakeoffController.Instance.Rpc_OnInteract();
                 LevelManager.Instance.LoadLevel();
+                yield return RotateToAngle(initialRotation.eulerAngles.x);
             while (TakeoffController.Instance.IsFlying)
             {
                 yield return null;
@@ -103,7 +104,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
             {
                 IsPulled = true;
                 screenFade.TriggerScreenFade(true);
-                yield return RotateToAngle(0f);
+                yield return RotateToAngle(rotationAngle);
                 OnButtonReleased?.Invoke();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
@@ -117,6 +118,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                     yield return null;
                 }
                 LevelManager.Instance.DestroyLevel();
+                yield return RotateToAngle(initialRotation.eulerAngles.x);
                 SetState(SpaceshipState.PreparingForTakeoff);
             }
         }
@@ -126,7 +128,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
     {
         isRotating = true;
 
-        Quaternion targetRotation = Quaternion.Euler(targetAngle, initialRotation.eulerAngles.y, initialRotation.eulerAngles.z);
+        Quaternion targetRotation = Quaternion.Euler(targetAngle, 180f, initialRotation.eulerAngles.z);
         while (Quaternion.Angle(transform.localRotation, targetRotation) > 0.1f)
         {
             transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);

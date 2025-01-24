@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 8035343482454445388}
   - component: {fileID: 8968216287122142816}
   - component: {fileID: 9029582911213777836}
+  - component: {fileID: 3507122436015405779}
   m_Layer: 0
   m_Name: BobojianSystem
   m_TagString: Untagged
@@ -165,6 +166,19 @@ MonoBehaviour:
   - {fileID: 1178209540141898313}
   NetworkedBehaviours:
   - {fileID: 8968216287122142816}
+--- !u!114 &3507122436015405779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882480804854945561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9805f1d9b37699542897f80ab795bae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalScore: 0
 --- !u!1 &2149265824382894569
 GameObject:
   m_ObjectHideFlags: 0
@@ -2137,6 +2151,11 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2940198896836578809, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
+      propertyPath: m_text
+      value: "Project 8 Demo. Version 0.1.250124.01.\nFor testing purposes only.
+        \nThe final quality of the game is not represented."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940198896836578809, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
@@ -2236,6 +2255,10 @@ PrefabInstance:
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+    - target: {fileID: 3643164792094818946, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
     - target: {fileID: 3643164792094818946, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
@@ -2509,6 +2532,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5052536740404849922, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5302113636270639567, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -3060,6 +3087,10 @@ PrefabInstance:
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+    - target: {fileID: 9204839236072573172, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
     - target: {fileID: 9204839236072573172, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1

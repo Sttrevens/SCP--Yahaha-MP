@@ -6,8 +6,6 @@ using LPSurvivalEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    // TMP Text ������ʾ�ܷ�
-    [SerializeField] private TMP_Text scoreText;
 
     // �洢���� CameraController ������
     private List<ConeDetection> cameraControllers = new List<ConeDetection>();
@@ -15,24 +13,10 @@ public class ScoreManager : MonoBehaviour
     // ��ǰ�ܷ�
     public float totalScore = 0f;
 
-    void Start()
-    {
-        // ȷ�� Score Text �Ѿ�����
-        if (scoreText == null)
-        {
-            Debug.LogError("Score Text not assigned in ScoreManager!");
-            return;
-        }
-
-        // ��ʼ��������ʾ
-        UpdateScoreDisplay();
-    }
-
     void Update()
     {
         // ÿ֡�����ܷ�
         CalculateTotalScore();
-        UpdateScoreDisplay();
     }
 
     void CalculateTotalScore()
@@ -63,10 +47,4 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    // ���·�����ʾ
-    void UpdateScoreDisplay()
-    {
-        // ����������µ� TMP Text ��
-        scoreText.text = "Total Viewers: " + totalScore.ToString("F0");
-    }
 }
