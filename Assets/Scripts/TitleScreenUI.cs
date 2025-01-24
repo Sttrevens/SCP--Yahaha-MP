@@ -8,12 +8,14 @@ public class TitleScreenUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tmpText; // ��ʾ���ֵ� TMP ����
     [SerializeField] private TextMeshProUGUI roomNameText; // ��ʾ�������ֵ� TMP ����
     [SerializeField] private TMP_InputField inputFieldTMP;
+    [SerializeField] private TMP_InputField playerNameInputField;
 
     // ����ť��Ӧ������
     private const string creatingGameText = "Creating a Game...";
     private const string joiningGameText = "Joining a Game...";
     private const string destinationText = "Going to the Destination...";
     public static string roomName;
+    public static string playerName;
 
     public string gameSceneName;
 
@@ -58,6 +60,7 @@ public class TitleScreenUI : MonoBehaviour
         ShowText(displayText); // ��ʾ��Ӧ����
 
             roomName = inputFieldTMP.text;
+            playerName = playerNameInputField.text;
             SceneManager.LoadScene(gameSceneName);
     }
 

@@ -52,8 +52,9 @@ public class ExitMenu : MonoBehaviour
     // 继续游戏
     public void HideExitMenu()
     {
-        exitMenuPanel.SetActive(false);
         playerController.ToggleCursor(false);
+        exitMenuPanel.SetActive(false);
+        
         //Time.timeScale = 1; 
 
         isPaused = false;
