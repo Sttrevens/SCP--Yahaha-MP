@@ -1,0 +1,25 @@
+*** This Assets Required ShaderGraph to work.
+That mean you need to download pakage Lightweight RP , Shader Graph in Window > Pakage Manager
+and then set the Pipeline to Lightweight RP in Edit > Project Settings > Graphics > insert Lightweight RP that you have downloaded in the Pipeline settings tab
+
+The Particle Effects Divided in to 2 type
+
+1. use material from Shader Graph (you can edit the colors and some setting in material in the folder ShaderGraph > material)
+   *the list of Effects name that use Shader Graph
+	Flame01
+	Flame02
+	IceCrack(Child in freeze01)
+	Darkness
+
+2. use material frome default particles shader (you can edit directly in the Particles setting itself)
+
+Tips
+-Freeze02 If you want to get rid of the blurly thing just uncheck the size over lifetime.
+-Aura If you want it to be brighter go set the alpha of the color, emission rate and size help too or just edit directly in the texture.
+-Darkness Start Size is the canvas of effect.
+
+Most of the texture , sprites have alpha channel or transparency So you can use it overlay.
+All the Particles Mean to use at the Edge of the screen but it can develop in to the other effects as well.
+
+I hope you can make good use of this assets and wish for your best, If you have any question feel free to ask me at twitter.
+Thank you for supporting.
