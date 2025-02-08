@@ -31,6 +31,8 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
     [SerializeField] private GameObject door;
     [SerializeField] private GameObject spaceship;
 
+    public int currentDays = 1;
+
     private void Awake()
     {
      
@@ -96,6 +98,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
                 SetState(SpaceshipState.Landing);
+                IsPulled = true;
             }
         }
         else if (CurrentState == SpaceshipState.Landing)
@@ -120,6 +123,11 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 LevelManager.Instance.DestroyLevel();
                 yield return RotateToAngle(19.303f);
                 SetState(SpaceshipState.PreparingForTakeoff);
+                if (currentDays < 3)
+                {
+                    currentDays++;
+                }
+                IsPulled = false;
             }
         }
     }

@@ -10,15 +10,18 @@ public class SpaceshipMonitorController : MonoBehaviour
     [SerializeField] private TMP_Text playerNamesText;
     [SerializeField] private TMP_Text totalScoreText;
     [SerializeField] private TMP_Text roomNameText;
+    [SerializeField] private TMP_Text dayText;
 
     private ScoreManager scoreManager;
     private NetworkStart networkStart;
+    private ControlSticksController controlSticksController;
 
     void Start()
     {
         // Find required components
         scoreManager = FindObjectOfType<ScoreManager>();
         networkStart = FindObjectOfType<NetworkStart>();
+        controlSticksController = FindObjectOfType<ControlSticksController>();
 
         // Initialize UI texts
         if (playerNamesText == null || totalScoreText == null || roomNameText == null)
@@ -72,9 +75,21 @@ public class SpaceshipMonitorController : MonoBehaviour
 
     private void UpdateTotalScore()
     {
-        if (totalScoreText == null || scoreManager == null) return;
+        if (totalScoreText == null || scoreManager == null || controlSticksController == null) return;
 
-        totalScoreText.text = "Total Viewers: " + scoreManager.accumulatedTotalScore.ToString("F0") + "\n" + "Total Income: " + "\n" + (scoreManager.accumulatedTotalScore / 240).ToString("F2") + " $";
+        totalScoreText.text = "Total Viewers: " + scoreManager.accumulatedTotalScore.ToString("F0") + "\n" + "Total Revenue: " + "\n" + (scoreManager.accumulatedTotalScore / 240).ToString("F2") + "/1000 $";
+        if (controlSticksController.currentDays <= 3)
+        {
+            dayText.text = "Day: " + controlSticksController.currentDays.ToString()  + "/3";
+        }
+        else if (controlSticksController.currentDays > 3 && scoreManager.accumulatedTotalScore >= 1000)
+        {
+            dayText.text = "Day: " + controlSticksController.currentDays.ToString() + "/3" + "\n" + "You reached the target revenue!";
+        }
+        else if (controlSticksController.currentDays > 3 && scoreManager.accumulatedTotalScore < 1000)
+        {
+            dayText.text = "Day: " + controlSticksController.currentDays.ToString() + "/3" + "\n" + "You didn't reach the target revenue! Die in peace in space.";
+        }
     }
 
     private void UpdateRoomName()
