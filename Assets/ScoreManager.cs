@@ -10,27 +10,46 @@ public class ScoreManager : MonoBehaviour
     private List<ConeDetection> cameraControllers = new List<ConeDetection>();
 
     // ǰܷ
-    public float totalScore = 0f;
-    private float timer = 0f;
+    private float totalScore = 0f;
+    private float accumulatedTimerScore = 0f;
+    public float accumulatedTotalScore = 0f;
+
+            private float timer = 0f;
 
     void Update()
     {
-        // 每帧增加计时器
-        timer += Time.deltaTime;
-        
-        // 每秒固定增加1分
-        if (timer >= 1f)
-        {
-            totalScore += 1f;
-            timer = 0f;
-        }
-
-        // 保持原有的分数计算逻辑
         CalculateTotalScore();
     }
 
     void CalculateTotalScore()
     {
+        bool hasLiveCamera = false;
+        
+        // 先检查场景中是否存在符合条件的摄像机
+        foreach (var camera in FindObjectsOfType<ConeDetection>())
+        {
+            if (camera.gameObject.CompareTag("LiveCamera"))
+            {
+                hasLiveCamera = true;
+                break;
+            }
+        }
+
+        // 只有存在符合条件的摄像机时才进行计时加分
+        if (hasLiveCamera)
+        {
+            timer += Time.deltaTime;
+            if (timer >= Random.Range(0.1f, 4f))
+            {
+                accumulatedTimerScore += 1f;
+                timer = 0f;
+            }
+        }
+        else
+        {
+            timer = 0f; // 如果没有符合条件的摄像机，重置计时器
+        }
+
         if (cameraControllers.Count != 0)
         {
             //շ
@@ -53,6 +72,8 @@ public class ScoreManager : MonoBehaviour
             if (cameraController != null)
             {
                 totalScore += cameraController.accumulatedScore; // accumulatedScore ǹ
+                totalScore += accumulatedTimerScore;
+                accumulatedTotalScore = totalScore;
             }
         }
     }

@@ -8,25 +8,27 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Planet_01_Material_Alt
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ALPHATEST_ON
   - _EMISSION
-  m_InvalidKeywords:
-  - _SOFT_BLEND_SWITCH_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: -1
   stringTagMap:
-    RenderType: TransparentCutout
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -91,6 +93,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 700d5d639323b03408165c4dd484dd9a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _TextureSample0:
         m_Texture: {fileID: 2800000, guid: b6204f059d33a5b4096e19632e1c7519, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -103,13 +109,35 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClip: 0
     - _AlphaCutoff: 0.5
+    - _AlphaToMask: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
+    - _Cull: 2
     - _Cutoff: 0.43
+    - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _DstBlendAlpha: 0
+    - _EnvironmentReflections: 1
     - _Float0: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -121,11 +149,16 @@ Material:
     - _Opacity: 0.46
     - _Parallax: 0.02
     - _Planet_Light: 1.75
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _Rim_Intensity: 2.74
+    - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _Soft_Blend_Switch: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
+    - _Surface: 0
     - _TransAmbient: 0.2
     - _TransDirect: 1
     - _TransNormalDistortion: 0.1
@@ -133,9 +166,11 @@ Material:
     - _TransShadow: 0.9
     - _Translucency: 1
     - _UVSec: 0
+    - _WorkflowMode: 1
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 0.4632353, g: 0.9555781, b: 1, a: 0}
     - _Color_Tint: {r: 0.74264705, g: 1, b: 0.84026366, a: 0}
@@ -143,4 +178,18 @@ Material:
     - _EmissionColor: {r: 0.5735294, g: 0.29665318, b: 0, a: 1}
     - _Glow_Tint: {r: 1, g: 0.09558821, b: 0.09558821, a: 0}
     - _Planet_Tint: {r: 0.48099867, g: 0.7352941, b: 0.4000865, a: 0}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &110244039347079833
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7

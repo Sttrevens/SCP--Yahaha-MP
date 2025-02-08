@@ -17,6 +17,6 @@ public class BobojianScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = scoreManager.totalScore.ToString("F0");
+        scoreText.text = scoreManager.accumulatedTotalScore.ToString("F0");
     }
 }
