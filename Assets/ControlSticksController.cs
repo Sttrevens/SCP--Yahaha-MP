@@ -47,7 +47,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         }
     }
 
-    void Start()
+    public override void Spawned()
     {
         CurrentState = SpaceshipState.PreparingForTakeoff;
         initialRotation = transform.localRotation;
@@ -92,9 +92,10 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 yield return null;
             }
 
-            if (ReciveIsFlying && !isRotating)
+            if (!TakeoffController.Instance.IsFlying && !isRotating)
             {
-                door.GetComponent<EnterRoom>().RPC_StartRotation();
+                Debug.Log("[ControlSticksController] StartRotation called");
+                door.GetComponent<EnterRoom>().StartRotation();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
                 SetState(SpaceshipState.Landing);
@@ -108,7 +109,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 IsPulled = true;
                 screenFade.TriggerScreenFade(true);
                 yield return RotateToAngle(rotationAngle);
-                door.GetComponent<EnterRoom>().RPC_ResetRotation();
+                door.GetComponent<EnterRoom>().ResetRotation();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
 
