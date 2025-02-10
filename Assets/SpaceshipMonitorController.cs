@@ -46,7 +46,7 @@ public class SpaceshipMonitorController : MonoBehaviour
         }
 
         PlayerData[] players = FindObjectsOfType<PlayerData>();
-        Debug.Log($"Found {players.Length} players in the scene");
+        //Debug.Log($"Found {players.Length} players in the scene");
 
         string names = "";
 
@@ -69,7 +69,7 @@ public class SpaceshipMonitorController : MonoBehaviour
             }
         }
 
-        Debug.Log($"Updating player names text with: {names}");
+        //Debug.Log($"Updating player names text with: {names}");
         playerNamesText.text = names;
     }
 
@@ -120,7 +120,7 @@ public class SpaceshipMonitorController : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Updating room name with: {networkStart.roomName}");
+            //Debug.Log($"Updating room name with: {networkStart.roomName}");
             roomNameText.text = "Current Room Name: \n" + networkStart.roomName;
         }
     }

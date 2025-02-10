@@ -127,20 +127,20 @@ namespace LPSurvivalEngine
             {
                 inventoryWindow.SetActive(false);
                 onCloseInventory.Invoke();
-                //playerController.ToggleCursor(false);
+                playerController.ToggleCursor(false);
             }
             else if (containerUIWindow.activeInHierarchy)
             {
                 containerUIWindow.SetActive(false);
                 onCloseContainerInventory.Invoke();
-                //playerController.ToggleCursor(false);
+                playerController.ToggleCursor(false);
             }
             else
             {
                 inventoryWindow.SetActive(true);
                 onOpenInventory.Invoke();
                 //ClearSelectedItemWindow();
-                //playerController.ToggleCursor(true);
+                playerController.ToggleCursor(true);
             }
         }
 

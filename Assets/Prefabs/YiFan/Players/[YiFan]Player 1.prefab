@@ -2705,10 +2705,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9cf3c8c2809f7b4baeb6a959d954359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  headBone: {fileID: 0}
+  spineBone: {fileID: 0}
+  maxLookUpAngle: 45
+  maxLookDownAngle: 45
+  headRotationRatio: 0.7
+  spineRotationRatio: 0.3
   Camera: {fileID: 0}
+  defaultFOV: 40
+  sprintFOV: 60
+  defaultSpeed: 4
+  sprintSpeed: 6
+  fovChangeSpeed: 4
+  speedChangeSpeed: 4
   PlayerSpeed: 2
   JumpForce: 5
   GravityValue: -9.81
+  RotationSpeed: 5
+  issprinting: 0
+  cameraRoot: {fileID: 0}
+  upperBodys: []
+  firstPersonCamera: {fileID: 0}
+  _upperBodyRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &2020516845862190081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6046,7 +6064,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

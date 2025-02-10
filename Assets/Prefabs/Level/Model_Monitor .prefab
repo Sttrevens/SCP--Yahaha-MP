@@ -5455,11 +5455,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8620820370157352114}
-  - component: {fileID: 2997949231774179683}
   - component: {fileID: 6221391505468866482}
   - component: {fileID: 3571237309335598528}
   - component: {fileID: 2529441494273440704}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: object_ControlSticks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5482,58 +5481,6 @@ Transform:
   - {fileID: 8625063286094137064}
   m_Father: {fileID: 8620820370202928655}
   m_LocalEulerAnglesHint: {x: 19.303, y: 180, z: 0}
---- !u!114 &2997949231774179683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8620820370157352125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22dc7e0b763f9a64c9dca238dcdd3630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _CurrentState: 0
-  ReciveIsFlying: 0
-  _IsPulled: 0
-  OnButtonPressed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EnterRoom, Assembly-CSharp
-        m_MethodName: StartRotation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnButtonReleased:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EnterRoom, Assembly-CSharp
-        m_MethodName: ResetRotation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  rotationAngle: -6
-  rotationSpeed: 100
-  isRotating: 0
-  screenFade: {fileID: 0}
-  door: {fileID: 0}
-  spaceship: {fileID: 0}
-  currentDays: 1
 --- !u!65 &6221391505468866482
 BoxCollider:
   m_ObjectHideFlags: 0
