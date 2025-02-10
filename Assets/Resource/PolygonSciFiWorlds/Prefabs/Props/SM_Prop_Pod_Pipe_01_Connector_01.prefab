@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 64125141419223592}
   - component: {fileID: 2854967383223916821}
   - component: {fileID: 5154375166177795202}
-  - component: {fileID: 2070172278048164496}
   m_Layer: 0
   m_Name: SM_Prop_Pod_Pipe_01_Connector_01
   m_TagString: Untagged
@@ -127,7 +126,6 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5154375166177795202}
-  - {fileID: 2070172278048164496}
 --- !u!114 &5154375166177795202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,55 +142,3 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
---- !u!114 &2070172278048164496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1133739767499256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22dc7e0b763f9a64c9dca238dcdd3630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _CurrentState: 0
-  ReciveIsFlying: 0
-  _IsPulled: 0
-  OnButtonPressed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EnterRoom, Assembly-CSharp
-        m_MethodName: StartRotation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnButtonReleased:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EnterRoom, Assembly-CSharp
-        m_MethodName: ResetRotation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  rotationAngle: -6
-  rotationSpeed: 100
-  isRotating: 0
-  screenFade: {fileID: 0}
-  door: {fileID: 0}
-  spaceship: {fileID: 0}
-  currentDays: 1

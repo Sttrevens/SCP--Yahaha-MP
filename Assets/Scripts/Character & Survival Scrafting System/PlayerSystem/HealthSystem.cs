@@ -152,8 +152,11 @@ namespace LPSurvivalEngine
 
         void FixedUpdate()
         {
-            // 使用 Time.fixedDeltaTime 替代 Time.deltaTime
-            stamina.Add(stamina.regenrate * Time.fixedDeltaTime);
+            if (!(Input.GetButton("Sprint") && GetComponent<PlayerMovement>().isMoving))
+            {
+                stamina.Add(stamina.regenrate * Time.fixedDeltaTime);
+            }
+
             if (isInOxygenRoom)
             {
                 oxygen.Add(oxygen.regenrate * Time.fixedDeltaTime);
@@ -167,11 +170,11 @@ namespace LPSurvivalEngine
             if (GetComponent<PlayerMovement>().issprinting)
             {
                 stamina.Subtract(stamina.decayRate * Time.fixedDeltaTime);
-                Debug.Log("subtract stamina");
             }
 
-            if ((stamina.currentValue >= stamina.maxValue * 0.8f) && (oxygen.currentValue >= oxygen.maxValue * 0.8f) && (sanity.currentValue >= sanity.maxValue * 0.5f))
-                health.Add(health.regenrate * Time.fixedDeltaTime);
+            //生存版本的血量恢复, 暂时禁用
+            // if ((stamina.currentValue >= stamina.maxValue * 0.8f) && (oxygen.currentValue >= oxygen.maxValue * 0.8f) && (sanity.currentValue >= sanity.maxValue * 0.5f))
+            //     health.Add(health.regenrate * Time.fixedDeltaTime);
 
             if (oxygen.currentValue == 0.0f)
             {

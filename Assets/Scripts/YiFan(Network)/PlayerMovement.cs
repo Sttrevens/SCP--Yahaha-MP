@@ -33,7 +33,7 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private float speedChangeSpeed = 4f;
     public float PlayerSpeed;
 
-    private bool isMoving;
+    public bool isMoving;
 
     public float JumpForce = 5f;
     public float GravityValue = -9.81f;
