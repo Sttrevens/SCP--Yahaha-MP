@@ -150,6 +150,11 @@ public class EnemyAI : NetworkBehaviour
 
     public bool PlayerInSight()
     {
+        if (targetPlayer != null)
+        {
+            return true;
+        }
+        
         Debug.Log("[EnemyAI] Checking for players in sight...");
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {

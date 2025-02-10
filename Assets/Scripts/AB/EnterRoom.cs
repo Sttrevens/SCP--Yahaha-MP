@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using Fusion;
 
-public class EnterRoom : MonoBehaviour
+public class EnterRoom : NetworkBehaviour
 {
     [Header("Rotation Settings")]
     public float rotationSpeed = 100f;  // ÿתٶȣ/룩
@@ -20,10 +21,8 @@ public class EnterRoom : MonoBehaviour
         Debug.Log($"[EnterRoom] Initial rotation: {initialRotation.eulerAngles}, Target rotation: {targetRotation.eulerAngles}");
     }
 
-    /// <summary>
-    /// ƽתĿλ
-    /// </summary>
-    public void StartRotation()
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_StartRotation()
     {
         Debug.Log("[EnterRoom] StartRotation called");
         if (!isRotating)
@@ -37,10 +36,8 @@ public class EnterRoom : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// ƽλʼλ
-    /// </summary>
-    public void ResetRotation()
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_ResetRotation()
     {
         Debug.Log("[EnterRoom] ResetRotation called");
         if (!isRotating)
@@ -54,10 +51,6 @@ public class EnterRoom : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// ƽתָĿ
-    /// </summary>
-    /// <param name="target">Ŀת</param>
     IEnumerator RotateToTarget(Quaternion target)
     {
         Debug.Log($"[EnterRoom] Starting RotateToTarget coroutine. Target rotation: {target.eulerAngles}");

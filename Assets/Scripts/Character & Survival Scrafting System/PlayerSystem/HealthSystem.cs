@@ -186,7 +186,10 @@ namespace LPSurvivalEngine
                 Die();
             }
 
-            UpdateUIAndSync();
+            if (HasStateAuthority)
+            {
+                UpdateUIAndSync();
+            }
         }
 
         private void UpdateUIAndSync()

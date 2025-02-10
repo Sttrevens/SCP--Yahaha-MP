@@ -94,7 +94,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
 
             if (ReciveIsFlying && !isRotating)
             {
-                door.GetComponent<EnterRoom>().StartRotation();
+                door.GetComponent<EnterRoom>().RPC_StartRotation();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
                 SetState(SpaceshipState.Landing);
@@ -108,7 +108,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 IsPulled = true;
                 screenFade.TriggerScreenFade(true);
                 yield return RotateToAngle(rotationAngle);
-                door.GetComponent<EnterRoom>().ResetRotation();
+                door.GetComponent<EnterRoom>().RPC_ResetRotation();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
 
