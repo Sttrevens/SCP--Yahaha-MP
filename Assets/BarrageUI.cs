@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Fusion;
 
-public class BarrageUI : NetworkBehaviour
+public class BarrageUI : MonoBehaviour
 {
     public ScrollRect scroll_rect;//滚动区域
     public ScrollViewNevigation scrollViewNevigation;//用于滚动缓动动画的插件
@@ -21,39 +20,70 @@ public class BarrageUI : NetworkBehaviour
     double min;//最小弹幕出现速度
     double max;//最大弹幕出现速度
     public bool isStop = true;//是否弹幕滚动停止了
-    public override void Spawned(){
-        // MessageCenter.Instance.RigisterListener(MessageName.INSERT_BARRAGE, InsertBarrage);
+    void Start()
+    {
         Debug.Log("弹幕UI初始化");
-        //barrageClass = new BarrageClass();
-        //userNameClass = new UserNameClass();
-        // 实例化的同时就拿到弹幕
-        //barrageClass = BarrageClass.instance;
-        //Debug.Log("弹幕类:" + barrageClass);
-        //Debug.Log("是否成功获取到单例: " + (barrageClass != null));
-        //设置弹幕类型为新手
-        StartCoroutine(createItem());
+        // 只需要创建一次实例
         
-    }
-    void Update(){
-        //SetBarrageList(BarrageType.day);
+        userNameClass = new UserNameClass();
+        if (BarrageClass.instance == null)
+        {
+            BarrageClass.instance = new BarrageClass();  // 确保初始化
+        }
+        // 确保实例化成功
+        if (barrageClass == null)
+        {
+            Debug.LogError("弹幕类初始化失败");
+            return;
+        }
         
+        Debug.Log("弹幕类初始化成功");
+    }
+
+    void Update()
+    {
+        // 添加空检查
+        // if (barrageClass == null)
+        // {
+        //     Debug.LogError("弹幕类为空，重新初始化");
+        //     barrageClass = new BarrageClass();
+        //     return;
+        // }
+        
+        SetBarrageList(BarrageType.day);
     }
 
 
 
-    public void SetBarrageList(BarrageType type) {
-        //拿到类名
+    public void SetBarrageList(BarrageType type) 
+    {
+        Debug.Log($"设置弹幕列表，类型: {type}");
         barrageType = type;
-        //拿到最小和最大弹幕出现速度
-        min = barrageClass.getBarrageByType(type).min;
-        max = barrageClass.getBarrageByType(type).max;
-        //拿到弹幕组合列表
+        
+        if (BarrageClass.instance == null)
+        {
+            Debug.LogError("barrageClass 为空");
+            return;
+        }
+        
+        min = BarrageClass.instance.getBarrageByType(type).min;
+        max = BarrageClass.instance.getBarrageByType(type).max;
+        Debug.Log($"弹幕速度范围: {min} - {max}");
+        
+        if (!BarrageClass.TYPE_Barrage.ContainsKey(barrageType))
+        {
+            Debug.LogError($"找不到类型 {barrageType} 的弹幕列表");
+            return;
+        }
+        
         barrageItemsJson = BarrageClass.TYPE_Barrage[barrageType];
-        //初始化弹幕组合索引
+        Debug.Log($"获取到 {barrageItemsJson.Count} 条弹幕");
+        
         index = 0;
         arrIndex = 0;
-        //如果弹幕滚动停止了，则播放下一组弹幕
-        if(isStop){
+        
+        if(isStop)
+        {
             NextBarrageArr();
         }
     }
@@ -143,23 +173,21 @@ public class BarrageUI : NetworkBehaviour
     }
         //创建弹幕UI
     IEnumerator createItem(){
-    NetworkObject _obj = Runner.Spawn(item, scroll_rect.content.transform.position, Quaternion.identity);
-    //_obj.SetActive(true);
+    GameObject _obj = Instantiate(item, scroll_rect.content.transform, false);
+    _obj.SetActive(true);
     
-    RectTransform rt = _obj.gameObject.GetComponent<RectTransform>();
-    rt.SetParent(scroll_rect.content.transform);
+    RectTransform rt = _obj.GetComponent<RectTransform>();
     rt.anchoredPosition3D = Vector3.zero; // 重置锚点位置
     rt.localRotation = Quaternion.identity;
     rt.localScale = Vector3.one;
 
-    _obj.gameObject.GetComponent<BarrageItem>().setData(curBarrage);
+    _obj.GetComponent<BarrageItem>().setData(curBarrage);
     
     // 强制刷新布局
     LayoutRebuilder.ForceRebuildLayoutImmediate(scroll_rect.content);
     
-    yield return new WaitForSeconds(3.5f);
-    scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, 3f/2));
-    StartCoroutine(createItem());
+    yield return new WaitForEndOfFrame();
+    scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, ((float)min)/2));
 }
 
 }
