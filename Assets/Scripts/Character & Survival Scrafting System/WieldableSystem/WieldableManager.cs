@@ -166,6 +166,11 @@ namespace LPSurvivalEngine
                 Debug.Log($"[SpawnEquippedItem] Equipped item: {equippedItem.wieldablePrefab.name} by {player}");
             }
 
+            if (spawnedItem.TryGetComponent<CameraController>(out var cameraController))
+            {
+                cameraController.gameObject.GetComponentInChildren<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
+            }
+
             spawnedItem.transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
             spawnedItem.transform.localPosition = Vector3.zero;
             spawnedItem.transform.localRotation = Quaternion.identity;
