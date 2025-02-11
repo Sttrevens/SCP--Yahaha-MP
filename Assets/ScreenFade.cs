@@ -69,7 +69,7 @@ public class ScreenFade : MonoBehaviour
 
         // �ڻָ�����������Ļ
         subtitleText.text = "";
-        scoreManager.accumulatedTotalScore = 0;
+        //scoreManager.accumulatedTotalScore = 0;
         fadeScreen.SetActive(false);
     }
     

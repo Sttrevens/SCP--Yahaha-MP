@@ -160,7 +160,8 @@ public class PlayerMovement : NetworkBehaviour
                 // 本地客户端更新上半身旋转
                 if (HasStateAuthority)
                 {
-                    upperBody.rotation = Quaternion.Lerp(upperBody.rotation, Camera.transform.rotation, Time.deltaTime * 10f);
+                    //upperBody.rotation = Camera.transform.rotation;
+                    upperBody.rotation = Quaternion.Lerp(upperBody.rotation, Camera.transform.rotation, Time.deltaTime * 30f);
                     // 同步上半身旋转到服务器
                     upperBodyRotation = upperBody.rotation;
                 }

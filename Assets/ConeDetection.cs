@@ -300,4 +300,15 @@ public class ConeDetection : MonoBehaviour
         corners[7] = center + new Vector3(-extents.x, -extents.y, -extents.z);
         return corners;
     }
+
+    private void OnDestroy()
+{
+    // 在销毁前将当前累积分数回传给 ScoreManager
+    var scoreManager = FindObjectOfType<ScoreManager>();
+    if (scoreManager != null)
+    {
+        int myId = GetInstanceID();
+        scoreManager.OnCameraDestroyed(myId, accumulatedScore);
+    }
+}
 }
