@@ -16,11 +16,10 @@ public class BarrageItem : NetworkBehaviour
         Debug.Log("开始set");
         userNameText = UserNameClass.GetRandomName().nickName + ": ";
         textText = data.desc;
-
-        userName.text = userNameText;
-        text.text = textText;
     }
     void Update() {
+        userName.text = userNameText;
+        text.text = textText;
         GetComponent<RectTransform>().localScale = Vector3.one;
     }
 }
