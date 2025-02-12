@@ -191,8 +191,7 @@ public void PickupItem(ItemObject itemObject)
             Prompt.instance.CustomPrompt(string.Format("{0} has been thrown!", selectedItem.item.name));
             throwedItem = item;
             currentThrowingItemDurability = selectedItem.currentDurability;
-            RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
-            RPC_RequestSpawnItem(Runner.LocalPlayer);
+            RequestStateAuthorityForThrowItem(item);
         }
 
         private ItemDatabase throwedItem;
@@ -258,6 +257,49 @@ private IEnumerator RequestAuthorityLoop()
         Debug.Log($"成功拿到 StateAuthority，尝试次数: {attempts}");
         // 在这之后你可以执行真正需要有权限才可以做的操作，比如 EquipNewItem()
         // EquipWieldableItem();
+    }
+    else
+    {
+        Debug.LogWarning($"多次尝试仍未拿到 StateAuthority，尝试次数: {attempts}");
+        // 你可以做一些 fallback 处理
+    }
+
+    isRequestingAuthority = false;
+    requestAuthorityCoroutine = null;
+}
+
+public void RequestStateAuthorityForThrowItem(ItemDatabase item)
+{
+    // 防止重复开启协程
+    if (!isRequestingAuthority)
+    {
+        requestAuthorityCoroutine = StartCoroutine(RequestThrowAuthorityLoop(item));
+    }
+}
+
+private IEnumerator RequestThrowAuthorityLoop(ItemDatabase item)
+{
+    isRequestingAuthority = true;
+
+    // 你可以自定义一个上限，防止死循环
+    int maxAttempts = 10; 
+    int attempts = 0;
+
+    while (!Object.HasStateAuthority && attempts < maxAttempts)
+    {
+        Object.RequestStateAuthority();
+        attempts++;
+
+        // 等待一小段时间再请求下一次
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    // 请求结束，要么成功，要么超时
+    if (Object.HasStateAuthority)
+    {
+        Debug.Log($"成功拿到 StateAuthority，尝试次数: {attempts}");
+        // 在这之后你可以执行真正需要有权限才可以做的操作，比如 EquipNewItem()
+        RPC_RequestSpawnItem(Runner.LocalPlayer);
     }
     else
     {
