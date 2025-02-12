@@ -5,6 +5,7 @@ using System;
 using Fusion;
 using UnityEngine.SceneManagement;
 using System.Globalization;
+using System.Collections;
 
 namespace LPSurvivalEngine
 {
@@ -219,28 +220,54 @@ public void PickupItem(ItemObject itemObject)
             }
         }
 
-        private void RequestStateAuthorityForEquipItem(PlayerRef player)
-        {
-            // 如果当前客户端没有 StateAuthority，尝试请求
-            if (!HasStateAuthority)
-            {
-                // 此代码段表示此对象在当前客户端上没有控制权限
-                Debug.Log("Requesting StateAuthority for EquipItem.");
-                Object.RequestStateAuthority();
-                if (HasStateAuthority)
-                {
-                    Debug.Log($"This client has StateAuthority over {gameObject.name}");
-                }
-                else
-                {
-                    Debug.Log($"This client does not have StateAuthority over {gameObject.name}");
-                }
-            }// 请求获取该对象的控制权限
-            else
-            {
-                Debug.Log("Already have StateAuthority.");
-            }
-        }
+        private Coroutine requestAuthorityCoroutine;
+private bool isRequestingAuthority = false;
+
+/// <summary>
+/// 如果没有 StateAuthority，则持续发起请求，直到拿到或超过最大尝试次数。
+/// </summary>
+public void RequestStateAuthorityForEquipItem(PlayerRef player)
+{
+    // 防止重复开启协程
+    if (!isRequestingAuthority)
+    {
+        requestAuthorityCoroutine = StartCoroutine(RequestAuthorityLoop());
+    }
+}
+
+private IEnumerator RequestAuthorityLoop()
+{
+    isRequestingAuthority = true;
+
+    // 你可以自定义一个上限，防止死循环
+    int maxAttempts = 10; 
+    int attempts = 0;
+
+    while (!Object.HasStateAuthority && attempts < maxAttempts)
+    {
+        Object.RequestStateAuthority();
+        attempts++;
+
+        // 等待一小段时间再请求下一次
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    // 请求结束，要么成功，要么超时
+    if (Object.HasStateAuthority)
+    {
+        Debug.Log($"成功拿到 StateAuthority，尝试次数: {attempts}");
+        // 在这之后你可以执行真正需要有权限才可以做的操作，比如 EquipNewItem()
+        // EquipWieldableItem();
+    }
+    else
+    {
+        Debug.LogWarning($"多次尝试仍未拿到 StateAuthority，尝试次数: {attempts}");
+        // 你可以做一些 fallback 处理
+    }
+
+    isRequestingAuthority = false;
+    requestAuthorityCoroutine = null;
+}
 
         // 物品生成逻辑（只在 StateAuthority 执行）
         private void SpawnItem(PlayerRef player)
@@ -367,6 +394,8 @@ public void PickupItem(ItemObject itemObject)
 
         public void EquipWieldableItem()
         {
+                RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
+
             if (InventorySlots[currentWieldableIndex].equipped)
             {
                 DisableItem(currentWieldableIndex);

@@ -72,7 +72,7 @@ namespace LPSurvivalEngine
         {
             RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
 
-if (!Object.HasStateAuthority) return;
+if (!Object.HasStateAuthority) RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
             Debug.Log("EquipNewItem");
             equippedItem = item;
             RPC_RequestEquipItem(Runner.LocalPlayer);
