@@ -439,7 +439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9805f1d9b37699542897f80ab795bae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accumulatedTotalScore: 0
 --- !u!1 &2149265824382894569
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,6 +616,7 @@ GameObject:
   - component: {fileID: 7784183405259439881}
   - component: {fileID: 5716875058807811740}
   - component: {fileID: 7938463418257259974}
+  - component: {fileID: 2711226345528191455}
   m_Layer: 17
   m_Name: Barrage
   m_TagString: Untagged
@@ -740,6 +740,23 @@ MonoBehaviour:
   scrollViewNevigation: {fileID: 5716875058807811740}
   item: {fileID: 5698917604995582042, guid: 1fb886e808926684cbcb8305f3d2e158, type: 3}
   isStop: 1
+--- !u!114 &2711226345528191455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5679250281154155462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 0
+  ObjectInterest: 1
+  Flags: 524288
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &6134468432294459458
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 0
   ObjectInterest: 1
-  Flags: 262144
+  Flags: 524288
   NestedObjects: []
   NetworkedBehaviours: []
 --- !u!1 &7224044086106216175
@@ -2739,7 +2756,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5327969659520471125, guid: 1fb886e808926684cbcb8305f3d2e158, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -77
+      value: -37
       objectReference: {fileID: 0}
     - target: {fileID: 5698917604995582042, guid: 1fb886e808926684cbcb8305f3d2e158, type: 3}
       propertyPath: m_Name
@@ -2819,6 +2836,10 @@ PrefabInstance:
       propertyPath: dropPosition
       value: 
       objectReference: {fileID: 5895177137882005155}
+    - target: {fileID: 1630644913069553198, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1635338364198841799, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -184.108

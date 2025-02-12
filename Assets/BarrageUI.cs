@@ -176,6 +176,7 @@ public class BarrageUI : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_CreateItem()
     {
+        if(!Object.HasStateAuthority) return;
         StartCoroutine(createItem());
     }
 
