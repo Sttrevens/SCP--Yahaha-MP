@@ -5,24 +5,22 @@ using LPSurvivalEngine;
 
 public class PlayerMovement : NetworkBehaviour
 {
+    //角色视角转变动画相关的参数
     [Header("Look Animation")]
     [SerializeField] private Transform headBone;      // 头部骨骼
     [SerializeField] private Transform spineBone;     // 脊椎骨骼
     [SerializeField] private float maxLookUpAngle = 45f;    // 最大抬头角度
     [SerializeField] private float maxLookDownAngle = 45f;  // 最大低头角度
-        // 头部和脊椎的旋转比例（两者加起来为1）
     [SerializeField] private float headRotationRatio = 0.7f;
     [SerializeField] private float spineRotationRatio = 0.3f;
-
-    [Networked]
-    private float NetworkedLookAngle { get; set; }
-    private Vector3 _velocity;
-    private bool _jumpPressed;
-
-    private CharacterController _controller;
-    private AnimatorManager _animatorManager;
-
-    public Camera Camera;
+    [SerializeField] private Transform[] upperBodys;
+    //网络同步相关的参数
+    [Header("Network Sync")]
+    [Networked] private float NetworkedLookAngle { get; set; }
+    [Networked] public Quaternion upperBodyRotation { get; set; }
+    //角色属性(本身的属性和第一人称的属性)
+    [SerializeField]private Vector3 _velocity;
+    [SerializeField]private bool _jumpPressed;
     private float targetFOV = 40f;
     private float targetSpeed = 6f;
     [SerializeField] private float defaultFOV = 40f;
@@ -32,25 +30,18 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private float fovChangeSpeed = 4f;
     [SerializeField] private float speedChangeSpeed = 4f;
     public float PlayerSpeed;
-
     public bool isMoving;
-
     public float JumpForce = 5f;
     public float GravityValue = -9.81f;
-
-    // Add a variable to control the rotation speed. Adjust this value according to your actual needs.
+    // 这个变量是干嘛的 存疑Add a variable to control the rotation speed. Adjust this value according to your actual needs.
     public float RotationSpeed = 5f;
-
     public bool issprinting = false;
-
+    //角色上面挂载的其他组件
+    public Camera Camera;
+    private CharacterController _controller;
+    private AnimatorManager _animatorManager;
     public Transform cameraRoot;
-
-    [SerializeField] private Transform[] upperBodys;
-    public Camera firstPersonCamera;
-
-    [Networked]
-    public Quaternion upperBodyRotation { get; set; }
-
+    
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
