@@ -44,8 +44,9 @@ public class ChasingState : EnemyBaseState
 
         if (enemy.animator != null)
             enemy.PlayAnimation("IsChasing", true);
+            
         // Rotate towards the player's position (or the destination if no player)
-        enemy.RotateTowards(enemy.targetPlayer?.transform.position ?? enemy.agent.destination);
+        //enemy.RotateTowards(enemy.targetPlayer?.transform.position ?? enemy.agent.destination);
     }
 
     public override void ExitState(EnemyAI enemy)

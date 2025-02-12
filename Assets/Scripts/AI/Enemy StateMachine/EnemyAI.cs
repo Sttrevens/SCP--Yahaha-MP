@@ -91,6 +91,8 @@ public class EnemyAI : NetworkBehaviour
 
            //players = GameObject.FindGameObjectsWithTag("Player");
         }
+
+        RotateTowardsMovementDirection();
     }
 
     public void SwitchState(IEnemyState newState)
@@ -154,7 +156,7 @@ public class EnemyAI : NetworkBehaviour
         {
             return true;
         }
-        
+
         Debug.Log("[EnemyAI] Checking for players in sight...");
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -324,7 +326,7 @@ public class EnemyAI : NetworkBehaviour
         }
 
         PlayAnimation("IsPatrolling", true);
-        RotateTowards(agent.destination);
+        //RotateTowards(agent.destination);
         yield return null;
     }
 
@@ -385,11 +387,24 @@ public class EnemyAI : NetworkBehaviour
         return false;
     }
 
-    public void RotateTowards(Vector3 target)
+    /// <summary>
+/// 根据 NavMeshAgent 当前的移动方向来旋转敌人
+/// </summary>
+public void RotateTowardsMovementDirection()
+{
+    // 若当前有移动速度
+    if (agent.velocity.sqrMagnitude > 0.01f)
     {
-        Vector3 direction = (target - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        // 只在水平方向旋转
+        Vector3 moveDirection = agent.velocity;
+        moveDirection.y = 0f;
+        moveDirection.Normalize();
+
+        // 计算应该朝向的目标旋转
+        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+        // 通过球面插值让敌人平滑地转向
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        }
     }
 
     public void PlayAnimation(string animationName, bool isLooping)

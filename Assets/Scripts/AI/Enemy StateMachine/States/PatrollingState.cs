@@ -17,14 +17,14 @@ public class PatrollingState : EnemyBaseState
 
     public override void UpdateState(EnemyAI enemy)
     {
-        if (enemy.agent.path.corners.Length > 1)
-        {
-            Vector3 currentPathDirection = enemy.agent.path.corners[1] - enemy.agent.transform.position;
-            currentPathDirection.y = 0;
-            currentPathDirection.Normalize();
+        // if (enemy.agent.path.corners.Length > 1)
+        // {
+        //     Vector3 currentPathDirection = enemy.agent.path.corners[1] - enemy.agent.transform.position;
+        //     currentPathDirection.y = 0;
+        //     currentPathDirection.Normalize();
 
-            enemy.RotateTowards(currentPathDirection);
-        }
+        //     enemy.RotateTowards(currentPathDirection);
+        // }
     }
 
     public override void ExitState(EnemyAI enemy)
