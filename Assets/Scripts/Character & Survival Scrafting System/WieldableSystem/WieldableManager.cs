@@ -71,11 +71,8 @@ namespace LPSurvivalEngine
         public void EquipNewItem(ItemDatabase item)
         {
             Debug.Log("EquipNewItem");
-            equippedItem = item;
             RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
             RPC_RequestEquipItem(Runner.LocalPlayer);
-
-            currentWieldableIndex = Inventory.instance.selectedItemIndex;
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -83,8 +80,10 @@ namespace LPSurvivalEngine
         {
             if (!Object.HasStateAuthority) return;
 
+            equippedItem = item;
             //GameObject.Find("CurrentPlayer").GetComponent<FirstPersonOptimizer>().Wield();
             SpawnEquippedItem(player);
+            currentWieldableIndex = Inventory.instance.selectedItemIndex;
         }
 
         private void RequestStateAuthorityForEquipItem(PlayerRef player)
