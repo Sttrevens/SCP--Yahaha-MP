@@ -70,8 +70,11 @@ namespace LPSurvivalEngine
 
         public void EquipNewItem(ItemDatabase item)
         {
-            Debug.Log("EquipNewItem");
             RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
+
+if (!Object.HasStateAuthority) return;
+            Debug.Log("EquipNewItem");
+            equippedItem = item;
             RPC_RequestEquipItem(Runner.LocalPlayer);
         }
 
@@ -80,7 +83,6 @@ namespace LPSurvivalEngine
         {
             if (!Object.HasStateAuthority) return;
 
-            equippedItem = item;
             //GameObject.Find("CurrentPlayer").GetComponent<FirstPersonOptimizer>().Wield();
             SpawnEquippedItem(player);
             currentWieldableIndex = Inventory.instance.selectedItemIndex;
