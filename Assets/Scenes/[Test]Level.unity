@@ -642,6 +642,17 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1044468126 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1402319111644164622, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+  m_PrefabInstance: {fileID: 1403620209}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d39e4efc6ce28d9438630882ceea999f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1053520340 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4633864565637016701, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
@@ -1298,7 +1309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4437560750417532860, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: DefaultRoomName
-      value: 123
+      value: fku
       objectReference: {fileID: 0}
     - target: {fileID: 4453793608586719008, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: m_Enabled
@@ -1404,6 +1415,14 @@ PrefabInstance:
       propertyPath: NestedObjects.Array.data[0]
       value: 
       objectReference: {fileID: 84822066}
+    - target: {fileID: 5670563717161345672, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: NetworkedBehaviours.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670563717161345672, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 1044468126}
     - target: {fileID: 5805411009042214229, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0

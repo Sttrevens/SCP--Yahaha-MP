@@ -184,20 +184,28 @@ public class BarrageUI : NetworkBehaviour
     IEnumerator createItem(){
     NetworkObject _obj = Runner.Spawn(item, scroll_rect.content.transform.position, Quaternion.identity);
     //_obj.SetActive(true);
-    
-    RectTransform rt = _obj.gameObject.GetComponent<RectTransform>();
-    rt.SetParent(scroll_rect.content.transform);
-    rt.anchoredPosition3D = Vector3.zero; // 重置锚点位置
-    rt.localRotation = Quaternion.identity;
-    rt.localScale = Vector3.one;
-
+    yield return null;
     _obj.gameObject.GetComponent<BarrageItem>().setData(curBarrage);
+    RPC_OnItemCreated(_obj);
+}
+
+[Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+   public void RPC_OnItemCreated(NetworkObject _obj) {
+       // 这里是在所有客户端执行
+       if (_obj == null) return;
+       
+       RectTransform rt = _obj.gameObject.GetComponent<RectTransform>();
+       if(rt == null) return;
+
+       rt.SetParent(scroll_rect.content.transform);
+       rt.anchoredPosition3D = Vector3.zero; // 重置锚点位置
+       rt.localRotation = Quaternion.identity;
+       rt.localScale = Vector3.one;
     
     // 强制刷新布局
     LayoutRebuilder.ForceRebuildLayoutImmediate(scroll_rect.content);
     
-    yield return new WaitForEndOfFrame();
     scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, ((float)min)/2));
-}
+   }
 
 }
