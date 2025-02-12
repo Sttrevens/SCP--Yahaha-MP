@@ -2,18 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Fusion;
 
-public class BarrageItem : MonoBehaviour
+public class BarrageItem : NetworkBehaviour
 {
+    [Networked] public string userNameText { get; set; }
     public Text userName;
+    [Networked] public string textText { get; set; }
     public Text text;
 
     public void setData(BarrageItemJson data){
+        if(!Object.HasStateAuthority) return;
         Debug.Log("开始set");
-        userName.text = UserNameClass.GetRandomName().nickName + ": ";
-        text.text = data.desc;
+        userNameText = UserNameClass.GetRandomName().nickName + ": ";
+        textText = data.desc;
+
+        userName.text = userNameText;
+        text.text = textText;
     }
-    private void Update() {
+    public override void FixedUpdateNetwork() {
+        if(!Object.HasStateAuthority) return;
         GetComponent<RectTransform>().localScale = Vector3.one;
     }
 }
