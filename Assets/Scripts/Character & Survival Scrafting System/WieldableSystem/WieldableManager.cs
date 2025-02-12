@@ -2,6 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Fusion;
+using System.Collections;
 
 namespace LPSurvivalEngine
 {
@@ -70,15 +71,61 @@ namespace LPSurvivalEngine
 
         public void EquipNewItem(ItemDatabase item)
         {
-            RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
+            RequestStateAuthorityForEquipItem(item);
 
-if (!Object.HasStateAuthority) return;
-            Debug.Log("EquipNewItem");
+//if (!Object.HasStateAuthority) RequestStateAuthorityForEquipItem(Runner.LocalPlayer);
+            
+        }
+
+        private Coroutine requestAuthorityCoroutine;
+        private bool isRequestingAuthority = false;
+
+        public void RequestStateAuthorityForEquipItem(ItemDatabase item)
+{
+    // 防止重复开启协程
+    if (!isRequestingAuthority)
+    {
+        requestAuthorityCoroutine = StartCoroutine(RequestAuthorityLoop(item));
+    }
+}
+
+private IEnumerator RequestAuthorityLoop(ItemDatabase item)
+{
+    isRequestingAuthority = true;
+
+    // 你可以自定义一个上限，防止死循环
+    int maxAttempts = 10; 
+    int attempts = 0;
+
+    while (!Object.HasStateAuthority && attempts < maxAttempts)
+    {
+        Object.RequestStateAuthority();
+        attempts++;
+
+        // 等待一小段时间再请求下一次
+        yield return new WaitForSeconds(0.1f);
+    }
+
+    // 请求结束，要么成功，要么超时
+    if (Object.HasStateAuthority)
+    {
+        Debug.Log($"成功拿到 StateAuthority，尝试次数: {attempts}");
+        // 在这之后你可以执行真正需要有权限才可以做的操作，比如 EquipNewItem()
+        Debug.Log("EquipNewItem");
             equippedItem = item;
             RPC_RequestEquipItem(Runner.LocalPlayer);
         }
+    else
+    {
+        Debug.LogWarning($"多次尝试仍未拿到 StateAuthority，尝试次数: {attempts}");
+        // 你可以做一些 fallback 处理
+    }
 
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    isRequestingAuthority = false;
+    requestAuthorityCoroutine = null;
+}
+
+[Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_RequestEquipItem(PlayerRef player)
         {
             if (!Object.HasStateAuthority) return;
@@ -87,26 +134,7 @@ if (!Object.HasStateAuthority) return;
             SpawnEquippedItem(player);
             currentWieldableIndex = Inventory.instance.selectedItemIndex;
         }
-
-        private void RequestStateAuthorityForEquipItem(PlayerRef player)
-        {
-            if (HasStateAuthority)
-            {
-                Debug.Log("Already have StateAuthority.");
-                return;
-            }
-
-            Debug.Log("Requesting StateAuthority for EquipItem.");
-            Object.RequestStateAuthority();
-            LogStateAuthorityStatus();
-        }
-
-        private void LogStateAuthorityStatus()
-        {
-            string status = HasStateAuthority ? "has" : "does not have";
-            Debug.Log($"This client {status} StateAuthority over {gameObject.name}");
-        }
-
+        
         public Transform CurrentWieldableRootTransform()
 {
     if (equippedItem == null || equippedItem.wieldablePrefab == null) return null;
