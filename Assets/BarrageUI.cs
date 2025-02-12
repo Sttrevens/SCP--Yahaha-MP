@@ -31,11 +31,11 @@ public class BarrageUI : MonoBehaviour
             BarrageClass.instance = new BarrageClass();  // 确保初始化
         }
         // 确保实例化成功
-        if (barrageClass == null)
-        {
-            Debug.LogError("弹幕类初始化失败");
-            return;
-        }
+        // if (barrageClass == null)
+        // {
+        //     Debug.LogError("弹幕类初始化失败");
+        //     return;
+        // }
         
         Debug.Log("弹幕类初始化成功");
     }

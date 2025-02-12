@@ -15,7 +15,6 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private float spineRotationRatio = 0.3f;
     [SerializeField] private Transform[] upperBodys;
     //网络同步相关的参数
-    [Header("Network Sync")]
     [Networked] private float NetworkedLookAngle { get; set; }
     [Networked] public Quaternion upperBodyRotation { get; set; }
     //角色属性(本身的属性和第一人称的属性)
@@ -41,7 +40,7 @@ public class PlayerMovement : NetworkBehaviour
     private CharacterController _controller;
     private AnimatorManager _animatorManager;
     public Transform cameraRoot;
-    
+
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
