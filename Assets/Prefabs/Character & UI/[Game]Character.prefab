@@ -1650,7 +1650,11 @@ MonoBehaviour:
   maxLookDownAngle: 45
   headRotationRatio: 0.7
   spineRotationRatio: 0.3
-  Camera: {fileID: 0}
+  upperBodys:
+  - {fileID: 3728027146099076049}
+  _upperBodyRotation: {x: 0, y: 0, z: 0, w: 0}
+  _velocity: {x: 0, y: 0, z: 0}
+  _jumpPressed: 0
   defaultFOV: 60
   sprintFOV: 90
   defaultSpeed: 4
@@ -1663,11 +1667,8 @@ MonoBehaviour:
   GravityValue: -9.81
   RotationSpeed: 5
   issprinting: 0
+  Camera: {fileID: 0}
   cameraRoot: {fileID: 4992387614600776163}
-  upperBodys:
-  - {fileID: 3728027146099076049}
-  firstPersonCamera: {fileID: 0}
-  _upperBodyRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &6515430458572477251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1893,7 +1894,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
