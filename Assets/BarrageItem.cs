@@ -21,7 +21,6 @@ public class BarrageItem : NetworkBehaviour
         text.text = textText;
     }
     public override void FixedUpdateNetwork() {
-        if(!Object.HasStateAuthority) return;
         GetComponent<RectTransform>().localScale = Vector3.one;
     }
 }
