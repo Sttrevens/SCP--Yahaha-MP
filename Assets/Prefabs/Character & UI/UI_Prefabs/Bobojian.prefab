@@ -2883,9 +2883,11 @@ MonoBehaviour:
   SortKey: 3058220684
   ObjectInterest: 1
   Flags: 262145
-  NestedObjects: []
+  NestedObjects:
+  - {fileID: 5256413425408307226}
   NetworkedBehaviours:
   - {fileID: 7278348583962370333}
+  - {fileID: 4225868135547875583}
 --- !u!1 &4301607043292071121
 GameObject:
   m_ObjectHideFlags: 0
@@ -4602,6 +4604,7 @@ GameObject:
   - component: {fileID: 5079651248306538528}
   - component: {fileID: 7290793325065623989}
   - component: {fileID: 4923388899628993263}
+  - component: {fileID: 5256413425408307226}
   m_Layer: 5
   m_Name: Barrage
   m_TagString: Untagged
@@ -4725,6 +4728,24 @@ MonoBehaviour:
   scrollViewNevigation: {fileID: 7290793325065623989}
   item: {fileID: 5698917604995582042, guid: 1fb886e808926684cbcb8305f3d2e158, type: 3}
   isStop: 1
+--- !u!114 &5256413425408307226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7253243459760284911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2316717401
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 4923388899628993263}
 --- !u!1 &7321117855764073322
 GameObject:
   m_ObjectHideFlags: 0
