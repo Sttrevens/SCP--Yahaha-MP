@@ -20,7 +20,7 @@ public class BarrageItem : NetworkBehaviour
         userName.text = userNameText;
         text.text = textText;
     }
-    public override void FixedUpdateNetwork() {
+    void Update() {
         GetComponent<RectTransform>().localScale = Vector3.one;
     }
 }
