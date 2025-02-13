@@ -21,13 +21,16 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
             // GameObject.Find("WieldManager").GetComponent<WieldableManager>().wieldablesPosition =
             //     plObject.transform.Find("jointItemR");
             GameObject.Find("WieldManager").GetComponent<WieldableManager>().controller = plObject.GetComponent<PlayerController>();
-        }
 
-        MaterialRenderTextureManager.Instance.RPC_AssignCharacterMaterial(Object);
+            MaterialRenderTextureManager.Instance.AssignCharacterMaterial(plObject);
+        }
     }
 
     public void PlayerLeft(PlayerRef player)
     {
-        MaterialRenderTextureManager.Instance.RPC_ReleaseCharacterMaterial(Object);
+        if (player == Runner.LocalPlayer)
+        {
+            MaterialRenderTextureManager.Instance.ReleaseCharacterMaterial(Runner.GetPlayerObject(player).GetComponent<NetworkObject>());
+        }
     }
 }

@@ -133,18 +133,13 @@ public class MaterialRenderTextureManager : NetworkBehaviour
         }
     }
 
-[Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_AssignCharacterMaterial(NetworkObject player)
-    {
-        AssignCharacterMaterial(player);
-    }
 
     /// <summary>
     /// 分配角色材质（3个），并将它们应用到玩家对象下 Model/Male_01
     /// </summary>
     public void AssignCharacterMaterial(NetworkObject player)
     {
-        if (!HasStateAuthority) return;
+        //if (!HasStateAuthority) return;
 
         if (assignedCharacterMaterialsIndexes.Count < availableCharacterMaterialSets.Count)
         {
@@ -170,18 +165,12 @@ public class MaterialRenderTextureManager : NetworkBehaviour
         }
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_ReleaseCharacterMaterial(NetworkObject player)
-    {
-        ReleaseCharacterMaterial(player);
-    }
-
     /// <summary>
     /// 释放角色材质（3个）
     /// </summary>
     public void ReleaseCharacterMaterial(NetworkObject player)
     {
-        if (!HasStateAuthority) return;
+        //if (!HasStateAuthority) return;
 
         if (characterAssignments.TryGetValue(player, out int charMatSetIndex))
         {
