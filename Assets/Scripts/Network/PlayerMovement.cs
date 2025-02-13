@@ -61,9 +61,11 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (HasStateAuthority)
         {
-            if (GetComponent<HealthSystem>().stamina.currentValue > 20f)
+            if (Input.GetButtonDown("Jump"))
+            {
+                if (GetComponent<HealthSystem>().stamina.currentValue > 20f)
             {
                 _jumpPressed = true;
                 if (_controller.isGrounded)
@@ -86,6 +88,7 @@ public class PlayerMovement : NetworkBehaviour
 
         Camera.fieldOfView = Mathf.Lerp(Camera.fieldOfView, targetFOV, fovChangeSpeed*Time.deltaTime);
         PlayerSpeed = Mathf.Lerp(PlayerSpeed, targetSpeed, speedChangeSpeed*Time.deltaTime);
+        }
     }
 
     public override void FixedUpdateNetwork()

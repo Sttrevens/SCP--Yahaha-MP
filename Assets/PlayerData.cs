@@ -19,12 +19,12 @@ public class PlayerData : NetworkBehaviour
 
     public override void Spawned()
     {
-        MaterialRenderTextureManager.Instance.AssignMaterialAndRenderTexture(Object);
+        MaterialRenderTextureManager.Instance.AssignCharacterMaterial(Object);
     }
 
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
-        MaterialRenderTextureManager.Instance.ReleaseMaterialAndRenderTexture(Object);
+        MaterialRenderTextureManager.Instance.ReleaseCharacterMaterial(Object);
     }
 
     // Update is called once per frame
