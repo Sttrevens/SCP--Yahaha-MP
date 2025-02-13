@@ -198,6 +198,36 @@ public class MaterialRenderTextureManager : NetworkBehaviour
             }
         }
     }
+
+    void OnPlayerJoined(PlayerRef playerRef, NetworkRunner runner)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        // 获取该玩家的 NetworkObject（若已spawn）
+        NetworkObject playerObject = runner.GetPlayerObject(playerRef);
+        if (playerObject != null)
+        {
+            AssignCharacterMaterial(playerObject);
+        }
+        else
+        {
+            Debug.LogWarning($"PlayerRef {playerRef} has no spawned NetworkObject yet.");
+        }
+    }
+
+    void OnPlayerLeft(PlayerRef playerRef, NetworkRunner runner)
+    {
+        if (!HasStateAuthority)
+            return;
+    
+        // 按照Fusion惯例，获取玩家的网络对象
+        NetworkObject playerObject = runner.GetPlayerObject(playerRef);
+        if (playerObject != null)
+        {
+            ReleaseCharacterMaterial(playerObject);
+        }
+}
 }
 
 [System.Serializable]
