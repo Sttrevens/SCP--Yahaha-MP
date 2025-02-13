@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Fusion;
 using System.Collections;
+using TMPro;
 
 namespace LPSurvivalEngine
 {
@@ -17,6 +18,8 @@ namespace LPSurvivalEngine
         public Transform flashlightPosition;
         public Transform cameraPositon;
         public Transform aimPositon;
+
+        [SerializeField] private TextMeshProUGUI hintActionText;
         [SerializeField] private PlayerInput playerInput;
 
         [HideInInspector] public Wieldable currentWieldable;
@@ -43,6 +46,18 @@ namespace LPSurvivalEngine
             if (!IsValidWieldableAction(context)) return;
 
             currentWieldable.OnAltAttackInput();
+        }
+
+        void Update()
+        {
+            if (currentWieldable != null && currentWieldable.altInputHint != null)
+            {
+                hintActionText.text = string.Format(currentWieldable.altInputHint, "Right Mouse Button");
+            }
+            else
+            {
+                hintActionText.text = "";
+            }
         }
 
         private bool IsValidWieldableAction(InputAction.CallbackContext context)

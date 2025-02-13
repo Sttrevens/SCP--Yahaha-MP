@@ -12,6 +12,8 @@ namespace LPSurvivalEngine
         public virtual void OnAltAttackInput() { }
 
         public PlayerRef player;
+
+        public string altInputHint;
     }
 
 

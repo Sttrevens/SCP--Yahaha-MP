@@ -43,6 +43,9 @@ namespace LPSurvivalEngine
         [Header("MaterialRenderTextureManager")]
         [SerializeField] private Renderer screenRenderer;
 
+        [Header("Input")]
+        public string altInputHint;
+
         private void DrainDurability()
     {
         // 通过 WieldableManager 获取当前装备的物品槽
