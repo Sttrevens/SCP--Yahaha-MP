@@ -2,7 +2,7 @@ using Fusion;
 using LPSurvivalEngine;
 using UnityEngine;
 
-public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
+public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 {
     public GameObject PlayerPrefab;
     public Transform spawnPoint;
@@ -22,5 +22,12 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             //     plObject.transform.Find("jointItemR");
             GameObject.Find("WieldManager").GetComponent<WieldableManager>().controller = plObject.GetComponent<PlayerController>();
         }
+
+        MaterialRenderTextureManager.Instance.RPC_AssignCharacterMaterial(Object);
+    }
+
+    public void PlayerLeft(PlayerRef player)
+    {
+        MaterialRenderTextureManager.Instance.RPC_ReleaseCharacterMaterial(Object);
     }
 }

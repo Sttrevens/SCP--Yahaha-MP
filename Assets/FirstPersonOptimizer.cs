@@ -9,7 +9,7 @@ public class FirstPersonOptimizer : MonoBehaviour
     public Transform aimPosition;
     public Transform flashlightPosition;
 
-    private void Update()
+    private void Start()
     {
         GameObject currentPlayerObject = GameObject.Find("CurrentPlayer");
         if (currentPlayerObject != null)
