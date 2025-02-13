@@ -208,14 +208,14 @@ public void PickupItem(ItemObject itemObject)
                 dropPosition = GameObject.Find("PublicDropBox").transform;
                 SpawnItem(player);
 
-                if (throwedItem.type == ItemType.Wieldable)
-            {
-                   NetworkObject playerObject = Runner.GetPlayerObject(player);
-            if (playerObject != null)
-            {
-                MaterialRenderTextureManager.Instance.AssignMaterialAndRenderTexture(playerObject);
-            }
-                }
+            //     if (throwedItem.type == ItemType.Wieldable)
+            // {
+            //        NetworkObject playerObject = Runner.GetPlayerObject(player);
+            // if (playerObject != null)
+            // {
+            //     MaterialRenderTextureManager.Instance.AssignMaterialAndRenderTexture(playerObject);
+            // }
+            //     }
             }
         }
 

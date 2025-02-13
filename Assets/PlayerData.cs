@@ -17,6 +17,16 @@ public class PlayerData : NetworkBehaviour
         }
     }
 
+    public override void Spawned()
+    {
+        MaterialRenderTextureManager.Instance.AssignMaterialAndRenderTexture(Object);
+    }
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        MaterialRenderTextureManager.Instance.ReleaseMaterialAndRenderTexture(Object);
+    }
+
     // Update is called once per frame
     void Update()
     {
