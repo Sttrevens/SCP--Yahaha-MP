@@ -17,6 +17,16 @@ public class PlayerData : NetworkBehaviour
         }
     }
 
+    public override void Spawned()
+    {
+        MaterialRenderTextureManager.Instance.RPC_AssignCharacterMaterial(Object);
+    }
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        MaterialRenderTextureManager.Instance.RPC_ReleaseCharacterMaterial(Object);
+    }
+
     // Update is called once per frame
     void Update()
     {

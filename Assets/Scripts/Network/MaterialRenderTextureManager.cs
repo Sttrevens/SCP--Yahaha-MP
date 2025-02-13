@@ -133,6 +133,12 @@ public class MaterialRenderTextureManager : NetworkBehaviour
         }
     }
 
+[Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_AssignCharacterMaterial(NetworkObject player)
+    {
+        AssignCharacterMaterial(player);
+    }
+
     /// <summary>
     /// 分配角色材质（3个），并将它们应用到玩家对象下 Model/Male_01
     /// </summary>
@@ -163,6 +169,12 @@ public class MaterialRenderTextureManager : NetworkBehaviour
         {
             Debug.LogWarning("No available character material set for the player.");
         }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_ReleaseCharacterMaterial(NetworkObject player)
+    {
+        ReleaseCharacterMaterial(player);
     }
 
     /// <summary>
@@ -198,36 +210,6 @@ public class MaterialRenderTextureManager : NetworkBehaviour
             }
         }
     }
-
-    void OnPlayerJoined(PlayerRef playerRef, NetworkRunner runner)
-    {
-        if (!HasStateAuthority)
-            return;
-
-        // 获取该玩家的 NetworkObject（若已spawn）
-        NetworkObject playerObject = runner.GetPlayerObject(playerRef);
-        if (playerObject != null)
-        {
-            AssignCharacterMaterial(playerObject);
-        }
-        else
-        {
-            Debug.LogWarning($"PlayerRef {playerRef} has no spawned NetworkObject yet.");
-        }
-    }
-
-    void OnPlayerLeft(PlayerRef playerRef, NetworkRunner runner)
-    {
-        if (!HasStateAuthority)
-            return;
-    
-        // 按照Fusion惯例，获取玩家的网络对象
-        NetworkObject playerObject = runner.GetPlayerObject(playerRef);
-        if (playerObject != null)
-        {
-            ReleaseCharacterMaterial(playerObject);
-        }
-}
 }
 
 [System.Serializable]
