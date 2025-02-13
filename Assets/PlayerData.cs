@@ -8,6 +8,8 @@ public class PlayerData : NetworkBehaviour
     [Networked]
     public string PlayerName { get; set; }
 
+    [Networked] public int characterMaterialIndex { get; set; }
+
     private void Start()
     {
         if (HasStateAuthority && TitleScreenUI.playerName != null)
@@ -31,5 +33,11 @@ public class PlayerData : NetworkBehaviour
     void Update()
     {
         
+    }
+
+    public override void Render()
+    {
+        CharacterMaterialSet charMatSet = MaterialRenderTextureManager.Instance.availableCharacterMaterialSets[characterMaterialIndex];
+        MaterialRenderTextureManager.Instance.ApplyCharacterMaterial(Object, charMatSet);
     }
 }

@@ -10,7 +10,7 @@ public class MaterialRenderTextureManager : NetworkBehaviour
     [SerializeField] private RenderTexture[] availableRenderTextures;
 
     // 角色材质改为“材质列表的列表”，每个子列表包含3个材质
-    [SerializeField] private List<CharacterMaterialSet> availableCharacterMaterialSets;
+    public List<CharacterMaterialSet> availableCharacterMaterialSets;
 
     // 存储当前玩家分配的材质和渲染纹理（保持不变）
     private Dictionary<NetworkObject, (Material, RenderTexture)> playerAssignments;
@@ -157,8 +157,7 @@ public class MaterialRenderTextureManager : NetworkBehaviour
 
                 assignedCharacterMaterialsIndexes.Add(availableIndex);
 
-                // 应用3个材质到玩家角色的 Model/Male_01
-                ApplyCharacterMaterial(player, charMatSet);
+                player.GetComponent<PlayerData>().characterMaterialIndex = availableIndex;
             }
             else
             {
@@ -189,13 +188,13 @@ public class MaterialRenderTextureManager : NetworkBehaviour
             assignedCharacterMaterialsIndexes.Remove(charMatSetIndex);
             characterAssignments.Remove(player);
 
-            // 清理角色材质
-            ApplyCharacterMaterial(player, null);
+            // // 清理角色材质
+            // ApplyCharacterMaterial(player, null);
         }
     }
 
     // 给角色的 Model/Male_01 应用或清除对应的3个材质
-    private void ApplyCharacterMaterial(NetworkObject player, CharacterMaterialSet charMatSet)
+    public void ApplyCharacterMaterial(NetworkObject player, CharacterMaterialSet charMatSet)
     {
         Transform male01 = player.transform.Find("Model/Male_01");
         if (male01 != null)
