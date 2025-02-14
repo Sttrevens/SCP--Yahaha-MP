@@ -35,7 +35,7 @@ public class AttackingState : EnemyBaseState
                 HealthSystem playerHealth = enemy.targetPlayer.GetComponent<HealthSystem>();
                 if (playerHealth != null)
                 {
-                    playerHealth.TakePhysicDamage(enemy.attackDamage);
+                    playerHealth.Rpc_TakePhysicDamage(enemy.attackDamage);
                     Debug.Log("Current Player health: " + playerHealth.health.currentValue + "/" + playerHealth.health.maxValue);
                 }
                 else { Debug.Log("Player Health is Null,"); }

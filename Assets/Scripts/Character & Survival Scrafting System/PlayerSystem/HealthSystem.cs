@@ -152,6 +152,10 @@ namespace LPSurvivalEngine
 
         void FixedUpdate()
         {
+            if (gameObject.tag != "Player")
+            {
+                return;
+            }
             if (!(Input.GetButton("Sprint") && GetComponent<PlayerMovement>().isMoving))
             {
                 stamina.Add(stamina.regenrate * Time.fixedDeltaTime);
@@ -183,7 +187,7 @@ namespace LPSurvivalEngine
         
             if (health.currentValue == 0.0f)
             {
-                Die();
+                Rpc_Die();
             }
 
             if (HasStateAuthority)
@@ -237,6 +241,12 @@ namespace LPSurvivalEngine
             sanity.Add(amount);
         }
 
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void Rpc_TakePhysicDamage(int amount)
+        {
+            TakePhysicDamage(amount);
+        }
+
         public void TakePhysicDamage(int amount)
         {
             health.Subtract(amount);
@@ -258,7 +268,13 @@ namespace LPSurvivalEngine
             {
                 Debug.Log("δ�ҵ�tagΪ ������");
             }
-        }   
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void Rpc_Die()
+        {
+            Die();
+        }
     
         public void Die()
         {
