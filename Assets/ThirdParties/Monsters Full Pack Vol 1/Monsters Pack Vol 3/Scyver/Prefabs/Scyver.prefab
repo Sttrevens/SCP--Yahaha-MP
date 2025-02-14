@@ -227,19 +227,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51d500943e47d7c4f83cd6450c1f86af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  detectionRange: 10
+  attackInterval: 3
+  chasingSpeed: 3.5
+  patrollingSpeed: 2
+  fieldOfViewAngleHorizontal: 90
+  fieldOfViewAngleVertical: 60
+  sensingRadius: 1
+  patrolMode: 1
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
-  detectionRange: 10
-  destroyRange: 1
-  destroyTime: 3
-  chasingSpeed: 3.5
-  patrollingSpeed: 2
-  patrolMode: 1
   patrolRange: 10
   patrolWidth: 10
   patrolHeight: 10
   waitTimeAtPatrolPoint: 4
+  attackDamage: 20
+  health: 100
+  attackRange: 3
 --- !u!1 &7675484017940027526
 GameObject:
   m_ObjectHideFlags: 0

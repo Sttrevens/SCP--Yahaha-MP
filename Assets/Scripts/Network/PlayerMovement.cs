@@ -61,7 +61,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        if (HasStateAuthority)
+        if (HasStateAuthority && gameObject.tag == "Player")
         {
             if (Input.GetButtonDown("Jump"))
             {
@@ -94,7 +94,7 @@ public class PlayerMovement : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         // Only move own player and not every other player. Each player controls its own player object.
-        if (HasStateAuthority == false)
+        if (HasStateAuthority == false && gameObject.tag != "Player")
         {
             return;
         }

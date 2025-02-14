@@ -154,7 +154,10 @@ public class EnemyAI : NetworkBehaviour
     {
         if (targetPlayer != null)
         {
-            return true;
+            if (targetPlayer.tag != "Player")
+                return false;
+            else
+                return true;
         }
 
         Debug.Log("[EnemyAI] Checking for players in sight...");
