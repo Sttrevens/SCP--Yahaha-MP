@@ -2,6 +2,7 @@ using LPSurvivalEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 public class AttackingState : EnemyBaseState
 {
     public override void EnterState(EnemyAI enemy)
@@ -10,9 +11,9 @@ public class AttackingState : EnemyBaseState
         {
             enemy.lastAttackTime = Time.time;
             enemy.lastAttackPreDelayTime = Time.time;
-            if (enemy.animator != null)
+            if (enemy._animatorManager != null)
             {
-                enemy.animator.SetTrigger("Attack");
+                enemy._animatorManager.AttackCount++;
             }
         }
         else
@@ -23,6 +24,8 @@ public class AttackingState : EnemyBaseState
 
     public override void UpdateState(EnemyAI enemy)
     {
+        if (enemy.HasStateAuthority)
+        {
         // Attack pre-delay before actually applying damage
         if (Time.time - enemy.lastAttackPreDelayTime >= enemy.attackPreDelay)
         {
@@ -38,7 +41,8 @@ public class AttackingState : EnemyBaseState
                 else { Debug.Log("Player Health is Null,"); }
             }
 
-            enemy.SwitchState(new WaitingforNextAttackState());
+                enemy.SwitchState(new WaitingforNextAttackState());
+            }
         }
     }
 

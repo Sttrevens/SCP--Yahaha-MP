@@ -124,6 +124,8 @@ GameObject:
   - component: {fileID: 7675484017960521852}
   - component: {fileID: 3508813134460981291}
   - component: {fileID: 2076709088267169683}
+  - component: {fileID: 3438833319343853503}
+  - component: {fileID: 412903832068673179}
   m_Layer: 0
   m_Name: Scyver
   m_TagString: Untagged
@@ -246,6 +248,37 @@ MonoBehaviour:
   attackDamage: 20
   health: 100
   attackRange: 3
+--- !u!114 &3438833319343853503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7675484017940027524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a9979b380b04249b43dfcdb7d074d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _AttackCount: 0
+--- !u!114 &412903832068673179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7675484017940027524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1650395050
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 3438833319343853503}
 --- !u!1 &7675484017940027526
 GameObject:
   m_ObjectHideFlags: 0

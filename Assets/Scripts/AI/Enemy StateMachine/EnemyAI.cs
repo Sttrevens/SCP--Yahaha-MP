@@ -57,6 +57,8 @@ public class EnemyAI : NetworkBehaviour
 
     public IEnemyState currentState;
 
+    public EnemyAnimatorManager _animatorManager;
+
     private void Awake()
     {
         if (agent == null)
