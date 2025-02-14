@@ -13,7 +13,6 @@ public class PatrollingState : EnemyBaseState
         {
             enemy.agent.speed = enemy.patrollingSpeed;
            
-            patrolLoop = enemy.StartCoroutine(PatrolLoop(enemy));
             if (enemy._animatorManager != null)
                 enemy._animatorManager.isPatrolling = 1;
         }
@@ -29,6 +28,11 @@ public class PatrollingState : EnemyBaseState
 
         //     enemy.RotateTowards(currentPathDirection);
         // }
+
+        if (enemy.currentState is PatrollingState)
+        {
+            enemy.Patrol();
+        }
     }
 
     public override void ExitState(EnemyAI enemy)
