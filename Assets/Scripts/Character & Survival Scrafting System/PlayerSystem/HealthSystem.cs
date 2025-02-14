@@ -293,6 +293,25 @@ namespace LPSurvivalEngine
             // }
         }
 
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void Rpc_Respawn()
+        {
+            Respawn();
+        }
+
+        public void Respawn()
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            gameObject.tag = "Player";
+            health.currentValue = health.maxValue;
+            stamina.currentValue = stamina.maxValue;
+            sanity.currentValue = sanity.maxValue;
+            transform.position = new Vector3(0, 0, 0);
+            transform.rotation = Quaternion.identity;
+        }
+
         #region һ��ͬ����ɫ���ݺ���
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

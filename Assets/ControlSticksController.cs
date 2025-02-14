@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using Fusion;
+using LPSurvivalEngine;
 
 public class ControlSticksController : NetworkBehaviour, IInteractable
 {
@@ -127,6 +128,14 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 if (currentDays < 3)
                 {
                     currentDays++;
+                }
+
+                foreach (var player in GameObject.FindObjectsOfType<HealthSystem>())
+                {
+                    if (player.gameObject.tag != "Player")
+                    {
+                        player.Rpc_Respawn();
+                    }
                 }
                 IsPulled = false;
             }

@@ -46,7 +46,7 @@ public class ChasingState : EnemyBaseState
         }
 
         if (enemy._animatorManager != null)
-            enemy._animatorManager.isChasing = 1;
+            enemy._animatorManager.isChasing++; 
             
         // Rotate towards the player's position (or the destination if no player)
         //enemy.RotateTowards(enemy.targetPlayer?.transform.position ?? enemy.agent.destination);

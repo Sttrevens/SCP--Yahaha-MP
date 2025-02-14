@@ -3144,15 +3144,15 @@ RectTransform:
   m_GameObject: {fileID: 5023590439731978861}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.82323, y: 0.82323, z: 0.82323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5023590440429939348}
-  m_Father: {fileID: 5023590441071873213}
+  m_Father: {fileID: 5023590440083769179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -93.35867, y: -191.78995}
+  m_AnchoredPosition: {x: -0.000030517578, y: -0.00093078613}
   m_SizeDelta: {x: 118.748, y: 121.042}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5023590439731978850
@@ -3205,7 +3205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740d1099f445fc34b8f317e739c61b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vitalImage: {fileID: 0}
+  vitalImage: {fileID: 5023590440083769178}
   shakeThreshold: 0.3
   maxShakeIntensity: 10
 --- !u!1 &5023590439838884979
@@ -3236,15 +3236,15 @@ RectTransform:
   m_GameObject: {fileID: 5023590439838884979}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.82323, y: 0.82323, z: 0.82323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5023590440815554057}
-  m_Father: {fileID: 5023590441071873213}
+  m_Father: {fileID: 5023590440162423796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 144.70131, y: -191.88995}
+  m_AnchoredPosition: {x: 0.000076293945, y: 0.000045776367}
   m_SizeDelta: {x: 118.748, y: 121.042}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5023590439838884976
@@ -3297,8 +3297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740d1099f445fc34b8f317e739c61b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vitalImage: {fileID: 0}
-  shakeThreshold: 0.3
+  vitalImage: {fileID: 5023590440162423787}
+  shakeThreshold: 0.5
   maxShakeIntensity: 10
 --- !u!1 &5023590439913054738
 GameObject:
@@ -3909,7 +3909,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.82323, y: 0.82323, z: 0.82322997}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5023590439731978860}
   m_Father: {fileID: 5023590441071873213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4212,7 +4213,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.82323, y: 0.82323, z: 0.82322997}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5023590439838884978}
   m_Father: {fileID: 5023590441071873213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4871,7 +4873,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.82323, y: 0.82323, z: 0.82322997}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5023590441288313043}
   m_Father: {fileID: 5023590441071873213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5843,7 +5846,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.82323, y: 0.82323, z: 0.82322997}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5023590441368339013}
   m_Father: {fileID: 5023590441071873213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -6102,13 +6106,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5023590440162423796}
-  - {fileID: 5023590439838884978}
   - {fileID: 5023590440827539997}
-  - {fileID: 5023590441368339013}
   - {fileID: 5023590440552183280}
-  - {fileID: 5023590441288313043}
   - {fileID: 5023590440083769179}
-  - {fileID: 5023590439731978860}
   m_Father: {fileID: 8984648492469031619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6835,15 +6835,15 @@ RectTransform:
   m_GameObject: {fileID: 5023590441288313052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.82323, y: 0.82323, z: 0.82323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5023590440769804215}
-  m_Father: {fileID: 5023590441071873213}
+  m_Father: {fileID: 5023590440552183280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 24.000017, y: -190.99997}
+  m_AnchoredPosition: {x: 0.00005340576, y: -0.000015258789}
   m_SizeDelta: {x: 118.748, y: 121.042}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5023590441288313041
@@ -6896,7 +6896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740d1099f445fc34b8f317e739c61b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vitalImage: {fileID: 0}
+  vitalImage: {fileID: 5023590440552183287}
   shakeThreshold: 0.3
   maxShakeIntensity: 10
 --- !u!1 &5023590441314072220
@@ -7003,15 +7003,15 @@ RectTransform:
   m_GameObject: {fileID: 5023590441368339014}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.82323, y: 0.82323, z: 0.82323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5023590440258180647}
-  m_Father: {fileID: 5023590441071873213}
+  m_Father: {fileID: 5023590440827539997}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 262.06134, y: -191.09995}
+  m_AnchoredPosition: {x: -0.000091552734, y: 0.00038146973}
   m_SizeDelta: {x: 118.748, y: 121.042}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5023590441368339131
@@ -7064,7 +7064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740d1099f445fc34b8f317e739c61b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vitalImage: {fileID: 0}
+  vitalImage: {fileID: 5023590440827539996}
   shakeThreshold: 0.3
   maxShakeIntensity: 10
 --- !u!1 &5023590441373704397

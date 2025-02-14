@@ -80,12 +80,6 @@ public class EnemyAI : NetworkBehaviour
         SwitchState(new PatrollingState());
     }
 
-    private void Start()
-    {
-       currentHealth = maxHealth;
-        SwitchState(new PatrollingState());
-    }
-
     public override void FixedUpdateNetwork()
     {
         if (currentState != null)
@@ -105,6 +99,7 @@ public class EnemyAI : NetworkBehaviour
 
         currentState = newState;
         currentState.EnterState(this);
+        Debug.Log("Switching to state: " + currentState.GetType().Name);
     }
 
     private bool PathBlocked()
@@ -302,13 +297,14 @@ public class EnemyAI : NetworkBehaviour
     {
         if (patrolMode == PatrolMode.FixedPoints)
         {
-            if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) < 0.5f)
+            if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) < 3f)
             {
                 Debug.Log($"[EnemyAI] Reached patrol point {currentPatrolIndex}, waiting {waitTimeAtPatrolPoint} seconds");
                 yield return new WaitForSeconds(waitTimeAtPatrolPoint);
                 currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
                 Debug.Log($"[EnemyAI] Moving to next patrol point {currentPatrolIndex}");
             }
+
             agent.SetDestination(patrolPoints[currentPatrolIndex].position);
         }
         else if (patrolMode == PatrolMode.RandomCircle || patrolMode == PatrolMode.RandomRectangle)

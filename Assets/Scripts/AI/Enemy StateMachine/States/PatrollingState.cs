@@ -15,7 +15,7 @@ public class PatrollingState : EnemyBaseState
            
             patrolLoop = enemy.StartCoroutine(PatrolLoop(enemy));
             if (enemy._animatorManager != null)
-                enemy._animatorManager.isPatrolling = 1;
+                enemy._animatorManager.isPatrolling++;
         }
     }
 
@@ -47,6 +47,7 @@ public class PatrollingState : EnemyBaseState
         while (enemy.currentState is PatrollingState)
         {
             yield return enemy.StartCoroutine(enemy.Patrol());
+            Debug.Log("Patrolling AHAHAH");
            
             if (!(enemy.currentState is PatrollingState))
             {

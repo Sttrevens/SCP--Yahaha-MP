@@ -24,14 +24,16 @@ public class VitalIconShaker : MonoBehaviour
             vitalImage = GetComponent<Image>();
         }
         // Store the initial position of the object for shake offset.
-        originalPosition = transform.localPosition;
+        originalPosition = vitalImage.transform.localPosition;
     }
 
     void Update()
     {
         if (vitalImage == null) return;
 
-        float fillValue = vitalImage.fillAmount;
+        if (GetComponent<Image>() == null) return;
+
+        float fillValue = GetComponent<Image>().fillAmount;
 
         // When fill is below the threshold, start shaking. The lower the fill, the stronger the shake.
         if (fillValue < shakeThreshold)
@@ -41,12 +43,12 @@ public class VitalIconShaker : MonoBehaviour
 
             Vector3 randomShakeOffset = Random.insideUnitSphere * currentShakeIntensity;
             // Shake in local position
-            transform.localPosition = originalPosition + randomShakeOffset;
+            vitalImage.transform.localPosition = originalPosition + randomShakeOffset;
         }
         else
         {
             // Reset position if above threshold
-            transform.localPosition = originalPosition;
+            vitalImage.transform.localPosition = originalPosition;
         }
     }
 }
