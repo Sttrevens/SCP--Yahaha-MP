@@ -886,7 +886,7 @@ Shader "SyntyStudios/EnvTriplanar"
 				#endif
 				float3 normalWS = TransformObjectToWorldDir(v.ase_normal);
 
-				float4 clipPos = TransformWorldToHClip( ApplyShadowDepthBias( positionWS, _LightDirection ) );
+				// float4 clipPos = TransformWorldToHClip( ApplyShadowDepthBias( positionWS, _LightDirection ) );
 
 				#if UNITY_REVERSED_Z
 					clipPos.z = min(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
