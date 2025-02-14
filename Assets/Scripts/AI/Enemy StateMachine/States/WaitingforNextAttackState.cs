@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
+
 public class WaitingforNextAttackState : EnemyBaseState
 {
     public override void EnterState(EnemyAI enemy)
@@ -9,15 +11,18 @@ public class WaitingforNextAttackState : EnemyBaseState
 
     public override void UpdateState(EnemyAI enemy)
     {
-        if (Time.time - enemy.lastAttackTime >= enemy.attackInterval)
+        if (enemy.HasStateAuthority)
         {
-            if (enemy.ShouldAttack(enemy))
+            if (Time.time - enemy.lastAttackTime >= enemy.attackInterval)
+            {
+                if (enemy.ShouldAttack(enemy))
             {
                 enemy.SwitchState(new AttackingState());
             }
             else
             {
-                enemy.SwitchState(new ChasingState());
+                    enemy.SwitchState(new ChasingState());
+                }
             }
         }
     }
