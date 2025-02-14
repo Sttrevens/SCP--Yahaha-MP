@@ -43,7 +43,7 @@ namespace LPSurvivalEngine
             Inventory.instance.PickupItem(this);
         }
         
-        private void Update()
+        public override void FixedUpdateNetwork()
         {
             if (IsPickedUp)
             {

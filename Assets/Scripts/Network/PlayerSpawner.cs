@@ -28,9 +28,9 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 
     public void PlayerLeft(PlayerRef player)
     {
-        if (player == Runner.LocalPlayer)
-        {
-            MaterialRenderTextureManager.Instance.ReleaseCharacterMaterial(Runner.GetPlayerObject(player).GetComponent<NetworkObject>());
-        }
+        // if (player == Runner.LocalPlayer)
+        // {
+             MaterialRenderTextureManager.Instance.ReleaseCharacterMaterial(Runner.GetPlayerObject(player).GetComponent<NetworkObject>());
+        // }
     }
 }

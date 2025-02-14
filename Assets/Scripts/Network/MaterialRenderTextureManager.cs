@@ -170,7 +170,7 @@ public class MaterialRenderTextureManager : NetworkBehaviour
     /// </summary>
     public void ReleaseCharacterMaterial(NetworkObject player)
     {
-        //if (!HasStateAuthority) return;
+        if (!HasStateAuthority) return;
 
         if (characterAssignments.TryGetValue(player, out int charMatSetIndex))
         {
