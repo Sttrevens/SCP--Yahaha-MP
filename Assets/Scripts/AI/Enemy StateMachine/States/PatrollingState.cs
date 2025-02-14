@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
 public class PatrollingState : EnemyBaseState
 {
@@ -8,11 +9,14 @@ public class PatrollingState : EnemyBaseState
 
     public override void EnterState(EnemyAI enemy)
     {
-        enemy.agent.speed = enemy.patrollingSpeed;
-       
-        patrolLoop = enemy.StartCoroutine(PatrolLoop(enemy));
-        if (enemy.animator != null)
-            enemy.PlayAnimation("IsPatrolling", true);
+        if (enemy.HasStateAuthority)
+        {
+            enemy.agent.speed = enemy.patrollingSpeed;
+           
+            patrolLoop = enemy.StartCoroutine(PatrolLoop(enemy));
+            if (enemy._animatorManager != null)
+                enemy._animatorManager.isPatrolling = 1;
+        }
     }
 
     public override void UpdateState(EnemyAI enemy)
@@ -29,9 +33,12 @@ public class PatrollingState : EnemyBaseState
 
     public override void ExitState(EnemyAI enemy)
     {
-        if (patrolLoop != null)
+        if (enemy.HasStateAuthority)
         {
-            enemy.StopCoroutine(patrolLoop);
+            if (patrolLoop != null) 
+            {
+                enemy.StopCoroutine(patrolLoop);
+            }
         }
     }
 

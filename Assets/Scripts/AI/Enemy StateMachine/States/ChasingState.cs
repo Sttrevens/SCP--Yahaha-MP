@@ -1,4 +1,5 @@
 using UnityEngine;
+using Fusion;
 
 public class ChasingState : EnemyBaseState
 {
@@ -10,9 +11,11 @@ public class ChasingState : EnemyBaseState
 
     public override void UpdateState(EnemyAI enemy)
     {
-        // Check if the enemy should attack the player
-        if (enemy.ShouldAttack(enemy))
+        if (enemy.HasStateAuthority)
         {
+            // Check if the enemy should attack the player
+            if (enemy.ShouldAttack(enemy))
+            {
             // Switch to AttackingState if conditions are met
             enemy.SwitchState(new AttackingState());
             return; // Exit early as we've already handled the state change
@@ -42,11 +45,12 @@ public class ChasingState : EnemyBaseState
             enemy.SwitchState(new PatrollingState());
         }
 
-        if (enemy.animator != null)
-            enemy.PlayAnimation("IsChasing", true);
+        if (enemy._animatorManager != null)
+            enemy._animatorManager.isChasing = 1;
             
         // Rotate towards the player's position (or the destination if no player)
         //enemy.RotateTowards(enemy.targetPlayer?.transform.position ?? enemy.agent.destination);
+    }
     }
 
     public override void ExitState(EnemyAI enemy)

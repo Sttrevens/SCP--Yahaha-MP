@@ -70,6 +70,7 @@ public class EnemyAI : NetworkBehaviour
         {
             animator = GetComponent<Animator>();
         }
+        _animatorManager = GetComponent<EnemyAnimatorManager>();
     }
 
     public override void Spawned()
