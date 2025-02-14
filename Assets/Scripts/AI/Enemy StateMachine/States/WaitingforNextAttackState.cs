@@ -17,11 +17,11 @@ public class WaitingforNextAttackState : EnemyBaseState
             {
                 if (enemy.ShouldAttack(enemy))
             {
-                enemy.SwitchState(GetComponent<AttackingState>());
+                enemy.SwitchState(new AttackingState());
             }
             else
             {
-                    enemy.SwitchState(GetComponent<ChasingState>());
+                    enemy.SwitchState(new ChasingState());
                 }
             }
         }

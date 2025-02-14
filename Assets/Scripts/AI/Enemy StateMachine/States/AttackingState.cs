@@ -7,7 +7,7 @@ public class AttackingState : EnemyBaseState
 {
     public override void EnterState(EnemyAI enemy)
     {
-        if (enemy.targetPlayer != null && enemy.targetPlayer.tag == "Player")
+        if (enemy.targetPlayer != null)
         {
             enemy.lastAttackTime = Time.time;
             enemy.lastAttackPreDelayTime = Time.time;
@@ -18,7 +18,7 @@ public class AttackingState : EnemyBaseState
         }
         else
         {
-            enemy.SwitchState(GetComponent<ChasingState>());
+            enemy.SwitchState(new ChasingState());
         }
     }
 
@@ -41,7 +41,7 @@ public class AttackingState : EnemyBaseState
                 else { Debug.Log("Player Health is Null,"); }
             }
 
-                enemy.SwitchState(GetComponent<WaitingforNextAttackState>());
+                enemy.SwitchState(new WaitingforNextAttackState());
             }
         }
     }

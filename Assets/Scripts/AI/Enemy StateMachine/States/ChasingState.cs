@@ -17,32 +17,32 @@ public class ChasingState : EnemyBaseState
             if (enemy.ShouldAttack(enemy))
             {
             // Switch to AttackingState if conditions are met
-            enemy.SwitchState(GetComponent<AttackingState>());
+            enemy.SwitchState(new AttackingState());
             return; // Exit early as we've already handled the state change
         }
 
         // Continue chasing the player if no attack is triggered
-        if (enemy.targetPlayer != null && enemy.targetPlayer.tag == "Player")
+        if (enemy.targetPlayer != null)
         {
             enemy.agent.SetDestination(enemy.targetPlayer.transform.position);
 
             // If the player is within the attack range, switch to AttackingState
             if (enemy.ShouldAttack(enemy))
             {
-                enemy.SwitchState(GetComponent<AttackingState>());
+                enemy.SwitchState(new AttackingState());
             }
             else if (Vector3.Distance(enemy.transform.position, enemy.targetPlayer.transform.position) > enemy.detectionRange)
             {
                 // If the player is out of detection range, switch to PatrollingState
-                enemy.SwitchState(GetComponent<PatrollingState>());
+                enemy.SwitchState(new PatrollingState());
                 enemy.targetPlayer = null;
             }
-            else if (enemy.CheckForDestroyableObstacle() != null) {enemy.SwitchState(GetComponent<DestroyingObstacleState>());}
+            else if (enemy.CheckForDestroyableObstacle() != null) {enemy.SwitchState(new DestroyingObstacleState());}
         }
         else
         {
             // If no player is detected, switch to PatrollingState
-            enemy.SwitchState(GetComponent<PatrollingState>());
+            enemy.SwitchState(new PatrollingState());
         }
 
         if (enemy._animatorManager != null)

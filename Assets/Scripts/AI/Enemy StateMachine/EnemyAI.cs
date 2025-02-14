@@ -77,13 +77,13 @@ public class EnemyAI : NetworkBehaviour
     {
         //players = GameObject.FindGameObjectsWithTag("Player");
         currentHealth = maxHealth;
-        SwitchState(GetComponent<PatrollingState>());
+        SwitchState(new PatrollingState());
     }
 
     private void Start()
     {
        currentHealth = maxHealth;
-        SwitchState(GetComponent<PatrollingState>());
+        SwitchState(new PatrollingState());
     }
 
     public override void FixedUpdateNetwork()
@@ -99,41 +99,13 @@ public class EnemyAI : NetworkBehaviour
     }
 
     public void SwitchState(IEnemyState newState)
-{
-    if (currentState != null)
     {
-        currentState.ExitState(this);
-    }
-    
-    // 假设 newState 的类型是 PatrollingState，使用 AddComponent 创建实例
-    // 这里直接判断 newState 的类型，然后添加对应组件
-    if (newState is PatrollingState)
-    {
-        currentState = gameObject.GetComponent<PatrollingState>();
-    }
-    else if (newState is ChasingState)
-    {
-        currentState = gameObject.GetComponent<ChasingState>();
-    }
-    else if (newState is AttackingState)
-    {
-        currentState = gameObject.GetComponent<AttackingState>();
-    }
-    else if (newState is WaitingforNextAttackState)
-    {
-        currentState = gameObject.GetComponent<WaitingforNextAttackState>();
-    }
-    else if (newState is DeadState)
-    {
-        currentState = gameObject.GetComponent<DeadState>();
-    }
-    else if (newState is BeingAttackedState)
-    {
-        currentState = gameObject.GetComponent<BeingAttackedState>();
-    }
+        if (currentState != null)
+            currentState.ExitState(this);
 
-    currentState.EnterState(this);
-}
+        currentState = newState;
+        currentState.EnterState(this);
+    }
 
     private bool PathBlocked()
     {
@@ -354,7 +326,7 @@ public class EnemyAI : NetworkBehaviour
         if (PlayerInSight())
         {
             Debug.Log("[EnemyAI] Player detected while patrolling, switching to chase state");
-            SwitchState(GetComponent<ChasingState>());
+            SwitchState(new ChasingState());
             agent.speed = chasingSpeed;
             yield break;
         }
@@ -392,7 +364,7 @@ public class EnemyAI : NetworkBehaviour
 
         // �ָ�׷��״̬
         agent.isStopped = false;
-        SwitchState(GetComponent<ChasingState>());
+        SwitchState(new ChasingState());
     }
 
         public bool ShouldAttack(EnemyAI enemy)
