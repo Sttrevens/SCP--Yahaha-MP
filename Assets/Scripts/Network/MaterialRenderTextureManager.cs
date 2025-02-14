@@ -28,9 +28,6 @@ public class MaterialRenderTextureManager : NetworkBehaviour
     [Networked, Capacity(4)]
     private NetworkLinkedList<int> assignedCharacterMaterialsIndexes { get; }
 
-    [Networked, Capacity(4)]
-    public NetworkLinkedList<int> characterMaterialIndex { get; }
-
     public static MaterialRenderTextureManager Instance { get; private set; }
 
     private void Awake()
@@ -46,14 +43,6 @@ public class MaterialRenderTextureManager : NetworkBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    public override void Spawned()
-    {
-        foreach (int i in Enumerable.Range(0, 4))
-    {
-        characterMaterialIndex.Add(i);
-    }
     }
 
     // 该示例假设只在服务器(HasStateAuthority)上修改同步数据

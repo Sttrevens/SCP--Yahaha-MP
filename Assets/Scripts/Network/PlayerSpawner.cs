@@ -2,6 +2,7 @@ using Fusion;
 using LPSurvivalEngine;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 {
@@ -15,10 +16,20 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
     // 如果需要，你也可以用一个字典来记录该玩家对应的Prefab下标
     private Dictionary<PlayerRef, int> assignedPrefabIndices = new Dictionary<PlayerRef, int>();
 
+    [Networked, Capacity(4)]
+    public NetworkLinkedList<int> characterMaterialIndex { get; }
     public void PlayerJoined(PlayerRef player)
     {
+        if (Runner.IsSharedModeMasterClient)
+        {
+            foreach (int i in Enumerable.Range(0, 4))
+            {
+                characterMaterialIndex.Add(i);
+            }
+        }
+
         // 先检查全局同步的 characterMaterialIndex，如果没有可用下标，则提示
-        if (MaterialRenderTextureManager.Instance.characterMaterialIndex.Count == 0)
+        if (characterMaterialIndex.Count == 0)
         {
             Debug.LogWarning("No more available player prefabs in the pool via synced index.");
             return;
@@ -26,9 +37,9 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 
         // 如果有 State Authority，则从全局列表里减去一个可用下标
         // 这里为了示例，直接取第 0 个。实际逻辑可按需改成 FindAvailableIndex 等
-        int chosenIndex = MaterialRenderTextureManager.Instance.characterMaterialIndex[0];
-            int indexValue = MaterialRenderTextureManager.Instance.characterMaterialIndex[0];
-            MaterialRenderTextureManager.Instance.characterMaterialIndex.Remove(indexValue);
+        int chosenIndex = characterMaterialIndex[0];
+        int indexValue = characterMaterialIndex[0];
+        characterMaterialIndex.Remove(indexValue);
 
         // 仅在本地玩家加入时进行处理（与原逻辑保持一致）
         if (player == Runner.LocalPlayer)
@@ -66,7 +77,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
         // 如果玩家名下有PrefabIndex的记录，则将其归还至全局同步列表
         if (assignedPrefabIndices.TryGetValue(player, out int usedIndex))
         {
-                MaterialRenderTextureManager.Instance.characterMaterialIndex.Add(usedIndex);
+            characterMaterialIndex.Add(usedIndex);
 
             assignedPrefabIndices.Remove(player);
         }
