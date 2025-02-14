@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 7366751367913657091}
   - component: {fileID: 3764277809295143984}
   - component: {fileID: 7473454302680662905}
+  - component: {fileID: 10332401114021760}
   m_Layer: 5
   m_Name: BobojianLiveCapture
   m_TagString: Untagged
@@ -301,6 +302,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &10332401114021760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404927727810426227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7f42bc0a58b47428c9849461979802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNameText: {fileID: 616649547486834721}
 --- !u!1 &431014845258166062
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,10 +530,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'monitoring:'
+  m_text: 'monitoring: DefaultPlayer'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
-  m_sharedMaterial: {fileID: 7409485994217783921, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+  m_sharedMaterial: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -579,7 +593,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -334.47855, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1473,8 +1487,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 12345
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 38aecd77a18d544bfb836befe83883b7, type: 2}
-  m_sharedMaterial: {fileID: 6434564289584660316, guid: 38aecd77a18d544bfb836befe83883b7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+  m_sharedMaterial: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2373,10 +2387,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'monitoring:'
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
-  m_sharedMaterial: {fileID: 7409485994217783921, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+  m_sharedMaterial: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2400,8 +2414,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2436,7 +2450,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -162.30806, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2453,6 +2467,7 @@ GameObject:
   - component: {fileID: 6169596993220152312}
   - component: {fileID: 547288684274478283}
   - component: {fileID: 6057958901323406210}
+  - component: {fileID: 648522362966119946}
   m_Layer: 5
   m_Name: BobojianLiveCapture (1)
   m_TagString: Untagged
@@ -2515,6 +2530,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &648522362966119946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3907907380988472712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7f42bc0a58b47428c9849461979802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNameText: {fileID: 4263780673731619034}
 --- !u!1 &3913011439028699549
 GameObject:
   m_ObjectHideFlags: 0
@@ -2974,6 +3002,7 @@ GameObject:
   - component: {fileID: 6738454690928368682}
   - component: {fileID: 1118404782770912025}
   - component: {fileID: 6633576403862359120}
+  - component: {fileID: 6270030772909645160}
   m_Layer: 5
   m_Name: BobojianLiveCapture (3)
   m_TagString: Untagged
@@ -3036,6 +3065,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &6270030772909645160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4478458328524847706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7f42bc0a58b47428c9849461979802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNameText: {fileID: 3690417317023317768}
 --- !u!1 &4486566231910653959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3178,8 +3220,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: LIVE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
-  m_sharedMaterial: {fileID: 7409485994217783921, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+  m_sharedMaterial: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3310,10 +3352,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'monitoring:'
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
-  m_sharedMaterial: {fileID: 7409485994217783921, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+  m_sharedMaterial: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3337,8 +3379,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3373,7 +3415,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -168.74458, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3465,6 +3507,7 @@ GameObject:
   - component: {fileID: 3137010616661913689}
   - component: {fileID: 8759067408866662250}
   - component: {fileID: 3027572097774493731}
+  - component: {fileID: 2074236353894658714}
   m_Layer: 5
   m_Name: BobojianLiveCapture (2)
   m_TagString: Untagged
@@ -3527,6 +3570,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &2074236353894658714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5200958558719858217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7f42bc0a58b47428c9849461979802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNameText: {fileID: 4989377748725486459}
 --- !u!1 &5208507975866944628
 GameObject:
   m_ObjectHideFlags: 0
@@ -3742,10 +3798,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'monitoring:'
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
-  m_sharedMaterial: {fileID: 7409485994217783921, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+  m_sharedMaterial: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3769,8 +3825,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3805,7 +3861,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -158.21901, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4125,8 +4181,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: LIVE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
-  m_sharedMaterial: {fileID: 7409485994217783921, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+  m_sharedMaterial: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4914,6 +4970,7 @@ GameObject:
   - component: {fileID: 1124526060426883351}
   - component: {fileID: 6745703474800367140}
   - component: {fileID: 1015526803408773485}
+  - component: {fileID: 4395558312673767752}
   m_Layer: 5
   m_Name: BobojianLiveCapture
   m_TagString: Untagged
@@ -4977,6 +5034,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &4395558312673767752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7799808732936574823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7f42bc0a58b47428c9849461979802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNameText: {fileID: 7002583226433638965}
 --- !u!1 &7802519969132313458
 GameObject:
   m_ObjectHideFlags: 0
@@ -5498,8 +5568,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 12345
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 38aecd77a18d544bfb836befe83883b7, type: 2}
-  m_sharedMaterial: {fileID: 6434564289584660316, guid: 38aecd77a18d544bfb836befe83883b7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+  m_sharedMaterial: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5630,10 +5700,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'monitoring:'
+  m_text: 'monitoring: DefaultPlayer'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
-  m_sharedMaterial: {fileID: 7409485994217783921, guid: d9b454495b7d24a7a933eb61bdfa0607, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
+  m_sharedMaterial: {fileID: -6845188673183132766, guid: 9230c829b7aa2cf41b314644cc9a81a9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5693,7 +5763,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -381.20346, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
