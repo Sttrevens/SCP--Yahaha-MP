@@ -1698,6 +1698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c16d8786b05ded04aa333753c924a6ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  altInputHint: 
   placementUpdateRate: 0.03
   placementMaxDistance: 7
   rotateSpeed: 180
@@ -1748,8 +1749,8 @@ MonoBehaviour:
     currentValue: 0
     maxValue: 100
     startValue: 100
-    regenrate: 2
-    decayRate: 16
+    regenrate: 4
+    decayRate: 8
     VitalBar: {fileID: 0}
   oxygen:
     currentValue: 0
@@ -1947,6 +1948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _PlayerName: Default Player
+  _characterMaterialIndex: 0
 --- !u!1 &5385546817467512204
 GameObject:
   m_ObjectHideFlags: 0

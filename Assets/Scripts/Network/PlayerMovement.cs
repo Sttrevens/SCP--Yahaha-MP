@@ -65,12 +65,12 @@ public class PlayerMovement : NetworkBehaviour
         {
             if (Input.GetButtonDown("Jump"))
             {
-                if (GetComponent<HealthSystem>().stamina.currentValue > 20f)
+                if (GetComponent<HealthSystem>().stamina.currentValue > 10f)
             {
                 _jumpPressed = true;
                 if (_controller.isGrounded)
                 {
-                    GetComponent<HealthSystem>().stamina.Subtract(20f);
+                    GetComponent<HealthSystem>().stamina.Subtract(10f);
                 }
             }
         }
