@@ -3127,6 +3127,7 @@ GameObject:
   - component: {fileID: 5023590439731978860}
   - component: {fileID: 5023590439731978850}
   - component: {fileID: 5023590439731978851}
+  - component: {fileID: 2274180299283715065}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -3192,6 +3193,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.66
+--- !u!114 &2274180299283715065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023590439731978861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740d1099f445fc34b8f317e739c61b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vitalImage: {fileID: 0}
+  shakeThreshold: 0.3
+  maxShakeIntensity: 10
 --- !u!1 &5023590439838884979
 GameObject:
   m_ObjectHideFlags: 0
@@ -3203,6 +3219,7 @@ GameObject:
   - component: {fileID: 5023590439838884978}
   - component: {fileID: 5023590439838884976}
   - component: {fileID: 5023590439838884977}
+  - component: {fileID: 6662241919631243139}
   m_Layer: 5
   m_Name: Oxygen
   m_TagString: Untagged
@@ -3268,6 +3285,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.66
+--- !u!114 &6662241919631243139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023590439838884979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740d1099f445fc34b8f317e739c61b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vitalImage: {fileID: 0}
+  shakeThreshold: 0.3
+  maxShakeIntensity: 10
 --- !u!1 &5023590439913054738
 GameObject:
   m_ObjectHideFlags: 0
@@ -6786,6 +6818,7 @@ GameObject:
   - component: {fileID: 5023590441288313043}
   - component: {fileID: 5023590441288313041}
   - component: {fileID: 5023590441288313042}
+  - component: {fileID: 7524919504186514589}
   m_Layer: 5
   m_Name: Stamina
   m_TagString: Untagged
@@ -6851,6 +6884,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.66
+--- !u!114 &7524919504186514589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023590441288313052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740d1099f445fc34b8f317e739c61b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vitalImage: {fileID: 0}
+  shakeThreshold: 0.3
+  maxShakeIntensity: 10
 --- !u!1 &5023590441314072220
 GameObject:
   m_ObjectHideFlags: 0
@@ -6938,6 +6986,7 @@ GameObject:
   - component: {fileID: 5023590441368339013}
   - component: {fileID: 5023590441368339131}
   - component: {fileID: 5023590441368339012}
+  - component: {fileID: 3519200031317315718}
   m_Layer: 5
   m_Name: Sanity
   m_TagString: Untagged
@@ -7003,6 +7052,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.66
+--- !u!114 &3519200031317315718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023590441368339014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740d1099f445fc34b8f317e739c61b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vitalImage: {fileID: 0}
+  shakeThreshold: 0.3
+  maxShakeIntensity: 10
 --- !u!1 &5023590441373704397
 GameObject:
   m_ObjectHideFlags: 0

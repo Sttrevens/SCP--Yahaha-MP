@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using LPSurvivalEngine;
+using System.Linq;
 
 public class MaterialRenderTextureManager : NetworkBehaviour
 {
@@ -27,6 +28,9 @@ public class MaterialRenderTextureManager : NetworkBehaviour
     [Networked, Capacity(4)]
     private NetworkLinkedList<int> assignedCharacterMaterialsIndexes { get; }
 
+    [Networked, Capacity(4)]
+    public NetworkLinkedList<int> characterMaterialIndex { get; }
+
     public static MaterialRenderTextureManager Instance { get; private set; }
 
     private void Awake()
@@ -42,6 +46,14 @@ public class MaterialRenderTextureManager : NetworkBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public override void Spawned()
+    {
+        foreach (int i in Enumerable.Range(0, 4))
+    {
+        characterMaterialIndex.Add(i);
+    }
     }
 
     // 该示例假设只在服务器(HasStateAuthority)上修改同步数据
@@ -152,7 +164,7 @@ public class MaterialRenderTextureManager : NetworkBehaviour
 
                 assignedCharacterMaterialsIndexes.Add(availableIndex);
 
-                player.GetComponent<PlayerData>().characterMaterialIndex = availableIndex;
+                player.GetComponent<PlayerData>().characterMaterialIndex = 1;
             }
             else
             {

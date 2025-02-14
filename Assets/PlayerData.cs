@@ -25,9 +25,9 @@ public class PlayerData : NetworkBehaviour
         
     }
 
-    public override void Render()
-    {
-        CharacterMaterialSet charMatSet = MaterialRenderTextureManager.Instance.availableCharacterMaterialSets[characterMaterialIndex];
-        MaterialRenderTextureManager.Instance.ApplyCharacterMaterial(Object, charMatSet);
-    }
+    // public override void Render()
+    // {
+    //     CharacterMaterialSet charMatSet = MaterialRenderTextureManager.Instance.availableCharacterMaterialSets[characterMaterialIndex];
+    //     MaterialRenderTextureManager.Instance.ApplyCharacterMaterial(Object, charMatSet);
+    // }
 }

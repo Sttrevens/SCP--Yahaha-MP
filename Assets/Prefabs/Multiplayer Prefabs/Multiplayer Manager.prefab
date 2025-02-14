@@ -418,6 +418,7 @@ MonoBehaviour:
   - uvMat: {fileID: 2100000, guid: ff231789b6cad304e90250a48427a4a4, type: 2}
     lightMat: {fileID: 2100000, guid: fadc2c82b568e744191a48cb720166d0, type: 2}
     normalMat: {fileID: 2100000, guid: 14f308b01a1ee2444abeb1858194a502, type: 2}
+  _characterMaterialIndex: 
 --- !u!114 &9029582911213777836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,7 +1083,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b8f987a75dacf489cc30ddf1a54307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 5250024112804794185, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+  PlayerPrefabsPool:
+  - {fileID: 5250024112804794185, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+  - {fileID: 15123330915201270, guid: 2d340844ab713674285be65a2fcb711a, type: 3}
+  - {fileID: 15123330915201270, guid: eab99c13f012cb745bc78ebd50f6226b, type: 3}
+  - {fileID: 15123330915201270, guid: 44300cb2b1670c04c92245f57c0d5fd4, type: 3}
   spawnPoint: {fileID: 0}
 --- !u!1001 &6162136657599590
 PrefabInstance:
