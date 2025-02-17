@@ -40,21 +40,21 @@ public class EnemyAttack : NetworkBehaviour
                 Vector3 rightDirection = Quaternion.Euler(0f, -15f, 0f) * enemy.transform.forward;
                 Vector3 raycastDirection = enemy.transform.forward;
                 RaycastHit hit;
-                if (Physics.Raycast(raycastStart, leftDirection, out hit, attackRange))
+                if (Physics.Raycast(raycastStart, leftDirection, out hit, attackRange * 0.8f))
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
                         return true;
                     }
                 }
-                if (Physics.Raycast(raycastStart, rightDirection, out hit, attackRange))
+                if (Physics.Raycast(raycastStart, rightDirection, out hit, attackRange * 0.8f))
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
                         return true;
                     }
                 }
-                if (Physics.Raycast(raycastStart, raycastDirection, out hit, attackRange))
+                if (Physics.Raycast(raycastStart, raycastDirection, out hit, attackRange * 0.8f))
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
