@@ -2,18 +2,18 @@ using DestroyIt;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class DestroyingObstacleState : IEnemyState
+public class DestroyingObstacleState : EnemyBaseState
 {
 
-    public void EnterState(EnemyAI enemy)
+    public void EnterState(Enemy enemy)
     {
-        enemy.lastAttackTime = Time.time;
-        enemy.agent.isStopped = true;
+        EnemyAttack.lastAttackTime = Time.time;
+        EnemyMovement.agent.isStopped = true;
     }
 
-    public void UpdateState(EnemyAI enemy)
+    public void UpdateState(Enemy enemy)
     {
-        GameObject obstacle = enemy.CheckForDestroyableObstacle();
+        /*GameObject obstacle = enemy.CheckForDestroyableObstacle();
         if (obstacle != null)
         {
 
@@ -26,11 +26,11 @@ public class DestroyingObstacleState : IEnemyState
         else
         {
             enemy.SwitchState(new ChasingState());
-        }
+        }*/
     }
 
-    public void ExitState(EnemyAI enemy)
+    public void ExitState(Enemy enemy)
     {
-        enemy.agent.isStopped = false;
+        EnemyMovement.agent.isStopped = false;
     }
 }

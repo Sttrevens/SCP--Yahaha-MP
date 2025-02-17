@@ -4,7 +4,19 @@ using UnityEngine;
 using Fusion;
 public abstract class EnemyBaseState : IEnemyState
 {
-    public virtual void EnterState(EnemyAI enemy) { }
-    public virtual void UpdateState(EnemyAI enemy) { }
-    public virtual void ExitState(EnemyAI enemy) { }
+    public EnemyMovement EnemyMovement;
+    public ChasingEnemy ChasingEnemy;
+    public EnemyAttack EnemyAttack;
+
+    public virtual void EnterState(Enemy enemy)
+    {
+        if (enemy.HasStateAuthority)
+        {
+            EnemyMovement = enemy.GetComponent<EnemyMovement>();
+            ChasingEnemy = enemy.GetComponent<ChasingEnemy>();
+            EnemyAttack = enemy.GetComponent<EnemyAttack>();
+        }
+    }
+    public virtual void UpdateState(Enemy enemy) { }
+    public virtual void ExitState(Enemy enemy) { }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 using UnityEngine;
 using Fusion;
 
@@ -7,11 +8,13 @@ public class PatrollingState : EnemyBaseState
 {
     private Coroutine patrolLoop;
 
-    public override void EnterState(EnemyAI enemy)
+    public override void EnterState(Enemy enemy)
     {
+        base.EnterState(enemy);
+
         if (enemy.HasStateAuthority)
-        {
-            enemy.agent.speed = enemy.patrollingSpeed;
+        { 
+            EnemyMovement.agent.speed = EnemyMovement.patrollingSpeed;
            
             patrolLoop = enemy.StartCoroutine(PatrolLoop(enemy));
             if (enemy._animatorManager != null)
@@ -19,7 +22,7 @@ public class PatrollingState : EnemyBaseState
         }
     }
 
-    public override void UpdateState(EnemyAI enemy)
+    public override void UpdateState(Enemy enemy)
     {
         // if (enemy.agent.path.corners.Length > 1)
         // {
@@ -31,7 +34,7 @@ public class PatrollingState : EnemyBaseState
         // }
     }
 
-    public override void ExitState(EnemyAI enemy)
+    public override void ExitState(Enemy enemy)
     {
         if (enemy.HasStateAuthority)
         {
@@ -42,14 +45,14 @@ public class PatrollingState : EnemyBaseState
         }
     }
 
-    private IEnumerator PatrolLoop(EnemyAI enemy)
+    private IEnumerator PatrolLoop(Enemy enemy)
     {
-        while (enemy.currentState is PatrollingState)
+        while (enemy.CurrentState is PatrollingState)
         {
-            yield return enemy.StartCoroutine(enemy.Patrol());
+            yield return EnemyMovement.StartCoroutine(EnemyMovement.Patrol());
             Debug.Log("Patrolling AHAHAH");
            
-            if (!(enemy.currentState is PatrollingState))
+            if (!(enemy.CurrentState is PatrollingState))
             {
                 yield break;
             }

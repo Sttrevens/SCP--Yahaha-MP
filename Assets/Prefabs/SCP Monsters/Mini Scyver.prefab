@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mini Scyver
       objectReference: {fileID: 0}
+    - target: {fileID: 1669231238848277445, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 677b14501a640e04e8b4e5d381262cc7, type: 2}
     - target: {fileID: 1741383101279916694, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.75
@@ -64,6 +68,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2879526749205372651, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: chasingSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879526749205372651, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: patrollingSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2881711990319182107, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
       propertyPath: health
       value: 100
@@ -88,6 +100,10 @@ PrefabInstance:
       propertyPath: patrollingSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4921574029404513386, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 677b14501a640e04e8b4e5d381262cc7, type: 2}
     - target: {fileID: 7361262494600811521, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
       propertyPath: SortKey
       value: 1147040096
@@ -97,8 +113,20 @@ PrefabInstance:
       value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 8838658910775223982, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: m_Acceleration
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8838658910775223982, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
       propertyPath: m_StoppingDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996106264372517254, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: attackRange
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996106264372517254, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      propertyPath: attackDamage
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

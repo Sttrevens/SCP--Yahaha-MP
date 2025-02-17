@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class IdleState : EnemyBaseState
 {
-    public override void EnterState(EnemyAI enemy)
+    public override void EnterState(Enemy enemy)
     {
-        enemy.Idle();
+        //enemy.Idle();
     }
 
-    public override void UpdateState(EnemyAI enemy)
+    public override void UpdateState(Enemy enemy)
     {
-        
-        if (enemy.PlayerInSight())
+        if (ChasingEnemy.PlayerInSight())
         {
             enemy.SwitchState(new ChasingState());
         }
     }
 
-    public override void ExitState(EnemyAI enemy)
+    public override void ExitState(Enemy enemy)
     {
        
     }

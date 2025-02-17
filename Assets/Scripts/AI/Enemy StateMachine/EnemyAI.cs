@@ -1,3 +1,4 @@
+/*
 using DestroyIt;
 using System.Collections;
 using Fusion;
@@ -55,7 +56,7 @@ public class EnemyAI : NetworkBehaviour
 
     [SerializeField] private bool isFlyingEnemy = false;
 
-    public IEnemyState currentState;
+    public IEnemyState CurrentState;
 
     public EnemyAnimatorManager _animatorManager;
 
@@ -82,9 +83,9 @@ public class EnemyAI : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (currentState != null)
+        if (CurrentState != null)
         {
-             currentState.UpdateState(this);
+             CurrentState.UpdateState(this);
 
            //players = GameObject.FindGameObjectsWithTag("Player");
         }
@@ -94,12 +95,12 @@ public class EnemyAI : NetworkBehaviour
 
     public void SwitchState(IEnemyState newState)
     {
-        if (currentState != null)
-            currentState.ExitState(this);
+        if (CurrentState != null)
+            CurrentState.ExitState(this);
 
-        currentState = newState;
-        currentState.EnterState(this);
-        Debug.Log("Switching to state: " + currentState.GetType().Name);
+        CurrentState = newState;
+        CurrentState.EnterState(this);
+        Debug.Log("Switching to state: " + CurrentState.GetType().Name);
     }
 
     private bool PathBlocked()
@@ -208,7 +209,7 @@ public class EnemyAI : NetworkBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (!(currentState is DeadState))
+        if (!(CurrentState is DeadState))
         {
             // TODO:����������Ѫ��ͬ��
             // currentHealth -= damage;
@@ -372,11 +373,28 @@ public class EnemyAI : NetworkBehaviour
             if (distanceToTarget <= enemy.attackRange)
             {
                 // Check if there are obstacles between enemy and player
-                Vector3 directionToPlayer = (enemy.targetPlayer.transform.position - enemy.transform.position).normalized;
-                RaycastHit hit;
+                //Vector3 directionToPlayer = (enemy.targetPlayer.transform.position - enemy.transform.position).normalized;
                 Vector3 raycastStart = enemy.transform.position + Vector3.up;
-
-                if (Physics.Raycast(raycastStart, directionToPlayer, out hit, enemy.attackRange))
+                // Calculate directions for two rays with a 30° spread (15° to the left and 15° to the right)
+                Vector3 leftDirection = Quaternion.Euler(0f, 15f, 0f) * enemy.transform.forward;
+                Vector3 rightDirection = Quaternion.Euler(0f, -15f, 0f) * enemy.transform.forward;
+                Vector3 raycastDirection = enemy.transform.forward;
+                RaycastHit hit;
+                if (Physics.Raycast(raycastStart, leftDirection, out hit, enemy.attackRange))
+                {
+                    if (hit.collider.CompareTag("Player"))
+                    {
+                        return true;
+                    }
+                }
+                if (Physics.Raycast(raycastStart, rightDirection, out hit, enemy.attackRange))
+                {
+                    if (hit.collider.CompareTag("Player"))
+                    {
+                        return true;
+                    }
+                }
+                if (Physics.Raycast(raycastStart, raycastDirection, out hit, enemy.attackRange))
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
@@ -421,16 +439,15 @@ public void RotateTowardsMovementDirection()
         //}
     }
 
-    private void OnDrawGizmos()
-    {
-        
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Vector3 raycastStart = transform.position + Vector3.up;
+        Vector3 leftDirection = Quaternion.Euler(0f, 15f, 0f) * transform.forward;
+        Vector3 rightDirection = Quaternion.Euler(0f, -15f, 0f) * transform.forward;
         Vector3 raycastDirection = transform.forward;
+        Gizmos.DrawRay(raycastStart, leftDirection * attackRange);
+        Gizmos.DrawRay(raycastStart, rightDirection * attackRange);
         Gizmos.DrawRay(raycastStart, raycastDirection * attackRange);
 
 
@@ -475,3 +492,4 @@ public void RotateTowardsMovementDirection()
         currentHealth -= damage;
     }
 }
+*/

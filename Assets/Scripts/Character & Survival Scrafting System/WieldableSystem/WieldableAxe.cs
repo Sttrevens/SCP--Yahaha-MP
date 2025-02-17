@@ -53,10 +53,10 @@ namespace LPSurvivalEngine
             {
                 if (networkObject.HasStateAuthority)
                 {
-                    // Èç¹û¸ÃNetworkObject¾ßÓÐÊäÈëÈ¨ÏÞ£¬ÔòÈÏÎªÊÇµ±Ç°²Ù×÷µÄÍæ¼Ò¶ÔÏó
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½NetworkObjectï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½Þ£ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Çµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½
                     GameObject currentPlayerObject = networkObject.gameObject;
                     anim = currentPlayerObject.GetComponent<Animator>();
-                    Debug.Log("µ±Ç°²Ù×÷µÄÍæ¼Ò¶ÔÏóÊÇ£º" + currentPlayerObject.name);
+                    Debug.Log("ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½ï¿½Ç£ï¿½" + currentPlayerObject.name);
                     break;
                 }
             }
@@ -115,9 +115,9 @@ namespace LPSurvivalEngine
                     }
                 }
 
-                if (doesDealDamage && hit.collider.GetComponent<EnemyAI>() != null)
+                if (doesDealDamage && hit.collider.GetComponent<Enemy>() != null)
                 {
-                    hit.collider.GetComponent<EnemyAI>().TakeDamage(damage);
+                    hit.collider.GetComponent<Enemy>().TakeDamage(damage);
                 }
 
                 if (doesDealDamage && hit.collider.GetComponent<hitEffect>() != null)

@@ -42,7 +42,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1741383101279916694}
   - component: {fileID: 8838658910775223982}
-  - component: {fileID: 2881711990319182107}
   - component: {fileID: 1760737360189838549}
   - component: {fileID: 4507690019245153522}
   - component: {fileID: 5457690532826218384}
@@ -51,6 +50,10 @@ GameObject:
   - component: {fileID: 8063579947087977798}
   - component: {fileID: -862223771675728385}
   - component: {fileID: 4638254101481957626}
+  - component: {fileID: 4884397009001671538}
+  - component: {fileID: 8996106264372517254}
+  - component: {fileID: 2374247297385732892}
+  - component: {fileID: 2879526749205372651}
   m_Layer: 14
   m_Name: Scyver
   m_TagString: Untagged
@@ -85,7 +88,7 @@ NavMeshAgent:
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 6
-  m_Acceleration: 8
+  m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 2
@@ -96,44 +99,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2881711990319182107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 513229352100526564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 679234a8c19216d4f8067435d611047e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 8838658910775223982}
-  animator: {fileID: 4549434837546348943}
-  currentPatrolIndex: 0
-  detectionRange: 10
-  attackPreDelay: 1
-  attackInterval: 3
-  chasingSpeed: 5
-  patrollingSpeed: 2
-  fieldOfViewAngleHorizontal: 180
-  fieldOfViewAngleVertical: 90
-  sensingRadius: 3
-  patrolMode: 1
-  patrolPoints: []
-  patrolRange: 10
-  patrolWidth: 10
-  patrolHeight: 10
-  waitTimeAtPatrolPoint: 4
-  attackDamage: 120
-  maxHealth: 100
-  _currentHealth: 100
-  attackRange: 3
-  lastAttackTime: 0
-  lastAttackPreDelayTime: 0
-  targetPlayer: {fileID: 0}
-  isFlyingEnemy: 1
-  _animatorManager: {fileID: 0}
 --- !u!65 &1760737360189838549
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -313,10 +278,13 @@ MonoBehaviour:
   Flags: 524289
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 2881711990319182107}
   - {fileID: 8063579947087977798}
   - {fileID: -862223771675728385}
   - {fileID: 4638254101481957626}
+  - {fileID: 4884397009001671538}
+  - {fileID: 8996106264372517254}
+  - {fileID: 2374247297385732892}
+  - {fileID: 2879526749205372651}
 --- !u!114 &8063579947087977798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,6 +327,100 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 1045433725114777547}
+--- !u!114 &4884397009001671538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513229352100526564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d32f3b790db32347910275acadeafff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  _currentHealth: 100
+  isFlyingEnemy: 1
+  animator: {fileID: 4549434837546348943}
+  _animatorManager: {fileID: -862223771675728385}
+--- !u!114 &8996106264372517254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513229352100526564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af32d9366f49b7e4fad79aa5d8a475f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 100
+  attackRange: 3
+  lastAttackTime: 0
+  lastAttackPreDelayTime: 0
+  attackPreDelay: 0.5
+  attackInterval: 3
+  enemy: {fileID: 0}
+--- !u!114 &2374247297385732892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513229352100526564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 265e4e1dcb952d14e873ab3cc8d93dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  detectionRange: 10
+  attackPreDelay: 0.5
+  attackInterval: 3
+  patrollingSpeed: 2
+  fieldOfViewAngleHorizontal: 180
+  fieldOfViewAngleVertical: 90
+  sensingRadius: 3
+  currentPatrolIndex: 0
+  enemy: {fileID: 0}
+  patrolMode: 0
+  patrolPoints: []
+  patrolRange: 10
+  patrolWidth: 10
+  patrolHeight: 10
+  waitTimeAtPatrolPoint: 2
+--- !u!114 &2879526749205372651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513229352100526564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 484f381c65bc5d44bba02e4a5ec77b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 8838658910775223982}
+  detectionRange: 10
+  attackPreDelay: 0.5
+  attackInterval: 3
+  patrollingSpeed: 2
+  fieldOfViewAngleHorizontal: 180
+  fieldOfViewAngleVertical: 90
+  sensingRadius: 3
+  currentPatrolIndex: 0
+  enemy: {fileID: 0}
+  patrolMode: 0
+  patrolPoints: []
+  patrolRange: 10
+  patrolWidth: 10
+  patrolHeight: 10
+  waitTimeAtPatrolPoint: 2
+  targetPlayer: {fileID: 0}
+  chasingSpeed: 5
 --- !u!1 &962269116399748618
 GameObject:
   m_ObjectHideFlags: 0

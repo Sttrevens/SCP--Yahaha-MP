@@ -52,7 +52,7 @@ public class ChoppedItems : MonoBehaviour
     {
         if (currentFuckability <= 0 && !isChopped) { Chopped(); }
 
-        if (GetComponent<EnemyAI>() != null && GetComponent<EnemyAI>().currentState is DeadState)
+        if (GetComponent<Enemy>() != null && GetComponent<Enemy>().CurrentState is DeadState)
         {
             canBeChopped = true;
         }

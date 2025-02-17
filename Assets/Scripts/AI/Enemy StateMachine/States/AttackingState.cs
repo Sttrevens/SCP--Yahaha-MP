@@ -3,50 +3,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+
 public class AttackingState : EnemyBaseState
 {
-    public override void EnterState(EnemyAI enemy)
+    public override void EnterState(Enemy enemy)
     {
-        if (enemy.targetPlayer != null)
-        {
-            enemy.lastAttackTime = Time.time;
-            enemy.lastAttackPreDelayTime = Time.time;
-            if (enemy._animatorManager != null)
-            {
-                enemy._animatorManager.AttackCount++;
-            }
-        }
-        else
-        {
-            enemy.SwitchState(new ChasingState());
-        }
-    }
+        base.EnterState(enemy);
 
-    public override void UpdateState(EnemyAI enemy)
-    {
         if (enemy.HasStateAuthority)
         {
-        // Attack pre-delay before actually applying damage
-        if (Time.time - enemy.lastAttackPreDelayTime >= enemy.attackPreDelay)
-        {
-            if (enemy.targetPlayer != null && enemy.ShouldAttack(enemy))
+            if (ChasingEnemy.targetPlayer != null)
             {
-                // Reduce player health
-                HealthSystem playerHealth = enemy.targetPlayer.GetComponent<HealthSystem>();
-                if (playerHealth != null)
+                EnemyAttack.lastAttackTime = Time.time;
+                EnemyAttack.lastAttackPreDelayTime = Time.time;
+                if (enemy._animatorManager != null)
                 {
-                    playerHealth.Rpc_TakePhysicDamage(enemy.attackDamage);
-                    Debug.Log("Current Player health: " + playerHealth.health.currentValue + "/" + playerHealth.health.maxValue);
+                    enemy._animatorManager.AttackCount++;
+                    // Since AttackingState is not a MonoBehaviour, we use enemy to start the coroutine.
+                    enemy.StartCoroutine(Attack(enemy));
                 }
-                else { Debug.Log("Player Health is Null,"); }
-            }
-
-                enemy.SwitchState(new WaitingforNextAttackState());
             }
         }
     }
 
-    public override void ExitState(EnemyAI enemy)
+    public override void UpdateState(Enemy enemy)
+    {
+        
+    }
+    
+    private IEnumerator Attack(Enemy enemy)
+    {
+        yield return new WaitForSeconds(EnemyAttack.attackPreDelay);
+
+        if (ChasingEnemy.targetPlayer != null && EnemyAttack.ShouldAttackBasedOnChasingEnemy(ChasingEnemy))
+        {
+            // Reduce player health
+            HealthSystem playerHealth = ChasingEnemy.targetPlayer.GetComponent<HealthSystem>();
+            if (playerHealth != null)
+            {
+                playerHealth.Rpc_TakePhysicDamage(EnemyAttack.attackDamage);
+                Debug.Log("Current Player health: " + playerHealth.health.currentValue + "/" +
+                          playerHealth.health.maxValue);
+            }
+            else
+            {
+                Debug.Log("Player Health is Null,");
+            }
+        }
+        
+        enemy.SwitchState(new WaitingforNextAttackState());
+        // Use yield break to end the coroutine cleanly after switching state.
+        yield break;
+    }
+
+    public override void ExitState(Enemy enemy)
     {
         
     }

@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class BeingAttackedState : EnemyBaseState
 {
-    public override void EnterState(EnemyAI enemy)
+    public override void EnterState(Enemy enemy)
     {
+        base.EnterState(enemy);
+        
         if (enemy.animator != null)
             enemy.animator.SetTrigger("Hit");
         enemy.StartCoroutine(BeingAttackedRoutine(enemy));
     }
 
-    private IEnumerator BeingAttackedRoutine(EnemyAI enemy)
+    private IEnumerator BeingAttackedRoutine(Enemy enemy)
     {
         yield return new WaitForSeconds(1f);
        
@@ -21,12 +23,12 @@ public class BeingAttackedState : EnemyBaseState
             enemy.SwitchState(new DeadState());
     }
 
-    public override void UpdateState(EnemyAI enemy)
+    public override void UpdateState(Enemy enemy)
     {
         
     }
 
-    public override void ExitState(EnemyAI enemy)
+    public override void ExitState(Enemy enemy)
     {
        
     }

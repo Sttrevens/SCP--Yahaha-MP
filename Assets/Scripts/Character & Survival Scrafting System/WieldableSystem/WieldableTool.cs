@@ -137,9 +137,9 @@ namespace LPSurvivalEngine
                     }
                 }
 
-                if (hit.collider.GetComponent<EnemyAI>() != null)
+                if (hit.collider.GetComponent<Enemy>() != null)
                 {
-                    hit.collider.GetComponent<EnemyAI>().TakeDamage(damage);
+                    hit.collider.GetComponent<Enemy>().TakeDamage(damage);
                     Debug.Log("hit.collider.GetComponent<EnemyAI>().TakeDamage(damage)");
                 }
 
@@ -157,13 +157,13 @@ namespace LPSurvivalEngine
         {
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
-            // »æÖÆÉäÏß£¨ÂÌÉ«±íÊ¾ÉäÏß±¾Éí£¬ÓÃÓÚ¿ÉÊÓ»¯ÉäÏß¼ì²âµÄÆðÊ¼·½ÏòºÍ³¤¶È£©
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½É«ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ß±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½Ó»ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Í³ï¿½ï¿½È£ï¿½
             Gizmos.color = Color.green;
             Gizmos.DrawRay(ray.origin, ray.direction * hitDistance);
 
             if (wasHitLastFrame)
             {
-                // ÔÚÃüÖÐµã»æÖÆÒ»¸öºìÉ«Ð¡Çò£¬ÓÃÓÚ±ê¼ÇÃüÖÐµÄÎ»ÖÃ
+                // ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½É«Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Î»ï¿½ï¿½
                 Gizmos.color = Color.red;
                 Gizmos.DrawSphere(lastHit.point, 0.1f);
             }
