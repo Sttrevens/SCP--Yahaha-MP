@@ -162,7 +162,27 @@ public class ConeDetection : MonoBehaviour
         centerOffsetDistance = CalculateCenterOffset(objectCenter);
 
         // 计算得分
-        targetScore.score = CalculateScore(centerOffsetDistance, distanceToCamera, visibleRatio) * 10;
+        float baseScore = CalculateScore(centerOffsetDistance, distanceToCamera, visibleRatio) * 10;
+
+        // 检查目标状态并调整分数
+        var targetBehaviour = target.GetComponent<Enemy>(); // 假设TargetBehaviour脚本包含CurrentState字段
+        if (targetBehaviour != null)
+        {
+            switch (targetBehaviour.CurrentState)
+            {
+                case ChasingState:
+                    baseScore *= 2f; // 为追逐状态调整分数
+                    break;
+                case AttackingState:
+                    baseScore *= 5.0f; // 为攻击状态调整分数
+                    break;
+                case WaitingforNextAttackState:
+                    baseScore *= 3f; // 为等待下次攻击状态调整分数
+                    break;
+            }
+        }
+
+        targetScore.score = baseScore;
 
         return targetScore;
     }

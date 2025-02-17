@@ -37,23 +37,28 @@ public class AttackingState : EnemyBaseState
 
         if (ChasingEnemy.targetPlayer != null && EnemyAttack.ShouldAttackBasedOnChasingEnemy(ChasingEnemy))
         {
-            // Reduce player health
-            HealthSystem playerHealth = ChasingEnemy.targetPlayer.GetComponent<HealthSystem>();
-            if (playerHealth != null)
-            {
-                playerHealth.Rpc_TakePhysicDamage(EnemyAttack.attackDamage);
-                Debug.Log("Current Player health: " + playerHealth.health.currentValue + "/" +
-                          playerHealth.health.maxValue);
-            }
-            else
-            {
-                Debug.Log("Player Health is Null,");
-            }
+            ReducePlayerHealth();
         }
         
         enemy.SwitchState(new WaitingforNextAttackState());
         // Use yield break to end the coroutine cleanly after switching state.
         yield break;
+    }
+    
+    void ReducePlayerHealth()
+    {
+        // Reduce player health
+        HealthSystem playerHealth = ChasingEnemy.targetPlayer.GetComponent<HealthSystem>();
+        if (playerHealth != null)
+        {
+            playerHealth.Rpc_TakePhysicDamage(EnemyAttack.attackDamage);
+            Debug.Log("Current Player health: " + playerHealth.health.currentValue + "/" +
+                      playerHealth.health.maxValue);
+        }
+        else
+        {
+            Debug.Log("Player Health is Null,");
+        }
     }
 
     public override void ExitState(Enemy enemy)

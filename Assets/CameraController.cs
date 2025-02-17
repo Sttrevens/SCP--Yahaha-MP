@@ -4,6 +4,7 @@ using UnityEngine;
 using Fusion; // ���� Fusion �����ռ�
 using LPSurvivalEngine;
 using TMPro;
+using UnityEngine.Serialization;
 
 namespace LPSurvivalEngine
 {
@@ -38,7 +39,7 @@ namespace LPSurvivalEngine
 
         [Header("UI")]
         [SerializeField] private GameObject[] batteryIcons = new GameObject[3]; // 三个电池图标
-        [SerializeField] private string bobojian;
+        [FormerlySerializedAs("bobojian")] [SerializeField] private string bobojianReferenceinScene;
 
         [Header("MaterialRenderTextureManager")]
         [SerializeField] private Renderer screenRenderer;
@@ -102,11 +103,11 @@ namespace LPSurvivalEngine
 
         public override void Spawned()
         {
-            if (GameObject.Find(bobojian) != null)
+            if (GameObject.Find(bobojianReferenceinScene) != null)
             {
-                batteryIcons[0] = GameObject.Find(bobojian).transform.Find("BatteryIcon/BatteryContent1").gameObject;
-                batteryIcons[1] = GameObject.Find(bobojian).transform.Find("BatteryIcon/BatteryContent2").gameObject;
-                batteryIcons[2] = GameObject.Find(bobojian).transform.Find("BatteryIcon/BatteryContent3").gameObject;
+                batteryIcons[0] = GameObject.Find(bobojianReferenceinScene).transform.Find("BatteryIcon/BatteryContent1").gameObject;
+                batteryIcons[1] = GameObject.Find(bobojianReferenceinScene).transform.Find("BatteryIcon/BatteryContent2").gameObject;
+                batteryIcons[2] = GameObject.Find(bobojianReferenceinScene).transform.Find("BatteryIcon/BatteryContent3").gameObject;
             }
 
             if (HasStateAuthority)
