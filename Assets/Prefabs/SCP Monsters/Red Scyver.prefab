@@ -380,8 +380,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   detectionRange: 10
-  attackPreDelay: 0.5
-  attackInterval: 3
   patrollingSpeed: 2
   fieldOfViewAngleHorizontal: 180
   fieldOfViewAngleVertical: 90
@@ -408,15 +406,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 8838658910775223982}
   detectionRange: 10
-  attackPreDelay: 0.5
-  attackInterval: 3
   patrollingSpeed: 2
   fieldOfViewAngleHorizontal: 180
   fieldOfViewAngleVertical: 90
   sensingRadius: 3
   currentPatrolIndex: 0
   enemy: {fileID: 0}
-  patrolMode: 0
+  patrolMode: 1
   patrolPoints: []
   patrolRange: 10
   patrolWidth: 10
@@ -600,7 +596,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6ecd975660bb8254cb0f7484fe01c06f, type: 2}
+  - {fileID: 2100000, guid: eb04ac5e34886d04ba5091de42a95e6c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1530,7 +1526,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6ecd975660bb8254cb0f7484fe01c06f, type: 2}
+  - {fileID: 2100000, guid: eb04ac5e34886d04ba5091de42a95e6c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

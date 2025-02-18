@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Fusion;
+using Unity.VisualScripting;
+using LPSurvivalEngine;
 
-public class EnemyAttack : NetworkBehaviour
+public class EnemyAbsorbStamina : NetworkBehaviour
 {
-    public int attackDamage = 100;
-    public float attackRange = 3f;
-    [HideInInspector] public float lastAttackTime = 0f;
-    [HideInInspector] public float lastAttackPreDelayTime = 0f;
-    public float attackPreDelay = 0.5f;
-    public float attackInterval = 3f;
-    
+    public float absorbRange = 6f;
+
+    [SerializeField] private float absorbRate = 10f;
     [HideInInspector] public Enemy enemy;
     
     // Start is called before the first frame update
@@ -24,13 +22,21 @@ public class EnemyAttack : NetworkBehaviour
         }
     }
 
-    public bool ShouldAttackBasedOnChasingEnemy(ChasingEnemy enemy)
+    public override void FixedUpdateNetwork()
+    {
+        if (HasStateAuthority && (enemy.CurrentState is ChasingState && ShouldAbsorbPlayerStaminaBasedOnChasingEnemy(enemy.GetComponent<ChasingEnemy>())))
+        {
+            ReducePlayerStamina();
+        }
+    }
+
+    public bool ShouldAbsorbPlayerStaminaBasedOnChasingEnemy(ChasingEnemy enemy)
     {
         // First check if target player exists and is within attack range
         if (enemy.targetPlayer != null)
         {
             float distanceToTarget = Vector3.Distance(enemy.transform.position, enemy.targetPlayer.transform.position);
-            if (distanceToTarget <= attackRange)
+            if (distanceToTarget <= absorbRange)
             {
                 // Check if there are obstacles between enemy and player
                 //Vector3 directionToPlayer = (enemy.targetPlayer.transform.position - enemy.transform.position).normalized;
@@ -43,35 +49,35 @@ public class EnemyAttack : NetworkBehaviour
                 Vector3 rightSideDirection = Quaternion.Euler(0f, -60f, 0f) * enemy.transform.forward;
                 
                 RaycastHit hit;
-                if (Physics.Raycast(raycastStart, leftDirection, out hit, attackRange * 0.8f))
+                if (Physics.Raycast(raycastStart, leftDirection, out hit, absorbRange * 0.8f))
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
                         return true;
                     }
                 }
-                if (Physics.Raycast(raycastStart, rightDirection, out hit, attackRange * 0.8f))
+                if (Physics.Raycast(raycastStart, rightDirection, out hit, absorbRange * 0.8f))
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
                         return true;
                     }
                 }
-                if (Physics.Raycast(raycastStart, raycastDirection, out hit, attackRange))
+                if (Physics.Raycast(raycastStart, raycastDirection, out hit, absorbRange))
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
                         return true;
                     }
                 }
-                if (Physics.Raycast(raycastStart, leftSideDirection, out hit, attackRange * 0.5f))
+                if (Physics.Raycast(raycastStart, leftSideDirection, out hit, absorbRange * 0.5f))
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
                         return true;
                     }
                 }
-                if (Physics.Raycast(raycastStart, rightSideDirection, out hit, attackRange * 0.5f))
+                if (Physics.Raycast(raycastStart, rightSideDirection, out hit, absorbRange * 0.5f))
                 {
                     if (hit.collider.CompareTag("Player"))
                     {
@@ -83,20 +89,33 @@ public class EnemyAttack : NetworkBehaviour
 
         return false;
     }
+
+    void ReducePlayerStamina()
+    {
+        HealthSystem playerHealth = enemy.GetComponent<ChasingEnemy>().targetPlayer.GetComponent<HealthSystem>();
+        if (playerHealth != null)
+        {
+            playerHealth.stamina.Subtract(absorbRate * Time.fixedDeltaTime);
+        }
+        else
+        {
+            Debug.Log("Player Health is Null,");
+        }
+    }
     
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.blue;
         Vector3 raycastStart = transform.position + Vector3.up;
         Vector3 leftDirection = Quaternion.Euler(0f, 30f, 0f) * transform.forward;
         Vector3 rightDirection = Quaternion.Euler(0f, -30f, 0f) * transform.forward;
         Vector3 raycastDirection = transform.forward;
         Vector3 leftSideDirection = Quaternion.Euler(0f, 60f, 0f) * transform.forward;
         Vector3 rightSideDirection = Quaternion.Euler(0f, -60f, 0f) * transform.forward;
-        Gizmos.DrawRay(raycastStart, leftDirection * attackRange * 0.8f);
-        Gizmos.DrawRay(raycastStart, rightDirection * attackRange * 0.8f);
-        Gizmos.DrawRay(raycastStart, raycastDirection * attackRange);
-        Gizmos.DrawRay(raycastStart, leftSideDirection * attackRange * 0.5f);
-        Gizmos.DrawRay(raycastStart, rightSideDirection * attackRange * 0.5f);
+        Gizmos.DrawRay(raycastStart, leftDirection * absorbRange * 0.8f);
+        Gizmos.DrawRay(raycastStart, rightDirection * absorbRange * 0.8f);
+        Gizmos.DrawRay(raycastStart, raycastDirection * absorbRange);
+        Gizmos.DrawRay(raycastStart, leftSideDirection * absorbRange * 0.5f);
+        Gizmos.DrawRay(raycastStart, rightSideDirection * absorbRange * 0.5f);
     }
 }

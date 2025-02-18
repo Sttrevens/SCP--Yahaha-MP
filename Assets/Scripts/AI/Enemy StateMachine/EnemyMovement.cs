@@ -10,8 +10,6 @@ public class EnemyMovement : NetworkBehaviour
     public NavMeshAgent agent;
 
     [Space] [Header("AI Logic")] [Space] public float detectionRange = 10f;
-    public float attackPreDelay = 0.5f;
-    public float attackInterval = 3f;
     
     public float patrollingSpeed = 2f;
 
@@ -81,7 +79,7 @@ public class EnemyMovement : NetworkBehaviour
     {
         if (patrolMode == PatrolMode.FixedPoints)
         {
-            if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) < 3f)
+            if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) < agent.stoppingDistance + 1f)
             {
                 Debug.Log($"[EnemyAI] Reached patrol point {currentPatrolIndex}, waiting {waitTimeAtPatrolPoint} seconds");
                 yield return new WaitForSeconds(waitTimeAtPatrolPoint);
@@ -93,7 +91,7 @@ public class EnemyMovement : NetworkBehaviour
         }
         else if (patrolMode == PatrolMode.RandomCircle || patrolMode == PatrolMode.RandomRectangle)
         {
-            if (Vector3.Distance(transform.position, agent.destination) < 0.5f)
+            if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance + 1f)
             {
                 Debug.Log("[EnemyAI] Reached random patrol point, waiting before next point");
                 yield return new WaitForSeconds(waitTimeAtPatrolPoint);
@@ -123,5 +121,46 @@ public class EnemyMovement : NetworkBehaviour
         }
 
         return transform.position;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        int numSegments = 20;
+        float angleStep = 2 * Mathf.PI / numSegments;
+        for (int i = 0; i < numSegments; i++)
+        {
+            float angle1 = i * angleStep;
+            float angle2 = (i + 1) * angleStep;
+
+            Vector3 point1 = Quaternion.Euler(-fieldOfViewAngleVertical / 2, angle1, 0) * transform.forward *
+                             detectionRange;
+            Vector3 point2 = Quaternion.Euler(-fieldOfViewAngleVertical / 2, angle2, 0) * transform.forward *
+                             detectionRange;
+
+            Vector3 point3 = Quaternion.Euler(fieldOfViewAngleVertical / 2, angle1, 0) * transform.forward *
+                             detectionRange;
+            Vector3 point4 = Quaternion.Euler(fieldOfViewAngleVertical / 2, angle2, 0) * transform.forward *
+                             detectionRange;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + point1);
+            Gizmos.DrawLine(transform.position, transform.position + point2);
+            Gizmos.DrawLine(transform.position, transform.position + point3);
+            Gizmos.DrawLine(transform.position, transform.position + point4);
+
+            Gizmos.DrawLine(transform.position + point1, transform.position + point3);
+            Gizmos.DrawLine(transform.position + point2, transform.position + point4);
+        }
+
+        if (patrolMode == PatrolMode.RandomCircle)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, patrolRange);
+        }
+        else if (patrolMode == PatrolMode.RandomRectangle)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(transform.position, new Vector3(patrolWidth, 0, patrolHeight));
+        }
     }
 }
