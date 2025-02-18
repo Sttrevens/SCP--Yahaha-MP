@@ -14,8 +14,13 @@ public class PredesignedCreaturesSpawnController : NetworkBehaviour
 
     public override void Spawned()
     {
-        if (HasStateAuthority)
-            StartCoroutine(SpawnCreatures());
+        Rpc_SpawnCreatures();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void Rpc_SpawnCreatures()
+    {
+        StartCoroutine(SpawnCreatures());
     }
 
     IEnumerator SpawnCreatures()
