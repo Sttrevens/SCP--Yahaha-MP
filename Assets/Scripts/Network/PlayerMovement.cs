@@ -17,6 +17,7 @@ public class PlayerMovement : NetworkBehaviour
     //网络同步相关的参数
     [Networked] private float NetworkedLookAngle { get; set; }
     [Networked] public Quaternion upperBodyRotation { get; set; }
+    [Header("Player Settings")]
     //角色属性(本身的属性和第一人称的属性)
     [SerializeField]private Vector3 _velocity;
     [SerializeField]private bool _jumpPressed;
