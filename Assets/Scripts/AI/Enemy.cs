@@ -17,6 +17,15 @@ public class Enemy : NetworkBehaviour
     public Animator animator;
 
     public EnemyAnimatorManager _animatorManager;
+    
+    [SerializeField] public List<AudioClipWithLabel> sfxClips = new List<AudioClipWithLabel>();
+
+[Serializable]
+public class AudioClipWithLabel
+{
+    public AudioClip clip;
+    public string label;
+}
 
     private void Awake()
     {

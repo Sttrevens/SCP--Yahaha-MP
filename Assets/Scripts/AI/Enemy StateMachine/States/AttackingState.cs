@@ -33,6 +33,8 @@ public class AttackingState : EnemyBaseState
     
     private IEnumerator Attack(Enemy enemy)
     {
+        PlayAttackSFX(enemy);
+        
         yield return new WaitForSeconds(EnemyAttack.attackPreDelay);
 
         if (ChasingEnemy.targetPlayer != null && EnemyAttack.ShouldAttackBasedOnChasingEnemy(ChasingEnemy))
@@ -60,6 +62,21 @@ public class AttackingState : EnemyBaseState
             Debug.Log("Player Health is Null,");
         }
     }
+
+    void PlayAttackSFX(Enemy enemy)
+{
+    if (enemy.sfxClips != null)
+    {
+        foreach (var clip in enemy.sfxClips)
+        {
+            if (clip.label == "Bite")
+            {
+                AudioManager.instance.PlaySFX(enemy.gameObject, clip.clip);
+                break;
+            }
+        }
+    }
+}
 
     public override void ExitState(Enemy enemy)
     {

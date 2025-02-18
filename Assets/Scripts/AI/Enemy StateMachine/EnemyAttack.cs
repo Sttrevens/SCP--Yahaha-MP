@@ -36,8 +36,8 @@ public class EnemyAttack : NetworkBehaviour
                 //Vector3 directionToPlayer = (enemy.targetPlayer.transform.position - enemy.transform.position).normalized;
                 Vector3 raycastStart = enemy.transform.position + Vector3.up;
                 // Calculate directions for two rays with a 30° spread (15° to the left and 15° to the right)
-                Vector3 leftDirection = Quaternion.Euler(0f, 15f, 0f) * enemy.transform.forward;
-                Vector3 rightDirection = Quaternion.Euler(0f, -15f, 0f) * enemy.transform.forward;
+                Vector3 leftDirection = Quaternion.Euler(0f, 30f, 0f) * enemy.transform.forward;
+                Vector3 rightDirection = Quaternion.Euler(0f, -30f, 0f) * enemy.transform.forward;
                 Vector3 raycastDirection = enemy.transform.forward;
                 RaycastHit hit;
                 if (Physics.Raycast(raycastStart, leftDirection, out hit, attackRange * 0.8f))

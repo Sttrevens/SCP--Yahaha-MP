@@ -77,16 +77,16 @@ public class SpaceshipMonitorController : MonoBehaviour
     {
         if (totalScoreText == null || scoreManager == null || controlSticksController == null) return;
 
-        totalScoreText.text = "Total Viewers: " + scoreManager.accumulatedTotalScore.ToString("F0") + "\n" + "Total Revenue: " + "\n" + (scoreManager.accumulatedTotalScore / 240).ToString("F2") + "/1000 $";
+        totalScoreText.text = "Total Viewers: " + scoreManager.networkedTotalScore + "\n" + "Total Revenue: " + "\n" + (scoreManager.networkedTotalScore / 240).ToString("F2") + "/1000 $";
         if (controlSticksController.currentDays <= 3)
         {
             dayText.text = "Day: " + controlSticksController.currentDays.ToString()  + "/3";
         }
-        else if (controlSticksController.currentDays > 3 && scoreManager.accumulatedTotalScore >= 1000)
+        else if (controlSticksController.currentDays > 3 && scoreManager.networkedTotalScore >= 1000)
         {
             dayText.text = "Day: " + controlSticksController.currentDays.ToString() + "/3" + "\n" + "You reached the target revenue!";
         }
-        else if (controlSticksController.currentDays > 3 && scoreManager.accumulatedTotalScore < 1000)
+        else if (controlSticksController.currentDays > 3 && scoreManager.networkedTotalScore < 1000)
         {
             dayText.text = "Day: " + controlSticksController.currentDays.ToString() + "/3" + "\n" + "You didn't reach the target revenue! Die in peace in space.";
         }

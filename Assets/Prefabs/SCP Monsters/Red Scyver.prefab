@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 2374247297385732892}
   - component: {fileID: 2879526749205372651}
   m_Layer: 14
-  m_Name: Scyver
+  m_Name: Red Scyver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ NavMeshAgent:
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -344,6 +344,9 @@ MonoBehaviour:
   isFlyingEnemy: 1
   animator: {fileID: 4549434837546348943}
   _animatorManager: {fileID: -862223771675728385}
+  sfxClips:
+  - clip: {fileID: 8300000, guid: 8d1a5126192489244913d3bb9a9024cf, type: 3}
+    label: Bite
 --- !u!114 &8996106264372517254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +363,7 @@ MonoBehaviour:
   attackRange: 3
   lastAttackTime: 0
   lastAttackPreDelayTime: 0
-  attackPreDelay: 0.5
+  attackPreDelay: 0.2
   attackInterval: 3
   enemy: {fileID: 0}
 --- !u!114 &2374247297385732892
@@ -781,7 +784,7 @@ Transform:
   m_GameObject: {fileID: 3175538669061674407}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: -0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -28,12 +28,7 @@ public class ChasingState : EnemyBaseState
         {
             EnemyMovement.agent.SetDestination(ChasingEnemy.targetPlayer.transform.position);
 
-            // If the player is within the attack range, switch to AttackingState
-            if (EnemyAttack.ShouldAttackBasedOnChasingEnemy(ChasingEnemy))
-            {
-                enemy.SwitchState(new AttackingState());
-            }
-            else if (Vector3.Distance(enemy.transform.position, ChasingEnemy.targetPlayer.transform.position) > ChasingEnemy.detectionRange)
+            if (Vector3.Distance(enemy.transform.position, ChasingEnemy.targetPlayer.transform.position) > ChasingEnemy.detectionRange)
             {
                 // If the player is out of detection range, switch to PatrollingState
                 enemy.SwitchState(new PatrollingState());

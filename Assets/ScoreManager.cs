@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Fusion;
+using Random = UnityEngine.Random;
 
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : NetworkBehaviour
 {
     /// <summary>
     /// 维护每个ConeDetection实例ID对应的分数。
@@ -20,7 +23,7 @@ public class ScoreManager : MonoBehaviour
     private float timer = 0f;
 
     // 你可以根据需要，单独提供总分的访问器：
-    public float accumulatedTotalScore
+    private float accumulatedTotalScore
     {
         get
         {
@@ -29,6 +32,14 @@ public class ScoreManager : MonoBehaviour
             // 再加上计时分数
             return sumCameras + timerAccumulatedScore;
         }
+    }
+
+    [Networked] public int networkedTotalScore { get; set; }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (!HasStateAuthority) return;
+        networkedTotalScore = (int)accumulatedTotalScore;
     }
 
     private void Update()

@@ -60,7 +60,7 @@ public class ScreenFade : MonoBehaviour
         }
         else
         {
-            subtitleText.text = "Your total viewers: " + scoreManager.accumulatedTotalScore.ToString("F0");
+            subtitleText.text = "Your total viewers: " + scoreManager.networkedTotalScore;
         }
         yield return StartCoroutine(ShowSubtitle());
 
