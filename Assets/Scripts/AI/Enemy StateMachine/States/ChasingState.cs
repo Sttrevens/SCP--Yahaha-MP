@@ -24,7 +24,7 @@ public class ChasingState : EnemyBaseState
         }
 
         // Continue chasing the player if no attack is triggered
-        if (ChasingEnemy.targetPlayer != null)
+        if (ChasingEnemy.targetPlayer != null && ChasingEnemy.targetPlayer.tag == "Player")
         {
             EnemyMovement.agent.SetDestination(ChasingEnemy.targetPlayer.transform.position);
 

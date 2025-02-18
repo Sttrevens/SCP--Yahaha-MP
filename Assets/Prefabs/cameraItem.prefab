@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 6878268625536953844}
   - component: {fileID: 5868905250710004773}
   - component: {fileID: 2526032741598263466}
+  - component: {fileID: 3869903123914851178}
   m_Layer: 6
   m_Name: cameraItem
   m_TagString: Untagged
@@ -354,6 +355,23 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
+--- !u!114 &3869903123914851178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee10fec6ac3467347b9a683b19a85450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionSound: {fileID: 8300000, guid: edacf7273ee69aa4c8a4f613a74db248, type: 3}
+  minImpactForce: 1
+  maxImpactForce: 10
+  minVolume: 0.1
+  maxVolume: 1
 --- !u!1 &176766
 GameObject:
   m_ObjectHideFlags: 0

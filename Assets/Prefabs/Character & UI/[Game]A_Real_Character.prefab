@@ -132,8 +132,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e187bbec0e7bab048a69b2be6fcc2fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mudFootstepClip: {fileID: 8300000, guid: d66ac1d301feeda489935172cff8ca26, type: 3}
-  metalFootstepClip: {fileID: 8300000, guid: 6d096067e7c1234418d5ab1e72291c42, type: 3}
+  mudFootstepClips:
+  - {fileID: 8300000, guid: 272f0349953b3ae49aa00fcbe93e9986, type: 3}
+  - {fileID: 8300000, guid: 052c281082f4fac4caee78ac328a70e2, type: 3}
+  - {fileID: 8300000, guid: 60f6d577af9fbfa4998390274c9b9b6b, type: 3}
+  - {fileID: 8300000, guid: a4f15ee8912fb6b41bd7410201397dd6, type: 3}
+  - {fileID: 8300000, guid: c8d57af8dc80a0b43bdf9c4b8c4d409f, type: 3}
+  - {fileID: 8300000, guid: 77af4be5506b9d548a529df288bf196e, type: 3}
+  - {fileID: 8300000, guid: c93ae26f4c6c9ac46a3b48e57da020cf, type: 3}
+  - {fileID: 8300000, guid: 0c7b708df7e2059448505bf4e9fd2cb7, type: 3}
+  metalFootstepClips:
+  - {fileID: 8300000, guid: 2869de1c752126042a340e265849b06c, type: 3}
+  - {fileID: 8300000, guid: 63a6f0f132e72e14093c0b433bc97f02, type: 3}
+  - {fileID: 8300000, guid: dd2dc83703d4d544bae3432cf122eeeb, type: 3}
+  - {fileID: 8300000, guid: 6d096067e7c1234418d5ab1e72291c42, type: 3}
+  - {fileID: 8300000, guid: b059374d789b5ae4583494cbde79cab0, type: 3}
+  - {fileID: 8300000, guid: d5b8d515e68e0dd4ca197dad235eae34, type: 3}
+  - {fileID: 8300000, guid: c87163d36db04fb49abc0b0e3c6fb985, type: 3}
+  - {fileID: 8300000, guid: f962438e163623b40829e50f1fb27a97, type: 3}
+  - {fileID: 8300000, guid: 9669dab4cf867a845a00873e759582cb, type: 3}
   raycastDistance: 5.95
 --- !u!1 &286651382315245872
 GameObject:
@@ -1465,7 +1482,6 @@ GameObject:
   - component: {fileID: 7358732985660825714}
   - component: {fileID: 4082337287283386946}
   - component: {fileID: 4015699918195571167}
-  - component: {fileID: 64363743347778280}
   - component: {fileID: 7181534300083372722}
   - component: {fileID: 2904240422611391486}
   - component: {fileID: 397341189134474547}
@@ -1591,6 +1607,7 @@ MonoBehaviour:
   - {fileID: 7358732985660825714}
   - {fileID: 4082337287283386946}
   - {fileID: 2904240422611391486}
+  - {fileID: 6037538954385029536}
 --- !u!114 &1122259457492835225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1682,10 +1699,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3193cad89ba4446b0d1b377bd20bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceGround: 0.2
-  GroundCheck:
-    serializedVersion: 2
-    m_Bits: 4617
   cursor: 1
 --- !u!114 &-2697029352120812069
 MonoBehaviour:
@@ -1825,21 +1838,6 @@ MonoBehaviour:
   cameraPosition: {fileID: 7176491506407218905}
   aimPosition: {fileID: 8251394407689845665}
   flashlightPosition: {fileID: 8877788334594266796}
---- !u!114 &64363743347778280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5250024112804794185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e187bbec0e7bab048a69b2be6fcc2fc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mudFootstepClip: {fileID: 8300000, guid: d66ac1d301feeda489935172cff8ca26, type: 3}
-  metalFootstepClip: {fileID: 8300000, guid: 6d096067e7c1234418d5ab1e72291c42, type: 3}
-  raycastDistance: 2
 --- !u!82 &7181534300083372722
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1851,7 +1849,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1960,7 +1958,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_Extents: {x: 0.2, y: 1, z: 0.2}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1

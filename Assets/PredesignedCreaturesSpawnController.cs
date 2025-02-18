@@ -4,7 +4,7 @@ using UnityEngine;
 using Fusion;
 using System;
 
-public class CreaturesSpawnController : NetworkBehaviour
+public class PredesignedCreaturesSpawnController : NetworkBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -14,7 +14,8 @@ public class CreaturesSpawnController : NetworkBehaviour
 
     public override void Spawned()
     {
-        StartCoroutine(SpawnCreatures());
+        if (HasStateAuthority)
+            StartCoroutine(SpawnCreatures());
     }
 
     IEnumerator SpawnCreatures()
