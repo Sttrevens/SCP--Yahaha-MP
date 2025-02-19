@@ -182,7 +182,7 @@ MonoBehaviour:
   realtimeScore: 0
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 4227973119
+    m_Bits: 4160864255
   requiredVisiblePoints: 2
   visibilityThreshold: 0.1
 --- !u!114 &7050679032339698554
@@ -614,6 +614,7 @@ GameObject:
   - component: {fileID: 2748849363578258891}
   - component: {fileID: 130721672268757483}
   - component: {fileID: 7073308838336779793}
+  - component: {fileID: 3540395987962652090}
   m_Layer: 0
   m_Name: PhotoCamera
   m_TagString: MainCamera
@@ -747,6 +748,18 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &3540395987962652090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246979066746601712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0874e69b95d9d064c9d99e856419e873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1643524414196473341
 GameObject:
   m_ObjectHideFlags: 0

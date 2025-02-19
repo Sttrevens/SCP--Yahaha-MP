@@ -1,7 +1,6 @@
 using UnityEngine;
-using Fusion;
 
-public class FootstepSFXSystem : NetworkBehaviour
+public class FootstepSFXSystem : MonoBehaviour
 {
     // 常量定义
     private const string MudTag = "Mud";
@@ -13,13 +12,7 @@ public class FootstepSFXSystem : NetworkBehaviour
     [SerializeField] private float raycastDistance = 1.1f; // 射线检测距离
 
     private AudioSource audioSource;
-
-    private void Start()
-    {
-        InitializeAudioSource();
-    }
-
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    
     public void Rpc_PlayFootstep()
     {
         PlayFootstepSound();
@@ -51,16 +44,7 @@ public class FootstepSFXSystem : NetworkBehaviour
         if (clips != null && clips.Length > 0)
         {
             AudioClip clip = clips[Random.Range(0, clips.Length)];
-            audioSource.PlayOneShot(clip);
-        }
-    }
-
-    private void InitializeAudioSource()
-    {
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
+            AudioManager.Instance.PlaySFX(this.gameObject, clip);
         }
     }
 }

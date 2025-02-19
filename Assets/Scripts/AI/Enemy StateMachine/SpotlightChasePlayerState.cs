@@ -43,7 +43,7 @@ public class SpotlightChasePlayerState : EnemyBaseState
         AudioManager.instance.PlaySFX(spotlight.spotlightColliderObject, spotlight.spotlightSound);
         
         float elapsedTime = Time.timeSinceLevelLoad - stateEnterTime; // 从状态进入时间计算经过的时间
-        playerObject.GetComponent<HealthSystem>().sanity.Subtract(Mathf.Exp(elapsedTime) * 0.1f * Time.fixedDeltaTime);
+        playerObject.GetComponent<HealthSystem>().Rpc_Scared(Mathf.Exp(elapsedTime) * 0.1f * Time.fixedDeltaTime);
         // 玩家被照到时的自定义逻辑
         Debug.Log($"玩家在位置 {playerPosition} 被探照灯追踪！");
     }

@@ -297,6 +297,12 @@ namespace LPSurvivalEngine
         {
             TakePhysicDamage(amount);
         }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void Rpc_Scared(float amount)
+        {
+            Scared(amount);
+        }
 
         public void TakePhysicDamage(int amount)
         {
@@ -319,6 +325,11 @@ namespace LPSurvivalEngine
             {
                 Debug.Log("δ�ҵ�tagΪ ������");
             }
+        }
+        
+        public void Scared(float amount)
+        {
+            sanity.Subtract(amount);
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
