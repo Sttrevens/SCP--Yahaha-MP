@@ -347,7 +347,7 @@ namespace LPSurvivalEngine
         [Rpc(RpcSources.All, RpcTargets.All)]
         public void Rpc_Respawn()
         {
-            if (gameObject.tag == "Untagged")
+            //if (gameObject.tag == "Untagged")
                 Respawn();
         }
 
