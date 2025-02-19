@@ -235,13 +235,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20b0fb12298bda49ba3d4bc174c71c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.7
   pauseDuration: 3
-  detectionRadius: 5
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  followSpeed: 2
+  followSpeed: 0.5
   playerLoseThreshold: 10
   useRandomPatrolPoints: 1
   fixedPatrolPoints: []
@@ -249,6 +248,8 @@ MonoBehaviour:
   enemy: {fileID: 0}
   spotlightCenter: {fileID: 4746382883492812292}
   spotlightObject: {fileID: 5974675425824931685}
+  spotlightColliderObject: {fileID: 7076263523949770756}
+  spotlightCollider: {fileID: 0}
 --- !u!1 &5329542856109683820
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,8 +565,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8227627423839011876}
   - component: {fileID: 9149791964120513613}
+  - component: {fileID: 438809172642898508}
+  - component: {fileID: 5749967870482016751}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Volumetric Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -640,7 +643,7 @@ MonoBehaviour:
   hdrpExposureWeight: 0
   blendingMode: 0
   spotAngleFromLight: 1
-  spotAngle: 10
+  spotAngle: 15
   spotAngleMultiplier: 1
   coneRadiusStart: 0.5
   shaderAccuracy: 0
@@ -674,3 +677,29 @@ MonoBehaviour:
   _SortingOrder: 0
   _FadeOutBegin: -150
   _FadeOutEnd: -200
+--- !u!114 &438809172642898508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7076263523949770756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b5217c9f8723a447824a7530d14c03d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setIsTrigger: 1
+  rangeMultiplier: 1
+--- !u!114 &5749967870482016751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7076263523949770756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccdddcfd7003d6143b54a2f00a80f42a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

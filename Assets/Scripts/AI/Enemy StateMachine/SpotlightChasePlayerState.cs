@@ -15,16 +15,16 @@ public class SpotlightChasePlayerState : EnemyBaseState
         Vector3 playerPosition = spotlight.GetPlayerPosition();
 
         // 如果玩家超出范围，切回普通巡逻
-        if (Vector3.Distance(playerPosition, enemy.transform.position) > spotlight.playerLoseThreshold)
+        if (!spotlight.DetectPlayer())
         {
             spotlight.ChangeState(new SpotlightNormalState());
             return;
         }
 
         // 追踪玩家方向，但不移动灯的本体
-        Vector3 directionToPlayer = (playerPosition - enemy.transform.position).normalized;
+        Vector3 directionToPlayer = (playerPosition - spotlight.spotlightObject.transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-        spotlight.spotlightObject.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, spotlight.followSpeed * Time.deltaTime);
+        spotlight.spotlightObject.rotation = Quaternion.Slerp(spotlight.spotlightObject.transform.rotation, targetRotation, spotlight.followSpeed * Time.deltaTime);
 
         // 自定义玩家被照逻辑
         OnPlayerDetected(playerPosition);

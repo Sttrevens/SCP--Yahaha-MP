@@ -8,7 +8,6 @@ public class SpotlightBase : NetworkBehaviour
     [Header("Spotlight Settings")]
     public float speed = 2f;                      // 移动的速度
     public float pauseDuration = 1f;             // 探照点停顿时间
-    public float detectionRadius = 5f;           // 探测半径，用于检测玩家
     public LayerMask playerLayer;                // 玩家层级
     public float followSpeed = 3f;               // 跟随模式下的速度
     public float playerLoseThreshold = 10f;      // 玩家摆脱探照灯的距离
@@ -23,8 +22,10 @@ public class SpotlightBase : NetworkBehaviour
     public Enemy enemy;
 
     public Transform spotlightCenter;
-
     public Transform spotlightObject;
+    
+    public GameObject spotlightColliderObject;
+    public Collider spotlightCollider;
     
     // Start is called before the first frame update
     void Awake()
@@ -40,6 +41,8 @@ public class SpotlightBase : NetworkBehaviour
     /// </summary>
     public override void Spawned()
     {
+        spotlightCollider = spotlightColliderObject.GetComponent<Collider>();
+            
         if (HasStateAuthority)
         {
             // 默认进入普通探照模式
@@ -73,8 +76,16 @@ public class SpotlightBase : NetworkBehaviour
     /// <returns>是否发现玩家</returns>
     public bool DetectPlayer()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
-        return hits.Length > 0; // 发现玩家
+        return spotlightColliderObject.GetComponent<DetectPlayer>().detectPlayerResult;
+        /*Collider[] hits = Physics.OverlapSphere(spotlightCollider.bounds.center, spotlightCollider.bounds.extents.magnitude, playerLayer);
+        foreach (Collider hit in hits)
+        {
+            if (hit.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                return true; // 发现玩家
+            }
+        }
+        return false; */ // 未发现玩家
     }
 
     /// <summary>
@@ -83,11 +94,12 @@ public class SpotlightBase : NetworkBehaviour
     /// <returns>玩家位置</returns>
     public Vector3 GetPlayerPosition()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
+        return spotlightColliderObject.GetComponent<DetectPlayer>().player.position;
+        /*Collider[] hits = Physics.OverlapSphere(spotlightCollider.bounds.center, spotlightCollider.bounds.extents.magnitude, playerLayer);
         if (hits.Length > 0)
         {
             return hits[0].transform.position;
         }
-        return Vector3.zero;
+        return Vector3.zero;*/
     }
 }

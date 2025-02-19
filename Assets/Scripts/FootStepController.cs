@@ -27,8 +27,6 @@ public class FootstepController : NetworkBehaviour
     // 动画事件调用的函数
     public void PlayFootstep()
     {
-        if (!HasStateAuthority) return;
-        
         Debug.Log("开始播放脚步声喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵");
         // 发射射线检测地面类型
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, raycastDistance))
