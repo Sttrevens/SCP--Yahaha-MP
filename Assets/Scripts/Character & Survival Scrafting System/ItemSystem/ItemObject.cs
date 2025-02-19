@@ -15,7 +15,7 @@ namespace LPSurvivalEngine
         [SerializeField] private AudioClip pickupSound;
         [Networked] public float currentDurability { get; set; }
 
-        // public bool isDisplayedItem = false;
+        public bool isDisplayedItem = false;
 
         public string GetInteractText()
         {
@@ -47,8 +47,10 @@ namespace LPSurvivalEngine
         {
             if (IsPickedUp)
             {
-                // �����ѱ�ʰȡ��ִ�����ػ������߼�
-                Destroy(gameObject);
+                if (!isDisplayedItem)
+                {
+                    Destroy(gameObject);
+                }
             }
         }
 
@@ -62,10 +64,6 @@ namespace LPSurvivalEngine
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.gameObject, pickupSound);
             }
             Debug.Log($"Ʒ {player} ʰȡ");
-            // if (!isDisplayedItem)
-            // {
-            //     Destroy(gameObject);
-            // }
         }
     
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

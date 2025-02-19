@@ -250,6 +250,7 @@ MonoBehaviour:
   spotlightObject: {fileID: 5974675425824931685}
   spotlightColliderObject: {fileID: 7076263523949770756}
   spotlightCollider: {fileID: 0}
+  spotlightSound: {fileID: 8300000, guid: 03059e6d23ecd0745bb82a8e8d7a2db7, type: 3}
 --- !u!1 &5329542856109683820
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +584,7 @@ Transform:
   m_GameObject: {fileID: 7076263523949770756}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: -0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: -0.000342}
   m_LocalScale: {x: 0.00068965513, y: 0.00068965496, z: 0.00068965513}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -703,3 +704,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccdddcfd7003d6143b54a2f00a80f42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectPlayerResult: 0
+  player: {fileID: 0}

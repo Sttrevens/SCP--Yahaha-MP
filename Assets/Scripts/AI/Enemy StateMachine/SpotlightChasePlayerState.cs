@@ -1,19 +1,25 @@
+using LPSurvivalEngine;
 using UnityEngine;
 
 public class SpotlightChasePlayerState : EnemyBaseState
 {
+    private float stateEnterTime;
+    
+    private SpotlightBase spotlight;
+    private GameObject playerObject;
+
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
         // 进入玩家跟踪状态时的初始化逻辑
         Debug.Log("进入玩家跟随模式");
+        stateEnterTime = Time.timeSinceLevelLoad; // 记录状态进入时间
     }
 
     public override void UpdateState(Enemy enemy)
     {
-        SpotlightBase spotlight = enemy.GetComponent<SpotlightBase>();
-        Vector3 playerPosition = spotlight.GetPlayerPosition();
-
+        spotlight = enemy.GetComponent<SpotlightBase>();
+        
         // 如果玩家超出范围，切回普通巡逻
         if (!spotlight.DetectPlayer())
         {
@@ -21,6 +27,7 @@ public class SpotlightChasePlayerState : EnemyBaseState
             return;
         }
 
+        Vector3 playerPosition = spotlight.GetPlayerPosition();
         // 追踪玩家方向，但不移动灯的本体
         Vector3 directionToPlayer = (playerPosition - spotlight.spotlightObject.transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
@@ -32,6 +39,11 @@ public class SpotlightChasePlayerState : EnemyBaseState
 
     protected virtual void OnPlayerDetected(Vector3 playerPosition)
     {
+        playerObject = spotlight.spotlightColliderObject.GetComponent<DetectPlayer>().player.gameObject;
+        AudioManager.instance.PlaySFX(spotlight.spotlightColliderObject, spotlight.spotlightSound);
+        
+        float elapsedTime = Time.timeSinceLevelLoad - stateEnterTime; // 从状态进入时间计算经过的时间
+        playerObject.GetComponent<HealthSystem>().sanity.Subtract(Mathf.Exp(elapsedTime) * 0.1f * Time.fixedDeltaTime);
         // 玩家被照到时的自定义逻辑
         Debug.Log($"玩家在位置 {playerPosition} 被探照灯追踪！");
     }

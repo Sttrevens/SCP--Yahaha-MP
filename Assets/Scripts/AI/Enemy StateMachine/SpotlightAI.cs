@@ -27,6 +27,8 @@ public class SpotlightBase : NetworkBehaviour
     public GameObject spotlightColliderObject;
     public Collider spotlightCollider;
     
+    public AudioClip spotlightSound;
+    
     // Start is called before the first frame update
     void Awake()
     {

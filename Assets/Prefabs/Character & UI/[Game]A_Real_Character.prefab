@@ -74,7 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8426809253871604094}
   - component: {fileID: 955730383679289374}
-  - component: {fileID: 6037538954385029536}
+  - component: {fileID: 2262935059566359370}
   m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
@@ -120,7 +120,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6037538954385029536
+--- !u!114 &2262935059566359370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,11 +129,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 261135197159425387}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e187bbec0e7bab048a69b2be6fcc2fc8, type: 3}
+  m_Script: {fileID: 11500000, guid: aa7d3c5f61e4f984ca954394373a96e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mudFootstepClips: []
-  metalFootstepClips: []
+  mudFootstepClips:
+  - {fileID: 8300000, guid: 272f0349953b3ae49aa00fcbe93e9986, type: 3}
+  - {fileID: 8300000, guid: 052c281082f4fac4caee78ac328a70e2, type: 3}
+  - {fileID: 8300000, guid: 60f6d577af9fbfa4998390274c9b9b6b, type: 3}
+  - {fileID: 8300000, guid: a4f15ee8912fb6b41bd7410201397dd6, type: 3}
+  - {fileID: 8300000, guid: c8d57af8dc80a0b43bdf9c4b8c4d409f, type: 3}
+  - {fileID: 8300000, guid: 77af4be5506b9d548a529df288bf196e, type: 3}
+  - {fileID: 8300000, guid: c93ae26f4c6c9ac46a3b48e57da020cf, type: 3}
+  - {fileID: 8300000, guid: 0c7b708df7e2059448505bf4e9fd2cb7, type: 3}
+  metalFootstepClips:
+  - {fileID: 8300000, guid: 2869de1c752126042a340e265849b06c, type: 3}
+  - {fileID: 8300000, guid: 63a6f0f132e72e14093c0b433bc97f02, type: 3}
+  - {fileID: 8300000, guid: dd2dc83703d4d544bae3432cf122eeeb, type: 3}
+  - {fileID: 8300000, guid: 6d096067e7c1234418d5ab1e72291c42, type: 3}
+  - {fileID: 8300000, guid: b059374d789b5ae4583494cbde79cab0, type: 3}
+  - {fileID: 8300000, guid: d5b8d515e68e0dd4ca197dad235eae34, type: 3}
+  - {fileID: 8300000, guid: c87163d36db04fb49abc0b0e3c6fb985, type: 3}
+  - {fileID: 8300000, guid: f962438e163623b40829e50f1fb27a97, type: 3}
+  - {fileID: 8300000, guid: 9669dab4cf867a845a00873e759582cb, type: 3}
   raycastDistance: 5.95
 --- !u!1 &286651382315245872
 GameObject:
@@ -1468,6 +1485,7 @@ GameObject:
   - component: {fileID: 7181534300083372722}
   - component: {fileID: 2904240422611391486}
   - component: {fileID: 397341189134474547}
+  - component: {fileID: 3352045113354941783}
   m_Layer: 8
   m_Name: '[Game]A_Real_Character'
   m_TagString: Player
@@ -1590,7 +1608,8 @@ MonoBehaviour:
   - {fileID: 7358732985660825714}
   - {fileID: 4082337287283386946}
   - {fileID: 2904240422611391486}
-  - {fileID: 6037538954385029536}
+  - {fileID: 3352045113354941783}
+  - {fileID: 2262935059566359370}
 --- !u!114 &1122259457492835225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1773,9 +1792,13 @@ MonoBehaviour:
   staminaHealthdecay: 0
   oxygenHealthdecay: 1
   isInOxygenRoom: 0
+  scareSound: {fileID: 0}
   Player: {fileID: 0}
   UIPlayer: {fileID: 0}
   sleepScreenAnimation: {fileID: 0}
+  isScared: 0
+  isDying: 0
+  isTired: 0
 --- !u!114 &7358732985660825714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1835,7 +1858,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1947,6 +1970,45 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &3352045113354941783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e187bbec0e7bab048a69b2be6fcc2fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mudFootstepClips:
+  - {fileID: 8300000, guid: 272f0349953b3ae49aa00fcbe93e9986, type: 3}
+  - {fileID: 8300000, guid: 052c281082f4fac4caee78ac328a70e2, type: 3}
+  - {fileID: 8300000, guid: 60f6d577af9fbfa4998390274c9b9b6b, type: 3}
+  - {fileID: 8300000, guid: a4f15ee8912fb6b41bd7410201397dd6, type: 3}
+  - {fileID: 8300000, guid: c8d57af8dc80a0b43bdf9c4b8c4d409f, type: 3}
+  - {fileID: 8300000, guid: 77af4be5506b9d548a529df288bf196e, type: 3}
+  - {fileID: 8300000, guid: c93ae26f4c6c9ac46a3b48e57da020cf, type: 3}
+  - {fileID: 8300000, guid: 0c7b708df7e2059448505bf4e9fd2cb7, type: 3}
+  metalFootstepClips:
+  - {fileID: 8300000, guid: 2869de1c752126042a340e265849b06c, type: 3}
+  - {fileID: 8300000, guid: 63a6f0f132e72e14093c0b433bc97f02, type: 3}
+  - {fileID: 8300000, guid: dd2dc83703d4d544bae3432cf122eeeb, type: 3}
+  - {fileID: 8300000, guid: 6d096067e7c1234418d5ab1e72291c42, type: 3}
+  - {fileID: 8300000, guid: b059374d789b5ae4583494cbde79cab0, type: 3}
+  - {fileID: 8300000, guid: d5b8d515e68e0dd4ca197dad235eae34, type: 3}
+  - {fileID: 8300000, guid: c87163d36db04fb49abc0b0e3c6fb985, type: 3}
+  - {fileID: 8300000, guid: f962438e163623b40829e50f1fb27a97, type: 3}
+  - {fileID: 8300000, guid: 9669dab4cf867a845a00873e759582cb, type: 3}
+  raycastDistance: 5.95
+  dyingClips:
+  - {fileID: 8300000, guid: 44539e8f804eca44fb0924d41f56d0a1, type: 3}
+  scaredClips:
+  - {fileID: 8300000, guid: 653b30530ff883640a584bba7611025c, type: 3}
+  tiredClips:
+  - {fileID: 8300000, guid: f5eb79d6b54abef45ba44116b45b1f97, type: 3}
+  healthSystem: {fileID: -8306276541168044105}
 --- !u!1 &5385546817467512204
 GameObject:
   m_ObjectHideFlags: 0

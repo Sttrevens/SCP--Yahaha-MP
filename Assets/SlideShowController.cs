@@ -31,7 +31,7 @@ public class SlideShowController : MonoBehaviour
         {
             AudioManager.Instance.PlaySFX(messageSoundObject, messageSound);
             Debug.Log("PlayMessageSound");
-            yield return new WaitForSeconds(8f);
+            yield return new WaitForSeconds(12f);
         }
     }
 
@@ -45,9 +45,10 @@ public class SlideShowController : MonoBehaviour
             currentSlideIndex = 0;  // 确保从第一张幻灯片开始
             displayImage.sprite = slides[currentSlideIndex]; // 显示第一张幻灯片
             isFirstSlide = false;  // 设置为非首次状态
-            if(GetComponent<AudioSource>() != null)
+            if(messageSoundObject.GetComponent<AudioSource>() != null)
             {
-                GetComponent<AudioSource>().Stop();
+                StopCoroutine(PlayMessageSound());
+                messageSoundObject.GetComponent<AudioSource>().Stop();
             }
         }
         else

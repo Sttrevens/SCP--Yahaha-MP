@@ -35,6 +35,10 @@ namespace LPSurvivalEngine
         public float oxygenHealthdecay;
 
         public bool isInOxygenRoom;
+        
+        [Header("Effects")]
+        
+        public AudioClip scareSound;
 
         [Header("Assignments")]
 
@@ -193,6 +197,43 @@ namespace LPSurvivalEngine
             if (HasStateAuthority)
             {
                 UpdateUIAndSync();
+                HandlePlayerEffects();
+            }
+        }
+        
+        [Header("Player Effects")]
+        
+        public bool isScared = false;
+        public bool isDying = false;
+        public bool isTired = false;
+
+        void HandlePlayerEffects()
+        {
+            if (playerHealth <= 20)
+            {
+                isDying = true;
+            }
+            else
+            {
+                isDying = false;
+            }
+            
+            if (playerSanity <= 20)
+            {
+                isScared = true;
+            }
+            else
+            {
+                isScared = false;
+            }
+            
+            if (playerStamina <= 10)
+            {
+                isTired = true;
+            }
+            else
+            {
+                isTired = false;
             }
         }
 
@@ -220,9 +261,10 @@ namespace LPSurvivalEngine
                 SynchronousPlayerSanityRpc();
             }
 
-            if (playerStamina <= 10f)
+            if (isScared)
             {
                 GameObject.FindObjectOfType<Test>().GetComponent<Test>().Mohu();
+                Inventory.instance.DropItem();
             }
             else
             {
@@ -311,8 +353,8 @@ namespace LPSurvivalEngine
 
         public void Respawn()
         {
-            Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
 GetComponent<Rigidbody>().angularVelocity = Vector3.zero;

@@ -84,8 +84,9 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
             IsPulled = false;
             AudioManager.Instance.PlayElevatorShakeSound(spaceship);
                 yield return new WaitForSeconds(2f);
-                screenFade.TriggerScreenFade(false);
                 TakeoffController.Instance.Rpc_OnInteract();
+                screenFade.TriggerScreenFade(false);
+                yield return new WaitForSeconds(2f);
                 LevelManager.Instance.LoadLevel();
                 yield return RotateToAngle(19.303f);
             while (TakeoffController.Instance.IsFlying)
