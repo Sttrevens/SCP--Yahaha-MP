@@ -100,8 +100,6 @@ public class AudioManager : MonoBehaviour
             newSfxSource.loop = false;
             newSfxSource.playOnAwake = false;
         }
-        
-        if (newSfxSource.isPlaying) return;
 
         // 设置音效的音量
         newSfxSource.volume = sfxVolume * volume;
