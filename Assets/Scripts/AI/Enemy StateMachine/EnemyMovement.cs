@@ -71,8 +71,10 @@ public class EnemyMovement : NetworkBehaviour
             // 计算应该朝向的目标旋转
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             // 通过球面插值让敌人平滑地转向
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
         }
+        
+        Debug.Log("Velocity: " + agent.velocity);
     }
     
     public IEnumerator Patrol()

@@ -53,14 +53,14 @@ public class SpotlightNormalState : EnemyBaseState
         // 旋转探照灯至目标点方向，而非移动探照灯本体
         Vector3 direction = (targetPoint - enemy.transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        spotlight.spotlightObject.rotation = Quaternion.Slerp(spotlight.spotlightObject.transform.rotation, targetRotation, spotlight.speed * Time.deltaTime);
+        spotlight.spotlightObject.rotation = Quaternion.Slerp(spotlight.spotlightObject.transform.rotation, targetRotation, spotlight.speed * Time.fixedDeltaTime);
         Debug.Log("Rotating towards target...");
 
         // 检测是否完成旋转至当前点方向，然后 "移动" 至下一个点逻辑模拟
         if (Quaternion.Angle(spotlight.spotlightObject.transform.rotation, targetRotation) <= 1f) 
         {
             Debug.Log("Rotation to target complete.");
-            pauseTimer += Time.deltaTime;
+            pauseTimer += Time.fixedDeltaTime;
             if (pauseTimer >= spotlight.pauseDuration)
             {
                 Debug.Log("Pause duration complete. Moving to next patrol point.");

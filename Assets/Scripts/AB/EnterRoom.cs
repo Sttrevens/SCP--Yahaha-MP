@@ -72,7 +72,7 @@ public class EnterRoom : NetworkBehaviour
         while (Quaternion.Angle(transform.rotation, target) > 0.1f)
         {
             Debug.Log($"[EnterRoom] Current rotation: {transform.rotation.eulerAngles}, Remaining angle: {Quaternion.Angle(transform.rotation, target)}");
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed * Time.fixedDeltaTime);
             yield return null;  // ȴһ֡
         }
 

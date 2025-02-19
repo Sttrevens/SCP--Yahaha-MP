@@ -302,10 +302,11 @@ namespace LPSurvivalEngine
             // }
         }
 
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.All, RpcTargets.All)]
         public void Rpc_Respawn()
         {
-            Respawn();
+            if (gameObject.tag == "Untagged")
+                Respawn();
         }
 
         public void Respawn()
@@ -313,7 +314,9 @@ namespace LPSurvivalEngine
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-            gameObject.tag = "Player";
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+gameObject.tag = "Player";
             health.currentValue = health.maxValue;
             stamina.currentValue = stamina.maxValue;
             sanity.currentValue = sanity.maxValue;

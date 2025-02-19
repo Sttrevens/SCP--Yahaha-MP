@@ -87,8 +87,8 @@ public class PlayerMovement : NetworkBehaviour
                 issprinting = false;
             }
 
-        Camera.fieldOfView = Mathf.Lerp(Camera.fieldOfView, targetFOV, fovChangeSpeed*Time.deltaTime);
-        PlayerSpeed = Mathf.Lerp(PlayerSpeed, targetSpeed, speedChangeSpeed*Time.deltaTime);
+        Camera.fieldOfView = Mathf.Lerp(Camera.fieldOfView, targetFOV, fovChangeSpeed * Time.fixedDeltaTime);
+        PlayerSpeed = Mathf.Lerp(PlayerSpeed, targetSpeed, speedChangeSpeed * Time.fixedDeltaTime);
         }
     }
 
@@ -155,7 +155,7 @@ public class PlayerMovement : NetworkBehaviour
                 if (HasStateAuthority)
                 {
                     //upperBody.rotation = Camera.transform.rotation;
-                    upperBody.rotation = Quaternion.Lerp(upperBody.rotation, Camera.transform.rotation, Time.deltaTime * 30f);
+                    upperBody.rotation = Quaternion.Lerp(upperBody.rotation, Camera.transform.rotation, Time.fixedDeltaTime * 30f);
                     // 同步上半身旋转到服务器
                     upperBodyRotation = upperBody.rotation;
                 }

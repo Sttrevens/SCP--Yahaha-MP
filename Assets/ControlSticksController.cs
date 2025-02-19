@@ -149,7 +149,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         Quaternion targetRotation = Quaternion.Euler(targetAngle, 180f, initialRotation.eulerAngles.z);
         while (Quaternion.Angle(transform.localRotation, targetRotation) > 0.1f)
         {
-            transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
+            transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
             yield return null; 
         }
 

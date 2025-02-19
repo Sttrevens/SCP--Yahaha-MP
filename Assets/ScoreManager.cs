@@ -72,7 +72,7 @@ public class ScoreManager : NetworkBehaviour
         // 如果有任意一个 LiveCamera，则推进计时器
         if (hasLiveCamera)
         {
-            timer += Time.deltaTime;
+            timer += Time.fixedDeltaTime;
             if (timer >= Random.Range(4f, 14f))
             {
                 timerAccumulatedScore += 1f;
