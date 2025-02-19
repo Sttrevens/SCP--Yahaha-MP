@@ -219,6 +219,15 @@ namespace LPSurvivalEngine
             {
                 SynchronousPlayerSanityRpc();
             }
+
+            if (playerStamina <= 10f)
+            {
+                GameObject.FindObjectOfType<Test>().GetComponent<Test>().Mohu();
+            }
+            else
+            {
+                GameObject.FindObjectOfType<Test>().GetComponent<Test>().NoMohu();
+            }
         }
 
         public void Heal(float amount)

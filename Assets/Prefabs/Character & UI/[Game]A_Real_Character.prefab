@@ -132,8 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e187bbec0e7bab048a69b2be6fcc2fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mudFootstepClip: {fileID: 0}
-  metalFootstepClip: {fileID: 0}
+  mudFootstepClips: []
+  metalFootstepClips: []
   raycastDistance: 5.95
 --- !u!1 &286651382315245872
 GameObject:
@@ -1590,6 +1590,7 @@ MonoBehaviour:
   - {fileID: 7358732985660825714}
   - {fileID: 4082337287283386946}
   - {fileID: 2904240422611391486}
+  - {fileID: 6037538954385029536}
 --- !u!114 &1122259457492835225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1681,10 +1682,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3193cad89ba4446b0d1b377bd20bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceGround: 0.8
-  GroundCheck:
-    serializedVersion: 2
-    m_Bits: 0
   cursor: 1
 --- !u!114 &-2697029352120812069
 MonoBehaviour:

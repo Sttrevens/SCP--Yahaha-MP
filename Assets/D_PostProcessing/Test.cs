@@ -20,4 +20,14 @@ public class Test : MonoBehaviour
             customRendererFeature.enableMoHuPostProcessing = !customRendererFeature.enableMoHuPostProcessing;
         }
     }
+
+    public void Mohu()
+    {
+        customRendererFeature.enableMoHuPostProcessing = true;
+    }
+    
+    public void NoMohu()
+    {
+        customRendererFeature.enableMoHuPostProcessing = false;
+    }
 }
