@@ -373,8 +373,7 @@ gameObject.tag = "Player";
             health.currentValue = health.maxValue;
             stamina.currentValue = stamina.maxValue;
             sanity.currentValue = sanity.maxValue;
-            transform.position = new Vector3(0, 0, 0);
-            transform.rotation = Quaternion.identity;
+            GetComponent<NetworkTransform>().Teleport(Vector3.zero, Quaternion.identity);
         }
 
         #region һ��ͬ����ɫ���ݺ���
