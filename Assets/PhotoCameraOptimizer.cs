@@ -20,22 +20,8 @@ public class PhotoCameraOptimizer : MonoBehaviour
         if (thisCameraMan != null)
         {
             // Get both SkinnedMeshRenderer and MeshRenderer components under the highest parent object
-            SkinnedMeshRenderer[] skinnedMeshRenderers = thisCameraMan.GetComponentsInChildren<SkinnedMeshRenderer>();
-            MeshRenderer[] meshRenderers = thisCameraMan.GetComponentsInChildren<MeshRenderer>();
-
-            // Handle SkinnedMeshRenderers
-            foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers)
-            {
-                // Exclude this renderer from this camera's culling specifically
-                thisCamera.cullingMask &= ~(1 << renderer.gameObject.layer);
-            }
-
-            // Handle MeshRenderers
-            foreach (MeshRenderer renderer in meshRenderers)
-            {
-                // Exclude this renderer from this camera's culling specifically
-                thisCamera.cullingMask &= ~(1 << renderer.gameObject.layer);
-            }
+            SkinnedMeshRenderer skinnedMeshRenderers = thisCameraMan.transform.Find("Model/Male_01").GetComponent<SkinnedMeshRenderer>();
+                thisCamera.cullingMask &= ~(1 << skinnedMeshRenderers.gameObject.layer);
         }
     }
 
