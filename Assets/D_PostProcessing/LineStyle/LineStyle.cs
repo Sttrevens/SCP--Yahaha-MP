@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+
 [System.Serializable, VolumeComponentMenu("azhao/LineStyle")]
 public class LineStyle : VolumeComponent
 {
-    public BoolParameter isShow = new BoolParameter(false, true);
+    // public BoolParameter isShow = new BoolParameter(false, true);
     [Tooltip("Strength of the line.")]
     public MinFloatParameter lineStrength = new MinFloatParameter(1, 0,true);
     [Tooltip("The color of the line.")]

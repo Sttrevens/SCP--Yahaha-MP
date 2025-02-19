@@ -14,9 +14,10 @@ public class LineStylePass : ScriptableRenderPass
     private Material mat;
     RenderTargetIdentifier currentTarget;
 
-    public LineStylePass(RenderPassEvent passEvent,Shader lineStyleShader)
+    public LineStylePass(RenderPassEvent passEvent,Shader lineStyleShader = null)
     {
         renderPassEvent = passEvent;
+        lineStyleShader = Shader.Find("azhao/LineStyle");
         if(lineStyleShader == null)
         {
             Debug.LogError("Shader不存在");
@@ -25,9 +26,9 @@ public class LineStylePass : ScriptableRenderPass
         mat = CoreUtils.CreateEngineMaterial(lineStyleShader);
     }
 
-    public void Setup(in RenderTargetIdentifier currentTarget)
+    public void Setup(ScriptableRenderer renderer)
     {
-        this.currentTarget = currentTarget;
+        this.currentTarget = renderer.cameraColorTargetHandle;
     }
 
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -46,10 +47,10 @@ public class LineStylePass : ScriptableRenderPass
         {
             return;
         }
-        if (lineStyleVolume.isShow.value == false)
-        {
-            return;
-        }
+        // if (lineStyleVolume.isShow.value == false)
+        // {
+        //     return;
+        // }
         CommandBuffer cmd = CommandBufferPool.Get(renderTag);
         Render(cmd, ref renderingData);
         context.ExecuteCommandBuffer(cmd);
