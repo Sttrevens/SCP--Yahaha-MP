@@ -209,7 +209,7 @@ namespace LPSurvivalEngine
 
         void HandlePlayerEffects()
         {
-            if (playerHealth <= 20)
+            if (playerHealth <= 30)
             {
                 isDying = true;
             }

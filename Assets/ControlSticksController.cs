@@ -70,7 +70,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         if(LevelManager.Instance.isButtonSelected) RPC_OnInteract();
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_OnInteract()
     {
         StartCoroutine(HandleSpaceshipState());
@@ -133,10 +133,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
 
                 foreach (var player in GameObject.FindObjectsOfType<HealthSystem>())
                 {
-                    if (player.gameObject.tag != "Player")
-                    {
                         player.Rpc_Respawn();
-                    }
                 }
                 IsPulled = false;
             }

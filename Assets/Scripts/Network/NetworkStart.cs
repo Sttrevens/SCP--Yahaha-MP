@@ -18,5 +18,7 @@ public class NetworkStart : MonoBehaviour
 
         roomName = bootstrap.DefaultRoomName;
         bootstrap.StartSharedClient();
+        
+        AudioManager.Instance.StopBGM();
     }
 }
