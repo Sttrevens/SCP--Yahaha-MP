@@ -6,8 +6,10 @@ using Fusion;
 public class ChasingEnemy : EnemyMovement
 {
     [HideInInspector] public GameObject targetPlayer;
+    [HideInInspector] public Vector3 soundTargetPosition;
     public float chasingSpeed = 5f;
-    
+    public float hearingRadius = 10f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +26,7 @@ public class ChasingEnemy : EnemyMovement
             agent.speed = chasingSpeed;
         }
     }
-    
+
     public bool PlayerInSight()
     {
         if (targetPlayer != null)
@@ -80,6 +82,23 @@ public class ChasingEnemy : EnemyMovement
             }
         }
         Debug.Log("[EnemyAI] No players detected in sight");
+        return false;
+    }
+
+    public bool PlayerHeard()
+    {
+        Debug.Log("[EnemyAI] Checking for players by sound...");
+        Collider[] colliders = Physics.OverlapSphere(transform.position, hearingRadius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Player") && collider.transform.Find("Model").GetComponent<AudioSource>().isPlaying)
+            {
+                Debug.Log("[EnemyAI] Player detected by sound");
+                soundTargetPosition = collider.transform.position;
+                return true;
+            }
+        }
+        Debug.Log("[EnemyAI] No players detected by sound");
         return false;
     }
 }

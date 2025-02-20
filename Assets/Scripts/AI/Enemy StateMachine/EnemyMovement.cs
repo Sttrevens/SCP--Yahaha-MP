@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Fusion;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class EnemyMovement : NetworkBehaviour
 {
@@ -79,29 +81,39 @@ public class EnemyMovement : NetworkBehaviour
     
     public IEnumerator Patrol()
     {
-        if (patrolMode == PatrolMode.FixedPoints)
+        if (GetComponent<ChasingEnemy>().PlayerHeard())
         {
-            if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) < agent.stoppingDistance + 1f)
+            agent.SetDestination(GetComponent<ChasingEnemy>().soundTargetPosition);
+        }
+        else
+        {
+            if (patrolMode == PatrolMode.FixedPoints)
             {
-                Debug.Log($"[EnemyAI] Reached patrol point {currentPatrolIndex}, waiting {waitTimeAtPatrolPoint} seconds");
-                yield return new WaitForSeconds(waitTimeAtPatrolPoint);
-                currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
-                Debug.Log($"[EnemyAI] Moving to next patrol point {currentPatrolIndex}");
-            }
+                if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) <
+                    agent.stoppingDistance + 1f)
+                {
+                    Debug.Log(
+                        $"[EnemyAI] Reached patrol point {currentPatrolIndex}, waiting {waitTimeAtPatrolPoint} seconds");
+                    yield return new WaitForSeconds(waitTimeAtPatrolPoint);
+                    currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+                    Debug.Log($"[EnemyAI] Moving to next patrol point {currentPatrolIndex}");
+                }
 
-            agent.SetDestination(patrolPoints[currentPatrolIndex].position);
-        }
-        else if (patrolMode == PatrolMode.RandomCircle || patrolMode == PatrolMode.RandomRectangle)
-        {
-            if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance + 1f)
+                agent.SetDestination(patrolPoints[currentPatrolIndex].position);
+            }
+            else if (patrolMode == PatrolMode.RandomCircle || patrolMode == PatrolMode.RandomRectangle)
             {
-                Debug.Log("[EnemyAI] Reached random patrol point, waiting before next point");
-                yield return new WaitForSeconds(waitTimeAtPatrolPoint);
-                Vector3 randomPatrolPoint = GetRandomPatrolPoint();
-                agent.SetDestination(randomPatrolPoint);
-                Debug.Log($"[EnemyAI] Moving to new random patrol point at {randomPatrolPoint}");
+                if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance + 1f)
+                {
+                    Debug.Log("[EnemyAI] Reached random patrol point, waiting before next point");
+                    yield return new WaitForSeconds(waitTimeAtPatrolPoint);
+                    Vector3 randomPatrolPoint = GetRandomPatrolPoint();
+                    agent.SetDestination(randomPatrolPoint);
+                    Debug.Log($"[EnemyAI] Moving to new random patrol point at {randomPatrolPoint}");
+                }
             }
         }
+
         yield return null;
     }
     

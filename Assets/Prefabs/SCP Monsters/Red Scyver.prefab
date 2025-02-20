@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 8996106264372517254}
   - component: {fileID: 2374247297385732892}
   - component: {fileID: 2879526749205372651}
+  - component: {fileID: 1675716322479253717}
   m_Layer: 14
   m_Name: Red Scyver
   m_TagString: Untagged
@@ -188,6 +189,7 @@ MonoBehaviour:
   - {fileID: 8996106264372517254}
   - {fileID: 2374247297385732892}
   - {fileID: 2879526749205372651}
+  - {fileID: 1675716322479253717}
 --- !u!114 &8063579947087977798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +325,19 @@ MonoBehaviour:
   waitTimeAtPatrolPoint: 2
   targetPlayer: {fileID: 0}
   chasingSpeed: 5
+--- !u!114 &1675716322479253717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513229352100526564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88152b1077365c428b9d0b9979a999f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPosition: {fileID: 0}
 --- !u!1 &962269116399748618
 GameObject:
   m_ObjectHideFlags: 0

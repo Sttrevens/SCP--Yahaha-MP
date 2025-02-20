@@ -123,15 +123,9 @@ public class LevelManager : NetworkBehaviour, IInteractable
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_BuildNavMesh()
     {
-        StartCoroutine(BuildNavMeshAsync());
-    }
-
-    IEnumerator BuildNavMeshAsync()
-    {
         if (surface != null)
         {
-            surface.BuildNavMesh();
-            yield return null;
+            surface.navMeshData = currentLevel.GetComponent<LevelAIManager>().navMeshData;
         }
     }
 }

@@ -50,7 +50,6 @@ public class PatrollingState : EnemyBaseState
         while (enemy.CurrentState is PatrollingState)
         {
             yield return EnemyMovement.StartCoroutine(EnemyMovement.Patrol());
-            Debug.Log("Patrolling AHAHAH");
            
             if (!(enemy.CurrentState is PatrollingState))
             {
