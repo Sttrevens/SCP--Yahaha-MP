@@ -5,13 +5,21 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 [System.Serializable, VolumeComponentMenu("azhao/LineStyle")]
-public class LineStyle : VolumeComponent
+public class LineStyle : VolumeComponent, IPostProcessComponent
 {
-    // public BoolParameter isShow = new BoolParameter(false, true);
+    public BoolParameter isShow = new BoolParameter(false, true);
     [Tooltip("Strength of the line.")]
     public MinFloatParameter lineStrength = new MinFloatParameter(1, 0,true);
     [Tooltip("The color of the line.")]
     public ColorParameter lineColor = new ColorParameter(Color.black, true);
     [Tooltip("The color of the background.")]
     public ColorParameter baseColor = new ColorParameter(Color.white, true);
+    public bool IsActive()
+    {
+        return (bool)isShow;
+    }
+    public bool IsTileCompatible()
+    {
+        return false;
+    }
 }

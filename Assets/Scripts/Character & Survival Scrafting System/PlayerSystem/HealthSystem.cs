@@ -32,6 +32,7 @@ namespace LPSurvivalEngine
         [Header("Vitals Settings")]
     
         public float staminaHealthdecay;
+        //氧气空的时候生命值下降的速度
         public float oxygenHealthdecay;
 
         public bool isInOxygenRoom;
@@ -45,14 +46,25 @@ namespace LPSurvivalEngine
         public GameObject Player;
         public GameObject UIPlayer;
         public GameObject sleepScreenAnimation;
-
+        
+        [Header("Post processing")]
+        
+        public CustomRendererFeature postProcessing;
+        
+        [Header("Player Effects")]
+        
+        public bool isScared = false;
+        public bool isDying = false;
+        public bool isTired = false;
+        
         void Start()
         {
+            // 保障措施
             health.currentValue = Mathf.Min(health.startValue, health.maxValue);
             stamina.currentValue = Mathf.Min(stamina.startValue, stamina.maxValue);
             oxygen.currentValue = Mathf.Min(oxygen.startValue, oxygen.maxValue);
             sanity.currentValue = Mathf.Min(sanity.startValue, sanity.maxValue);
-
+            
             Player = gameObject;
             UIPlayer = GameObject.FindGameObjectWithTag("UI Player");
 
@@ -69,7 +81,7 @@ namespace LPSurvivalEngine
                 {
                     Debug.Log("δ�ҵ���ΪSleepAnimation��������");
                 }
-
+                //获取生命值UI图像
                 Image healthVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Health");
                 if (healthVitalBarImage != null)
                 {
@@ -79,7 +91,7 @@ namespace LPSurvivalEngine
                 {
                     Debug.Log("δ�ҵ���ΪHealth��������");
                 }
-
+                //获取体力值UI图像
                 Image staminaVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Stamina");
                 if (staminaVitalBarImage != null)
                 {
@@ -89,7 +101,7 @@ namespace LPSurvivalEngine
                 {
                     Debug.Log("δҵΪStamina");
                 }
-
+                //获取氧气值UI
                 Image oxygenVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Oxygen");
                 if (oxygenVitalBarImage != null)
                 {
@@ -99,7 +111,7 @@ namespace LPSurvivalEngine
                 {
                     Debug.Log("δ�ҵ���ΪOxygen");
                 }
-
+                //获取San值UI
                 Image sanityVitalBarImage = FindChildRecursive<Image>(UIPlayer.transform, "Sanity");
                 if (sanityVitalBarImage != null)
                 {
@@ -116,6 +128,12 @@ namespace LPSurvivalEngine
             }
         }
 
+        private void Update()
+        {
+            postProcessing.enableMoHuPostProcessing = isDying;
+            postProcessing.enableInvertColor = isScared;
+            postProcessing.enableInvertColor = isTired;
+        }
         private T FindChildRecursive<T>(Transform parent, string name) where T : Component
         {
             foreach (Transform child in parent)
@@ -134,7 +152,7 @@ namespace LPSurvivalEngine
                     return result;
                 }
             }
-            return null;
+            return null;  
         }
 
         private GameObject FindChildRecursive(Transform parent, string name)
@@ -201,17 +219,13 @@ namespace LPSurvivalEngine
             }
         }
         
-        [Header("Player Effects")]
-        
-        public bool isScared = false;
-        public bool isDying = false;
-        public bool isTired = false;
 
         void HandlePlayerEffects()
         {
             if (playerHealth <= 30)
             {
                 isDying = true;
+                
             }
             else
             {
@@ -261,15 +275,15 @@ namespace LPSurvivalEngine
                 SynchronousPlayerSanityRpc();
             }
 
-            if (isScared)
-            {
-                GameObject.FindObjectOfType<Test>().GetComponent<Test>().Mohu();
-                Inventory.instance.DropItem();
-            }
-            else
-            {
-                GameObject.FindObjectOfType<Test>().GetComponent<Test>().NoMohu();
-            }
+            // if (isScared)
+            // {
+            //     GameObject.FindObjectOfType<Test>().GetComponent<Test>().Mohu();
+            //     Inventory.instance.DropItem();
+            // }
+            // else
+            // {
+            //     GameObject.FindObjectOfType<Test>().GetComponent<Test>().NoMohu();
+            // }
         }
 
         public void Heal(float amount)
