@@ -2,8 +2,8 @@ Shader "Custom/FatigueVerigo"
 {
     Properties
     {
-        [HDR]_Color ("Base Color", Color) = (0,0,0,0)  // 默认透明黑色
-        _DistortionStrength ("Distortion Strength", Range(0, 1)) = 0.1
+        [HDR]_Color ("Base Color", Color) = (1,1,1,1)  // 默认透明黑色
+        _DistortionStrength ("Distortion Strength", Range(0, 1)) = 0.5
         _TimeSpeed ("Time Speed", Range(0.1, 10)) = 1.0
         _MainTex ("Base (RGB)", 2D) = "black" {}       // 默认黑色纹理（透明）
     }
@@ -74,7 +74,7 @@ Shader "Custom/FatigueVerigo"
                 
                 // 添加方形边缘渐隐效果
                 float edgeFade = 1.0 - max(abs(i.uv.x - 0.5) * 2, abs(i.uv.y - 0.5) * 2);
-                col.a *= 0.1;
+                // col.a *= edgeFade;
                 
                 return col;
             }

@@ -17,12 +17,13 @@ public class MoHuPostProcessingPass : ScriptableRenderPass
     {
         Debug.Log("MoHuPostProcessingPass进入喵喵喵喵喵喵");
         renderPassEvent = passEvent;
-        moHuPostProcessingShader = Shader.Find("Post Process/Invert Color");
+        moHuPostProcessingShader = Shader.Find("Custom/FatigueVerigo");
         if (moHuPostProcessingShader == null)
         {
             Debug.Log("没找到shader");
             return;
         }
+        // 这个地方创建材质消耗比较大 有空的时候可以改成引用材质
         mat = CoreUtils.CreateEngineMaterial(moHuPostProcessingShader);
     }
     public void Setup(ScriptableRenderer renderer)
@@ -37,8 +38,8 @@ public class MoHuPostProcessingPass : ScriptableRenderPass
         RenderTargetIdentifier source = currentTarget;
         int destination = TempTargetId;
         
-        // mat.SetFloat("_DistortionStrength",MoHuPostProcessingVolume.distortionStrength.value);
-        // mat.SetFloat("_DistortionSpeed", MoHuPostProcessingVolume.distortionSpeed.value);
+        mat.SetFloat("_DistortionStrength",MoHuPostProcessingVolume.distortionStrength.value);
+        mat.SetFloat("_TimeSpeed", MoHuPostProcessingVolume.distortionSpeed.value);
         // 把现在摄像机渲染的纹理（当前帧的画面）绑定到一个全局的shader属性变量
         cmd.SetGlobalTexture(MainTexId, source);
         // 创建一个临时的Render Texture，用作中间渲染目标 这个临时生成的纹理就是这个destination，只是一个数字ID
