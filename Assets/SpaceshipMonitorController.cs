@@ -77,7 +77,7 @@ public class SpaceshipMonitorController : MonoBehaviour
     {
         if (totalScoreText == null || scoreManager == null || controlSticksController == null) return;
 
-        totalScoreText.text = "Total Viewers: " + scoreManager.networkedTotalScore + "\n" + "Total Revenue: " + "\n" + (scoreManager.networkedTotalScore / 240).ToString("F2") + "/1000 $";
+        totalScoreText.text = "Total Viewers: " + scoreManager.networkedTotalScore + "\n" + "Total Revenue: " + "\n" + scoreManager.revenueRate + "/1000 $";
         if (controlSticksController.currentDays <= 3)
         {
             dayText.text = "Day: " + controlSticksController.currentDays.ToString()  + "/3";

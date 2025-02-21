@@ -35,11 +35,16 @@ public class ScoreManager : NetworkBehaviour
     }
 
     [Networked] public int networkedTotalScore { get; set; }
+    
+    [Header("Revenue Settings")]
+    [SerializeField] private int revenueRatio = 240;
+    [Networked] public float revenueRate { get; set; }
 
     public override void FixedUpdateNetwork()
     {
         if (!HasStateAuthority) return;
         networkedTotalScore = (int)accumulatedTotalScore;
+        revenueRate = Mathf.Round(networkedTotalScore / (float)revenueRatio * 100) / 100f;
     }
 
     private void Update()

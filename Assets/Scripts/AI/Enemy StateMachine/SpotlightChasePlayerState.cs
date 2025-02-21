@@ -30,8 +30,15 @@ public class SpotlightChasePlayerState : EnemyBaseState
         Vector3 playerPosition = spotlight.GetPlayerPosition();
         // 追踪玩家方向，但不移动灯的本体
         Vector3 directionToPlayer = (playerPosition - spotlight.spotlightObject.transform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-        spotlight.spotlightObject.rotation = Quaternion.Slerp(spotlight.spotlightObject.transform.rotation, targetRotation, spotlight.followSpeed * Time.deltaTime);
+Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+
+// 限制水平和垂直旋转角度
+Vector3 eulerAngles = targetRotation.eulerAngles;
+eulerAngles.y = Mathf.Clamp(eulerAngles.y, -spotlight.maxSpotLightHorizontalAngle / 2, spotlight.maxSpotLightHorizontalAngle / 2);
+eulerAngles.x = Mathf.Clamp(eulerAngles.x, -spotlight.maxSpotLightVerticalAngle / 2, spotlight.maxSpotLightVerticalAngle / 2);
+
+targetRotation = Quaternion.Euler(eulerAngles);
+spotlight.spotlightObject.rotation = Quaternion.Slerp(spotlight.spotlightObject.transform.rotation, targetRotation, spotlight.followSpeed * Time.deltaTime);
 
         // 自定义玩家被照逻辑
         OnPlayerDetected(playerPosition);

@@ -32,7 +32,8 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
     [SerializeField] private GameObject door;
     [SerializeField] private GameObject spaceship;
 
-    public int currentDays = 1;
+    [Networked]
+    public int currentDays { get; set; } = 1;
 
     private void Awake()
     {

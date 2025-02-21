@@ -38,7 +38,14 @@ public class SpotlightNormalState : EnemyBaseState
         {
             Debug.Log("Generating random patrol point.");
             patrolPoints = new Vector3[1];
-            patrolPoints[0] = GenerateRandomPatrolPoint(spotlight);
+            if (spotlight.spotlightCenter != null)
+            {
+                patrolPoints[0] = GenerateRandomPatrolPoint(spotlight);
+            }
+            else
+            {
+                Debug.Log("Spotlight center is null. Cannot generate random patrol point.");
+            }
         }
 
         if (patrolPoints.Length == 0) 

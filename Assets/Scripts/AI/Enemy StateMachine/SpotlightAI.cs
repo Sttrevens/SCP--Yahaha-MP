@@ -11,6 +11,8 @@ public class SpotlightBase : NetworkBehaviour
     public LayerMask playerLayer;                // 玩家层级
     public float followSpeed = 3f;               // 跟随模式下的速度
     public float playerLoseThreshold = 10f;      // 玩家摆脱探照灯的距离
+    public float maxSpotLightHorizontalAngle = 180f;
+    public float maxSpotLightVerticalAngle = 180f;
 
     [Header("Patrol Settings")]
     public bool useRandomPatrolPoints = true;    // 是否使用随机点

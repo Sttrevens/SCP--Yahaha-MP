@@ -15,15 +15,18 @@ public class ChasingState : EnemyBaseState
     {
         if (enemy.HasStateAuthority)
         {
-            // Check if the enemy should attack the player
-            if (EnemyAttack.ShouldAttackBasedOnChasingEnemy(ChasingEnemy))
+            if (EnemyAttack != null)
             {
-            // Switch to AttackingState if conditions are met
-            enemy.SwitchState(new AttackingState());
-            return; // Exit early as we've already handled the state change
-        }
+                // Check if the enemy should attack the player
+                if (EnemyAttack.ShouldAttackBasedOnChasingEnemy(ChasingEnemy))
+                {
+                    // Switch to AttackingState if conditions are met
+                    enemy.SwitchState(new AttackingState());
+                    return; // Exit early as we've already handled the state change
+                }
+            }
 
-        // Continue chasing the player if no attack is triggered
+            // Continue chasing the player if no attack is triggered
         if (ChasingEnemy.targetPlayer != null && ChasingEnemy.targetPlayer.tag == "Player")
         {
             EnemyMovement.agent.SetDestination(ChasingEnemy.targetPlayer.transform.position);
