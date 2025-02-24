@@ -130,9 +130,8 @@ namespace LPSurvivalEngine
 
         private void Update()
         {
-            postProcessing.enableMoHuPostProcessing = isDying;
+            postProcessing.enableMoHuPostProcessing = isTired;
             postProcessing.enableInvertColor = isScared;
-            postProcessing.enableInvertColor = isTired;
         }
         private T FindChildRecursive<T>(Transform parent, string name) where T : Component
         {
