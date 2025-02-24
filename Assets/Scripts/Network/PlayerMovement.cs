@@ -146,6 +146,8 @@ public class PlayerMovement : NetworkBehaviour
 
     void LateUpdate()
     {
+        if (!gameObject.CompareTag("Player")) return;
+        
         // 本地控制的上半身旋转，基于摄像机的旋转
         if (upperBodys != null)
         {

@@ -79,6 +79,19 @@ public class ScreenFade : MonoBehaviour
         StartCoroutine(FadeScreenAndShowSubtitle(showSubtitle));
     }
 
+    public void TriggerScreenFadeOnly()
+    {
+        fadeScreen.SetActive(true);
+        StartCoroutine(FadeScreenOnly());
+    }
+
+    private IEnumerator FadeScreenOnly()
+    {
+        yield return StartCoroutine(FadeToBlack());
+        
+        yield return StartCoroutine(FadeFromBlack());
+    }
+
     // ���䵽����
     private IEnumerator FadeToBlack()
     {

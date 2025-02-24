@@ -1,6 +1,7 @@
 using LPSurvivalEngine;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class FirstPersonOptimizer : MonoBehaviour
 {
@@ -21,24 +22,27 @@ public class FirstPersonOptimizer : MonoBehaviour
             // Handle SkinnedMeshRenderers
             foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers)
             {
-                // Set the renderer to only be invisible to the main camera
+                /*// Set the renderer to only be invisible to the main camera
                 renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");
                 
                 // Make sure the main camera's culling mask excludes the FirstPerson layer
-                Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
+                Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));*/
+
+                renderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
             }
 
             // Handle MeshRenderers
             foreach (MeshRenderer renderer in meshRenderers)
             {
-                // Make sure the main camera's culling mask excludes the FirstPerson layer
+                /*// Make sure the main camera's culling mask excludes the FirstPerson layer
                 Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
                 if (renderer.transform.parent != null && renderer.transform.parent.GetComponent<CameraController>() != null)
                 {
                     return;
                 }
-                renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");
+                renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");*/
                 
+                renderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
             }
         }
     }

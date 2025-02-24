@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -206,7 +207,7 @@ namespace LPSurvivalEngine
                 health.Subtract(oxygenHealthdecay * Time.fixedDeltaTime);
             }
         
-            if (health.currentValue == 0.0f)
+            if (health.currentValue == 0.0f && gameObject.CompareTag("Player"))
             {
                 Rpc_Die();
             }
@@ -234,6 +235,7 @@ namespace LPSurvivalEngine
             if (playerSanity <= 20)
             {
                 isScared = true;
+                Inventory.instance.DropItem();
             }
             else
             {
@@ -360,12 +362,18 @@ namespace LPSurvivalEngine
             GetComponent<Rigidbody>().isKinematic = false;
             //Inventory.instance.inventoryWindow.SetActive(true);
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            GetComponent<Rigidbody>().useGravity = true;
+            Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = true;
+            GetComponent<NavMeshObstacle>().enabled = false;
             gameObject.tag = "Untagged";
-            // foreach (var item in Inventory.instance.slots)
-            // {
-            //     Inventory.instance.ThrowItem(item.item);
-            //     item.quantity--;
-            // }
+            foreach (var item in Inventory.instance.slots)
+            {
+                if (item != null)
+                {
+                    Inventory.instance.selectedItem = item;
+                    Inventory.instance.DropItem();
+                }
+            }
         }
 
         [Rpc(RpcSources.All, RpcTargets.All)]
@@ -380,8 +388,11 @@ namespace LPSurvivalEngine
             Cursor.lockState = CursorLockMode.Locked;
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
 GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = false;
+GetComponent<NavMeshObstacle>().enabled = true;
 gameObject.tag = "Player";
             health.currentValue = health.maxValue;
             stamina.currentValue = stamina.maxValue;
