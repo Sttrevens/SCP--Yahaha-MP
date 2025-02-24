@@ -97,7 +97,12 @@ public class LevelManager : NetworkBehaviour, IInteractable
         {
             Runner.Despawn(currentLevel);
         }
-        RPC_BuildNavMesh();
+
+        foreach (var enemy in GameObject.FindObjectsOfType<Enemy>())
+        {
+            Destroy(enemy);
+        }
+        //RPC_BuildNavMesh();
     }
 
     public void DestroyLevel()

@@ -352,6 +352,9 @@ namespace LPSurvivalEngine
         {
             Die();
         }
+        
+        private ScreenFade screenFade;
+        private GameObject viewerBobojian;
     
         public void Die()
         {
@@ -374,17 +377,39 @@ namespace LPSurvivalEngine
                     Inventory.instance.DropItem();
                 }
             }
+            
+            screenFade = FindObjectOfType<ScreenFade>();
+            StartCoroutine(Dying());
+        }
+
+        private IEnumerator Dying()
+        {
+            ControlSticksController.Instance.HandlePlayerDeath();
+            screenFade.TriggerScreenFadeOnly();
+            viewerBobojian = GameObject.Find("BobojianSystem").transform.Find("ViewerBobojian").gameObject;
+            yield return new WaitForSeconds(screenFade.fadeDuration);
+            viewerBobojian.SetActive(true);
         }
 
         [Rpc(RpcSources.All, RpcTargets.All)]
         public void Rpc_Respawn()
         {
+            StopAllCoroutines();
+            
             //if (gameObject.tag == "Untagged")
-                Respawn();
+            StartCoroutine(Respawning());
+        }
+
+        private IEnumerator Respawning()
+        {
+            screenFade.TriggerScreenFadeOnly();
+            yield return new WaitForSeconds(screenFade.fadeDuration);
+            Respawn();
         }
 
         public void Respawn()
         {
+            viewerBobojian.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
