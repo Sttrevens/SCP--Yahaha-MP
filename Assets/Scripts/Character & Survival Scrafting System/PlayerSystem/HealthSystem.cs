@@ -48,10 +48,6 @@ namespace LPSurvivalEngine
         public GameObject UIPlayer;
         public GameObject sleepScreenAnimation;
         
-        [Header("Post processing")]
-        
-        public CustomRendererFeature postProcessing;
-        
         [Header("Player Effects")]
         
         public bool isScared = false;
@@ -216,7 +212,7 @@ namespace LPSurvivalEngine
             if (HasStateAuthority)
             {
                 UpdateUIAndSync();
-                HandlePlayerEffects();
+                // HandlePlayerEffects();
             }
         }
         
@@ -237,23 +233,23 @@ namespace LPSurvivalEngine
             {
                 isScared = true;
                 Inventory.instance.DropItem();
-                postProcessing.enableInvertColor = true;
+                GlobalPostProcessing.instance.ChangeStateInvert(true);
             }
             else
             {
                 isScared = false;
-                postProcessing.enableInvertColor = false;
+                GlobalPostProcessing.instance.ChangeStateInvert(false);
             }
             
             if (playerStamina <= 10)
             {
                 isTired = true;
-                postProcessing.enableMoHuPostProcessing = true;
+                GlobalPostProcessing.instance.ChangeMohuState(true);
             }
             else
             {
                 isTired = false;
-                postProcessing.enableMoHuPostProcessing = false;
+                GlobalPostProcessing.instance.ChangeMohuState(false);
             }
         }
 

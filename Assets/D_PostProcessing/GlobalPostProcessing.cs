@@ -4,9 +4,15 @@ using ExitGames.Client.Photon.StructWrapping;
 using LPSurvivalEngine;
 using UnityEngine;
 
-public class Test : MonoBehaviour
+public class GlobalPostProcessing : MonoBehaviour
 {
     public CustomRendererFeature customRendererFeature;
+    public static GlobalPostProcessing instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     // Update is called once per frame
     void Update()
@@ -29,13 +35,18 @@ public class Test : MonoBehaviour
         customRendererFeature.enableInvertColor = healthSystem.isScared;;*/
     }
 
-    public void Mohu()
+    public void ChangeMohuState(bool state)
     {
-        customRendererFeature.enableMoHuPostProcessing = true;
+        customRendererFeature.enableMoHuPostProcessing = state;
     }
     
-    public void NoMohu()
+    public void ChangeStateLineStyle(bool state)
     {
-        customRendererFeature.enableMoHuPostProcessing = false;
+        customRendererFeature.enableLineStyle = state;
+    }
+
+    public void ChangeStateInvert(bool state)
+    {
+        customRendererFeature.enableInvertColor = state;
     }
 }

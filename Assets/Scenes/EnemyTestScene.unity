@@ -277,6 +277,75 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 86093993102794218, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
   m_PrefabInstance: {fileID: 720514016}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &360316107
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 656468224}
+    m_Modifications:
+    - target: {fileID: 141110, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_Name
+      value: Toon Plant Monster-Purple
+      objectReference: {fileID: 0}
+    - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -19.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -109.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19874802, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19874802, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19942612, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
 --- !u!1 &389080493
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,6 +472,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 872344213176483465, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 971180163161223419, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
       propertyPath: SortKey
       value: 1894992724
@@ -475,6 +548,18 @@ PrefabInstance:
       propertyPath: SortKey
       value: 4081780627
       objectReference: {fileID: 0}
+    - target: {fileID: 4880340945959252757, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      propertyPath: NestedObjects.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880340945959252757, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      propertyPath: NestedObjects.Array.data[12]
+      value: 
+      objectReference: {fileID: 1235173759}
+    - target: {fileID: 4880340945959252757, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      propertyPath: NestedObjects.Array.data[13]
+      value: 
+      objectReference: {fileID: 698245554}
     - target: {fileID: 5936438080011586927, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
       propertyPath: SortKey
       value: 3080782584
@@ -503,9 +588,36 @@ PrefabInstance:
       propertyPath: SortKey
       value: 1892907642
       objectReference: {fileID: 0}
+    - target: {fileID: 7804031626265386270, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320546265672676972, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320546265672676972, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320546265672676972, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -106.46
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8243898071245772496, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+    - {fileID: 5167377242772611883, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3882973113075978015, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1234724775}
+    - targetCorrespondingSourceObject: {fileID: 3882973113075978015, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 982219112}
+    - targetCorrespondingSourceObject: {fileID: 3882973113075978015, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1195772476}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
 --- !u!1 &464697036
@@ -556,6 +668,22 @@ Transform:
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5670563717161345672, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
   m_PrefabInstance: {fileID: 1403620209}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &656468224 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3882973113075978015, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+  m_PrefabInstance: {fileID: 400447602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &698245554 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7369821315768086555, guid: d37710f4e54faf64ca55963e41a9ba5a, type: 3}
+  m_PrefabInstance: {fileID: 400447602}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -998,7 +1126,7 @@ PrefabInstance:
     - target: {fileID: 6788867824361680590, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 60366f9e78a77a44f98684eda733741e, type: 2}
+      objectReference: {fileID: 23800000, guid: ef48b345e154cca46a79b75c0243766d, type: 2}
     - target: {fileID: 7521988033756224945, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
       propertyPath: SortKey
       value: 3665154505
@@ -1453,6 +1581,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &982219112 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+  m_PrefabInstance: {fileID: 360316107}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1023765584 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1178209540141898313, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
@@ -1486,6 +1619,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1195772476 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+  m_PrefabInstance: {fileID: 2138762050}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1205866676 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 949174289323706372, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
@@ -1495,6 +1633,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1234724775 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 3433142468306029371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1235173759 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 3433142468306029371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1242194647
@@ -1930,7 +2084,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4437560750417532860, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: DefaultRoomName
-      value: 000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4465279824864520752, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: m_Enabled
@@ -2655,6 +2809,99 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customRendererFeature: {fileID: -4790220763175020456, guid: c40be3174f62c4acf8c1216858c64956, type: 2}
+--- !u!1001 &1959675620
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 436209211243788676, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.0338218
+      objectReference: {fileID: 0}
+    - target: {fileID: 436209211243788676, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.9384024
+      objectReference: {fileID: 0}
+    - target: {fileID: 436209211243788676, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -20.487411
+      objectReference: {fileID: 0}
+    - target: {fileID: 436209211243788676, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 436209211243788676, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436209211243788676, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436209211243788676, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436209211243788676, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436209211243788676, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 436209211243788676, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2276814548383471931, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_Name
+      value: Toon Plant Monster-Purple-NoMovement
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706107961073578357, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: patrolMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706107961073578357, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: chasingSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234513738169512049, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234513738169512049, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.80817604
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234513738169512049, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.93380195
+      objectReference: {fileID: 0}
+    - target: {fileID: 4707914608447318726, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774933199598968567, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: SortKey
+      value: 1024788386
+      objectReference: {fileID: 0}
+    - target: {fileID: 6791432219682007076, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: attackDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872369108820597513, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: patrollingSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
 --- !u!1 &2077130557
 GameObject:
   m_ObjectHideFlags: 0
@@ -2789,6 +3036,128 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92022af0ec7d92c438bd68b42f48e605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &2138762050
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 656468224}
+    m_Modifications:
+    - target: {fileID: 196488, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_Name
+      value: Toon Plant Monster-Red
+      objectReference: {fileID: 0}
+    - target: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -107.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433142, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 27cdaf4ffc672e4488bbd4f9e946809d, type: 3}
+--- !u!1001 &3433142468306029371
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 656468224}
+    m_Modifications:
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: SortKey
+      value: 172726306
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822145768500435799, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153400332146600106, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_Name
+      value: Toon Plant Monster-Pink
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -109.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2801,3 +3170,4 @@ SceneRoots:
   - {fileID: 464697038}
   - {fileID: 857841612}
   - {fileID: 400447602}
+  - {fileID: 1959675620}
