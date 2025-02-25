@@ -248,12 +248,12 @@ namespace LPSurvivalEngine
             if (playerStamina <= 10)
             {
                 isTired = true;
-                postProcessing.enableInvertColor = true;
+                postProcessing.enableMoHuPostProcessing = true;
             }
             else
             {
                 isTired = false;
-                postProcessing.enableInvertColor = false;
+                postProcessing.enableMoHuPostProcessing = false;
             }
         }
 
