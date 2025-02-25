@@ -129,7 +129,7 @@ namespace LPSurvivalEngine
             }
         }
 
-        private void Update()
+        public override void Render()
         {
             postProcessing.enableMoHuPostProcessing = isTired;
             postProcessing.enableInvertColor = isScared;
