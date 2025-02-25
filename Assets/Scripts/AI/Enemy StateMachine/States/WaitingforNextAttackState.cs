@@ -5,6 +5,13 @@ using Fusion;
 
 public class WaitingforNextAttackState : EnemyBaseState
 {
+    public override void EnterState(Enemy enemy)
+    {
+        base.EnterState(enemy);
+        
+        enemy._animatorManager.isChasing = false;
+        enemy._animatorManager.isPatrolling = false;
+    }
     public override void UpdateState(Enemy enemy)
     {
         if (enemy.HasStateAuthority)

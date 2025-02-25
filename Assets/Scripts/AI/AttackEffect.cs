@@ -6,7 +6,7 @@ using LPSurvivalEngine;
 public class AttackEffect : MonoBehaviour
 {
     public Enemy enemy;
-    
+
     private ChasingEnemy _chasingEnemy;
     private EnemyAttack _enemyAttack;
     
@@ -25,6 +25,8 @@ public class AttackEffect : MonoBehaviour
         {
             ReducePlayerHealth();
         }
+        
+        enemy.SwitchState(new WaitingforNextAttackState());
     }
     
     void ReducePlayerHealth()

@@ -9,6 +9,9 @@ public class ChasingState : EnemyBaseState
 
         // Set the agent speed for chasing state
         EnemyMovement.agent.speed = ChasingEnemy.chasingSpeed;
+
+        enemy._animatorManager.isPatrolling = false;
+        enemy._animatorManager.isChasing = true;
     }
 
     public override void UpdateState(Enemy enemy)
@@ -67,6 +70,6 @@ public class ChasingState : EnemyBaseState
 
     public override void ExitState(Enemy enemy)
     {
-        // No specific exit logic needed for ChasingState
+        enemy._animatorManager.isChasing = false;
     }
 }
