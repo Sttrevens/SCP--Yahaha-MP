@@ -10,8 +10,8 @@ public class EnemyAnimator : NetworkBehaviour
     private EnemyAnimatorManager _animatorManager;
     private Animator _animator;
     private int _lastVisibleAttack;
-    private int _lastVisibleChasing;
-    private int _lastVisiblePatrolling;
+    private bool _lastVisibleChasing;
+    private bool _lastVisiblePatrolling;
 
     // NetworkBehaviour INTERFACE
     public override void Spawned()
@@ -40,21 +40,14 @@ public class EnemyAnimator : NetworkBehaviour
         {
             _animator.SetTrigger("Attack");
         }
-        if (_lastVisibleChasing < _animatorManager.isChasing)
+        if (_lastVisibleChasing != _animatorManager.isChasing)
         {
-            _animator.SetBool("IsChasing", true);
+            _animator.SetBool("IsChasing", _animatorManager.isChasing);
         }
-        else
+
+        if (_lastVisiblePatrolling != _animatorManager.isPatrolling)
         {
-            _animator.SetBool("IsChasing", false);
-        }
-        if (_lastVisiblePatrolling < _animatorManager.isPatrolling)
-        {
-            _animator.SetBool("IsPatrolling", true);
-        }
-        else
-        {
-            _animator.SetBool("IsPatrolling", false);
+            _animator.SetBool("IsPatrolling", _animatorManager.isPatrolling);
         }
 
 
