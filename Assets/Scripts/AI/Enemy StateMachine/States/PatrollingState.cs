@@ -18,7 +18,10 @@ public class PatrollingState : EnemyBaseState
            
             patrolLoop = enemy.StartCoroutine(PatrolLoop(enemy));
             if (enemy._animatorManager != null)
-                enemy._animatorManager.isPatrolling++;
+            {
+                enemy._animatorManager.isPatrolling = true;
+                enemy._animatorManager.isChasing = false;
+            }
         }
     }
 

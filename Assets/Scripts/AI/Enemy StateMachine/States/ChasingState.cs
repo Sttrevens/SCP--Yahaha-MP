@@ -46,8 +46,11 @@ public class ChasingState : EnemyBaseState
         }
 
         if (enemy._animatorManager != null)
-            enemy._animatorManager.isChasing++; 
-            
+        {
+            enemy._animatorManager.isChasing = true;
+            enemy._animatorManager.isPatrolling = false;
+        }
+
         // Smoothly rotate enemy to face the target player if one exists
         if (ChasingEnemy.targetPlayer != null)
         {
