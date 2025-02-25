@@ -7,6 +7,7 @@ using TMPro;
 public class BobojianZhuBaoTracker : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI playerNameText;
+    [SerializeField] private TextMeshProUGUI noSignalText;
     private RenderTexture myRenderTexture;
 
     private void Start()
@@ -30,6 +31,7 @@ public class BobojianZhuBaoTracker : MonoBehaviour
         GameObject[] liveCameraObjects = GameObject.FindGameObjectsWithTag("LiveCamera");
         if (liveCameraObjects == null || liveCameraObjects.Length == 0)
         {
+            if (noSignalText != null) noSignalText.gameObject.SetActive(true);
             Debug.LogWarning("No GameObjects with tag 'LiveCamera' found.");
             return;
         }
@@ -37,11 +39,15 @@ public class BobojianZhuBaoTracker : MonoBehaviour
         foreach (GameObject liveCamObj in liveCameraObjects)
         {
             if (liveCamObj == null)
+            {
+                if (noSignalText != null) noSignalText.gameObject.SetActive(true);
                 continue;
+            }
 
             Transform photoCamTransform = liveCamObj.transform.Find("PhotoCamera");
             if (photoCamTransform == null)
             {
+                if (noSignalText != null) noSignalText.gameObject.SetActive(true);
                 Debug.LogWarning("PhotoCamera not found in " + liveCamObj.name);
                 continue;
             }
@@ -49,12 +55,14 @@ public class BobojianZhuBaoTracker : MonoBehaviour
             Camera cam = photoCamTransform.GetComponent<Camera>();
             if (cam == null)
             {
+                if (noSignalText != null) noSignalText.gameObject.SetActive(true);
                 Debug.LogWarning("Camera component not found on PhotoCamera in " + liveCamObj.name);
                 continue;
             }
             
             if (cam.targetTexture != myRenderTexture)
             {
+                //if (noSignalText != null) noSignalText.gameObject.SetActive(true);
                 Debug.Log("Camera on " + liveCamObj.name + " does not use the expected RenderTexture.");
                 continue;
             }
@@ -80,7 +88,8 @@ public class BobojianZhuBaoTracker : MonoBehaviour
             }
             
             playerNameText.text = "monitoring: " + pd.PlayerName;
-            Debug.Log("Updated playerNameText to: " + playerNameText.text);
+            
+            if (noSignalText != null) noSignalText.gameObject.SetActive(false);
         }
     }
 }

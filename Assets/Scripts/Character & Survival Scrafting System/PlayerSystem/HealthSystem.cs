@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -128,11 +129,12 @@ namespace LPSurvivalEngine
             }
         }
 
-        private void Update()
+        /*public override void Render()
         {
             postProcessing.enableMoHuPostProcessing = isTired;
             postProcessing.enableInvertColor = isScared;
-        }
+        }*/
+        
         private T FindChildRecursive<T>(Transform parent, string name) where T : Component
         {
             foreach (Transform child in parent)
@@ -206,7 +208,7 @@ namespace LPSurvivalEngine
                 health.Subtract(oxygenHealthdecay * Time.fixedDeltaTime);
             }
         
-            if (health.currentValue == 0.0f)
+            if (health.currentValue == 0.0f && gameObject.CompareTag("Player"))
             {
                 Rpc_Die();
             }
@@ -234,19 +236,24 @@ namespace LPSurvivalEngine
             if (playerSanity <= 20)
             {
                 isScared = true;
+                Inventory.instance.DropItem();
+                postProcessing.enableInvertColor = true;
             }
             else
             {
                 isScared = false;
+                postProcessing.enableInvertColor = false;
             }
             
             if (playerStamina <= 10)
             {
                 isTired = true;
+                postProcessing.enableMoHuPostProcessing = true;
             }
             else
             {
                 isTired = false;
+                postProcessing.enableMoHuPostProcessing = false;
             }
         }
 
@@ -350,6 +357,9 @@ namespace LPSurvivalEngine
         {
             Die();
         }
+        
+        private ScreenFade screenFade;
+        private GameObject viewerBobojian;
     
         public void Die()
         {
@@ -360,28 +370,59 @@ namespace LPSurvivalEngine
             GetComponent<Rigidbody>().isKinematic = false;
             //Inventory.instance.inventoryWindow.SetActive(true);
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            GetComponent<Rigidbody>().useGravity = true;
+            Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = true;
+            GetComponent<NavMeshObstacle>().enabled = false;
             gameObject.tag = "Untagged";
-            // foreach (var item in Inventory.instance.slots)
-            // {
-            //     Inventory.instance.ThrowItem(item.item);
-            //     item.quantity--;
-            // }
+            foreach (var item in Inventory.instance.slots)
+            {
+                if (item != null)
+                {
+                    Inventory.instance.selectedItem = item;
+                    Inventory.instance.DropItem();
+                }
+            }
+            
+            screenFade = FindObjectOfType<ScreenFade>();
+            StartCoroutine(Dying());
+        }
+
+        private IEnumerator Dying()
+        {
+            ControlSticksController.Instance.HandlePlayerDeath();
+            screenFade.TriggerScreenFadeOnly();
+            viewerBobojian = GameObject.Find("BobojianSystem").transform.Find("ViewerBobojian").gameObject;
+            yield return new WaitForSeconds(screenFade.fadeDuration);
+            viewerBobojian.SetActive(true);
         }
 
         [Rpc(RpcSources.All, RpcTargets.All)]
         public void Rpc_Respawn()
         {
+            StopAllCoroutines();
+            
             //if (gameObject.tag == "Untagged")
-                Respawn();
+            StartCoroutine(Respawning());
+        }
+
+        private IEnumerator Respawning()
+        {
+            screenFade.TriggerScreenFadeOnly();
+            yield return new WaitForSeconds(screenFade.fadeDuration);
+            Respawn();
         }
 
         public void Respawn()
         {
+            viewerBobojian.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
 GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = false;
+GetComponent<NavMeshObstacle>().enabled = true;
 gameObject.tag = "Player";
             health.currentValue = health.maxValue;
             stamina.currentValue = stamina.maxValue;

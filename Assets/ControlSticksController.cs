@@ -165,4 +165,25 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
     {
         CurrentState = newState;
     }
+
+    public void HandlePlayerDeath()
+{
+    HealthSystem[] players = GameObject.FindObjectsOfType<HealthSystem>();
+    bool allDied = true;
+
+    foreach (var player in players)
+    {
+        if (player.gameObject.CompareTag("Player"))
+        {
+            allDied = false;
+            break;
+        }
+    }
+
+    if (allDied)
+    {
+        if (CurrentState == SpaceshipState.Landing)
+            StartCoroutine(HandleSpaceshipState());
+    }
+}
 }

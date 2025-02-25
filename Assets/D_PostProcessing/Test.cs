@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
+using LPSurvivalEngine;
 using UnityEngine;
 
 public class Test : MonoBehaviour
@@ -18,6 +20,13 @@ public class Test : MonoBehaviour
         {
             customRendererFeature.enableMoHuPostProcessing = !customRendererFeature.enableMoHuPostProcessing;
         }
+        
+        /*if (GameObject.Find("CurrentPlayer") == null) return;
+        
+        HealthSystem healthSystem = GameObject.Find("CurrentPlayer").GetComponent<HealthSystem>();
+        
+        customRendererFeature.enableMoHuPostProcessing = healthSystem.isTired;
+        customRendererFeature.enableInvertColor = healthSystem.isScared;;*/
     }
 
     public void Mohu()

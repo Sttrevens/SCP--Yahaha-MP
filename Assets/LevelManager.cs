@@ -25,6 +25,8 @@ public class LevelManager : NetworkBehaviour, IInteractable
     private bool isLevelSelectionDisabled;
 
      public NavMeshSurface surface;
+     
+     public Light directionalLight;
 
     private void Awake()
     {
@@ -86,7 +88,14 @@ public class LevelManager : NetworkBehaviour, IInteractable
 
     public void LoadLevel()
     {
+        Rpc_UpdateDirectionalLight(1f);
         RPC_LoadLevel();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void Rpc_UpdateDirectionalLight(float intensity)
+    {
+        directionalLight.intensity = intensity;
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -97,11 +106,17 @@ public class LevelManager : NetworkBehaviour, IInteractable
         {
             Runner.Despawn(currentLevel);
         }
-        RPC_BuildNavMesh();
+
+        foreach (var enemy in GameObject.FindObjectsOfType<Enemy>())
+        {
+            Destroy(enemy.gameObject);
+        }
+        //RPC_BuildNavMesh();
     }
 
     public void DestroyLevel()
     {
+        Rpc_UpdateDirectionalLight(1.5f);
         RPC_DestroyLevel();
     }
     

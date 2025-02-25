@@ -14,7 +14,8 @@ public class Root : MonoBehaviour
     public float projectileSpeed = 10f;
     public float detectionRange = 10f;
 
-    private RootBaseState currentStateBehavior;
+    private EnemyBaseState currentStateBehavior;
+    private Enemy enemy;
 
     [Header("Patrol")]
     public float fieldOfViewAngleHorizontal = 90f;
@@ -31,27 +32,22 @@ public class Root : MonoBehaviour
             target = players[0].transform;
         }
 
-        SwitchState(new RootIdleState());
+        enemy = GetComponent<Enemy>();
+
+        enemy.SwitchState(new RootIdleState());
     }
 
     private void Update()
     {
         if (currentState != null)
         {
-            currentStateBehavior?.UpdateState(this);
+            currentStateBehavior?.UpdateState(enemy);
             players = GameObject.FindGameObjectsWithTag("Player");
             if (players.Length > 0)
             {
                 target = players[0].transform;
             }
         }
-    }
-
-    public void SwitchState(RootBaseState newState)
-    {
-        currentStateBehavior?.ExitState(this);
-        currentStateBehavior = newState;
-        currentStateBehavior.EnterState(this);
     }
 
     public bool PlayerInSight()

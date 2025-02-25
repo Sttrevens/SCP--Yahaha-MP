@@ -12,19 +12,19 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _USESPECULAR_ON
-  m_InvalidKeywords:
-  - _NORMALMAP
   - _OUTLINETYPE_NORMAL
   - _OVERLAYMODE1_NONE
-  - _OVERLAYMODE_NONE
+  - _OVERLAYMODE_HAFTONE
   - _RIMSPLITCOLOR_NOSPLIT
   - _USEADDITIONALLIGHTSDIFFUSE_ON
   - _USEHATCHINGCONSTANTSCALE_ON
   - _USELIGHTRAMP_STEP
   - _USEPURESKETCH_ON
+  - _USESPECULAR_ON
+  m_InvalidKeywords:
+  - _ENVIRONMENTREFLECTIONS_OFF
   - _USESHADOWS_ON
-  m_LightmapFlags: 4
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -35,7 +35,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 1b38c563deaa6bc49809cf379e4f3d87, type: 3}
+        m_Texture: {fileID: 2800000, guid: d44fa91dd607b2243aac51d78b7922dd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -91,7 +91,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LightRampTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a3778dabc4f47274885c820d86f4b733, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Lut:
@@ -99,7 +99,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1b38c563deaa6bc49809cf379e4f3d87, type: 3}
+        m_Texture: {fileID: 2800000, guid: d44fa91dd607b2243aac51d78b7922dd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -144,7 +144,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AdaptiveThicnkess: 0
+    - _AdaptiveThicnkess: 0.171
     - _AdditionalIndirectLightStrength: 0
     - _AdditionalLightsAmount: 1
     - _AdditionalLightsFaloff: 1
@@ -159,11 +159,11 @@ Material:
     - _BacklightIntensity: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BumpScale: 1
+    - _BumpScale: 5
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
-    - _Cutoff: 0.5
+    - _Cutoff: 0.548
     - _Darken: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -172,34 +172,34 @@ Material:
     - _DiffusePosterizePower: 1
     - _DiffusePosterizeSteps: 3
     - _DiffuseWarpAffectHalftone: 0
-    - _DiffuseWarpBrightnessOffset: 1.12
+    - _DiffuseWarpBrightnessOffset: 0.3
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _Emission: 0
     - _EmissionMask: 0
-    - _EnvironmentReflections: 1
+    - _EnvironmentReflections: 0
     - _GeometricSpecularAAON: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.2
+    - _Glossiness: 0.047
     - _GlossyReflections: 1
-    - _HalftoneEdgeOffset: 0.1
-    - _HalftoneSmoothness: 0.3
-    - _HalftoneThreshold: 0.1
+    - _HalftoneEdgeOffset: 0.45
+    - _HalftoneSmoothness: 0.6
+    - _HalftoneThreshold: 0.0527
     - _HalftoneToonAffect: 0
     - _HaltonePatternSize: 0
     - _Hue: 0
     - _IndirectLightAffectOnHatch: 0
-    - _IndirectLightStrength: 1
+    - _IndirectLightStrength: 0
     - _InverseMask: 0
     - _Is_Skin: 0
     - _Kajiya: 0
-    - _LightRampOffset: 0
+    - _LightRampOffset: -0.09
     - _Lighten: 0
     - _Lightness: 0
     - _MROEON: 1
     - _MainLightIntesity: 1
     - _MaxScaleDependingOnCamera: 1
-    - _Metallic: 0
+    - _Metallic: 1
     - _Mode: 0
     - _NormalMapStrength: 1
     - _OcclusionStrength: 1
@@ -208,7 +208,7 @@ Material:
     - _OutlineNoiseScale: 10
     - _OutlineTextureStrength: 0
     - _OutlineType: 0
-    - _OverlayMode: 0
+    - _OverlayMode: 1
     - _OverlayMode1: 0
     - _OverlayRotation: 0
     - _OverlayUVTilling: 0
@@ -232,11 +232,11 @@ Material:
     - _SideShineIntensity: 1
     - _SmartMaterialScale: 1
     - _SmartMaterial_On: 0
-    - _Smoothness: 0.46
+    - _Smoothness: 0.385
     - _SmoothnessMultiplier: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularAAThreshold: 0.2
-    - _SpecularFaloff: 0
+    - _SpecularFaloff: 0.428
     - _SpecularHighlights: 1
     - _SpecularMaskRotation: 0
     - _SpecularMaskScale: 1
@@ -246,10 +246,10 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _StepHalftoneTexture: 0
-    - _StepOffset: 0
+    - _StepOffset: -0
     - _Strength: 0
     - _Surface: 0
-    - _Thicnkess: 0
+    - _Thicnkess: 0.0217
     - _UVAnimationSpeed: 0
     - _UVAnimationSpeedSpec: 0
     - _UVAnimationSpeedWarp: 0
@@ -269,7 +269,7 @@ Material:
     - _UseDiffuseWarp: 0
     - _UseDiffuseWarpAsOverlay: 0
     - _UseDynamicOutline: 0
-    - _UseEmission: 0
+    - _UseEmission: 1
     - _UseEnvironmentRefletion: 0
     - _UseHatchingConstantScale: 1
     - _UseLightRamp: 0
@@ -300,7 +300,7 @@ Material:
     - _RimColor: {r: 1, g: 1, b: 1, a: 0}
     - _RimShadowColor: {r: 0, g: 0.055514283, b: 0.9622641, a: 0}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 0}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _SpecColor: {r: 0.31446534, g: 0.31446534, b: 0.31446534, a: 1}
     - _SpecularColor1: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor2: {r: 1, g: 1, b: 1, a: 1}
     - _TillingAndOffset: {r: 1, g: 1, b: 0, a: 0}

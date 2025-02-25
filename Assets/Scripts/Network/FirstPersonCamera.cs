@@ -5,6 +5,8 @@ public class FirstPersonCamera : MonoBehaviour
     public Transform Target;
     public float Height = 0.7f;
     public float MouseSensitivity = 10f;
+    
+    public bool isCameraLocked = false;
  
     private float verticalRotation;
     private float horizontalRotation;
@@ -18,6 +20,11 @@ public class FirstPersonCamera : MonoBehaviour
         
         transform.position = Target.position;
         transform.position += new Vector3(0,Height,0);
+
+        if (isCameraLocked)
+        {
+            return;
+        }
  
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
