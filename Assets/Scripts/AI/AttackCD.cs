@@ -9,12 +9,17 @@ public class AttackCD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemy.SwitchState(new WaitingforNextAttackState());
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void CD()
+    {
+        enemy.SwitchState(new WaitingforNextAttackState());
     }
 }

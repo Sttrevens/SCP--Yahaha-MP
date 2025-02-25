@@ -46,6 +46,8 @@ public class PatrollingState : EnemyBaseState
                 enemy.StopCoroutine(patrolLoop);
             }
         }
+        
+        enemy._animatorManager.isPatrolling = false;
     }
 
     private IEnumerator PatrolLoop(Enemy enemy)
