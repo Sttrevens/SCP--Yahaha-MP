@@ -129,11 +129,12 @@ namespace LPSurvivalEngine
             }
         }
 
-        public override void Render()
+        /*public override void Render()
         {
             postProcessing.enableMoHuPostProcessing = isTired;
             postProcessing.enableInvertColor = isScared;
-        }
+        }*/
+        
         private T FindChildRecursive<T>(Transform parent, string name) where T : Component
         {
             foreach (Transform child in parent)
@@ -236,19 +237,23 @@ namespace LPSurvivalEngine
             {
                 isScared = true;
                 Inventory.instance.DropItem();
+                postProcessing.enableInvertColor = true;
             }
             else
             {
                 isScared = false;
+                postProcessing.enableInvertColor = false;
             }
             
             if (playerStamina <= 10)
             {
                 isTired = true;
+                postProcessing.enableInvertColor = true;
             }
             else
             {
                 isTired = false;
+                postProcessing.enableInvertColor = false;
             }
         }
 
