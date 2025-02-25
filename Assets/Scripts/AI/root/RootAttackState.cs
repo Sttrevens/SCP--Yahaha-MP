@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class RootAttackState : RootBaseState
+public class RootAttackState : EnemyBaseState
 {
     private float throwCooldown;
 
-    public override void EnterState(Root enemy)
+    public override void EnterState(Enemy enemy)
     {
+        base.EnterState(enemy);
+        
         throwCooldown = 0f;
 
         // Start the shaking effect 
@@ -16,9 +18,9 @@ public class RootAttackState : RootBaseState
         }
     }
 
-    public override void UpdateState(Root enemy)
+    public override void UpdateState(Enemy enemy)
     {
-        if (!enemy.PlayerInSight())
+        /*if (!enemy.PlayerInSight())
         {
             enemy.SwitchState(new RootIdleState());
             return;
@@ -29,12 +31,12 @@ public class RootAttackState : RootBaseState
         {
             ThrowProjectile(enemy);
             throwCooldown = 1f; // Cooldown between throws
-        }
+        }*/
     }
 
-    private void ThrowProjectile(Root enemy)
+    private void ThrowProjectile(Enemy enemy)
     {
-        GameObject projectile = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        /*GameObject projectile = GameObject.CreatePrimitive(PrimitiveType.Cube);
         projectile.transform.position = enemy.projectileSpawnPoint.position;
         projectile.transform.localScale = Vector3.one * 0.2f;
 
@@ -45,10 +47,10 @@ public class RootAttackState : RootBaseState
             rb.velocity = direction * enemy.projectileSpeed;
         }
 
-        Object.Destroy(projectile, 5f);
+        Object.Destroy(projectile, 5f);*/
     }
 
-    public override void ExitState(Root enemy)
+    public override void ExitState(Enemy enemy)
     {
         // Stop the shaking effect
         EnemyShake shakeComponent = enemy.GetComponent<EnemyShake>();

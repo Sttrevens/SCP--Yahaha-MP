@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8258275638143978875}
   - component: {fileID: 3715326496604526081}
   - component: {fileID: 2830599734665176335}
+  - component: {fileID: 8805544104565812363}
+  - component: {fileID: 8696297152838245749}
   m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
@@ -42,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7609875558787853486}
-  m_Mesh: {fileID: 1097069380279004488, guid: 2221d0a7886587443ab0975dee850df6, type: 3}
+  m_Mesh: {fileID: 1097069380279004488, guid: 757f91ba7a314664c89c3ef380ff7bbb, type: 3}
 --- !u!23 &8258275638143978875
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 354921626cd50364499a215efb26e194, type: 2}
+  - {fileID: 2100000, guid: 4178e4ce1efaa854bb83fc7e1f122f88, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -124,3 +126,39 @@ MonoBehaviour:
   shakeIncreaseRate: 0.01
   maxShakeMagnitude: 0.1
   shakeDuration: 5
+--- !u!114 &8805544104565812363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609875558787853486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d32f3b790db32347910275acadeafff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  _currentHealth: 100
+  isFlyingEnemy: 0
+  animator: {fileID: 0}
+  _animatorManager: {fileID: 0}
+  sfxClips: []
+--- !u!114 &8696297152838245749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609875558787853486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2183463492
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 8805544104565812363}

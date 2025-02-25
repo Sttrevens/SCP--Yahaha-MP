@@ -14,6 +14,8 @@ public class SpotlightChasePlayerState : EnemyBaseState
         // 进入玩家跟踪状态时的初始化逻辑
         Debug.Log("进入玩家跟随模式");
         stateEnterTime = Time.timeSinceLevelLoad; // 记录状态进入时间
+        
+        AudioManager.instance.PlaySFX(spotlight.spotlightColliderObject, spotlight.spotlightSound);
     }
 
     public override void UpdateState(Enemy enemy)
@@ -47,8 +49,7 @@ spotlight.spotlightObject.rotation = Quaternion.Slerp(spotlight.spotlightObject.
     protected virtual void OnPlayerDetected(Vector3 playerPosition)
     {
         playerObject = spotlight.spotlightColliderObject.GetComponent<DetectPlayer>().player.gameObject;
-        AudioManager.instance.PlaySFX(spotlight.spotlightColliderObject, spotlight.spotlightSound);
-        
+  
         float elapsedTime = Time.timeSinceLevelLoad - stateEnterTime; // 从状态进入时间计算经过的时间
         playerObject.GetComponent<HealthSystem>().Rpc_Scared(Mathf.Exp(elapsedTime) * 0.1f * Time.fixedDeltaTime);
         // 玩家被照到时的自定义逻辑

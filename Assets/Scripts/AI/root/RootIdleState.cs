@@ -2,24 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RootIdleState : RootBaseState
+public class RootIdleState : EnemyBaseState
 {
-    public override void EnterState(Root enemy)
+    public override void EnterState(Enemy enemy)
     {
-        //anim
+        base.EnterState(enemy);
     }
 
-    public override void UpdateState(Root enemy)
+    public override void UpdateState(Enemy enemy)
     {
-
-        if (enemy.PlayerInSight())
-        {
-            enemy.SwitchState(new RootAttackState());
-        }
-
+        
     }
 
-    public override void ExitState(Root enemy)
+    public override void ExitState(Enemy enemy)
     {
        //anim
     }
