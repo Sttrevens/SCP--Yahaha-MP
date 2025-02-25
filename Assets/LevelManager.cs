@@ -88,8 +88,14 @@ public class LevelManager : NetworkBehaviour, IInteractable
 
     public void LoadLevel()
     {
-        directionalLight.intensity = 1;
+        Rpc_UpdateDirectionalLight(1f);
         RPC_LoadLevel();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void Rpc_UpdateDirectionalLight(float intensity)
+    {
+        directionalLight.intensity = intensity;
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -110,7 +116,7 @@ public class LevelManager : NetworkBehaviour, IInteractable
 
     public void DestroyLevel()
     {
-        directionalLight.intensity = 1.5f;
+        Rpc_UpdateDirectionalLight(1.5f);
         RPC_DestroyLevel();
     }
     
