@@ -7,14 +7,12 @@ public class AttackEffect : MonoBehaviour
 {
     public Enemy enemy;
     
-    private EnemyMovement _enemyMovement;
     private ChasingEnemy _chasingEnemy;
     private EnemyAttack _enemyAttack;
     
     // Start is called before the first frame update
     void Start()
     {
-        _enemyMovement = enemy.GetComponent<EnemyMovement>();
         _chasingEnemy = enemy.GetComponent<ChasingEnemy>();
         _enemyAttack = enemy.GetComponent<EnemyAttack>();
     }
@@ -27,8 +25,6 @@ public class AttackEffect : MonoBehaviour
         {
             ReducePlayerHealth();
         }
-        
-        enemy.SwitchState(new WaitingforNextAttackState());
     }
     
     void ReducePlayerHealth()
