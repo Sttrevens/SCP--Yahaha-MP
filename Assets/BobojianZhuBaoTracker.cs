@@ -62,7 +62,7 @@ public class BobojianZhuBaoTracker : MonoBehaviour
             
             if (cam.targetTexture != myRenderTexture)
             {
-                if (noSignalText != null) noSignalText.gameObject.SetActive(true);
+                //if (noSignalText != null) noSignalText.gameObject.SetActive(true);
                 Debug.Log("Camera on " + liveCamObj.name + " does not use the expected RenderTexture.");
                 continue;
             }
