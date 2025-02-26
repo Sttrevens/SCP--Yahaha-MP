@@ -34,7 +34,6 @@ public class CastingSpellState : EnemyBaseState
         }
     }
     
-
     public override void ExitState(Enemy enemy)
     {
         

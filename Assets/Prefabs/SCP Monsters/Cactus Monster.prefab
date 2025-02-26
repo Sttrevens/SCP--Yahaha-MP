@@ -10101,7 +10101,6 @@ GameObject:
   - component: {fileID: 4601361862180693216}
   - component: {fileID: 405350704607775416}
   - component: {fileID: 1168187699122348551}
-  - component: {fileID: 6939145852975519448}
   - component: {fileID: 8847562461911446890}
   - component: {fileID: 4676449541512774918}
   - component: {fileID: 9207020092520970697}
@@ -10204,7 +10203,6 @@ MonoBehaviour:
   - {fileID: 251276048767268380}
   - {fileID: 405350704607775416}
   - {fileID: 1168187699122348551}
-  - {fileID: 6939145852975519448}
   - {fileID: 8847562461911446890}
   - {fileID: 4676449541512774918}
 --- !u!136 &6299288902802320326
@@ -10277,33 +10275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a9979b380b04249b43dfcdb7d074d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AttackCount: 0
---- !u!114 &6939145852975519448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4268554706764865200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 265e4e1dcb952d14e873ab3cc8d93dc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  detectionRange: 10
-  patrollingSpeed: 1.5
-  fieldOfViewAngleHorizontal: 180
-  fieldOfViewAngleVertical: 90
-  sensingRadius: 3
-  currentPatrolIndex: 0
-  enemy: {fileID: 0}
-  patrolMode: 1
-  patrolPoints: []
-  patrolRange: 10
-  patrolWidth: 10
-  patrolHeight: 10
-  waitTimeAtPatrolPoint: 2
+  _CastSpellCount: 0
 --- !u!114 &8847562461911446890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10317,14 +10289,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  enemy: {fileID: 0}
   detectionRange: 10
-  patrollingSpeed: 3
+  patrollingSpeed: 1.5
   fieldOfViewAngleHorizontal: 180
   fieldOfViewAngleVertical: 90
   sensingRadius: 3
   currentPatrolIndex: 0
-  enemy: {fileID: 0}
-  patrolMode: 0
+  patrolMode: 1
   patrolPoints: []
   patrolRange: 10
   patrolWidth: 10
@@ -10332,7 +10304,7 @@ MonoBehaviour:
   waitTimeAtPatrolPoint: 2
   targetPlayer: {fileID: 0}
   soundTargetPosition: {x: 0, y: 0, z: 0}
-  chasingSpeed: 8
+  chasingSpeed: 7.5
   hearingRadius: 10
 --- !u!114 &4676449541512774918
 MonoBehaviour:
@@ -10346,8 +10318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af32d9366f49b7e4fad79aa5d8a475f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 40
-  attackRange: 2
+  attackDamage: 20
+  attackRange: 2.5
   lastAttackTime: 0
   lastAttackPreDelayTime: 0
   attackPreDelay: 0.5
@@ -10382,6 +10354,7 @@ MonoBehaviour:
   - {fileID: 1610449254618151703}
   - {fileID: 1986071774000716076}
   spell: {fileID: 1654418733993109780}
+  _enemyAttack: {fileID: 4676449541512774918}
 --- !u!114 &1654418733993109780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10394,8 +10367,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9350f09aadad74c907b065eeb90152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSpellActive: 0
   magicPoints: 100
-  interval: 18
+  spellInterval: 4
   spellCost: 80
   spellDuration: 10
   magicRegenRate: 10
