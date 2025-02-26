@@ -17,25 +17,23 @@ public class AttackEffect : MonoBehaviour
         _enemyAttack = enemy.GetComponent<EnemyAttack>();
     }
 
-    private void Attack()
+    private void Attack(int attackDamage)
     {
         PlayAttackSFX(enemy);
 
         if (_chasingEnemy.targetPlayer != null && _enemyAttack.ShouldAttackBasedOnChasingEnemy(_chasingEnemy))
         {
-            ReducePlayerHealth();
+            ReducePlayerHealth(attackDamage);
         }
-        
-        enemy.SwitchState(new WaitingforNextAttackState());
     }
     
-    void ReducePlayerHealth()
+    void ReducePlayerHealth(int attackDamage)
     {
         // Reduce player health
         HealthSystem playerHealth = _chasingEnemy.targetPlayer.GetComponent<HealthSystem>();
         if (playerHealth != null)
         {
-            playerHealth.Rpc_TakePhysicDamage(_enemyAttack.attackDamage);
+            playerHealth.Rpc_TakePhysicDamage(_enemyAttack.attackDamage + attackDamage);
             Debug.Log("Current Player health: " + playerHealth.health.currentValue + "/" +
                       playerHealth.health.maxValue);
         }
@@ -58,5 +56,10 @@ public class AttackEffect : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void EnterCD()
+    {
+        enemy.SwitchState(new WaitingforNextAttackState());
     }
 }

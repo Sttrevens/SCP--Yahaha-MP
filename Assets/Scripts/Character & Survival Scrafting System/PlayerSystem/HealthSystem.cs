@@ -32,7 +32,7 @@ namespace LPSurvivalEngine
 
         [Header("Vitals Settings")]
     
-        public float staminaHealthdecay;
+        public float sanityHealthdecay;
         //氧气空的时候生命值下降的速度
         public float oxygenHealthdecay;
 
@@ -203,9 +203,14 @@ namespace LPSurvivalEngine
             // if ((stamina.currentValue >= stamina.maxValue * 0.8f) && (oxygen.currentValue >= oxygen.maxValue * 0.8f) && (sanity.currentValue >= sanity.maxValue * 0.5f))
             //     health.Add(health.regenrate * Time.fixedDeltaTime);
 
-            if (oxygen.currentValue == 0.0f)
+            if (oxygen.currentValue <= 0.0f)
             {
                 health.Subtract(oxygenHealthdecay * Time.fixedDeltaTime);
+            }
+
+            if (sanity.currentValue <= 0.0f)
+            {
+                health.Subtract(sanityHealthdecay * Time.fixedDeltaTime);
             }
         
             if (health.currentValue == 0.0f && gameObject.CompareTag("Player"))

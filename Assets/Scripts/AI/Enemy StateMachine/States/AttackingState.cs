@@ -26,7 +26,13 @@ public class AttackingState : EnemyBaseState
 
     public override void UpdateState(Enemy enemy)
     {
-        
+        if (enemy.HasStateAuthority)
+        {
+                if (!EnemyAttack.ShouldAttackBasedOnChasingEnemy(ChasingEnemy))
+                {
+                    enemy.SwitchState(new ChasingState());
+                }
+        }
     }
     
 
