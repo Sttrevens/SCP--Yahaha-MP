@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class EnemyMovement : NetworkBehaviour
 {   
     //寻路网格
-    [Header("如果没有挂")]
+    [Header("如果没有挂会自动寻找")]
     public NavMeshAgent agent;
     [HideInInspector] public Enemy enemy;
     //检测半径
@@ -36,6 +36,7 @@ public class EnemyMovement : NetworkBehaviour
     public float patrolRange = 10f;
     public float patrolWidth = 10f;
     public float patrolHeight = 10f;
+    //在巡航点等待的时间
     public float waitTimeAtPatrolPoint = 2f;
 
     private void Awake()
@@ -61,7 +62,9 @@ public class EnemyMovement : NetworkBehaviour
     {
         RotateTowardsMovementDirection();
     }
-
+    /// <summary>
+    /// 转向逻辑
+    /// </summary>
     public void RotateTowardsMovementDirection()
     {
         // 若当前有移动速度
@@ -80,17 +83,23 @@ public class EnemyMovement : NetworkBehaviour
         
         Debug.Log("Velocity: " + agent.velocity);
     }
-    
+    /// <summary>
+    /// 巡逻的协程
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator Patrol()
     {
+        //如果听到了玩家发出的声音直接把玩家发出声音的位子加入到agent的巡航中去
         if (GetComponent<ChasingEnemy>().PlayerHeard())
         {
             agent.SetDestination(GetComponent<ChasingEnemy>().soundTargetPosition);
         }
         else
         {
+            //如果是按点巡航
             if (patrolMode == PatrolMode.FixedPoints)
             {
+                // 如果目标点与目前位置的距离没有达到阈值就继续往这个目标巡航 如果距离足够近（进入到半径范围），就更新下一个巡航点
                 if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) <
                     agent.stoppingDistance + 1f)
                 {
@@ -105,6 +114,7 @@ public class EnemyMovement : NetworkBehaviour
 
                 agent.SetDestination(patrolPoints[currentPatrolIndex].position);
             }
+            //如果是随机巡航
             else if (patrolMode == PatrolMode.RandomCircle || patrolMode == PatrolMode.RandomRectangle)
             {
                 if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance + 1f)
@@ -122,7 +132,10 @@ public class EnemyMovement : NetworkBehaviour
 
         yield return null;
     }
-    
+    /// <summary>
+    /// 两种情况下随机点的生成逻辑
+    /// </summary>
+    /// <returns></returns>
     private Vector3 GetRandomPatrolPoint()
     {
         if (patrolMode == PatrolMode.RandomCircle)
@@ -142,7 +155,9 @@ public class EnemyMovement : NetworkBehaviour
 
         return transform.position;
     }
-
+    /// <summary>
+    /// Editor里面生成gizmo线
+    /// </summary>
     private void OnDrawGizmosSelected()
     {
         int numSegments = 20;
