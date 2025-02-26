@@ -12,6 +12,7 @@ public class EnemyAnimator : NetworkBehaviour
     private int _lastVisibleAttack;
     private bool _lastVisibleChasing;
     private bool _lastVisiblePatrolling;
+    private int _lastVisibleCastSpell;
 
     // NetworkBehaviour INTERFACE
     public override void Spawned()
@@ -19,6 +20,7 @@ public class EnemyAnimator : NetworkBehaviour
         _lastVisibleAttack = _animatorManager.AttackCount;
         _lastVisibleChasing = _animatorManager.isChasing;
         _lastVisiblePatrolling = _animatorManager.isPatrolling;
+        _lastVisibleCastSpell = _animatorManager.CastSpellCount;
     }
 
     public override void Render()
@@ -50,9 +52,15 @@ public class EnemyAnimator : NetworkBehaviour
             _animator.SetBool("IsPatrolling", _animatorManager.isPatrolling);
         }
 
+        if (_lastVisibleCastSpell < _animatorManager.CastSpellCount)
+        {
+            _animator.SetTrigger("Cast Spell");
+        }
+
 
         _lastVisibleAttack = _animatorManager.AttackCount;
         _lastVisibleChasing = _animatorManager.isChasing;
         _lastVisiblePatrolling = _animatorManager.isPatrolling;
+        _lastVisibleCastSpell = _animatorManager.CastSpellCount;
     }
 }

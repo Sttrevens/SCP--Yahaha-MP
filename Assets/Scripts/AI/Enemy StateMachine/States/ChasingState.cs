@@ -48,12 +48,6 @@ public class ChasingState : EnemyBaseState
             enemy.SwitchState(new PatrollingState());
         }
 
-        if (enemy._animatorManager != null)
-        {
-            enemy._animatorManager.isChasing = true;
-            enemy._animatorManager.isPatrolling = false;
-        }
-
         // Smoothly rotate enemy to face the target player if one exists
         if (ChasingEnemy.targetPlayer != null)
         {
@@ -70,6 +64,7 @@ public class ChasingState : EnemyBaseState
 
     public override void ExitState(Enemy enemy)
     {
+        Debug.Log("Exiting Chasing State");
         enemy._animatorManager.isChasing = false;
     }
 }

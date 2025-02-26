@@ -12,6 +12,7 @@ public class EnemyAnimatorManager : NetworkBehaviour
         if (HasStateAuthority)
         {
             AttackCount = 0;
+            CastSpellCount = 0;
             isChasing = false;
             isPatrolling = false;
         }

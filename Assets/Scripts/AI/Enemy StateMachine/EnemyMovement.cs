@@ -101,7 +101,7 @@ public class EnemyMovement : NetworkBehaviour
             {
                 // 如果目标点与目前位置的距离没有达到阈值就继续往这个目标巡航 如果距离足够近（进入到半径范围），就更新下一个巡航点
                 if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) <
-                    agent.stoppingDistance + 1f)
+                    agent.stoppingDistance)
                 {
                     Debug.Log(
                         $"[EnemyAI] Reached patrol point {currentPatrolIndex}, waiting {waitTimeAtPatrolPoint} seconds");
@@ -117,7 +117,7 @@ public class EnemyMovement : NetworkBehaviour
             //如果是随机巡航
             else if (patrolMode == PatrolMode.RandomCircle || patrolMode == PatrolMode.RandomRectangle)
             {
-                if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance + 1f)
+                if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance)
                 {
                     Debug.Log("[EnemyAI] Reached random patrol point, waiting before next point");
                     enemy._animatorManager.isPatrolling = false;
