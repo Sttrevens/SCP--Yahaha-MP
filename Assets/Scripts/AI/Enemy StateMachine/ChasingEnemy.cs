@@ -26,67 +26,87 @@ public class ChasingEnemy : EnemyMovement
             agent.speed = chasingSpeed;
         }
     }
+    
+    public float stepAngle = 5f; // 多射线之间的步进角度
 
-    public bool PlayerInSight()
+    private void OnDrawGizmosSelected()
+{
+    Vector3 rayStartPosition = transform.position + Vector3.up * 1f; // Raise the origin point by 1 unit
+
+    if (targetPlayer != null)
     {
-        if (targetPlayer != null)
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(rayStartPosition, targetPlayer.transform.position);
+    }
+
+    Gizmos.color = Color.yellow;
+
+    // Full cone rays (both horizontal and vertical angles)
+    for (float horizontal = -fieldOfViewAngleHorizontal / 2; horizontal <= fieldOfViewAngleHorizontal / 2; horizontal += stepAngle)
+    {
+        for (float vertical = -fieldOfViewAngleVertical / 2; vertical <= fieldOfViewAngleVertical / 2; vertical += stepAngle)
         {
-            if (targetPlayer.tag != "Player")
-            {
-                targetPlayer = null;
-                return false;
-            }
-            else
-                return true;
+            Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * transform.forward;
+            Gizmos.DrawRay(rayStartPosition, rayDirection * detectionRange);
         }
+    }
+}
 
-        Debug.Log("[EnemyAI] Checking for players in sight...");
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+public bool PlayerInSight()
+{
+    if (targetPlayer != null)
+    {
+        if (targetPlayer.tag != "Player")
         {
-            Vector3 toPlayer = player.transform.position - transform.position;
-            Vector3 horizontalToPlayer = Vector3.ProjectOnPlane(toPlayer, Vector3.up);
+            targetPlayer = null;
+            return false;
+        }
+    }
 
-            float horizontalAngle = Vector3.Angle(transform.forward, horizontalToPlayer);
-            float verticalAngle = Vector3.Angle(toPlayer, horizontalToPlayer);
+    Debug.Log("[EnemyAI] Checking for players in sight...");
 
-            Debug.Log($"[EnemyAI] Checking angles - Horizontal: {horizontalAngle}, Vertical: {verticalAngle}");
+    foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+    {
+        Vector3 toPlayer = player.transform.position - transform.position;
+        float distanceToPlayer = toPlayer.magnitude;
 
-            if (horizontalAngle < fieldOfViewAngleHorizontal / 2 && verticalAngle < fieldOfViewAngleVertical / 2)
+        if (distanceToPlayer > detectionRange)
+            continue;
+
+        float horizontalAngle = Vector3.Angle(transform.forward, toPlayer);
+        if (horizontalAngle > fieldOfViewAngleHorizontal / 2f)
+            continue;
+
+        float verticalAngle = Vector3.Angle(transform.forward, toPlayer);
+        if (verticalAngle > fieldOfViewAngleVertical / 2f)
+            continue;
+
+        // Full cone check (combining horizontal and vertical angles)
+        for (float horizontal = -fieldOfViewAngleHorizontal / 2; horizontal <= fieldOfViewAngleHorizontal / 2; horizontal += stepAngle)
+        {
+            for (float vertical = -fieldOfViewAngleVertical / 2; vertical <= fieldOfViewAngleVertical / 2; vertical += stepAngle)
             {
-                Debug.Log("[EnemyAI] Player within FOV angles");
+                Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * transform.forward;
+
                 RaycastHit hit;
-                if (Physics.SphereCast(transform.position, sensingRadius, toPlayer.normalized, out hit, detectionRange))
+                if (Physics.Raycast(transform.position + Vector3.up * 1f, rayDirection, out hit, detectionRange))
                 {
+                    Debug.DrawLine(transform.position + Vector3.up * 1f, hit.point, Color.red, 0.1f);
+
                     if (hit.collider.gameObject == player)
                     {
-                        Debug.Log("[EnemyAI] Player detected via SphereCast");
+                        Debug.Log("[EnemyAI] Player detected via multiple rays!");
                         targetPlayer = player;
                         return true;
                     }
                 }
-
-                float distanceToPlayer = toPlayer.magnitude;
-                Debug.Log($"[EnemyAI] Distance to player: {distanceToPlayer}");
-                
-                if (Vector3.Angle(transform.forward, horizontalToPlayer) <= fieldOfViewAngleHorizontal / 2)
-                {
-                    Debug.Log("[EnemyAI] Player within horizontal FOV");
-                    if (distanceToPlayer <= detectionRange)
-                    {
-                        Debug.Log("[EnemyAI] Player within detection range");
-                        if (Physics.CheckSphere(player.transform.position, sensingRadius))
-                        {
-                            Debug.Log("[EnemyAI] Player detected via CheckSphere");
-                            targetPlayer = player;
-                            return true;
-                        }
-                    }
-                }
             }
         }
-        Debug.Log("[EnemyAI] No players detected in sight");
-        return false;
     }
+
+    Debug.Log("[EnemyAI] No players detected in sight");
+    return false;
+}
 
     public bool PlayerHeard()
     {

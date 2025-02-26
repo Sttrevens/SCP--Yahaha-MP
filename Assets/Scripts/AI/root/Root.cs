@@ -1,83 +1,113 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
-public class Root : MonoBehaviour
+public class Root : NetworkBehaviour
 {
-    public enum EnemyState { Idle, Attack }
-    [SerializeField]
-    private GameObject[] players;
-
-    public EnemyState currentState;
-    public Transform target;
-    public Transform projectileSpawnPoint;
-    public float projectileSpeed = 10f;
     public float detectionRange = 10f;
-
     private EnemyBaseState currentStateBehavior;
     private Enemy enemy;
 
-    [Header("Patrol")]
-    public float fieldOfViewAngleHorizontal = 90f;
-    public float fieldOfViewAngleVertical = 60f;
-    public float sensingRadius = 0.1f;
+    public float fieldOfViewAngleHorizontal = 120f;
+    public float fieldOfViewAngleVertical = 90f;
 
     [HideInInspector] public GameObject targetPlayer;
+    public float stepAngle = 5f; // 多射线之间的步进角度
+
+    public float pullRadius = 5f;       // 牵制范围：腐根为中心半径
+    public float breakFreeThreshold = 2f; // 挣脱角速度的累计阈值
+    public float escapeCooldown = 5f;  // 逃脱后的冷却时间
+    private bool isRestraining = false; // 是否正在牵制
+    private bool isCooldown = false;   // 是否处于冷却中
+
+    private Coroutine restrainCoroutine;
 
     private void Start()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
-        if (players.Length > 0)
-        {
-            target = players[0].transform;
-        }
-
         enemy = GetComponent<Enemy>();
-
-        enemy.SwitchState(new RootIdleState());
     }
 
-    private void Update()
+    private void OnDrawGizmosSelected()
     {
-        if (currentState != null)
+        Vector3 rayStartPosition = transform.position + Vector3.up * 1f;
+
+        if (targetPlayer != null)
         {
-            currentStateBehavior?.UpdateState(enemy);
-            players = GameObject.FindGameObjectsWithTag("Player");
-            if (players.Length > 0)
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(rayStartPosition, targetPlayer.transform.position);
+        }
+
+        Gizmos.color = Color.yellow;
+
+        // Full cone rays (模拟视野检测)
+        for (float horizontal = -fieldOfViewAngleHorizontal / 2; horizontal <= fieldOfViewAngleHorizontal / 2; horizontal += stepAngle)
+        {
+            for (float vertical = -fieldOfViewAngleVertical / 2; vertical <= fieldOfViewAngleVertical / 2; vertical += stepAngle)
             {
-                target = players[0].transform;
+                Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * transform.forward;
+                Gizmos.DrawRay(rayStartPosition, rayDirection * detectionRange);
             }
+        }
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (isCooldown || isRestraining)
+        {
+            // 冷却或正在牵制状态下，无其他行为
+            return;
+        }
+
+        if (PlayerInSight())
+        {
+            // 检测到玩家，开始牵制
+            if (restrainCoroutine == null)
+            {
+                restrainCoroutine = StartCoroutine(RestrainPlayer());
+            }
+        }
+        else
+        {
+            // 状态重置
+            enemy._animatorManager.isChasing = false;
         }
     }
 
     public bool PlayerInSight()
     {
-        foreach (GameObject player in players)
+        if (targetPlayer != null && targetPlayer.tag != "Player")
+        {
+            targetPlayer = null;
+            return false;
+        }
+
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
             Vector3 toPlayer = player.transform.position - transform.position;
-            Vector3 horizontalToPlayer = Vector3.ProjectOnPlane(toPlayer, Vector3.up);
+            float distanceToPlayer = toPlayer.magnitude;
 
-            float horizontalAngle = Vector3.Angle(transform.forward, horizontalToPlayer);
-            float verticalAngle = Vector3.Angle(toPlayer, horizontalToPlayer);
+            if (distanceToPlayer > detectionRange)
+                continue;
 
-            if (horizontalAngle < fieldOfViewAngleHorizontal / 2 && verticalAngle < fieldOfViewAngleVertical / 2)
+            float horizontalAngle = Vector3.Angle(transform.forward, toPlayer);
+            if (horizontalAngle > fieldOfViewAngleHorizontal / 2f)
+                continue;
+
+            float verticalAngle = Vector3.Angle(transform.forward, toPlayer);
+            if (verticalAngle > fieldOfViewAngleVertical / 2f)
+                continue;
+
+            // 使用视锥判断玩家是否在视野范围内
+            for (float horizontal = -fieldOfViewAngleHorizontal / 2; horizontal <= fieldOfViewAngleHorizontal / 2; horizontal += stepAngle)
             {
-                RaycastHit hit;
-                if (Physics.SphereCast(transform.position, sensingRadius, toPlayer.normalized, out hit, detectionRange))
+                for (float vertical = -fieldOfViewAngleVertical / 2; vertical <= fieldOfViewAngleVertical / 2; vertical += stepAngle)
                 {
-                    if (hit.collider.gameObject == player)
-                    {
-                        targetPlayer = player;
-                        return true;
-                    }
-                }
+                    Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * transform.forward;
 
-                float distanceToPlayer = toPlayer.magnitude;
-                if (Vector3.Angle(transform.forward, horizontalToPlayer) <= fieldOfViewAngleHorizontal / 2)
-                {
-                    if (distanceToPlayer <= detectionRange)
+                    if (Physics.Raycast(transform.position + Vector3.up * 1f, rayDirection, out RaycastHit hit, detectionRange))
                     {
-                        if (Physics.CheckSphere(player.transform.position, sensingRadius))
+                        if (hit.collider.gameObject == player)
                         {
                             targetPlayer = player;
                             return true;
@@ -89,22 +119,66 @@ public class Root : MonoBehaviour
         return false;
     }
 
-    private void OnDrawGizmos()
+    private IEnumerator RestrainPlayer()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        if (targetPlayer == null)
+            yield break;
 
-        Vector3 forward = transform.forward;
-        Vector3 right = Quaternion.Euler(0, fieldOfViewAngleHorizontal / 2, 0) * forward;
-        Vector3 left = Quaternion.Euler(0, -fieldOfViewAngleHorizontal / 2, 0) * forward;
+        isRestraining = true;
+        enemy._animatorManager.isChasing = true;
 
-        Gizmos.DrawLine(transform.position, transform.position + right * detectionRange);
-        Gizmos.DrawLine(transform.position, transform.position + left * detectionRange);
+        Debug.Log("开始牵制玩家：" + targetPlayer.name);
 
-        Vector3 up = Quaternion.Euler(-fieldOfViewAngleVertical / 2, 0, 0) * forward;
-        Vector3 down = Quaternion.Euler(fieldOfViewAngleVertical / 2, 0, 0) * forward;
+        float accumulatedAngle = 0f;
+        Vector3 centerPosition = transform.position;
 
-        Gizmos.DrawLine(transform.position, transform.position + up * detectionRange);
-        Gizmos.DrawLine(transform.position, transform.position + down * detectionRange);
+        while (isRestraining && targetPlayer != null)
+        {
+            // 计算玩家距离和角速度
+            Vector3 toPlayer = targetPlayer.transform.position - centerPosition;
+            float distanceToPlayer = toPlayer.magnitude;
+
+            if (distanceToPlayer > pullRadius)
+            {
+                Debug.Log("玩家离开牵制范围，牵制结束。");
+                break; // 玩家超出牵制范围
+            }
+
+            // 玩家挣脱逻辑
+            float angleDelta = Vector3.SignedAngle(toPlayer.normalized, -transform.forward.normalized, Vector3.up);
+            accumulatedAngle += Mathf.Abs(angleDelta * Time.deltaTime);
+
+            // 玩家挣脱成功
+            if (accumulatedAngle >= breakFreeThreshold)
+            {
+                Debug.Log("玩家挣脱成功！");
+                break;
+            }
+
+            // 持续牵制效果（玩家掉san等逻辑留空）
+            // TODO: 玩家持续掉SAN逻辑由玩家写入
+
+            yield return null;
+        }
+
+        StartCoroutine(EnterCooldown());
+    }
+
+    private IEnumerator EnterCooldown()
+    {
+        isRestraining = false;
+
+        if (targetPlayer != null)
+        {
+            targetPlayer = null; // 清除当前目标
+        }
+
+        Debug.Log("进入冷却状态...");
+        isCooldown = true;
+
+        yield return new WaitForSeconds(escapeCooldown);
+
+        Debug.Log("冷却结束，可以重新牵制玩家。");
+        isCooldown = false;
     }
 }

@@ -19,7 +19,6 @@ public class EnemyMovement : NetworkBehaviour
     public float patrollingSpeed = 2f;
     public float fieldOfViewAngleHorizontal = 180f;
     public float fieldOfViewAngleVertical = 90f;
-    public float sensingRadius = 3f;
     //处理巡航过程中的巡航点的索引
     [HideInInspector] public int currentPatrolIndex = 0;
 
@@ -145,33 +144,6 @@ public class EnemyMovement : NetworkBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        int numSegments = 20;
-        float angleStep = 2 * Mathf.PI / numSegments;
-        for (int i = 0; i < numSegments; i++)
-        {
-            float angle1 = i * angleStep;
-            float angle2 = (i + 1) * angleStep;
-
-            Vector3 point1 = Quaternion.Euler(-fieldOfViewAngleVertical / 2, angle1, 0) * transform.forward *
-                             detectionRange;
-            Vector3 point2 = Quaternion.Euler(-fieldOfViewAngleVertical / 2, angle2, 0) * transform.forward *
-                             detectionRange;
-
-            Vector3 point3 = Quaternion.Euler(fieldOfViewAngleVertical / 2, angle1, 0) * transform.forward *
-                             detectionRange;
-            Vector3 point4 = Quaternion.Euler(fieldOfViewAngleVertical / 2, angle2, 0) * transform.forward *
-                             detectionRange;
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + point1);
-            Gizmos.DrawLine(transform.position, transform.position + point2);
-            Gizmos.DrawLine(transform.position, transform.position + point3);
-            Gizmos.DrawLine(transform.position, transform.position + point4);
-
-            Gizmos.DrawLine(transform.position + point1, transform.position + point3);
-            Gizmos.DrawLine(transform.position + point2, transform.position + point4);
-        }
-
         if (patrolMode == PatrolMode.RandomCircle)
         {
             Gizmos.color = Color.green;

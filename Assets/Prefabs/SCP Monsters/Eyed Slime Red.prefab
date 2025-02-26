@@ -50,7 +50,6 @@ GameObject:
   - component: {fileID: 3331648908752685677}
   - component: {fileID: 3458600354236138481}
   - component: {fileID: 2066680244952505647}
-  - component: {fileID: 8375088018832790685}
   - component: {fileID: 4739397128552776170}
   - component: {fileID: 5890031812073893347}
   m_Layer: 14
@@ -142,7 +141,6 @@ MonoBehaviour:
   - {fileID: 3331648908752685677}
   - {fileID: 3458600354236138481}
   - {fileID: 2066680244952505647}
-  - {fileID: 8375088018832790685}
   - {fileID: 4739397128552776170}
   - {fileID: 5890031812073893347}
 --- !u!114 &3421275814966142917
@@ -186,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a9979b380b04249b43dfcdb7d074d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AttackCount: 0
+  _CastSpellCount: 0
 --- !u!114 &2066680244952505647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,32 +203,6 @@ MonoBehaviour:
   animator: {fileID: 3110002938063485081}
   _animatorManager: {fileID: 3458600354236138481}
   sfxClips: []
---- !u!114 &8375088018832790685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 191068282315392365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 265e4e1dcb952d14e873ab3cc8d93dc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  detectionRange: 10
-  patrollingSpeed: 2
-  fieldOfViewAngleHorizontal: 0
-  fieldOfViewAngleVertical: 0
-  sensingRadius: 3
-  currentPatrolIndex: 0
-  enemy: {fileID: 0}
-  patrolMode: 1
-  patrolPoints: []
-  patrolRange: 10
-  patrolWidth: 10
-  patrolHeight: 10
-  waitTimeAtPatrolPoint: 0
 --- !u!114 &4739397128552776170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,13 +216,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  detectionRange: 20
-  patrollingSpeed: 2
-  fieldOfViewAngleHorizontal: 120
-  fieldOfViewAngleVertical: 90
-  sensingRadius: 3
-  currentPatrolIndex: 0
   enemy: {fileID: 0}
+  detectionRange: 25
+  patrollingSpeed: 2
+  fieldOfViewAngleHorizontal: 90
+  fieldOfViewAngleVertical: 60
+  currentPatrolIndex: 0
   patrolMode: 0
   patrolPoints: []
   patrolRange: 10
@@ -261,6 +232,7 @@ MonoBehaviour:
   soundTargetPosition: {x: 0, y: 0, z: 0}
   chasingSpeed: 5
   hearingRadius: 1
+  stepAngle: 10
 --- !u!114 &5890031812073893347
 MonoBehaviour:
   m_ObjectHideFlags: 0

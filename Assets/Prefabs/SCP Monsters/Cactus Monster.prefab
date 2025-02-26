@@ -10290,11 +10290,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   enemy: {fileID: 0}
-  detectionRange: 10
+  detectionRange: 15
   patrollingSpeed: 1.5
-  fieldOfViewAngleHorizontal: 180
-  fieldOfViewAngleVertical: 90
-  sensingRadius: 3
+  fieldOfViewAngleHorizontal: 90
+  fieldOfViewAngleVertical: 60
   currentPatrolIndex: 0
   patrolMode: 1
   patrolPoints: []
@@ -10306,6 +10305,7 @@ MonoBehaviour:
   soundTargetPosition: {x: 0, y: 0, z: 0}
   chasingSpeed: 7.5
   hearingRadius: 10
+  stepAngle: 10
 --- !u!114 &4676449541512774918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10355,6 +10355,7 @@ MonoBehaviour:
   - {fileID: 1986071774000716076}
   spell: {fileID: 1654418733993109780}
   _enemyAttack: {fileID: 4676449541512774918}
+  cactusSpellClip: {fileID: 0}
 --- !u!114 &1654418733993109780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10372,7 +10373,7 @@ MonoBehaviour:
   spellInterval: 4
   spellCost: 80
   spellDuration: 10
-  magicRegenRate: 10
+  magicRegenRate: 5
 --- !u!1 &4712823961995957407
 GameObject:
   m_ObjectHideFlags: 0

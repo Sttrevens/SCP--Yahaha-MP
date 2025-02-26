@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a9979b380b04249b43dfcdb7d074d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AttackCount: 0
+  _CastSpellCount: 0
 --- !u!114 &4638254101481957626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,13 +284,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  enemy: {fileID: 0}
   detectionRange: 10
   patrollingSpeed: 2
   fieldOfViewAngleHorizontal: 180
   fieldOfViewAngleVertical: 90
-  sensingRadius: 3
   currentPatrolIndex: 0
-  enemy: {fileID: 0}
   patrolMode: 1
   patrolPoints: []
   patrolRange: 10
@@ -310,13 +309,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 8838658910775223982}
-  detectionRange: 10
-  patrollingSpeed: 2
-  fieldOfViewAngleHorizontal: 180
-  fieldOfViewAngleVertical: 90
-  sensingRadius: 3
-  currentPatrolIndex: 0
   enemy: {fileID: 0}
+  detectionRange: 15
+  patrollingSpeed: 2
+  fieldOfViewAngleHorizontal: 90
+  fieldOfViewAngleVertical: 60
+  currentPatrolIndex: 0
   patrolMode: 1
   patrolPoints: []
   patrolRange: 10
@@ -327,6 +325,7 @@ MonoBehaviour:
   soundTargetPosition: {x: 0, y: 0, z: 0}
   chasingSpeed: 6
   hearingRadius: 10
+  stepAngle: 10
 --- !u!114 &1675716322479253717
 MonoBehaviour:
   m_ObjectHideFlags: 0
