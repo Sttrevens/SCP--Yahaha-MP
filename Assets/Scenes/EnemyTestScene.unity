@@ -289,6 +289,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toon Plant Monster-Purple
       objectReference: {fileID: 0}
+    - target: {fileID: 141110, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 414752, guid: 3ac583445766aaf4687b148d7d33ab15, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.91
@@ -3113,6 +3117,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toon Plant Monster-Pink
       objectReference: {fileID: 0}
+    - target: {fileID: 5153400332146600106, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.57
@@ -3158,6 +3166,80 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+--- !u!1001 &3620014951517184423
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 682507801166454523, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: SortKey
+      value: 2514413804
+      objectReference: {fileID: 0}
+    - target: {fileID: 2239356778546999095, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: model
+      value: 
+      objectReference: {fileID: 3620014951517184424}
+    - target: {fileID: 2597420803174544448, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901550995532059235, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_Name
+      value: Toon Ghost-Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.0080006
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.2810082
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -16.91276
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+--- !u!4 &3620014951517184424 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+  m_PrefabInstance: {fileID: 3620014951517184423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3171,3 +3253,4 @@ SceneRoots:
   - {fileID: 857841612}
   - {fileID: 400447602}
   - {fileID: 1959675620}
+  - {fileID: 3620014951517184423}
