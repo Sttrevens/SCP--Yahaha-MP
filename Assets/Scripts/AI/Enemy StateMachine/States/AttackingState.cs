@@ -32,6 +32,10 @@ public class AttackingState : EnemyBaseState
                 {
                     enemy.SwitchState(new ChasingState());
                 }
+                else
+                {
+                    EnemyMovement.agent.speed = 0;
+                }
         }
     }
     

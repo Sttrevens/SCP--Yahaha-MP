@@ -90,7 +90,7 @@ public class EnemyMovement : NetworkBehaviour
             if (patrolMode == PatrolMode.FixedPoints)
             {
                 if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) <
-                    agent.stoppingDistance + 1f)
+                    agent.stoppingDistance)
                 {
                     Debug.Log(
                         $"[EnemyAI] Reached patrol point {currentPatrolIndex}, waiting {waitTimeAtPatrolPoint} seconds");
@@ -105,7 +105,7 @@ public class EnemyMovement : NetworkBehaviour
             }
             else if (patrolMode == PatrolMode.RandomCircle || patrolMode == PatrolMode.RandomRectangle)
             {
-                if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance + 1f)
+                if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance)
                 {
                     Debug.Log("[EnemyAI] Reached random patrol point, waiting before next point");
                     enemy._animatorManager.isPatrolling = false;

@@ -32,7 +32,10 @@ public class ChasingEnemy : EnemyMovement
         if (targetPlayer != null)
         {
             if (targetPlayer.tag != "Player")
+            {
+                targetPlayer = null;
                 return false;
+            }
             else
                 return true;
         }
