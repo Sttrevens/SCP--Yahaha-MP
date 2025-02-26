@@ -6,11 +6,16 @@ using Fusion;
 
 public class EnemyAttack : NetworkBehaviour
 {
+    [Header("攻击相关变量")]
     public int attackDamage = 100;
     public float attackRange = 3f;
+    //CD时间
     [HideInInspector] public float lastAttackTime = 0f;
+    //攻击前摇（已废弃）
     [HideInInspector] public float lastAttackPreDelayTime = 0f;
+    
     public float attackPreDelay = 0.5f;
+    //
     public float attackInterval = 3f;
     
     [HideInInspector] public Enemy enemy;
@@ -23,17 +28,25 @@ public class EnemyAttack : NetworkBehaviour
             enemy = GetComponent<Enemy>();
         }
     }
-
+    
+    /// <summary>
+    /// 检测逻辑实现原理：首先求得眼球处朝向面前的射线，然后偏移4个角度，分别投射射线检测有没有标签是“player”的玩家
+    /// </summary>
+    /// <param name="enemy"></param>
+    /// <returns>是不是有玩家被检测到</returns>
     public bool ShouldAttackBasedOnChasingEnemy(ChasingEnemy enemy)
     {
         // First check if target player exists and is within attack range
         if (enemy.targetPlayer != null)
         {
+            //计算与要攻击的玩家的距离
             float distanceToTarget = Vector3.Distance(enemy.transform.position, enemy.targetPlayer.transform.position);
             if (distanceToTarget <= attackRange)
             {
+                //检测逻辑实现原理：首先求得眼球处朝向面前的射线，然后偏移4个角度，分别投射射线检测有没有标签是“player”的玩家
                 // Check if there are obstacles between enemy and player
                 //Vector3 directionToPlayer = (enemy.targetPlayer.transform.position - enemy.transform.position).normalized;
+                //模拟眼球的位置
                 Vector3 raycastStart = enemy.transform.position + Vector3.up;
                 // Calculate directions for two rays with a 30° spread (15° to the left and 15° to the right)
                 Vector3 leftDirection = Quaternion.Euler(0f, 30f, 0f) * enemy.transform.forward;
@@ -83,7 +96,9 @@ public class EnemyAttack : NetworkBehaviour
 
         return false;
     }
-    
+    /// <summary>
+    /// Scene里面画线，方便可视化
+    /// </summary>
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

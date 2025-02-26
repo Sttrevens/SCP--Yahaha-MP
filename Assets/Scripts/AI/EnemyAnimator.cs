@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAnimator : NetworkBehaviour
 {
-    [Header("Animator")]
+    [Header("要挂动画Animator所在的物体，手动挂")]
     public Transform model;
     // PRIVATE MEMBERS
     private EnemyAnimatorManager _animatorManager;

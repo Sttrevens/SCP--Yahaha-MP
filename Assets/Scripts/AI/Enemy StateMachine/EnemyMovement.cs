@@ -8,19 +8,20 @@ using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class EnemyMovement : NetworkBehaviour
-{
+{   
+    //寻路网格
+    [Header("如果没有挂")]
     public NavMeshAgent agent;
-
+    [HideInInspector] public Enemy enemy;
+    //检测半径
     [Space] [Header("AI Logic")] [Space] public float detectionRange = 10f;
-    
+    [Header("移动相关参数")]
     public float patrollingSpeed = 2f;
-
     public float fieldOfViewAngleHorizontal = 180f;
     public float fieldOfViewAngleVertical = 90f;
     public float sensingRadius = 3f;
+    //处理巡航过程中的巡航点的索引
     [HideInInspector] public int currentPatrolIndex = 0;
-
-    [HideInInspector] [FormerlySerializedAs("_enemy")] public Enemy enemy;
 
     public enum PatrolMode
     {
@@ -29,7 +30,8 @@ public class EnemyMovement : NetworkBehaviour
         RandomRectangle
     }
 
-    public PatrolMode patrolMode = PatrolMode.FixedPoints;
+    public PatrolMode patrolMode = PatrolMode.RandomCircle;
+    [Header("巡航相关参数")]
     public Transform[] patrolPoints;
     public float patrolRange = 10f;
     public float patrolWidth = 10f;
