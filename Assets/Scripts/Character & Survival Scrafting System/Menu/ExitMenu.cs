@@ -43,7 +43,8 @@ public class ExitMenu : MonoBehaviour
     public void ShowExitMenu()
     {
         exitMenuPanel.SetActive(true); 
-        playerController.ToggleCursor(true);
+        if (playerController != null)
+            playerController.ToggleCursor(true);
         //Time.timeScale = 0; 
 
         isPaused = true;
@@ -52,7 +53,8 @@ public class ExitMenu : MonoBehaviour
     // 继续游戏
     public void HideExitMenu()
     {
-        playerController.ToggleCursor(false);
+        if (playerController != null)
+            playerController.ToggleCursor(false);
         exitMenuPanel.SetActive(false);
         
         //Time.timeScale = 1; 

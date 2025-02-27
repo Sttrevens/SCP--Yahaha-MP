@@ -964,7 +964,6 @@ GameObject:
   - component: {fileID: 4490669057826533563}
   - component: {fileID: 1462483342321738520}
   - component: {fileID: 4864704229170713883}
-  - component: {fileID: 1677735324058724657}
   - component: {fileID: 3838954312680101989}
   - component: {fileID: 5170275399185516413}
   - component: {fileID: 1245993213072529724}
@@ -1051,7 +1050,6 @@ MonoBehaviour:
   - {fileID: 3459248144430495394}
   - {fileID: 1462483342321738520}
   - {fileID: 4864704229170713883}
-  - {fileID: 1677735324058724657}
   - {fileID: 3838954312680101989}
   - {fileID: 5170275399185516413}
 --- !u!135 &5250888818628991056
@@ -1123,31 +1121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CastSpellCount: 0
---- !u!114 &1677735324058724657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7847366243756474999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 265e4e1dcb952d14e873ab3cc8d93dc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  enemy: {fileID: 0}
-  detectionRange: 10
-  patrollingSpeed: 1
-  fieldOfViewAngleHorizontal: 180
-  fieldOfViewAngleVertical: 90
-  currentPatrolIndex: 0
-  patrolMode: 1
-  patrolPoints: []
-  patrolRange: 10
-  patrolWidth: 10
-  patrolHeight: 10
-  waitTimeAtPatrolPoint: 2
 --- !u!114 &3838954312680101989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1162,12 +1135,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   enemy: {fileID: 0}
-  detectionRange: 15
+  detectionRange: 5
   patrollingSpeed: 2
-  fieldOfViewAngleHorizontal: 90
-  fieldOfViewAngleVertical: 60
+  fieldOfViewAngleHorizontal: 60
+  fieldOfViewAngleVertical: 30
   currentPatrolIndex: 0
-  patrolMode: 0
+  patrolMode: 1
   patrolPoints: []
   patrolRange: 10
   patrolWidth: 10
@@ -1176,8 +1149,9 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   soundTargetPosition: {x: 0, y: 0, z: 0}
   chasingSpeed: 2
-  hearingRadius: 10
-  stepAngle: 10
+  hearingRadius: 20
+  stepAngle: 20
+  drawGizmos: 0
 --- !u!114 &5170275399185516413
 MonoBehaviour:
   m_ObjectHideFlags: 0

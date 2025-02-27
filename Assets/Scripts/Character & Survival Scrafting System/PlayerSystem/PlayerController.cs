@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace LPSurvivalEngine
 {
@@ -40,6 +41,14 @@ namespace LPSurvivalEngine
             //
             // jumping = Animator.StringToHash("Jump");
             // grounding = Animator.StringToHash("Grounded");
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
         
         public void Spawn(Transform spawnTransform)
