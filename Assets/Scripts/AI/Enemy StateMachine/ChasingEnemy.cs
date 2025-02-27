@@ -5,7 +5,7 @@ using Fusion;
 
 public class ChasingEnemy : EnemyMovement
 {
-    [HideInInspector] public GameObject targetPlayer;
+    public GameObject targetPlayer;
     [HideInInspector] public Vector3 soundTargetPosition;
     public float chasingSpeed = 5f;
     public float hearingRadius = 10f;
@@ -26,6 +26,22 @@ public class ChasingEnemy : EnemyMovement
             agent.speed = chasingSpeed;
         }
     }
+    /// <summary>
+    /// 判断是否有玩家在怪物的视野中
+    /// </summary>
+    /// <returns>玩家是否在视野中</returns>
+    public bool PlayerInSight()
+    {
+        if (targetPlayer != null)
+        {
+            if (targetPlayer.tag != "Player")
+            {
+                targetPlayer = null;
+                return false;
+            }
+            else
+                return true;
+        }
     
     public float stepAngle = 5f; // 多射线之间的步进角度
 

@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
-
+/// <summary>
+/// 作用：利用Monobehavior转换状态
+/// </summary>
 public class EnemySpell : MonoBehaviour
 {
     // Constants for default values

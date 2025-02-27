@@ -4,11 +4,11 @@ using UnityEngine;
 public class EnemyAnimatorManager : NetworkBehaviour
 {
     [Networked, HideInInspector]
-    public int CastSpellCount { get; set; }
     public int AttackCount { get; set; }
     public bool isChasing { get; set; }
     public bool isPatrolling { get; set; }
-
+    public int CastSpellCount { get; set; }
+    public bool spellingBool { get; set; }
     public override void Spawned()
     {
         if (HasStateAuthority)

@@ -1486,6 +1486,7 @@ GameObject:
   - component: {fileID: 2904240422611391486}
   - component: {fileID: 397341189134474547}
   - component: {fileID: 3352045113354941783}
+  - component: {fileID: 8117083900136536344}
   m_Layer: 8
   m_Name: '[Game]A_Real_Character'
   m_TagString: Player
@@ -1795,7 +1796,6 @@ MonoBehaviour:
   Player: {fileID: 0}
   UIPlayer: {fileID: 0}
   sleepScreenAnimation: {fileID: 0}
-  postProcessing: {fileID: -4790220763175020456, guid: c40be3174f62c4acf8c1216858c64956, type: 2}
   isScared: 0
   isDying: 0
   isTired: 0
@@ -2009,6 +2009,34 @@ MonoBehaviour:
   tiredClips:
   - {fileID: 8300000, guid: f5eb79d6b54abef45ba44116b45b1f97, type: 3}
   healthSystem: {fileID: -8306276541168044105}
+--- !u!114 &8117083900136536344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba98d4f347dff44fa15ef1bc17e6d77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetClassName: TargetObject
+  hasTargetInView: 0
+  visibleRatio: 0
+  centerOffsetDistance: 0
+  distanceToCamera: 0
+  centerOffsetWeight: 1
+  distanceToCameraWeight: 1
+  visibleRatioWeight: 0.5
+  cam: {fileID: 0}
+  accumulatedScore: 0
+  realtimeScore: 0
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  requiredVisiblePoints: 2
+  visibilityThreshold: 0.1
 --- !u!1 &5385546817467512204
 GameObject:
   m_ObjectHideFlags: 0
