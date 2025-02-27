@@ -29,8 +29,12 @@ public class ChasingEnemy : EnemyMovement
     
     public float stepAngle = 5f; // 多射线之间的步进角度
 
+    [Header( "Gizmos" )]
+    public bool drawGizmos = false; // Exposed variable to control drawing
+
     private void OnDrawGizmosSelected()
-{
+    {
+        if (!drawGizmos) return;
     Vector3 rayStartPosition = transform.position + Vector3.up * 1f; // Raise the origin point by 1 unit
 
     if (targetPlayer != null)

@@ -28,28 +28,88 @@ public class Root : NetworkBehaviour
         enemy = GetComponent<Enemy>();
     }
 
-    private void OnDrawGizmosSelected()
+    [Header( "Gizmos" )]
+    public bool drawGizmos = false; // Exposed variable to control drawing
+
+private void OnDrawGizmosSelected()
+{
+    if (!drawGizmos) return;
+    Vector3 rayStartPosition = transform.position + Vector3.up * 1f; // Raise the origin point by 1 unit
+
+    if (targetPlayer != null)
     {
-        Vector3 rayStartPosition = transform.position + Vector3.up * 1f;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(rayStartPosition, targetPlayer.transform.position);
+    }
 
-        if (targetPlayer != null)
+    Gizmos.color = Color.yellow;
+
+    // Full cone rays (both horizontal and vertical angles)
+    for (float horizontal = -fieldOfViewAngleHorizontal / 2; horizontal <= fieldOfViewAngleHorizontal / 2; horizontal += stepAngle)
+    {
+        for (float vertical = -fieldOfViewAngleVertical / 2; vertical <= fieldOfViewAngleVertical / 2; vertical += stepAngle)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(rayStartPosition, targetPlayer.transform.position);
+            Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * transform.forward;
+            Gizmos.DrawRay(rayStartPosition, rayDirection * detectionRange);
         }
+    }
+}
 
-        Gizmos.color = Color.yellow;
+public bool PlayerInSight()
+{
+    if (targetPlayer != null)
+    {
+        if (targetPlayer.tag != "Player")
+        {
+            targetPlayer = null;
+            return false;
+        }
+    }
 
-        // Full cone rays (模拟视野检测)
+    Debug.Log("[EnemyAI] Checking for players in sight...");
+
+    foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+    {
+        Vector3 toPlayer = player.transform.position - transform.position;
+        float distanceToPlayer = toPlayer.magnitude;
+
+        if (distanceToPlayer > detectionRange)
+            continue;
+
+        float horizontalAngle = Vector3.Angle(transform.forward, toPlayer);
+        if (horizontalAngle > fieldOfViewAngleHorizontal / 2f)
+            continue;
+
+        float verticalAngle = Vector3.Angle(transform.forward, toPlayer);
+        if (verticalAngle > fieldOfViewAngleVertical / 2f)
+            continue;
+
+        // Full cone check (combining horizontal and vertical angles)
         for (float horizontal = -fieldOfViewAngleHorizontal / 2; horizontal <= fieldOfViewAngleHorizontal / 2; horizontal += stepAngle)
         {
             for (float vertical = -fieldOfViewAngleVertical / 2; vertical <= fieldOfViewAngleVertical / 2; vertical += stepAngle)
             {
                 Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * transform.forward;
-                Gizmos.DrawRay(rayStartPosition, rayDirection * detectionRange);
+
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position + Vector3.up * 1f, rayDirection, out hit, detectionRange))
+                {
+                    Debug.DrawLine(transform.position + Vector3.up * 1f, hit.point, Color.red, 0.1f);
+
+                    if (hit.collider.gameObject == player)
+                    {
+                        Debug.Log("[EnemyAI] Player detected via multiple rays!");
+                        targetPlayer = player;
+                        return true;
+                    }
+                }
             }
         }
     }
+
+    Debug.Log("[EnemyAI] No players detected in sight");
+    return false;
+}
 
     public override void FixedUpdateNetwork()
     {
@@ -74,51 +134,6 @@ public class Root : NetworkBehaviour
         }
     }
 
-    public bool PlayerInSight()
-    {
-        if (targetPlayer != null && targetPlayer.tag != "Player")
-        {
-            targetPlayer = null;
-            return false;
-        }
-
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            Vector3 toPlayer = player.transform.position - transform.position;
-            float distanceToPlayer = toPlayer.magnitude;
-
-            if (distanceToPlayer > detectionRange)
-                continue;
-
-            float horizontalAngle = Vector3.Angle(transform.forward, toPlayer);
-            if (horizontalAngle > fieldOfViewAngleHorizontal / 2f)
-                continue;
-
-            float verticalAngle = Vector3.Angle(transform.forward, toPlayer);
-            if (verticalAngle > fieldOfViewAngleVertical / 2f)
-                continue;
-
-            // 使用视锥判断玩家是否在视野范围内
-            for (float horizontal = -fieldOfViewAngleHorizontal / 2; horizontal <= fieldOfViewAngleHorizontal / 2; horizontal += stepAngle)
-            {
-                for (float vertical = -fieldOfViewAngleVertical / 2; vertical <= fieldOfViewAngleVertical / 2; vertical += stepAngle)
-                {
-                    Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * transform.forward;
-
-                    if (Physics.Raycast(transform.position + Vector3.up * 1f, rayDirection, out RaycastHit hit, detectionRange))
-                    {
-                        if (hit.collider.gameObject == player)
-                        {
-                            targetPlayer = player;
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     private IEnumerator RestrainPlayer()
     {
         if (targetPlayer == null)
@@ -138,29 +153,30 @@ public class Root : NetworkBehaviour
             Vector3 toPlayer = targetPlayer.transform.position - centerPosition;
             float distanceToPlayer = toPlayer.magnitude;
 
+            // 限制玩家移动范围
             if (distanceToPlayer > pullRadius)
             {
-                Debug.Log("玩家离开牵制范围，牵制结束。");
-                break; // 玩家超出牵制范围
+                Debug.Log("玩家试图离开牵制范围，强制推回！");
+                Vector3 clampedPosition = centerPosition + toPlayer.normalized * pullRadius;
+                targetPlayer.transform.position = clampedPosition; // 强制限制玩家位置
             }
 
             // 玩家挣脱逻辑
             float angleDelta = Vector3.SignedAngle(toPlayer.normalized, -transform.forward.normalized, Vector3.up);
             accumulatedAngle += Mathf.Abs(angleDelta * Time.deltaTime);
 
-            // 玩家挣脱成功
             if (accumulatedAngle >= breakFreeThreshold)
             {
                 Debug.Log("玩家挣脱成功！");
-                break;
+                break; // 玩家挣脱
             }
 
             // 持续牵制效果（玩家掉san等逻辑留空）
-            // TODO: 玩家持续掉SAN逻辑由玩家写入
-
+            // TODO: 玩家持续掉SAN逻辑由其他部分提供
             yield return null;
         }
 
+        Debug.Log("牵制结束，进入冷却状态。");
         StartCoroutine(EnterCooldown());
     }
 
@@ -180,5 +196,6 @@ public class Root : NetworkBehaviour
 
         Debug.Log("冷却结束，可以重新牵制玩家。");
         isCooldown = false;
+        restrainCoroutine = null;
     }
 }
