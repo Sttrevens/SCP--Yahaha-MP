@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 using UnityEngine;
 using Fusion;
 
@@ -23,22 +24,15 @@ public class EnemyDefend : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         CurrentChasingPlayer = ChasingEnemyInstance.targetPlayer;
-        PlayerCanSeeEnemy = EnemyInPlayerSight();
-        if (CurrentChasingPlayer != null && PlayerCanSeeEnemy)
+        if (CurrentChasingPlayer != null)
         {
-            DefendState = true;
-            enemy.SwitchState(new DefendState());
+            CurrentChasingPlayer.GetComponent<EnemyInPlayerSight>().EnemyInSight(CurrentChasingPlayer);
+            PlayerCanSeeEnemy = CurrentChasingPlayer.GetComponent<EnemyInPlayerSight>().isEnemyInSight;
+            if (CurrentChasingPlayer != null && PlayerCanSeeEnemy)
+            {
+                DefendState = true;
+                enemy.SwitchState(new DefendState());
+            }
         }
-    }
-
-    
-    public bool EnemyInPlayerSight()
-    {
-        if (CurrentChasingPlayer != null && CurrentChasingPlayer.name == "CurrentPlayer")
-        {
-            var curCamera = Camera.main;
-            return curCamera.GetComponentInChildren<ConeDetection>().hasTargetInView;
-        }
-        else return false;
     }
 }

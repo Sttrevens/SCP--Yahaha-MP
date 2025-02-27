@@ -25,7 +25,7 @@ public class DefendState : EnemyBaseState
         if (enemy.HasStateAuthority)
         {
             //检测要不要龟   当我看到了玩家，玩家也看到了我，并且两者的距离足够接近三个 条件同时满足的时候，进入龟缩
-            if (ChasingEnemy.targetPlayer != null && defend.EnemyInPlayerSight())
+            if (ChasingEnemy.targetPlayer != null && ChasingEnemy.targetPlayer.GetComponent<EnemyInPlayerSight>().isEnemyInSight)
             {
                 
             }
