@@ -28,7 +28,7 @@ public class EnemyDefend : NetworkBehaviour
             CurrentChasingPlayer = ChasingEnemyInstance.targetPlayer;
             if (CurrentChasingPlayer != null)
             {
-                CurrentChasingPlayer.GetComponent<EnemyInPlayerSight>().EnemyInSight(CurrentChasingPlayer);
+                CurrentChasingPlayer.GetComponent<EnemyInPlayerSight>().Rpc_EnemyInSight();
                 PlayerCanSeeEnemy = CurrentChasingPlayer.GetComponent<EnemyInPlayerSight>().isEnemyInSight;
                 if (CurrentChasingPlayer != null && PlayerCanSeeEnemy)
                 {
