@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
-public class EnemyDefend : MonoBehaviour
+public class EnemyDefend : NetworkBehaviour
 {
     public Enemy enemy;
     public bool DefendState = false;
@@ -19,7 +20,7 @@ public class EnemyDefend : MonoBehaviour
 
     }
 
-    void Update()
+    public override void FixedUpdateNetwork()
     {
         CurrentChasingPlayer = ChasingEnemyInstance.targetPlayer;
         PlayerCanSeeEnemy = EnemyInPlayerSight();

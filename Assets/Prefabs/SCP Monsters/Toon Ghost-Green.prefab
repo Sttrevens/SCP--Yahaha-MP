@@ -5042,6 +5042,7 @@ MonoBehaviour:
   - {fileID: 8438372434980213884}
   - {fileID: 2902083061957192780}
   - {fileID: 7920759076678503391}
+  - {fileID: 3812460681084587774}
 --- !u!114 &1664878239460560184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5070,7 +5071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a9979b380b04249b43dfcdb7d074d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CastSpellCount: 0
+  _AttackCount: 0
 --- !u!114 &2239356778546999095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5176,6 +5177,7 @@ MonoBehaviour:
   chasingSpeed: 5
   hearingRadius: 10
   stepAngle: 10
+  drawGizmos: 0
 --- !u!114 &7920759076678503391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5252,6 +5254,7 @@ MonoBehaviour:
   DefendState: 0
   PlayerCanSeeEnemy: 0
   CurrentChasingPlayer: {fileID: 0}
+  ChasingEnemyInstance: {fileID: 0}
 --- !u!1 &4257468397932735745
 GameObject:
   m_ObjectHideFlags: 0
