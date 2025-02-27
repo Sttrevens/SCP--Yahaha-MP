@@ -25,7 +25,7 @@ public class AttackMoHu : NetworkBehaviour
             HealthSystem playerHealth = _chasingEnemy.targetPlayer.GetComponent<HealthSystem>();
             if (playerHealth != null)
             {
-                playerHealth.Rpc_MoHu(5.0f);
+                playerHealth.Rpc_LineStyle(5.0f);
             }
         }
     }

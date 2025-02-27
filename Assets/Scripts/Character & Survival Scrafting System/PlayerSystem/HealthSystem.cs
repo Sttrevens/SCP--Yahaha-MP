@@ -217,7 +217,7 @@ namespace LPSurvivalEngine
             if (HasStateAuthority)
             {
                 UpdateUIAndSync();
-                // HandlePlayerEffects();
+                HandlePlayerEffects();
             }
         }
         
@@ -325,6 +325,7 @@ namespace LPSurvivalEngine
             Scared(amount);
         }
 
+        
         public void TakePhysicDamage(int amount)
         {
             health.Subtract(amount);
@@ -421,10 +422,10 @@ namespace LPSurvivalEngine
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = false;
-GetComponent<NavMeshObstacle>().enabled = true;
-gameObject.tag = "Player";
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = false;
+            GetComponent<NavMeshObstacle>().enabled = true;
+            gameObject.tag = "Player";
             health.currentValue = health.maxValue;
             stamina.currentValue = stamina.maxValue;
             sanity.currentValue = sanity.maxValue;
@@ -435,6 +436,12 @@ gameObject.tag = "Player";
         public void Rpc_MoHu(float seconds)
         {
             PlayMoHuForSecond(seconds);
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void Rpc_LineStyle(float seconds)
+        {
+            PlayLineStyle(seconds);
         }
 
         private void PlayMoHuForSecond(float seconds)
@@ -448,6 +455,17 @@ gameObject.tag = "Player";
             GlobalPostProcessing.instance.ChangeMohuState(false);
         }
 
+        private void PlayLineStyleForSecond(float seconds)
+        {
+            StartCoroutine(PlayLineStyle(seconds));
+        }
+
+        IEnumerator PlayLineStyle(float seconds)
+        {
+            GlobalPostProcessing.instance.ChangeStateLineStyle(true);
+            yield return new WaitForSeconds(seconds);
+            GlobalPostProcessing.instance.ChangeStateLineStyle(false);
+        }
         #region һ��ͬ����ɫ���ݺ���
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
