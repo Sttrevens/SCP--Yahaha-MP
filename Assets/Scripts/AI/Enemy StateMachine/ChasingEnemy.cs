@@ -26,22 +26,6 @@ public class ChasingEnemy : EnemyMovement
             agent.speed = chasingSpeed;
         }
     }
-    /// <summary>
-    /// 判断是否有玩家在怪物的视野中
-    /// </summary>
-    /// <returns>玩家是否在视野中</returns>
-    public bool PlayerInSight()
-    {
-        if (targetPlayer != null)
-        {
-            if (targetPlayer.tag != "Player")
-            {
-                targetPlayer = null;
-                return false;
-            }
-            else
-                return true;
-        }
     
     public float stepAngle = 5f; // 多射线之间的步进角度
 
@@ -72,6 +56,10 @@ public class ChasingEnemy : EnemyMovement
     }
 }
 
+    /// <summary>
+    /// 判断是否有玩家在怪物的视野中
+    /// </summary>
+    /// <returns>玩家是否在视野中</returns>
 public bool PlayerInSight()
 {
     if (targetPlayer != null)

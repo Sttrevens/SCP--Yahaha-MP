@@ -102,11 +102,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62857fdef3cc93f49a015acce3d12aa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 10
+  detectionRange: 7
   fieldOfViewAngleHorizontal: 60
   fieldOfViewAngleVertical: 260.8
   targetPlayer: {fileID: 0}
   stepAngle: 5
+  pullRadius: 5
+  breakFreeThreshold: 1000
+  escapeCooldown: 10
+  drawGizmos: 0
 --- !u!114 &8805544104565812363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a9979b380b04249b43dfcdb7d074d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CastSpellCount: 0
+  _AttackCount: 0
 --- !u!114 &2596303590458147769
 MonoBehaviour:
   m_ObjectHideFlags: 0
