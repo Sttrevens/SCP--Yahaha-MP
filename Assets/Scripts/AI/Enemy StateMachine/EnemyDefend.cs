@@ -23,15 +23,18 @@ public class EnemyDefend : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        CurrentChasingPlayer = ChasingEnemyInstance.targetPlayer;
-        if (CurrentChasingPlayer != null)
+        if (HasStateAuthority)
         {
-            CurrentChasingPlayer.GetComponent<EnemyInPlayerSight>().EnemyInSight(CurrentChasingPlayer);
-            PlayerCanSeeEnemy = CurrentChasingPlayer.GetComponent<EnemyInPlayerSight>().isEnemyInSight;
-            if (CurrentChasingPlayer != null && PlayerCanSeeEnemy)
+            CurrentChasingPlayer = ChasingEnemyInstance.targetPlayer;
+            if (CurrentChasingPlayer != null)
             {
-                DefendState = true;
-                enemy.SwitchState(new DefendState());
+                CurrentChasingPlayer.GetComponent<EnemyInPlayerSight>().EnemyInSight(CurrentChasingPlayer);
+                PlayerCanSeeEnemy = CurrentChasingPlayer.GetComponent<EnemyInPlayerSight>().isEnemyInSight;
+                if (CurrentChasingPlayer != null && PlayerCanSeeEnemy)
+                {
+                    DefendState = true;
+                    enemy.SwitchState(new DefendState());
+                }
             }
         }
     }
