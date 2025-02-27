@@ -430,6 +430,23 @@ gameObject.tag = "Player";
             sanity.currentValue = sanity.maxValue;
             GetComponent<NetworkTransform>().Teleport(Vector3.zero, Quaternion.identity);
         }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void Rpc_MoHu(float seconds)
+        {
+            PlayMoHuForSecond(seconds);
+        }
+
+        private void PlayMoHuForSecond(float seconds)
+        {
+            StartCoroutine(PlayPostProcessing(seconds));
+        }
+        IEnumerator PlayPostProcessing(float seconds)
+        {
+            GlobalPostProcessing.instance.ChangeMohuState(true);
+            yield return new WaitForSeconds(seconds);
+            GlobalPostProcessing.instance.ChangeMohuState(false);
+        }
 
         #region һ��ͬ����ɫ���ݺ���
 

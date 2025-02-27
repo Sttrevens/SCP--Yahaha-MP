@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
+using LPSurvivalEngine;
 
-public class AttackMoHu : MonoBehaviour
+public class AttackMoHu : NetworkBehaviour
 {
     public Enemy enemy;
 
@@ -18,19 +20,14 @@ public class AttackMoHu : MonoBehaviour
 
     private void MoHu()
     {
-        Debug.Log("MoHumiaosdadsadsadsaughdfsyaugfytasufgauysf");
-        PlayMoHuForSecond(5.0f);
-    }
-
-    private void PlayMoHuForSecond(float seconds)
-    {
-        StartCoroutine(PlayPostProcessing(seconds));
-    }
-    IEnumerator PlayPostProcessing(float seconds)
-    {
-        GlobalPostProcessing.instance.ChangeMohuState(true);
-        yield return new WaitForSeconds(seconds);
-        GlobalPostProcessing.instance.ChangeMohuState(false);
+        if (_chasingEnemy.targetPlayer != null && _enemyAttack.ShouldAttackBasedOnChasingEnemy(_chasingEnemy))
+        {
+            HealthSystem playerHealth = _chasingEnemy.targetPlayer.GetComponent<HealthSystem>();
+            if (playerHealth != null)
+            {
+                playerHealth.Rpc_MoHu(5.0f);
+            }
+        }
     }
     
 }
