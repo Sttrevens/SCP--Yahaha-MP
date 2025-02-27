@@ -12,6 +12,9 @@ public class GlobalPostProcessing : MonoBehaviour
     void Awake()
     {
         instance = this;
+        ChangeMohuState(false);
+        ChangeStateInvert(false);
+        ChangeStateLineStyle(false);
     }
 
     // Update is called once per frame
