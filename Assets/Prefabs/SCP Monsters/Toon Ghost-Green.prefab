@@ -4940,6 +4940,8 @@ GameObject:
   - component: {fileID: 7920759076678503391}
   - component: {fileID: 1633390984479749735}
   - component: {fileID: 5611117118170815069}
+  - component: {fileID: 4476147738338142209}
+  - component: {fileID: 3812460681084587774}
   m_Layer: 0
   m_Name: Toon Ghost-Green
   m_TagString: Untagged
@@ -5081,7 +5083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717f89806da7b164e93e87c65a89bd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 0}
+  model: {fileID: 6640562633417692019}
 --- !u!114 &2560743327901916973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5112,7 +5114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af32d9366f49b7e4fad79aa5d8a475f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 100
+  attackDamage: 10
   attackRange: 3
   lastAttackTime: 0
   lastAttackPreDelayTime: 0
@@ -5223,6 +5225,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 2560743327901916973}
+--- !u!114 &4476147738338142209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3901550995532059235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997adfab80a11014f8a81408b3243014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3812460681084587774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3901550995532059235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2c0a911306a1a43a116bbb40db05d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  DefendState: 0
+  PlayerCanSeeEnemy: 0
+  CurrentChasingPlayer: {fileID: 0}
 --- !u!1 &4257468397932735745
 GameObject:
   m_ObjectHideFlags: 0

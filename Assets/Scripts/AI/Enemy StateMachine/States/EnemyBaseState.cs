@@ -7,6 +7,7 @@ public abstract class EnemyBaseState : IEnemyState
     public EnemyMovement EnemyMovement;
     public ChasingEnemy ChasingEnemy;
     public EnemyAttack EnemyAttack;
+    
 
     public virtual void EnterState(Enemy enemy)
     {

@@ -5,7 +5,7 @@ using Fusion;
 
 public class ChasingEnemy : EnemyMovement
 {
-    [HideInInspector] public GameObject targetPlayer;
+    public GameObject targetPlayer;
     [HideInInspector] public Vector3 soundTargetPosition;
     public float chasingSpeed = 5f;
     public float hearingRadius = 10f;
@@ -26,7 +26,10 @@ public class ChasingEnemy : EnemyMovement
             agent.speed = chasingSpeed;
         }
     }
-
+    /// <summary>
+    /// 判断是否有玩家在怪物的视野中
+    /// </summary>
+    /// <returns>玩家是否在视野中</returns>
     public bool PlayerInSight()
     {
         if (targetPlayer != null)
@@ -50,7 +53,7 @@ public class ChasingEnemy : EnemyMovement
             float verticalAngle = Vector3.Angle(toPlayer, horizontalToPlayer);
 
             Debug.Log($"[EnemyAI] Checking angles - Horizontal: {horizontalAngle}, Vertical: {verticalAngle}");
-
+            //
             if (horizontalAngle < fieldOfViewAngleHorizontal / 2 && verticalAngle < fieldOfViewAngleVertical / 2)
             {
                 Debug.Log("[EnemyAI] Player within FOV angles");
@@ -74,6 +77,7 @@ public class ChasingEnemy : EnemyMovement
                     if (distanceToPlayer <= detectionRange)
                     {
                         Debug.Log("[EnemyAI] Player within detection range");
+                        //蜘蛛感应
                         if (Physics.CheckSphere(player.transform.position, sensingRadius))
                         {
                             Debug.Log("[EnemyAI] Player detected via CheckSphere");
@@ -87,7 +91,6 @@ public class ChasingEnemy : EnemyMovement
         Debug.Log("[EnemyAI] No players detected in sight");
         return false;
     }
-
     public bool PlayerHeard()
     {
         Debug.Log("[EnemyAI] Checking for players by sound...");
