@@ -1,55 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6531894191376528339
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7
 --- !u!21 &2100000
 Material:
-  serializedVersion: 8
+  serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: PolygonSciFiWorlds_Env_Triplanar_Grass
-  m_Shader: {fileID: 4800000, guid: e8708ea10119adb4ea0a47374ddd5ed9, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _OUTLINETYPE_NORMAL
-  - _OVERLAYMODE1_NONE
-  - _OVERLAYMODE_NONE
-  - _RIMSPLITCOLOR_NOSPLIT
-  - _USEADDITIONALLIGHTSDIFFUSE_ON
-  - _USEHATCHINGCONSTANTSCALE_ON
-  - _USELIGHTRAMP_STEP
-  - _USEPURESKETCH_ON
-  - _USESPECULAR_ON
-  m_InvalidKeywords:
-  - _USESHADOWS_ON
-  m_LightmapFlags: 6
+  m_Shader: {fileID: 4800000, guid: 8e3a7be9db42981418988bc59e1916cb, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _Base_Normal:
         m_Texture: {fileID: 2800000, guid: 2ee8591f903c8aa4382ef533fa1a51af, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -102,10 +70,6 @@ Material:
         m_Texture: {fileID: 2800000, guid: eada92c4ac57e254d9a0efc0242511ba, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _DiffuseWarpNoise:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -127,22 +91,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GroundMask1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _HalftoneTexture:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Hatch1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Hatch2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _LightRampTexture:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -226,10 +174,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _PaperTexture:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -244,14 +188,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Side_Triplanar:
         m_Texture: {fileID: 2800000, guid: 358612fdf9c718f4fa6f01d88164b407, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpecularMaskTexture:
-        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture:
@@ -306,56 +242,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
     m_Floats:
-    - _AdaptiveThicnkess: 0
-    - _AdditionalLightsAmount: 1
-    - _AdditionalLightsFaloff: 1
-    - _AdditionalLightsIntesity: 1
-    - _AdditionalLightsSmoothnessMultiplier: 1
-    - _AlphaClip: 0
-    - _AlphaCutoff: 0.5
-    - _AlphaToMask: 0
-    - _BacklightAmount: 0.5
-    - _BacklightHardness: 0
-    - _BacklightIntensity: 1
-    - _Blend: 0
-    - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
-    - _ClearCoatMask: 0
-    - _ClearCoatSmoothness: 0
     - _Cliff_Defail_Power: 1
     - _Cliff_Detail_Power: 0.299
     - _Cliff_Detail_Scale: 0.0063
-    - _Cull: 2
     - _Cutoff: 0.5
-    - _Darken: 0
-    - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DetailTilingLarge: 0.0202
     - _DetailTilingRocks: 0.0234
     - _DetailTilingSmall: 0.043
-    - _DiffusePosterizeOffset: 0
-    - _DiffusePosterizePower: 1
-    - _DiffusePosterizeSteps: 3
-    - _DiffuseWarpAffectHalftone: 0
-    - _DiffuseWarpBrightnessOffset: 1.12
     - _DirtBreakup: 0.0238
     - _DstBlend: 0
-    - _DstBlendAlpha: 0
-    - _EnvironmentReflections: 1
     - _FallOff: 100
     - _FallOff1: 100
     - _Float4: 0.296
@@ -367,115 +265,32 @@ Material:
     - _Ground_Falloff: 65
     - _Ground_Noise_Scale: 0
     - _Ground_Pebble_Scale: 0.0361
-    - _HalftoneEdgeOffset: 0.1
-    - _HalftoneSmoothness: 0.3
-    - _HalftoneThreshold: 0.1
-    - _HalftoneToonAffect: 0
-    - _HaltonePatternSize: 0
-    - _IndirectLightAffectOnHatch: 0
-    - _IndirectLightStrength: 1
-    - _InverseMask: 0
-    - _LightRampOffset: 0
-    - _Lighten: 0
     - _MEtallic: 0.421
-    - _MainLightIntesity: 1
-    - _MaxScaleDependingOnCamera: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalMapStrength: 1
     - _OcclusionStrength: 1
-    - _OutlineDynamicSpeed: 0
-    - _OutlineNoiseIntesity: 1
-    - _OutlineNoiseScale: 10
-    - _OutlineTextureStrength: 0
-    - _OutlineType: 0
-    - _OverlayMode: 0
-    - _OverlayMode1: 0
-    - _OverlayRotation: 0
-    - _OverlayUVTilling: 0
-    - _PaperTilling: 1
     - _Parallax: 0.02
-    - _QueueControl: -1
-    - _QueueOffset: 0
-    - _RampDiffuseTextureLoaded: 1
-    - _ReceiveShadows: 1
     - _RimPower: 2.83
     - _RimPower1: 3.01
-    - _RimSmoothness: 0
-    - _RimSplitColor: 0
-    - _RimThickness: 1
-    - _ShapeSmoothness: 0.2
-    - _SideShineAmount: 0.2717647
-    - _SideShineHardness: 0
-    - _SideShineIntensity: 1
-    - _Smoothness: 0.5
-    - _SmoothnessMultiplier: 1
     - _SmoothnessTextureChannel: 0
     - _Snow: 0
     - _Spec_Metallic: 0.01
     - _Spec_Smoothness: 0.068
-    - _SpecularFaloff: 0
     - _SpecularHighlights: 1
-    - _SpecularMaskRotation: 0
-    - _SpecularMaskScale: 1
-    - _SpecularMaskStrength: 0.1856417
-    - _SpecularPosterizeSteps: 0
-    - _SpecularShadowMask: 0
     - _SrcBlend: 1
-    - _SrcBlendAlpha: 1
-    - _StepHalftoneTexture: 0
-    - _StepOffset: 0
-    - _Strength: 0
-    - _Surface: 0
-    - _Thicnkess: 0
     - _TransAmbient: 0.179
     - _TransDirect: 0.496
     - _TransNormalDistortion: 0.34
     - _TransScattering: 2.9
     - _TransShadow: 0.232
     - _Translucency: 0
-    - _UVAnimationSpeed: 0
-    - _UVAnimationSpeedSpec: 0
-    - _UVAnimationSpeedWarp: 0
-    - _UVScrollSpeed: 0
-    - _UVScrollSpeedSpec: 0
-    - _UVScrollSpeedWarp: 0
     - _UVSec: 0
-    - _UVSrcrollAngle: 0
-    - _UVSrcrollAngleSpec: 0
-    - _UVSrcrollAngleWarp: 0
-    - _UseAdaptiveScreenUvs: 0
-    - _UseAdaptiveScreenUvsWarp: 0
-    - _UseAdaptiveUvsSpecular: 0
-    - _UseAdditionalLightsDiffuse: 1
-    - _UseBacklight: 0
-    - _UseDiffuseWarp: 0
-    - _UseDiffuseWarpAsOverlay: 0
-    - _UseDynamicOutline: 0
-    - _UseEmission: 0
-    - _UseEnvironmentRefletion: 0
-    - _UseHatchingConstantScale: 1
-    - _UseLightRamp: 0
-    - _UseOutline: 0
-    - _UsePureSketch: 1
-    - _UseRimLight: 0
-    - _UseScreenUvs: 0
-    - _UseScreenUvsSpecular: 0
-    - _UseScreenUvsWarp: 0
-    - _UseShadows: 1
-    - _UseSpecular: 1
-    - _UseSpecularMask: 0
-    - _WarpStrength: 0
-    - _WarpTextureRotation: 0
-    - _WarpTextureScale: 1
-    - _WorkflowMode: 1
     - _ZWrite: 1
     - __dirty: 0
     - _falloff: 41
     - _smoothness: 0.175
     - _translkucency: 0.443
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _CliffColour: {r: 0, g: 0.110750526, b: 0.17647058, a: 0}
     - _Cliff_Colour: {r: 0.61764705, g: 0.20891005, b: 0.20891005, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
@@ -486,17 +301,10 @@ Material:
     - _GroundColour: {r: 1, g: 1, b: 1, a: 0}
     - _Ground_Colour: {r: 0.44467843, g: 0.5588235, b: 0.12326988, a: 0}
     - _Ground_Detail_Colour: {r: 1, g: 0, b: 0, a: 0}
-    - _HalftoneColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 0}
     - _RimColor: {r: 0.2555147, g: 1, b: 0.9269017, a: 0}
     - _RimColor1: {r: 0.1614143, g: 0.1380298, b: 0.8161765, a: 0}
-    - _RimShadowColor: {r: 0, g: 0.055514283, b: 0.9622641, a: 0}
     - _Road_Colour: {r: 0.5441177, g: 0.3304439, b: 0.19204153, a: 0}
     - _RockColour: {r: 0.17560555, g: 0.18834269, b: 0.20588237, a: 0}
     - _Rock_Colour: {r: 0.3602941, g: 0.28238872, b: 0.2225346, a: 1}
     - _Rock_Colour_Primary: {r: 0.17766005, g: 0.24931695, b: 0.3897059, a: 0}
     - _Rock_Colour_Secondary: {r: 1, g: 0.16911763, b: 0.16911763, a: 0}
-    - _ShadowColor: {r: 0, g: 0, b: 0, a: 0}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-  m_BuildTextureStacks: []
