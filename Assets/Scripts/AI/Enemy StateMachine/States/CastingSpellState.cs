@@ -8,6 +8,7 @@ public class CastingSpellState : EnemyBaseState
 {
     public override void EnterState(Enemy enemy)
     {
+        //调动画
         base.EnterState(enemy);
 
         if (enemy.HasStateAuthority)
@@ -21,14 +22,18 @@ public class CastingSpellState : EnemyBaseState
 
     public override void UpdateState(Enemy enemy)
     {
+        //检测
         if (enemy.HasStateAuthority)
         {
+            //检测要不要干
             if (!EnemyAttack.ShouldAttackBasedOnChasingEnemy(ChasingEnemy))
             {
+                //不大就追
                 enemy.SwitchState(new ChasingState());
             }
             else
             {
+                //能打就打
                 enemy.SwitchState(new AttackingState());
             }
         }

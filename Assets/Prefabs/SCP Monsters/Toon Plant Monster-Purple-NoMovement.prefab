@@ -12,6 +12,26 @@ PrefabInstance:
       propertyPath: SortKey
       value: 3796483872
       objectReference: {fileID: 0}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[5]
+      value: 
+      objectReference: {fileID: 2706107961073578357}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[6]
+      value: 
+      objectReference: {fileID: 1130812223282582631}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[7]
+      value: 
+      objectReference: {fileID: 6939807052560043332}
+    - target: {fileID: 458332622941395381, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: attackDamage
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 705142455069864580, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -64,8 +84,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9048389514993156324, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: stepAngle
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 9048389514993156324, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: drawGizmos
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9048389514993156324, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: chasingSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9048389514993156324, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: patrollingSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9048389514993156324, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: fieldOfViewAngleVertical
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 9048389514993156324, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: fieldOfViewAngleHorizontal
+      value: 180
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 523508012895333016, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+--- !u!114 &1130812223282582631 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6317744547195610614, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 6349038122166972817}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88152b1077365c428b9d0b9979a999f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2706107961073578357 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9048389514993156324, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 6349038122166972817}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 484f381c65bc5d44bba02e4a5ec77b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6939807052560043332 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4058716565870968021, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 6349038122166972817}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3005a45b056898b499974940eabf8f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

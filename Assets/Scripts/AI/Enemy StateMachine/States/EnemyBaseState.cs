@@ -8,7 +8,7 @@ public abstract class EnemyBaseState : IEnemyState
     public ChasingEnemy ChasingEnemy;
     public EnemyAttack EnemyAttack;
     public EnemySpell EnemySpell;
-
+    
     public virtual void EnterState(Enemy enemy)
     {
         if (enemy.HasStateAuthority)
@@ -16,7 +16,6 @@ public abstract class EnemyBaseState : IEnemyState
             EnemyMovement = enemy.GetComponent<EnemyMovement>();
             ChasingEnemy = enemy.GetComponent<ChasingEnemy>();
             EnemyAttack = enemy.GetComponent<EnemyAttack>();
-            EnemySpell = enemy.GetComponent<EnemySpell>();
         }
     }
     public virtual void UpdateState(Enemy enemy) { }

@@ -9,8 +9,6 @@ public class Root : NetworkBehaviour
     private EnemyBaseState currentStateBehavior;
     private Enemy enemy;
 
-    public Transform eyeTransform; // New Transform reference for the raycast starting point and direction
-
     public float fieldOfViewAngleHorizontal = 120f;
     public float fieldOfViewAngleVertical = 90f;
 
@@ -33,11 +31,10 @@ public class Root : NetworkBehaviour
     [Header( "Gizmos" )]
     public bool drawGizmos = false; // Exposed variable to control drawing
 
-private void OnDrawGizmos()
+private void OnDrawGizmosSelected()
 {
-    if (!drawGizmos || eyeTransform == null) return;
-
-    Vector3 rayStartPosition = eyeTransform.position;
+    if (!drawGizmos) return;
+    Vector3 rayStartPosition = transform.position + Vector3.up * 1f; // Raise the origin point by 1 unit
 
     if (targetPlayer != null)
     {
@@ -47,15 +44,71 @@ private void OnDrawGizmos()
 
     Gizmos.color = Color.yellow;
 
-    // Full cone rays (模拟视野检测)
+    // Full cone rays (both horizontal and vertical angles)
     for (float horizontal = -fieldOfViewAngleHorizontal / 2; horizontal <= fieldOfViewAngleHorizontal / 2; horizontal += stepAngle)
     {
         for (float vertical = -fieldOfViewAngleVertical / 2; vertical <= fieldOfViewAngleVertical / 2; vertical += stepAngle)
         {
-            Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * eyeTransform.forward;
+            Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * transform.forward;
             Gizmos.DrawRay(rayStartPosition, rayDirection * detectionRange);
         }
     }
+}
+
+public bool PlayerInSight()
+{
+    if (targetPlayer != null)
+    {
+        if (targetPlayer.tag != "Player")
+        {
+            targetPlayer = null;
+            return false;
+        }
+    }
+
+    Debug.Log("[EnemyAI] Checking for players in sight...");
+
+    foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+    {
+        Vector3 toPlayer = player.transform.position - transform.position;
+        float distanceToPlayer = toPlayer.magnitude;
+
+        if (distanceToPlayer > detectionRange)
+            continue;
+
+        float horizontalAngle = Vector3.Angle(transform.forward, toPlayer);
+        if (horizontalAngle > fieldOfViewAngleHorizontal / 2f)
+            continue;
+
+        float verticalAngle = Vector3.Angle(transform.forward, toPlayer);
+        if (verticalAngle > fieldOfViewAngleVertical / 2f)
+            continue;
+
+        // Full cone check (combining horizontal and vertical angles)
+        for (float horizontal = -fieldOfViewAngleHorizontal / 2; horizontal <= fieldOfViewAngleHorizontal / 2; horizontal += stepAngle)
+        {
+            for (float vertical = -fieldOfViewAngleVertical / 2; vertical <= fieldOfViewAngleVertical / 2; vertical += stepAngle)
+            {
+                Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * transform.forward;
+
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position + Vector3.up * 1f, rayDirection, out hit, detectionRange))
+                {
+                    Debug.DrawLine(transform.position + Vector3.up * 1f, hit.point, Color.red, 0.1f);
+
+                    if (hit.collider.gameObject == player)
+                    {
+                        Debug.Log("[EnemyAI] Player detected via multiple rays!");
+                        targetPlayer = player;
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    Debug.Log("[EnemyAI] No players detected in sight");
+    return false;
 }
 
     public override void FixedUpdateNetwork()
@@ -79,56 +132,6 @@ private void OnDrawGizmos()
             // 状态重置
             enemy._animatorManager.isChasing = false;
         }
-    }
-
-    public bool PlayerInSight()
-    {
-        if (eyeTransform == null)
-            return false;
-
-        if (targetPlayer != null && targetPlayer.tag != "Player")
-        {
-            targetPlayer = null;
-            return false;
-        }
-
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            Vector3 toPlayer = player.transform.position - eyeTransform.position;
-            float distanceToPlayer = toPlayer.magnitude;
-
-            if (distanceToPlayer > detectionRange)
-                continue;
-
-            float horizontalAngle = Vector3.Angle(eyeTransform.forward, toPlayer);
-            if (horizontalAngle > fieldOfViewAngleHorizontal / 2f)
-                continue;
-
-            float verticalAngle = Vector3.Angle(eyeTransform.forward, toPlayer);
-            if (verticalAngle > fieldOfViewAngleVertical / 2f)
-                continue;
-
-            // 使用视锥判断玩家是否在视野范围内
-            for (float horizontal = -fieldOfViewAngleHorizontal / 2; horizontal <= fieldOfViewAngleHorizontal / 2; horizontal += stepAngle)
-            {
-                for (float vertical = -fieldOfViewAngleVertical / 2; vertical <= fieldOfViewAngleVertical / 2; vertical += stepAngle)
-                {
-                    Vector3 rayDirection = Quaternion.Euler(vertical, horizontal, 0) * eyeTransform.forward;
-
-                    if (Physics.Raycast(eyeTransform.position, rayDirection, out RaycastHit hit, detectionRange))
-                    {
-                        if (hit.collider.gameObject == player)
-                        {
-                            targetPlayer = player;
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        
-        targetPlayer = null;
-        return false;
     }
 
     private IEnumerator RestrainPlayer()

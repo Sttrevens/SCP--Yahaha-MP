@@ -1,6 +1,8 @@
 using UnityEngine;
 using Fusion;
-
+/// <summary>
+/// Chasing状态机处理进入状态时候的bool值的变化每一帧更新
+/// </summary>
 public class ChasingState : EnemyBaseState
 {
     public override void EnterState(Enemy enemy)
@@ -20,6 +22,7 @@ public class ChasingState : EnemyBaseState
         {
             if (EnemyAttack != null)
             {
+                // 如果应该打，那么直接切换到攻击模式
                 // Check if the enemy should attack the player
                 if (EnemyAttack.ShouldAttackBasedOnChasingEnemy(ChasingEnemy))
                 {

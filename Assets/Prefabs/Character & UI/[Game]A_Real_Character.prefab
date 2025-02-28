@@ -1486,6 +1486,7 @@ GameObject:
   - component: {fileID: 2904240422611391486}
   - component: {fileID: 397341189134474547}
   - component: {fileID: 3352045113354941783}
+  - component: {fileID: 7057388831754074905}
   m_Layer: 8
   m_Name: '[Game]A_Real_Character'
   m_TagString: Player
@@ -1609,6 +1610,7 @@ MonoBehaviour:
   - {fileID: 4082337287283386946}
   - {fileID: 2904240422611391486}
   - {fileID: 3352045113354941783}
+  - {fileID: 7057388831754074905}
 --- !u!114 &1122259457492835225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1795,7 +1797,6 @@ MonoBehaviour:
   Player: {fileID: 0}
   UIPlayer: {fileID: 0}
   sleepScreenAnimation: {fileID: 0}
-  postProcessing: {fileID: -4790220763175020456, guid: c40be3174f62c4acf8c1216858c64956, type: 2}
   isScared: 0
   isDying: 0
   isTired: 0
@@ -2009,6 +2010,19 @@ MonoBehaviour:
   tiredClips:
   - {fileID: 8300000, guid: f5eb79d6b54abef45ba44116b45b1f97, type: 3}
   healthSystem: {fileID: -8306276541168044105}
+--- !u!114 &7057388831754074905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a124f3edccf61e947b91abcd06014c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isEnemyInSight: 0
 --- !u!1 &5385546817467512204
 GameObject:
   m_ObjectHideFlags: 0
