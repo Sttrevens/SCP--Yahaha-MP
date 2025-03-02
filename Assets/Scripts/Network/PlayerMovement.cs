@@ -115,7 +115,12 @@ public class PlayerMovement : NetworkBehaviour
         }
         
         _cameraRotationY = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
-        Vector3 move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Time.deltaTime * playerSpeed;
+        Vector3 move = Vector3.zero;
+        if (PlayerController.instance.cursor)
+        {
+            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) *
+                           Time.deltaTime * playerSpeed;
+        }
         _animatorManager.Speed = move.magnitude * 100f;
 
         if (_jumpPressed && _controller.isGrounded)
