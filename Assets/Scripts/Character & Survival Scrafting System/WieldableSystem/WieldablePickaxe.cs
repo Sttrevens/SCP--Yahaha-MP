@@ -78,7 +78,7 @@ namespace LPSurvivalEngine
 
             if (doesDealDamage && hit.collider.GetComponent<IDamagable>() != null)
             {
-                hit.collider.GetComponent<IDamagable>().TakePhysicDamage(damage);
+                hit.collider.GetComponent<IDamagable>().Rpc_TakePhysicDamage(damage);
             }
             
         }

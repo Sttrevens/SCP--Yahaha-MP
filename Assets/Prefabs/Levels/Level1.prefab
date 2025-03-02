@@ -373,6 +373,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navMeshData: {fileID: 23800000, guid: db6c41912b3547940aa5be1b67d27d7c, type: 2}
+  onLevelLoaded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5774139772713792541}
+        m_TargetAssemblyTypeName: PredesignedCreaturesSpawnController, Assembly-CSharp
+        m_MethodName: Rpc_SpawnCreatures
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3451141812407094852
 GameObject:
   m_ObjectHideFlags: 0
@@ -7779,6 +7794,22 @@ PrefabInstance:
       propertyPath: SortKey
       value: 1352632658
       objectReference: {fileID: 0}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[5]
+      value: 
+      objectReference: {fileID: 6244730439007940055}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[6]
+      value: 
+      objectReference: {fileID: 8977583205157374149}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[7]
+      value: 
+      objectReference: {fileID: 1398541798800953830}
     - target: {fileID: 5153400332146600106, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
       propertyPath: m_Name
       value: Toon Plant Monster-Pink
@@ -7828,6 +7859,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+--- !u!114 &1398541798800953830 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4058716565870968021, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 3115342421742480691}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3005a45b056898b499974940eabf8f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3252406231328768597 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
@@ -7839,11 +7881,33 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6244730439007940055 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9048389514993156324, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 3115342421742480691}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 484f381c65bc5d44bba02e4a5ec77b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8442562730937214246 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
   m_PrefabInstance: {fileID: 3115342421742480691}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8977583205157374149 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6317744547195610614, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 3115342421742480691}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88152b1077365c428b9d0b9979a999f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3219526348642434274
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29793,6 +29857,22 @@ PrefabInstance:
       propertyPath: SortKey
       value: 1750170297
       objectReference: {fileID: 0}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[5]
+      value: 
+      objectReference: {fileID: 766224385193795595}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[6]
+      value: 
+      objectReference: {fileID: 2350131781480465689}
+    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[7]
+      value: 
+      objectReference: {fileID: 5720431759175572538}
     - target: {fileID: 5153400332146600106, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
       propertyPath: m_Name
       value: Toon Plant Monster-Pink (1)
@@ -29842,11 +29922,44 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+--- !u!114 &766224385193795595 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9048389514993156324, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 8588500098814484719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 484f381c65bc5d44bba02e4a5ec77b3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2350131781480465689 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6317744547195610614, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 8588500098814484719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88152b1077365c428b9d0b9979a999f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2963810738837268730 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
   m_PrefabInstance: {fileID: 8588500098814484719}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5720431759175572538 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4058716565870968021, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+  m_PrefabInstance: {fileID: 8588500098814484719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3005a45b056898b499974940eabf8f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8154134392387309449 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}

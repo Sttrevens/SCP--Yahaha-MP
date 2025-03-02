@@ -10278,6 +10278,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _AttackCount: 0
+  _isChasing: 0
+  _isPatrolling: 0
+  _CastSpellCount: 0
+  _spellingBool: 0
 --- !u!114 &8847562461911446890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10305,7 +10309,7 @@ MonoBehaviour:
   waitTimeAtPatrolPoint: 2
   targetPlayer: {fileID: 0}
   soundTargetPosition: {x: 0, y: 0, z: 0}
-  chasingSpeed: 7.5
+  chasingSpeed: 7
   hearingRadius: 10
   stepAngle: 10
   drawGizmos: 0

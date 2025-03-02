@@ -12,11 +12,6 @@ public class PredesignedCreaturesSpawnController : NetworkBehaviour
         
     }
 
-    public override void Spawned()
-    {
-        Rpc_SpawnCreatures();
-    }
-
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void Rpc_SpawnCreatures()
     {

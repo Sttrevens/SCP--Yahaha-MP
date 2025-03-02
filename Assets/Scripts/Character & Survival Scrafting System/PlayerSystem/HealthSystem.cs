@@ -123,6 +123,8 @@ namespace LPSurvivalEngine
             {
                 Debug.Log("δ�ҵ�tagΪUI Player������");
             }
+            
+            screenFade = FindObjectOfType<ScreenFade>();
         }
 
         /*public override void Render()
@@ -169,6 +171,7 @@ namespace LPSurvivalEngine
             return null;
         }
 
+        private bool canRegenStamina = false;
         void FixedUpdate()
         {
             if (gameObject.tag != "Player")
@@ -176,6 +179,19 @@ namespace LPSurvivalEngine
                 return;
             }
             if (!(Input.GetButton("Sprint") && GetComponent<PlayerMovement>().isMoving))
+{
+    if (!IsInvoking(nameof(DelayedStaminaRegen)) && !canRegenStamina && stamina.currentValue < stamina.maxValue)
+    {
+        Invoke(nameof(DelayedStaminaRegen), 2f);
+    }
+}
+else
+{
+    CancelInvoke(nameof(DelayedStaminaRegen));
+    canRegenStamina = false;
+}
+
+            if (canRegenStamina)
             {
                 stamina.Add(stamina.regenrate * Time.fixedDeltaTime);
             }
@@ -221,6 +237,10 @@ namespace LPSurvivalEngine
             }
         }
         
+        void DelayedStaminaRegen()
+        {
+            canRegenStamina = true;
+        }
 
         void HandlePlayerEffects()
         {
@@ -384,8 +404,6 @@ namespace LPSurvivalEngine
                     Inventory.instance.DropItem();
                 }
             }
-            
-            screenFade = FindObjectOfType<ScreenFade>();
             StartCoroutine(Dying());
         }
 
@@ -441,7 +459,7 @@ namespace LPSurvivalEngine
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void Rpc_LineStyle(float seconds)
         {
-            PlayLineStyle(seconds);
+            PlayLineStyleForSecond(seconds);
         }
 
         private void PlayMoHuForSecond(float seconds)
@@ -525,6 +543,6 @@ namespace LPSurvivalEngine
 
     public interface IDamagable
     {
-        void TakePhysicDamage(int damageAmount);
+        void Rpc_TakePhysicDamage(int damageAmount);
     }
 }

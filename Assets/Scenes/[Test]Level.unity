@@ -15,16 +15,16 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 0
-  m_FogColor: {r: 0.27503434, g: 0.29113016, b: 0.3018868, a: 1}
-  m_FogMode: 3
+  m_FogColor: {r: 0.48427665, g: 0.48427665, b: 0.48427665, a: 1}
+  m_FogMode: 1
   m_FogDensity: 0.03
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1.91
-  m_AmbientMode: 3
+  m_AmbientIntensity: 1.79
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: d6ae44ff8913405409b61351c6788c87, type: 2}
   m_HaloStrength: 0.5
@@ -262,11 +262,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &256418243 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 443060921172157677, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
-  m_PrefabInstance: {fileID: 720514016}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &257389878 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 5893204899413646539, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
@@ -669,11 +664,11 @@ PrefabInstance:
     - target: {fileID: 2128905956606242058, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
       propertyPath: OnButtonPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2087104643}
+      objectReference: {fileID: 0}
     - target: {fileID: 2128905956606242058, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
       propertyPath: OnButtonReleased.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2087104643}
+      objectReference: {fileID: 0}
     - target: {fileID: 2787516731008302735, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
       propertyPath: SortKey
       value: 1216042951
@@ -722,10 +717,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 12.834
       objectReference: {fileID: 0}
-    - target: {fileID: 3762159263626958457, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
-      propertyPath: uiPanel
-      value: 
-      objectReference: {fileID: 256418243}
     - target: {fileID: 3762159263626958457, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
       propertyPath: directionalLight
       value: 
@@ -879,9 +870,25 @@ PrefabInstance:
       value: -78
       objectReference: {fileID: 0}
     - target: {fileID: 6788867824361680590, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
+      propertyPath: m_TileSize
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 6788867824361680590, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
+      propertyPath: m_VoxelSize
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6788867824361680590, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 4fcdf072ac4be3147b61781c4571cabf, type: 2}
+      objectReference: {fileID: 23800000, guid: a9645acc611f16c46a02364d7fba71e4, type: 2}
+    - target: {fileID: 6788867824361680590, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
+      propertyPath: m_OverrideTileSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6788867824361680590, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7521988033756224945, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
       propertyPath: SortKey
       value: 1501124879
@@ -1755,6 +1762,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4086068571324677074, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.039
+      objectReference: {fileID: 0}
     - target: {fileID: 4192999002381876130, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1922,6 +1933,10 @@ PrefabInstance:
     - target: {fileID: 6430420346969453979, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: SortKey
       value: 4116830195
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707296424090406347, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.3684082
       objectReference: {fileID: 0}
     - target: {fileID: 6965534150074758088, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2633,17 +2648,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 87790501012702735, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
   m_PrefabInstance: {fileID: 720514016}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2087104643 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3678817563144137765, guid: 1c3a154c660c4cc43a64e80d815ea5bb, type: 3}
-  m_PrefabInstance: {fileID: 720514016}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087104637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92022af0ec7d92c438bd68b42f48e605, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

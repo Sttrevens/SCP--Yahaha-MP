@@ -1,5 +1,6 @@
 using Fusion;
 using UnityEngine;
+using Fusion.Photon.Realtime;
 
 public class NetworkStart : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class NetworkStart : MonoBehaviour
         if (TitleScreenUI.roomName != null)
         {
             bootstrap.DefaultRoomName = TitleScreenUI.roomName;
+            
+            PhotonAppSettings.Global.AppSettings.FixedRegion = TitleScreenUI.region;
         }
 
         roomName = bootstrap.DefaultRoomName;

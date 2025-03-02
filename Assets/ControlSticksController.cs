@@ -86,7 +86,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
             AudioManager.Instance.PlayElevatorShakeSound(spaceship);
                 yield return new WaitForSeconds(2f);
                 TakeoffController.Instance.Rpc_OnInteract();
-                screenFade.TriggerScreenFade(false);
+                Rpc_ScreenFade(false);
                 yield return new WaitForSeconds(2f);
                 LevelManager.Instance.LoadLevel();
                 yield return RotateToAngle(19.303f);
@@ -110,7 +110,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
             if (!isRotating)
             {
                 IsPulled = true;
-                screenFade.TriggerScreenFade(true);
+                Rpc_ScreenFade(true);
                 yield return RotateToAngle(rotationAngle);
                 door.GetComponent<EnterRoom>().ResetRotation();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
@@ -139,6 +139,12 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 IsPulled = false;
             }
         }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void Rpc_ScreenFade(bool fade)
+    {
+        screenFade.TriggerScreenFade(fade);
     }
 
     private IEnumerator RotateToAngle(float targetAngle)

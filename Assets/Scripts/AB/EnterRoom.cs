@@ -33,7 +33,7 @@ public class EnterRoom : NetworkBehaviour
         RPC_ResetRotation();
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_StartRotation()
     {
         Debug.Log("[EnterRoom] RPC_StartRotation called");

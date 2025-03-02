@@ -48,7 +48,7 @@ namespace LPSurvivalEngine
             if(isBurning && canDamage)
             {
                 for (int x = 0; x < thingsToDoDamage.Count; x++)
-                    thingsToDoDamage[x].TakePhysicDamage(damage);  
+                    thingsToDoDamage[x].Rpc_TakePhysicDamage(damage);  
             }
 
             yield return new WaitForSeconds(damageRate);

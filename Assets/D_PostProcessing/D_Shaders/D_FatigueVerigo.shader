@@ -3,7 +3,7 @@ Shader "Custom/FatigueVerigo"
     Properties
     {
         [HDR]_Color ("Base Color", Color) = (1,1,1,1)  // 默认透明黑色
-        _DistortionStrength ("Distortion Strength", Range(0, 1)) = 0.5
+        _DistortionStrength ("Distortion Strength", Range(0, 1)) = 0.2
         _TimeSpeed ("Time Speed", Range(0.1, 10)) = 1.0
         _MainTex ("Base (RGB)", 2D) = "black" {}       // 默认黑色纹理（透明）
     }

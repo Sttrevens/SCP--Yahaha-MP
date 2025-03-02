@@ -5,48 +5,48 @@ namespace LPSurvivalEngine
     public class DamageableObject : MonoBehaviour, IDamagable
     {
         [Header("Health Settings")]
-        [SerializeField] private int maxHealth = 100;   // ×î´óÑªÁ¿
-        private int currentHealth;                       // µ±Ç°ÑªÁ¿
+        [SerializeField] private int maxHealth = 100;   // ï¿½ï¿½ï¿½Ñªï¿½ï¿½
+        private int currentHealth;                       // ï¿½ï¿½Ç°Ñªï¿½ï¿½
 
         [Header("Death Settings")]
-        [SerializeField] private GameObject deathEffect; // ËÀÍöÊ±µÄÌØĞ§
+        [SerializeField] private GameObject deathEffect; // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ğ§
 
         private void Awake()
         {
             currentHealth = maxHealth;
         }
 
-        // ÊÜÉËÂß¼­
-        public void TakePhysicDamage(int damage)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
+        public void Rpc_TakePhysicDamage(int damage)
         {
             currentHealth -= damage;
 
-            // ´¦ÀíÎïÌåÊÜÉËºóµÄÂß¼­
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ß¼ï¿½
             Debug.Log($"{gameObject.name} took {damage} damage!");
 
-            // ÅĞ¶ÏÊÇ·ñËÀÍö
+            // ï¿½Ğ¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½
             if (currentHealth <= 0)
             {
                 Die();
             }
         }
 
-        // ËÀÍöÂß¼­
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
         private void Die()
         {
-            // ²¥·ÅËÀÍöÌØĞ§
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§
             if (deathEffect != null)
             {
                 Instantiate(deathEffect, transform.position, Quaternion.identity);
             }
 
-            // Ïú»ÙÎïÌå£¨¿ÉÒÔ¸ù¾İĞèÒªĞŞ¸Ä£©
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å£¨ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ş¸Ä£ï¿½
             Destroy(gameObject);
 
             Debug.Log($"{gameObject.name} has died!");
         }
 
-        // »ñÈ¡µ±Ç°ÑªÁ¿
+        // ï¿½ï¿½È¡ï¿½ï¿½Ç°Ñªï¿½ï¿½
         public int GetCurrentHealth()
         {
             return currentHealth;

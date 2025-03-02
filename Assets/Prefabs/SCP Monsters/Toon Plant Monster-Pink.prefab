@@ -5417,7 +5417,6 @@ GameObject:
   - component: {fileID: 1812885780332336775}
   - component: {fileID: 3892596574197940985}
   - component: {fileID: 458332622941395381}
-  - component: {fileID: 523508012895333016}
   - component: {fileID: 9048389514993156324}
   - component: {fileID: 6317744547195610614}
   - component: {fileID: 3642999550668730399}
@@ -5524,7 +5523,6 @@ MonoBehaviour:
   - {fileID: 1812885780332336775}
   - {fileID: 3892596574197940985}
   - {fileID: 458332622941395381}
-  - {fileID: 523508012895333016}
   - {fileID: 9048389514993156324}
   - {fileID: 6317744547195610614}
   - {fileID: 4058716565870968021}
@@ -5611,31 +5609,6 @@ MonoBehaviour:
   attackPreDelay: 0.5
   attackInterval: 3
   enemy: {fileID: 0}
---- !u!114 &523508012895333016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5153400332146600106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 265e4e1dcb952d14e873ab3cc8d93dc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  enemy: {fileID: 0}
-  detectionRange: 10
-  patrollingSpeed: 2
-  fieldOfViewAngleHorizontal: 180
-  fieldOfViewAngleVertical: 90
-  currentPatrolIndex: 0
-  patrolMode: 1
-  patrolPoints: []
-  patrolRange: 10
-  patrolWidth: 10
-  patrolHeight: 10
-  waitTimeAtPatrolPoint: 2
 --- !u!114 &9048389514993156324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5655,10 +5628,10 @@ MonoBehaviour:
   fieldOfViewAngleHorizontal: 90
   fieldOfViewAngleVertical: 60
   currentPatrolIndex: 0
-  patrolMode: 0
+  patrolMode: 2
   patrolPoints: []
-  patrolRange: 10
-  patrolWidth: 10
+  patrolRange: 15
+  patrolWidth: 15
   patrolHeight: 10
   waitTimeAtPatrolPoint: 2
   targetPlayer: {fileID: 0}
@@ -5715,6 +5688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 3892596574197940985}
+  mohuTime: 1
 --- !u!114 &1665026072672249597
 MonoBehaviour:
   m_ObjectHideFlags: 0

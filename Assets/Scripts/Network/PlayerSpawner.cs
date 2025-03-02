@@ -31,10 +31,22 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
             GameObject chosenPrefab = PlayerPrefabsPool[chosenIndex];
             PlayerPrefabsPool.RemoveAt(chosenIndex);
 
-            // Spawn 并记录引用
-            NetworkObject plObject = Runner.Spawn(chosenPrefab, Vector3.zero, Quaternion.identity, player);
-            plObject.name = "CurrentPlayer";
+            // 验证 spawnPoint 是否正确
+            Debug.Log($"Spawning at Position: {spawnPoint.position}, Rotation: {spawnPoint.rotation}");
+
+            // 在服务器下进行 Spawn 操作
+            NetworkObject plObject = Runner.Spawn(chosenPrefab, spawnPoint.position, spawnPoint.rotation, player);
+
+            // Debug 新实例的实际位置
+            Debug.Log($"Spawned Object Position: {plObject.transform.position}, Rotation: {plObject.transform.rotation}");
+
+            // 安全的强制更新位置
+            plObject.GetComponent<NetworkTransform>()?.Teleport(spawnPoint.position, spawnPoint.rotation);
+
             assignedPrefabs[player] = chosenPrefab;
+
+            // 设置默认名字为 CurrentPlayer，用于调试
+            plObject.name = "CurrentPlayer";
 
             // 以下代码为原逻辑
             GameObject.Find("Inventory").GetComponent<Inventory>().dropPosition =

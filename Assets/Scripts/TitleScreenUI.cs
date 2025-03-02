@@ -1,6 +1,9 @@
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Fusion;
+using System.Linq;
 
 public class TitleScreenUI : MonoBehaviour
 {
@@ -9,6 +12,7 @@ public class TitleScreenUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI roomNameText; // ��ʾ�������ֵ� TMP ����
     [SerializeField] private TMP_InputField inputFieldTMP;
     [SerializeField] private TMP_InputField playerNameInputField;
+    [SerializeField] private TMP_Dropdown playerRegionName;
 
     // ����ť��Ӧ������
     private const string creatingGameText = "Creating a Game...";
@@ -16,15 +20,50 @@ public class TitleScreenUI : MonoBehaviour
     private const string destinationText = "Going to the Destination...";
     public static string roomName;
     public static string playerName;
+    public static string region;
 
     public string gameSceneName;
+    
+    private CancellationTokenSource _tokenSource;
 
     // ��ʼ��
     void Start()
     {
         roomNameText.text = roomName;
         tmpText.gameObject.SetActive(false); // Ĭ������ TMP ����
+        playerRegionName.onValueChanged.AddListener(OnRegionDropdownChanged);
     }
+    
+    private async void RefreshRegionDropdown() {
+        _tokenSource = new CancellationTokenSource();
+
+        var regions = await NetworkRunner.GetAvailableRegions(cancellationToken: _tokenSource.Token);
+        playerRegionName.options.Clear();
+        playerRegionName.AddOptions(regions.Select(reg => $"{reg.RegionCode} = {reg.RegionPing}").ToList());
+    }
+
+    /// <summary>
+    /// TMP Dropdown ����״̬����ʱ��Ӧ.
+    /// </summary>
+    /// <param name="index">ѡ��Ĳ˵���</param>
+    private void OnRegionDropdownChanged(int index)
+    {
+        switch (index)
+        {
+            case 0: region = "asia"; break;
+            case 1: region = "eu"; break;
+            case 2: region = "hk"; break;
+            case 3: region = "us"; break;
+            case 4: region = "usw"; break;
+            case 5: region = "jp"; break;
+            default: region = ""; break;
+        }
+    }
+
+    /*private void Update()
+    {
+        RefreshRegionDropdown();
+    }*/
 
     /// <summary>
     /// ���¡��������䡱��ťʱ����

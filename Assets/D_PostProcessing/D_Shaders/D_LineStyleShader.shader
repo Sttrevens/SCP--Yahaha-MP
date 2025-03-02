@@ -3,7 +3,7 @@ Shader "azhao/LineStyle"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-		_lineStrength("lineStrength", Float) = 200
+		_lineStrength("lineStrength", Float) = 300
 		_lineColor("lineColor", Color) = (0,0,0,0)
 		_baseColor("baseColor", Color) = (1,1,1,0)
     }

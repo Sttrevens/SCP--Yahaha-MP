@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,6 +7,7 @@ using Fusion;
 using System.Globalization;
 using LPSurvivalEngine;
 using Unity.AI.Navigation;
+using UnityEngine.AI;
 
 public class LevelManager : NetworkBehaviour, IInteractable
 {
@@ -138,9 +139,16 @@ public class LevelManager : NetworkBehaviour, IInteractable
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_BuildNavMesh()
     {
-        if (surface != null)
+        LevelAIManager levelAIManager = currentLevel.GetComponent<LevelAIManager>();
+        if (levelAIManager != null)
         {
-            surface.navMeshData = currentLevel.GetComponent<LevelAIManager>().navMeshData;
+            if (surface != null)
+            {
+                surface.navMeshData = levelAIManager.navMeshData;
+            }
+
+            if (levelAIManager.onLevelLoaded != null)
+                levelAIManager.onLevelLoaded.Invoke();
         }
     }
 }

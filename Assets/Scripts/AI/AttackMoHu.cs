@@ -11,6 +11,8 @@ public class AttackMoHu : NetworkBehaviour
     private ChasingEnemy _chasingEnemy;
 
     private EnemyAttack _enemyAttack;
+    
+    public float mohuTime = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,7 @@ public class AttackMoHu : NetworkBehaviour
             HealthSystem playerHealth = _chasingEnemy.targetPlayer.GetComponent<HealthSystem>();
             if (playerHealth != null)
             {
-                playerHealth.Rpc_LineStyle(5.0f);
+                playerHealth.Rpc_LineStyle(mohuTime);
             }
         }
     }

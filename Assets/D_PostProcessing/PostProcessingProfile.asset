@@ -33,6 +33,7 @@ MonoBehaviour:
   - {fileID: 6576515420250634015}
   - {fileID: 398456787952359869}
   - {fileID: -6353412297249472654}
+  - {fileID: 6116263549530252664}
 --- !u!114 &398456787952359869
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -105,6 +106,31 @@ MonoBehaviour:
   baseColor:
     m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &6116263549530252664
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 114c2b3c97ab75a4bb0cd85f90eb0528, type: 3}
+  m_Name: LineStyle
+  m_EditorClassIdentifier: 
+  active: 1
+  isShow:
+    m_OverrideState: 1
+    m_Value: 0
+  lineStrength:
+    m_OverrideState: 1
+    m_Value: 93.17
+  lineColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  baseColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &6184780178562434211
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -120,7 +146,7 @@ MonoBehaviour:
   active: 1
   distortionStrength:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.049
   distortionSpeed:
     m_OverrideState: 1
     m_Value: 0.1
