@@ -14,8 +14,6 @@ public class ExitMenu : MonoBehaviour
     public GameObject exitConfirm;
     public GameObject allButtons;
 
-    public PlayerController playerController;
-
     [HideInInspector] public bool isPaused = false;
 
     public string titleMenuSceneName;
@@ -43,8 +41,8 @@ public class ExitMenu : MonoBehaviour
     public void ShowExitMenu()
     {
         exitMenuPanel.SetActive(true); 
-        if (playerController != null)
-            playerController.ToggleCursor(true);
+        if (GameObject.Find("CurrentPlayer").CompareTag("Player"))
+            PlayerController.instance.ToggleCursor(true);
         //Time.timeScale = 0; 
 
         isPaused = true;
@@ -53,8 +51,8 @@ public class ExitMenu : MonoBehaviour
     // 继续游戏
     public void HideExitMenu()
     {
-        if (playerController != null)
-            playerController.ToggleCursor(false);
+        if (GameObject.Find("CurrentPlayer").CompareTag("Player"))
+            PlayerController.instance.ToggleCursor(false);
         exitMenuPanel.SetActive(false);
         
         //Time.timeScale = 1; 

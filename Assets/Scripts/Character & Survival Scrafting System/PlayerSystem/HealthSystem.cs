@@ -123,8 +123,6 @@ namespace LPSurvivalEngine
             {
                 Debug.Log("δ�ҵ�tagΪUI Player������");
             }
-            
-            screenFade = FindObjectOfType<ScreenFade>();
         }
 
         /*public override void Render()
@@ -387,7 +385,7 @@ else
         {
             //Player.SetActive(false);
             //UIPlayer.SetActive(false);
-            Cursor.visible = true;
+            screenFade = FindObjectOfType<ScreenFade>();
             Cursor.lockState = CursorLockMode.None;
             GetComponent<Rigidbody>().isKinematic = false;
             //Inventory.instance.inventoryWindow.SetActive(true);
@@ -410,18 +408,21 @@ else
         private IEnumerator Dying()
         {
             ControlSticksController.Instance.HandlePlayerDeath();
-            screenFade.TriggerScreenFadeOnly();
+            if (screenFade != null)
+                screenFade.TriggerScreenFadeOnly();
             viewerBobojian = GameObject.Find("BobojianSystem").transform.Find("ViewerBobojian").gameObject;
             yield return new WaitForSeconds(screenFade.fadeDuration);
-            viewerBobojian.SetActive(true);
+            if (viewerBobojian != null)
+                viewerBobojian.SetActive(true);
         }
 
-        [Rpc(RpcSources.All, RpcTargets.All)]
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void Rpc_Respawn()
         {
             StopAllCoroutines();
             
             //if (gameObject.tag == "Untagged")
+            screenFade = FindObjectOfType<ScreenFade>();
             StartCoroutine(Respawning());
         }
 
@@ -434,7 +435,8 @@ else
 
         public void Respawn()
         {
-            viewerBobojian.SetActive(false);
+            if (viewerBobojian != null)
+                viewerBobojian.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;

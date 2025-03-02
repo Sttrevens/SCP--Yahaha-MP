@@ -21,18 +21,6 @@ public class EnterRoom : NetworkBehaviour
         Debug.Log($"[EnterRoom] Initial rotation: {initialRotation.eulerAngles}, Target rotation: {targetRotation.eulerAngles}");
     }
 
-    public void StartRotation()
-    {
-        Debug.Log("[EnterRoom] StartRotation called");
-        RPC_StartRotation();
-    }
-
-    public void ResetRotation()
-    {
-        Debug.Log("[EnterRoom] ResetRotation called");
-        RPC_ResetRotation();
-    }
-
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_StartRotation()
     {
@@ -48,7 +36,7 @@ public class EnterRoom : NetworkBehaviour
         }
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_ResetRotation()
     {
         Debug.Log("[EnterRoom] RPC_ResetRotation called");

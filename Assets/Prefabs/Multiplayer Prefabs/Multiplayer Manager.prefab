@@ -978,6 +978,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1728653224046049276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3753265418578376709}
+  - component: {fileID: 6572560424671016941}
+  m_Layer: 0
+  m_Name: PlayerController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3753265418578376709
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728653224046049276}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.00181, y: -3.7755642, z: -40.48472}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8323492799669256106}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6572560424671016941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728653224046049276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3193cad89ba4446b0d1b377bd20bae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursor: 1
 --- !u!1 &1765548710837145059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,6 +1309,7 @@ Transform:
   - {fileID: 2392898804529560070}
   - {fileID: 5667524513681272020}
   - {fileID: 6712572210194251233}
+  - {fileID: 3753265418578376709}
   - {fileID: 4086068571324677074}
   - {fileID: 8035343482454445388}
   m_Father: {fileID: 0}
@@ -6176,10 +6222,6 @@ PrefabInstance:
       value: Main/Zoom[/Mouse/scroll]
       objectReference: {fileID: 0}
     - target: {fileID: 2342774279301633817, guid: 306d1c230d7e9384db7162a17362808f, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2342774279301633817, guid: 306d1c230d7e9384db7162a17362808f, type: 3}
       propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -7162,6 +7204,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1441927050836449005}
     - target: {fileID: 8049269088045846543, guid: b802569c6fafa3d40a68148a3f4b0c24, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 6572560424671016941}
+    - target: {fileID: 8049269088045846543, guid: b802569c6fafa3d40a68148a3f4b0c24, type: 3}
       propertyPath: PlayerInput
       value: 
       objectReference: {fileID: 3438784422704533889}
@@ -7416,6 +7462,10 @@ PrefabInstance:
       propertyPath: dropPosition
       value: 
       objectReference: {fileID: 5895177137882005155}
+    - target: {fileID: 1200667033413871706, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 6572560424671016941}
     - target: {fileID: 1630644913069553198, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
@@ -7508,6 +7558,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3636461885856260256, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 6572560424671016941}
     - target: {fileID: 3690785409214547314, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_Name
       value: UIPlayer
@@ -7671,6 +7725,10 @@ PrefabInstance:
     - target: {fileID: 7649167810745175043, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7825678972998942855, guid: 418e6af188d6e2246a03f72442e0548c, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

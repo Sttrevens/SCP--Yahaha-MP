@@ -1475,7 +1475,6 @@ GameObject:
   - component: {fileID: 1122259457492835225}
   - component: {fileID: 8065060222564523672}
   - component: {fileID: 2747722033361472396}
-  - component: {fileID: 6515430458572477251}
   - component: {fileID: -2697029352120812069}
   - component: {fileID: -505270265219327843}
   - component: {fileID: -8306276541168044105}
@@ -1626,7 +1625,7 @@ MonoBehaviour:
   SyncScale: 0
   SyncParent: 0
   _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 0
+  DisableSharedModeInterpolation: 1
 --- !u!143 &8065060222564523672
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1682,27 +1681,14 @@ MonoBehaviour:
   sprintSpeed: 8
   fovChangeSpeed: 4
   speedChangeSpeed: 4
-  PlayerSpeed: 4
+  playerSpeed: 0
   isMoving: 0
-  JumpForce: 5
-  GravityValue: -9.81
-  RotationSpeed: 5
+  jumpForce: 5
+  gravityValue: -9.81
+  rotationSpeed: 5
   issprinting: 0
-  Camera: {fileID: 0}
+  plCamera: {fileID: 0}
   cameraRoot: {fileID: 4992387614600776163}
---- !u!114 &6515430458572477251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5250024112804794185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3193cad89ba4446b0d1b377bd20bae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cursor: 1
 --- !u!114 &-2697029352120812069
 MonoBehaviour:
   m_ObjectHideFlags: 0

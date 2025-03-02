@@ -38,9 +38,8 @@ namespace LPSurvivalEngine
         private InputAction inventoryAction;
 
         public int selectedItemIndex;
-        [HideInInspector] public PlayerController playerController;
         [HideInInspector] public HealthSystem vitals;
-        [HideInInspector]public ItemSlot selectedItem;
+        [HideInInspector] public ItemSlot selectedItem;
         private int currentWieldableIndex;
 
         [SerializeField] private AudioClip dropSound;
@@ -98,8 +97,6 @@ namespace LPSurvivalEngine
             }
             //ClearSelectedItemWindow();
 
-            playerController = PlayerController.instance;
-
             if (InventorySlots == null || InventorySlots.Length == 0)
             {
                 Debug.LogError("InventorySlots has not been properly initialized.");
@@ -128,20 +125,20 @@ namespace LPSurvivalEngine
             {
                 inventoryWindow.SetActive(false);
                 onCloseInventory.Invoke();
-                playerController.ToggleCursor(false);
+                PlayerController.instance.ToggleCursor(false);
             }
             else if (containerUIWindow.activeInHierarchy)
             {
                 containerUIWindow.SetActive(false);
                 onCloseContainerInventory.Invoke();
-                playerController.ToggleCursor(false);
+                PlayerController.instance.ToggleCursor(false);
             }
             else
             {
                 inventoryWindow.SetActive(true);
                 onOpenInventory.Invoke();
                 //ClearSelectedItemWindow();
-                playerController.ToggleCursor(true);
+                PlayerController.instance.ToggleCursor(true);
             }
         }
 
@@ -509,7 +506,7 @@ private IEnumerator RequestThrowAuthorityLoop(ItemDatabase item)
             currentContainerInventory = containerInventory;
             containerUIWindow.SetActive(true);  
             UpdateContainerUI();  
-            playerController.ToggleCursor(true);
+            PlayerController.instance.ToggleCursor(true);
             //TODO:打开Bag面板的交互
             bagPanel.GetComponent<CanvasGroup>().interactable = true;
         }

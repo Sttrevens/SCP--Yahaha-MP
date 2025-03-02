@@ -1,3 +1,4 @@
+using LPSurvivalEngine;
 using UnityEngine;
  
 public class FirstPersonCamera : MonoBehaviour
@@ -21,6 +22,7 @@ public class FirstPersonCamera : MonoBehaviour
         transform.position = Target.position;
         transform.position += new Vector3(0,Height,0);
 
+        isCameraLocked = !PlayerController.instance.cursor;
         if (isCameraLocked)
         {
             return;

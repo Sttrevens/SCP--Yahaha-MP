@@ -23,7 +23,6 @@ namespace LPSurvivalEngine
         [SerializeField] private PlayerInput playerInput;
 
         [HideInInspector] public Wieldable currentWieldable;
-        [HideInInspector] public PlayerController controller;
         [Networked] public PlayerRef Owner { get; set; }
 
         private ItemDatabase equippedItem;
@@ -64,7 +63,7 @@ namespace LPSurvivalEngine
         {
             return context.phase == InputActionPhase.Performed && 
                    currentWieldable != null && 
-                   controller.cursor;
+                   PlayerController.instance.cursor;
         }
 
     private int currentWieldableIndex = -1;

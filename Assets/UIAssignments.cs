@@ -21,10 +21,7 @@ public class UIAssignments : MonoBehaviour
     void Start()
     {
         Inventory.instance.dropPosition = dropPosition;
-        Inventory.instance.playerController = playerController;
         Inventory.instance.vitals = GetComponent<HealthSystem>();
-
-        ExitMenu.instance.playerController = playerController;
 
         //WieldableManager.instance.wieldablesPosition = wieldPostition;
         //WieldableManager.instance.flashlightPosition = flashlightRootPosition;
