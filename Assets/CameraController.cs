@@ -54,7 +54,7 @@ namespace LPSurvivalEngine
         if (currentSlot != null)
         {
             // 计算这一帧要消耗的耐久度
-            float drainAmount = durabilityDrainPerSecond * Time.deltaTime;
+            float drainAmount = durabilityDrainPerSecond * Time.fixedDeltaTime;
             
             // 通过 Inventory 更新耐久度
             Inventory.instance.UpdateItemDurability(WieldableManager.instance.GetCurrentWieldableIndex(), drainAmount);
@@ -129,6 +129,14 @@ namespace LPSurvivalEngine
             {
                 HandleZoom();
             }
+            Transform topParent = gameObject.transform;
+            while (topParent.parent != null)
+            {
+                topParent = topParent.parent;
+            }
+            PlayerMovement plMovement = topParent.GetComponent<PlayerMovement>();
+            if (plMovement != null)
+                plMovement.isAiming = isRightMouseButtonDown;
 
             if (HasStateAuthority)
             {
@@ -230,7 +238,7 @@ void HandleZoom()
         // 使用 Lerp 实现平滑缩放
         float targetFOV = CameraInCamera.fieldOfView - (ScrollInput * ZoomSpeed);
         targetFOV = Mathf.Clamp(targetFOV, MinFOV, MaxFOV);
-        CameraInCamera.fieldOfView = Mathf.Lerp(CameraInCamera.fieldOfView, targetFOV, Time.deltaTime * 10f);
+        CameraInCamera.fieldOfView = Mathf.Lerp(CameraInCamera.fieldOfView, targetFOV, Time.fixedDeltaTime * 10f);
 
         // 声音播放逻辑保持不变
         if (ScrollInput != lastScrollInput && Time.time - lastSoundTime >= 0.3f)
