@@ -119,7 +119,7 @@ public class PlayerMovement : NetworkBehaviour
         if (PlayerController.instance.cursor)
         {
             move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) *
-                           Time.deltaTime * playerSpeed;
+                           Time.fixedDeltaTime * playerSpeed;
         }
         _animatorManager.Speed = move.magnitude * 100f;
 
@@ -129,7 +129,7 @@ public class PlayerMovement : NetworkBehaviour
             _velocity.y += jumpForce;
         }
 
-        Vector3 trueMove = move + _velocity * Time.deltaTime;
+        Vector3 trueMove = move + _velocity * Time.fixedDeltaTime;
         _controller.Move(trueMove);
 
         if (move != Vector3.zero)
@@ -148,7 +148,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void Gravity()
     {
-        _velocity.y += gravityValue * Time.deltaTime;
+        _velocity.y += gravityValue * Time.fixedDeltaTime;
     }
 
     void LateUpdate()
