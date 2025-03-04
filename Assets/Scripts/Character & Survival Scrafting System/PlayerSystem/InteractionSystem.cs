@@ -78,10 +78,10 @@ namespace LPSurvivalEngine
                     {
                         if (currentInteractGameObject != null)
                         {
-                            var previousHighlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
-                            if (previousHighlightEffect != null)
+                            var outLine = currentInteractGameObject.GetComponent<HasOutLine>();
+                            if (outLine != null)
                             {
-                                previousHighlightEffect.highlighted = false; 
+                                outLine.isOutLineActive = false; 
                             }
                         }
 
@@ -94,10 +94,10 @@ namespace LPSurvivalEngine
                 {
                     if (currentInteractGameObject != null)
                     {
-                        var previousHighlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
-                        if (previousHighlightEffect != null)
+                        var outLine = currentInteractGameObject.GetComponent<HasOutLine>();
+                        if (outLine != null)
                         {
-                            previousHighlightEffect.highlighted = false;
+                            outLine.isOutLineActive = false;
                         }
                     }
 
@@ -188,10 +188,10 @@ namespace LPSurvivalEngine
             interactText.text = string.Format("{0}", currentInteractable.GetInteractText());
             Debug.Log("Interaction text updated: " + currentInteractable.GetInteractText());
 
-            var highlightEffect = currentInteractGameObject.GetComponent<HighlightEffect>();
-            if (highlightEffect != null)
+            var outLine = currentInteractGameObject.GetComponent<HasOutLine>();
+            if (outLine != null)
             {
-                highlightEffect.highlighted = true;
+                outLine.isOutLineActive = true;
             }
             else
             {
