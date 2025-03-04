@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1bf42c897c344772a8dea9cae097da4, type: 3}
   m_Name: FastOutline
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings: {fileID: 11400000, guid: 60def1a5c8a24174fb41555d03a8ea67, type: 2}
   shaders:
     mask: {fileID: 4800000, guid: d6efd8a53bb54ff68576b38c066c3134, type: 3}
@@ -221,16 +221,16 @@ MonoBehaviour:
   m_Name: SoftOutline
   m_EditorClassIdentifier: 
   m_Active: 1
-  settings: {fileID: 0}
+  settings: {fileID: 11400000, guid: e57e8505aa34d6a448c9ebbaf35defe1, type: 2}
   shaders:
-    mask: {fileID: 0}
-    silhouette: {fileID: 0}
-    silhouetteInstanced: {fileID: 0}
-    boxBlur: {fileID: 0}
-    gaussianBlur: {fileID: 0}
-    kawaseBlur: {fileID: 0}
-    dilate: {fileID: 0}
-    outline: {fileID: 0}
+    mask: {fileID: 4800000, guid: 231df427ffff4fee9202f22ce6a5d357, type: 3}
+    silhouette: {fileID: 4800000, guid: b0e6032b7b104d8db7f40d7f6e743674, type: 3}
+    silhouetteInstanced: {fileID: 4800000, guid: b7b25b6fd39f14aeeba46013a510a40c, type: 3}
+    boxBlur: {fileID: 4800000, guid: d8d4df91388b465aa9a07d27ccc72b73, type: 3}
+    gaussianBlur: {fileID: 4800000, guid: cb6a37cd1abc46e180a83317d8fefb26, type: 3}
+    kawaseBlur: {fileID: 4800000, guid: ead7e4745cd94d22beaeeea69ae381a7, type: 3}
+    dilate: {fileID: 4800000, guid: a987f6629a694e19a74290edccde4040, type: 3}
+    outline: {fileID: 4800000, guid: b0cf66d628f541279229be85e2c31db3, type: 3}
 --- !u!114 &5450602759486170200
 MonoBehaviour:
   m_ObjectHideFlags: 0
