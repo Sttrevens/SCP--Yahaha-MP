@@ -9,6 +9,9 @@ public class FirstPersonOptimizer : MonoBehaviour
     public Transform cameraPosition;
     public Transform aimPosition;
     public Transform flashlightPosition;
+    
+    [Header("Shadow Casting Mode")]
+    [SerializeField] private ShadowCastingMode shadowCastingMode;
 
     private void Start()
     {
@@ -28,7 +31,7 @@ public class FirstPersonOptimizer : MonoBehaviour
                 // Make sure the main camera's culling mask excludes the FirstPerson layer
                 Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));*/
 
-                renderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+                renderer.shadowCastingMode = shadowCastingMode;
             }
 
             // Handle MeshRenderers
@@ -42,7 +45,7 @@ public class FirstPersonOptimizer : MonoBehaviour
                 }
                 renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");*/
                 
-                renderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+                renderer.shadowCastingMode = shadowCastingMode;
             }
         }
     }

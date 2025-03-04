@@ -81,7 +81,7 @@ namespace LPSurvivalEngine
                             var outLine = currentInteractGameObject.GetComponent<HasOutLine>();
                             if (outLine != null)
                             {
-                                outLine.isOutLineActive = false; 
+                                outLine.SetOutLine(false);
                             }
                         }
 
@@ -97,7 +97,7 @@ namespace LPSurvivalEngine
                         var outLine = currentInteractGameObject.GetComponent<HasOutLine>();
                         if (outLine != null)
                         {
-                            outLine.isOutLineActive = false;
+                            outLine.SetOutLine(false);
                         }
                     }
 
@@ -191,7 +191,7 @@ namespace LPSurvivalEngine
             var outLine = currentInteractGameObject.GetComponent<HasOutLine>();
             if (outLine != null)
             {
-                outLine.isOutLineActive = true;
+                outLine.SetOutLine(true);
             }
             else
             {

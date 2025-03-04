@@ -11,7 +11,6 @@ public class HasOutLine : MonoBehaviour
     
     private Renderer[] _renderers;
     private uint _originalLayer;
-    public bool isOutLineActive;
 
     private void Start()
     {
@@ -19,14 +18,9 @@ public class HasOutLine : MonoBehaviour
         _renderers = TryGetComponent<Renderer>(out var meshRenderer)
             ? new[] {meshRenderer} : GetComponentsInChildren<Renderer>();
         _originalLayer = _renderers[0].renderingLayerMask;
-        isOutLineActive = false;
     }
 
-    private void Update()
-    {
-        SetOutLine(isOutLineActive);
-    }
-    private void SetOutLine(bool enabled)
+    public void SetOutLine(bool enabled)
     {
         foreach (var rend in _renderers)
         {
