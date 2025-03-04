@@ -8,6 +8,8 @@ public class NetworkStart : MonoBehaviour
 
     public string roomName;
 
+    public bool isSinglePlayerMode = false;
+
     private void Awake()
     {
         bootstrap = GetComponent<FusionBootstrap>();
@@ -16,12 +18,22 @@ public class NetworkStart : MonoBehaviour
         {
             bootstrap.DefaultRoomName = TitleScreenUI.roomName;
             
-            PhotonAppSettings.Global.AppSettings.FixedRegion = TitleScreenUI.region;
+            PhotonAppSettings.Global.AppSettings.FixedRegion = TitleScreenUI.Region;
         }
 
         roomName = bootstrap.DefaultRoomName;
-        bootstrap.StartSharedClient();
-        
+
+        isSinglePlayerMode = TitleScreenUI.IsSpGame;
+        Debug.Log("isSinglePlayerMode: " + isSinglePlayerMode);
+        if (isSinglePlayerMode)
+        {
+            bootstrap.StartSinglePlayer();
+        }
+        else
+        {
+            bootstrap.StartSharedClient();
+        }
+
         AudioManager.Instance.StopBGM();
     }
 }

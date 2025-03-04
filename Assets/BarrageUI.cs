@@ -201,11 +201,12 @@ public class BarrageUI : NetworkBehaviour
        rt.anchoredPosition3D = Vector3.zero; // 重置锚点位置
        rt.localRotation = Quaternion.identity;
        rt.localScale = Vector3.one;
-    
+    Debug.Log("Barrage Fucked1.");
     // 强制刷新布局
     LayoutRebuilder.ForceRebuildLayoutImmediate(scroll_rect.content);
     
     scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, ((float)min)/2));
+    Debug.Log("Barrage Fucked2.");
    }
 
 }
