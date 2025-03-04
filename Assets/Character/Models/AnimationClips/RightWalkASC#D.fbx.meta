@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1480f218e217ed24b95f0c4c1745f297
+guid: 11cf013a2f3c44b46937ca0beb070c56
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -16,11 +16,22 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: "Invalid copied Avatar Rig Configuration:\n\tNo human bone found.
-      Ensure both rig type match\n"
-    rigImportWarnings: 
+    rigImportErrors: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'UpperLeg_L'
+      : position error = 79.403343 mm\n\t'LowerLeg_L' : position error = 72.781349
+      mm\n\t'Ankle_L' : position error = 7.271069 mm\n"
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\n\t'Thumb_02_L' has translation animation
+      that will be discarded.\n\t'IndexFinger_02_L' has translation animation that
+      will be discarded.\n\t'IndexFinger_03_L' has translation animation that will
+      be discarded.\n\t'Finger_02_L' has translation animation that will be discarded.\n\t'Finger_03_L'
+      has translation animation that will be discarded.\n\t'Thumb_02_R' has translation
+      animation that will be discarded.\n\t'IndexFinger_02_R' has translation animation
+      that will be discarded.\n\t'IndexFinger_03_R' has translation animation that
+      will be discarded.\n\t'Finger_02_R' has translation animation that will be
+      discarded.\n\t'Finger_03_R' has translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -34,7 +45,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Run
+      name: Take 001
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0
@@ -50,7 +61,7 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 1
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0

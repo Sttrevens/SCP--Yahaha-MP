@@ -76,15 +76,15 @@ public class PlayerMovement : NetworkBehaviour
             if (Input.GetButtonDown("Jump"))
             {
                 if (GetComponent<HealthSystem>().stamina.currentValue > 10f)
-            {
-                _jumpPressed = true;
-                if (_controller.isGrounded)
                 {
-                    GetComponent<HealthSystem>().stamina.Subtract(10f);
+                    _jumpPressed = true;
+                    if (_controller.isGrounded)
+                    {
+                        GetComponent<HealthSystem>().stamina.Subtract(10f);
+                    }
                 }
             }
-        }
-        if((Input.GetButton("Sprint") && isMoving) && GetComponent<HealthSystem>().stamina.currentValue > 0){
+            if((Input.GetButton("Sprint") && isMoving) && GetComponent<HealthSystem>().stamina.currentValue > 0){
                 _targetFOV = sprintFOV;
                 _targetSpeed = sprintSpeed;
                 issprinting = true;
@@ -95,9 +95,9 @@ public class PlayerMovement : NetworkBehaviour
                 _targetSpeed = defaultSpeed;
                 issprinting = false;
             }
-
-        plCamera.fieldOfView = Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Time.fixedDeltaTime);
-        playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Time.fixedDeltaTime);
+            // 插值使得更改更加平滑
+            plCamera.fieldOfView = Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Time.fixedDeltaTime);
+            playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Time.fixedDeltaTime);
         }
     }
 

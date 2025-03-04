@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1480f218e217ed24b95f0c4c1745f297
+guid: f676dbe68a4cc2742ad8442a39477016
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -16,11 +16,18 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: "Invalid copied Avatar Rig Configuration:\n\tNo human bone found.
-      Ensure both rig type match\n"
-    rigImportWarnings: 
+    rigImportErrors: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'UpperLeg_L'
+      : position error = 62.647461 mm\n\t'LowerLeg_L' : position error = 88.871819
+      mm\n\t'Ankle_L' : position error = 4.626167 mm\n"
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\n\t'Thumb_02_L' has translation animation
+      that will be discarded.\n\t'IndexFinger_02_L' has translation animation that
+      will be discarded.\n\t'IndexFinger_03_L' has translation animation that will
+      be discarded.\n\t'Finger_02_L' has translation animation that will be discarded.\n\t'Finger_03_L'
+      has translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -34,7 +41,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Run
+      name: Take 001
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0
@@ -50,7 +57,7 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 1
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
