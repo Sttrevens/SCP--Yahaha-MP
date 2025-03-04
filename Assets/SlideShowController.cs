@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.Events;
 
 public class SlideShowController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class SlideShowController : MonoBehaviour
 
     [SerializeField] private AudioClip messageSound;
     [SerializeField] private GameObject messageSoundObject;
+    [SerializeField] private UnityEvent onSlideShowInteract;
 
     void Start()
     {
@@ -50,6 +52,8 @@ public class SlideShowController : MonoBehaviour
                 StopCoroutine(PlayMessageSound());
                 messageSoundObject.GetComponent<AudioSource>().Stop();
             }
+            if (onSlideShowInteract != null)
+                onSlideShowInteract.Invoke();
         }
         else
         {
