@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using AB.Shop;
+
 
 public class ShopManager : MonoBehaviour
 {
@@ -46,7 +48,7 @@ public class ShopManager : MonoBehaviour
         {
             GameObject itemButton = Instantiate(itemButtonPrefab, itemListPanel);
             ShopItemInteraction button = itemButton.GetComponent<ShopItemInteraction>();
-            button.Setup(item, this);
+            button.Setup(item);
         }
     }
 
