@@ -14,6 +14,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 
     public void PlayerJoined(PlayerRef player)
     {
+        
         // 当前加入的玩家是第几个 => chosenIndex
         int chosenIndex = Runner.ActivePlayers.Count() - 1;
 
@@ -33,10 +34,15 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 
             // 验证 spawnPoint 是否正确
             Debug.Log($"Spawning at Position: {spawnPoint.position}, Rotation: {spawnPoint.rotation}");
-
+            if (chosenPrefab == null)
+            {
+                Debug.LogError("playerPrefab 为空，请在 Inspector 里赋值！");
+                return;
+            }
             // 在服务器下进行 Spawn 操作
             NetworkObject plObject = Runner.Spawn(chosenPrefab, spawnPoint.position, spawnPoint.rotation, player);
-
+            //这个过程是个异步过程
+            Runner.SetPlayerObject(player, plObject);
             // Debug 新实例的实际位置
             Debug.Log($"Spawned Object Position: {plObject.transform.position}, Rotation: {plObject.transform.rotation}");
 

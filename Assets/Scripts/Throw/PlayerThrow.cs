@@ -4,7 +4,9 @@ using UnityEngine;
 using TMPro;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
-
+/// <summary>
+/// ç”¨æ¥ç ¸ä¸œè¥¿çš„åŠ¨ç”» ç›®å‰æ²¡ç”¨ï¼Œåé¢æˆ–è®¸æœ‰ç”¨
+/// </summary>
 public class PlayerThrow : MonoBehaviour
 {
     public Transform holdPoint;
@@ -12,7 +14,7 @@ public class PlayerThrow : MonoBehaviour
     public float throwForceMax = 20f;
     public float maxPickupMass = 5f;
     public float rotateSpeed = 100f;
-    public float pickupSmoothDuration = 0.15f; // Æ½»¬ÄÃÈ¡µÄ³ÖĞøÊ±¼ä
+    public float pickupSmoothDuration = 0.15f; 
 
     private Rigidbody heldObject;
     private Collider heldObjectCollider;
@@ -36,12 +38,12 @@ public class PlayerThrow : MonoBehaviour
             }
             else
             {
-                Debug.Log("Î´ÕÒµ½ÃûÎªPickupErrorMessageµÄ×ÓÎïÌå");
+                Debug.Log("Î´ï¿½Òµï¿½ï¿½ï¿½ÎªPickupErrorMessageï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             }
         }
         else
         {
-            Debug.Log("Î´ÕÒµ½tagÎªUI PlayerµÄÎïÌå");
+            Debug.Log("Î´ï¿½Òµï¿½tagÎªUI Playerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
@@ -53,7 +55,7 @@ public class PlayerThrow : MonoBehaviour
             {
                 return child;
             }
-            // µİ¹é²éÕÒ
+            // ï¿½İ¹ï¿½ï¿½ï¿½ï¿½
             Transform result = FindDeepChild(child, name);
             if (result != null)
             {
@@ -155,7 +157,7 @@ public class PlayerThrow : MonoBehaviour
                 }
                 else
                 {
-                    // ÖÊÁ¿Ì«´ó¾Ù²»¶¯Ê±£¬ÏÔÊ¾ÌáÊ¾ÎÄ±¾
+                    // ï¿½ï¿½ï¿½ï¿½Ì«ï¿½ï¿½Ù²ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ê¾ï¿½Ä±ï¿½
                     pickupErrorMessage.gameObject.SetActive(true);
                     StartCoroutine(HideErrorMessageAfterSeconds(3f));
                 }

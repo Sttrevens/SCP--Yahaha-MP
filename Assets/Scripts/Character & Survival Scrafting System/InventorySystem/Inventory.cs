@@ -43,7 +43,8 @@ namespace LPSurvivalEngine
         private int currentWieldableIndex;
 
         [SerializeField] private AudioClip dropSound;
-
+        private NetworkObject currentPlayerObject;
+        public bool isHolding  = false; 
 
         private void Awake()
         {
@@ -62,6 +63,8 @@ namespace LPSurvivalEngine
                 Destroy(gameObject); 
             }
         }
+
+        
 
         private void OnEnable()
         {
@@ -148,16 +151,24 @@ namespace LPSurvivalEngine
         }
 
         // 新增：专门处理拾取物品的方法
-public void PickupItem(ItemObject itemObject)
-{
-    if (itemObject != null)
-    {
-        AddItem(itemObject.item, itemObject.currentDurability); // 确保传递当前耐久度
-    }
-}
-        
+        public void PickupItem(ItemObject itemObject)
+        {
+            currentPlayerObject = Runner.GetPlayerObject(Runner.LocalPlayer);
+            currentPlayerObject.GetComponent<AnimatorManager>().PickupCount++;
+            if (itemObject != null)
+            {
+                AddItem(itemObject.item, itemObject.currentDurability); // 确保传递当前耐久度
+            }
+            
+        }
+        /// <summary>
+        /// 加入item到slot中
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="durability"></param>
         public void AddItem(ItemDatabase item, float durability = -1)
         {
+            
             if (item.canStackItem)
             {
                 ItemSlot slotToStackTo = GetItemstack(item);
@@ -185,6 +196,8 @@ public void PickupItem(ItemObject itemObject)
 
         public void ThrowItem(ItemDatabase item)
         {
+            // 声音还没写
+            // AudioManager.Instance.PlaySFX(AudioManager.Instance.gameObject, );
             Prompt.instance.CustomPrompt(string.Format("{0} has been thrown!", selectedItem.item.name));
             throwedItem = item;
             currentThrowingItemDurability = selectedItem.currentDurability;
@@ -217,100 +230,104 @@ public void PickupItem(ItemObject itemObject)
         }
 
         private Coroutine requestAuthorityCoroutine;
-private bool isRequestingAuthority = false;
-
-/// <summary>
-/// 如果没有 StateAuthority，则持续发起请求，直到拿到或超过最大尝试次数。
-/// </summary>
-public void RequestStateAuthorityForEquipItem(PlayerRef player)
-{
-    // 防止重复开启协程
-    if (!isRequestingAuthority)
-    {
-        requestAuthorityCoroutine = StartCoroutine(RequestAuthorityLoop());
-    }
-}
-
-private IEnumerator RequestAuthorityLoop()
-{
-    isRequestingAuthority = true;
-
-    // 你可以自定义一个上限，防止死循环
-    int maxAttempts = 10; 
-    int attempts = 0;
-
-    while (!Object.HasStateAuthority && attempts < maxAttempts)
-    {
-        Object.RequestStateAuthority();
-        attempts++;
-
-        // 等待一小段时间再请求下一次
-        yield return new WaitForSeconds(0.1f);
-    }
-
-    // 请求结束，要么成功，要么超时
-    if (Object.HasStateAuthority)
-    {
-        Debug.Log($"成功拿到 StateAuthority，尝试次数: {attempts}");
-        // 在这之后你可以执行真正需要有权限才可以做的操作，比如 EquipNewItem()
-        // EquipWieldableItem();
-    }
-    else
-    {
-        Debug.LogWarning($"多次尝试仍未拿到 StateAuthority，尝试次数: {attempts}");
-        // 你可以做一些 fallback 处理
-    }
-
-    isRequestingAuthority = false;
-    requestAuthorityCoroutine = null;
-}
-
-public void RequestStateAuthorityForThrowItem(ItemDatabase item)
-{
-    // 防止重复开启协程
-    if (!isRequestingAuthority)
-    {
-        requestAuthorityCoroutine = StartCoroutine(RequestThrowAuthorityLoop(item));
-    }
-}
-
-private IEnumerator RequestThrowAuthorityLoop(ItemDatabase item)
-{
-    isRequestingAuthority = true;
-
-    // 你可以自定义一个上限，防止死循环
-    int maxAttempts = 10; 
-    int attempts = 0;
-
-    while (!Object.HasStateAuthority && attempts < maxAttempts)
-    {
-        Object.RequestStateAuthority();
-        attempts++;
-
-        // 等待一小段时间再请求下一次
-        yield return new WaitForSeconds(0.1f);
-    }
-
-    // 请求结束，要么成功，要么超时
-    if (Object.HasStateAuthority)
-    {
-        Debug.Log($"成功拿到 StateAuthority，尝试次数: {attempts}");
-        // 在这之后你可以执行真正需要有权限才可以做的操作，比如 EquipNewItem()
-        RPC_RequestSpawnItem(Runner.LocalPlayer);
-    }
-    else
-    {
-        Debug.LogWarning($"多次尝试仍未拿到 StateAuthority，尝试次数: {attempts}");
-        // 你可以做一些 fallback 处理
-    }
-
-    isRequestingAuthority = false;
-    requestAuthorityCoroutine = null;
-}
-
+        private bool isRequestingAuthority = false;
+        
+        /// <summary>
+        /// 如果没有 StateAuthority，则持续发起请求，直到拿到或超过最大尝试次数。
+        /// </summary>
+        public void RequestStateAuthorityForEquipItem(PlayerRef player)
+        {
+            // 防止重复开启协程
+            if (!isRequestingAuthority)
+            {
+                requestAuthorityCoroutine = StartCoroutine(RequestAuthorityLoop());
+            }
+        }
+        
+        private IEnumerator RequestAuthorityLoop()
+        {
+            isRequestingAuthority = true;
+        
+            // 你可以自定义一个上限，防止死循环
+            int maxAttempts = 10; 
+            int attempts = 0;
+        
+            while (!Object.HasStateAuthority && attempts < maxAttempts)
+            {
+                Object.RequestStateAuthority();
+                attempts++;
+        
+                // 等待一小段时间再请求下一次
+                yield return new WaitForSeconds(0.1f);
+            }
+        
+            // 请求结束，要么成功，要么超时
+            if (Object.HasStateAuthority)
+            {
+                Debug.Log($"成功拿到 StateAuthority，尝试次数: {attempts}");
+                // 在这之后你可以执行真正需要有权限才可以做的操作，比如 EquipNewItem()
+                // EquipWieldableItem();
+            }
+            else
+            {
+                Debug.LogWarning($"多次尝试仍未拿到 StateAuthority，尝试次数: {attempts}");
+                // 你可以做一些 fallback 处理
+            }
+        
+            isRequestingAuthority = false;
+            requestAuthorityCoroutine = null;
+        }
+        
+        public void RequestStateAuthorityForThrowItem(ItemDatabase item)
+        {
+            // 防止重复开启协程
+            if (!isRequestingAuthority)
+            {
+                requestAuthorityCoroutine = StartCoroutine(RequestThrowAuthorityLoop(item));
+            }
+        }
+        
+        private IEnumerator RequestThrowAuthorityLoop(ItemDatabase item)
+        {
+            isRequestingAuthority = true;
+        
+            // 你可以自定义一个上限，防止死循环
+            int maxAttempts = 10; 
+            int attempts = 0;
+        
+            while (!Object.HasStateAuthority && attempts < maxAttempts)
+            {
+                Object.RequestStateAuthority();
+                attempts++;
+        
+                // 等待一小段时间再请求下一次
+                yield return new WaitForSeconds(0.1f);
+            }
+        
+            // 请求结束，要么成功，要么超时
+            if (Object.HasStateAuthority)
+            {
+                Debug.Log($"成功拿到 StateAuthority，尝试次数: {attempts}");
+                // 在这之后你可以执行真正需要有权限才可以做的操作，比如 EquipNewItem()
+                RPC_RequestSpawnItem(Runner.LocalPlayer);
+            }
+            else
+            {
+                Debug.LogWarning($"多次尝试仍未拿到 StateAuthority，尝试次数: {attempts}");
+                // 你可以做一些 fallback 处理
+            }
+        
+            isRequestingAuthority = false;
+            requestAuthorityCoroutine = null;
+        }
+        /// <summary>
+        /// 物品在手上位置生成物体的逻辑
+        /// </summary>
+        /// <param name="player"></param>
         // 物品生成逻辑（只在 StateAuthority 执行）
         private void SpawnItem(PlayerRef player)
         {
+            
             Owner = player;
 
             // 物品实例化的旋转可以根据需要调整
@@ -410,9 +427,15 @@ private IEnumerator RequestThrowAuthorityLoop(ItemDatabase item)
         // {
         //     DisableItem(selectedItemIndex);
         // }
-
+        /// <summary>
+        /// 扔掉物体
+        /// </summary>
         public void DropItem()
         {
+            //播放扔的动画
+            currentPlayerObject.GetComponent<AnimatorManager>().ThrowCount++;
+            //改变人物状态
+            currentPlayerObject.GetComponent<AnimatorManager>().IsHolding = false;
             if (selectedItem== null || selectedItem.item == null)
                 return;
 
@@ -453,7 +476,10 @@ private IEnumerator RequestThrowAuthorityLoop(ItemDatabase item)
             UpdateUI();
             // SelectItem(selectedItemIndex);
         }
-
+        /// <summary>
+        /// 收起物体
+        /// </summary>
+        /// <param name="index"></param>
         void DisableItem(int index)
         {
             InventorySlots[index].equipped = false;
@@ -465,7 +491,9 @@ private IEnumerator RequestThrowAuthorityLoop(ItemDatabase item)
             // if (selectedItemIndex == index)
             //     SelectItem(index);
         }
-
+        /// <summary>
+        /// 扔的时候调用 移除当前物体
+        /// </summary>
         public void RemoveSelectedItem()
         {
             selectedItem.quantity--;
@@ -479,7 +507,10 @@ private IEnumerator RequestThrowAuthorityLoop(ItemDatabase item)
             }
             UpdateUI();
         }
-
+        /// <summary>
+        /// 暂时没用建造系统 统一的移除物体
+        /// </summary>
+        /// <param name="item"></param>
         public void RemoveItem(ItemDatabase item)
         {
             for (int i = 0; i < slots.Length; i++)

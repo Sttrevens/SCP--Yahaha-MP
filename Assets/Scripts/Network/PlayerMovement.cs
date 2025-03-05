@@ -118,11 +118,13 @@ public class PlayerMovement : NetworkBehaviour
         Vector3 move = Vector3.zero;
         if (PlayerController.instance.cursor)
         {
-            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) *
-                           Time.fixedDeltaTime * playerSpeed;
+            // 优化小技巧：较小的数字不要过早的参与计算，应将小数字先相乘然后整体与大数相乘，能够减少浮点数的舍入精度误差
+            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.fixedDeltaTime * playerSpeed);
         }
+        _animatorManager.XAxis = Input.GetAxis("Horizontal");
+        _animatorManager.ZAxis = Input.GetAxis("Vertical");
         _animatorManager.Speed = move.magnitude * 100f;
-
+        
         if (_jumpPressed && _controller.isGrounded)
         {
             _animatorManager.JumpCount++;
@@ -135,7 +137,7 @@ public class PlayerMovement : NetworkBehaviour
         if (move != Vector3.zero)
         {
             // Only adjust the forward direction slightly based on the move direction when moving.
-            transform.forward = Vector3.Slerp(transform.forward, move.normalized, 0.1f);
+            // transform.forward = Vector3.Slerp(transform.forward, move.normalized, 0.1f);
             isMoving = true;
         }
         else
@@ -159,8 +161,8 @@ public class PlayerMovement : NetworkBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
 
         // Smoothly rotate the object towards the target rotation first.
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
-        
+        transform.rotation = targetRotation;
+        //--------------------------------------控制骨骼旋转的逻辑--------------------------------------------------------------------------------
         // 本地控制的上半身旋转，基于摄像机的旋转
         if (upperBodys != null)
         {
@@ -227,4 +229,5 @@ public class PlayerMovement : NetworkBehaviour
             upperBodyRotation = upperBodys[0].rotation;  // 假设第一个上半身骨骼为主
         }
     }
+    // ---------------------------------------------骨骼旋转逻辑结束--------------------------------------------------
 }

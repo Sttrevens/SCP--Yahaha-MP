@@ -27,6 +27,7 @@ namespace LPSurvivalEngine
 
         private ItemDatabase equippedItem;
         public static WieldableManager instance;
+        private NetworkObject currentPlayerObject;
 
         private void Awake()
         {
@@ -66,21 +67,21 @@ namespace LPSurvivalEngine
                    PlayerController.instance.cursor;
         }
 
-    private int currentWieldableIndex = -1;
+        private int currentWieldableIndex = -1;
 
-    public ItemSlot GetCurrentWieldableSlot()
-    {
-        if (currentWieldableIndex >= 0)
+        public ItemSlot GetCurrentWieldableSlot()
         {
-            return Inventory.instance.slots[currentWieldableIndex];
+            if (currentWieldableIndex >= 0)
+            {
+                return Inventory.instance.slots[currentWieldableIndex];
+            }
+            return null;
         }
-        return null;
-    }
 
-    public int GetCurrentWieldableIndex()
-    {
-        return currentWieldableIndex;
-    }
+        public int GetCurrentWieldableIndex()
+        {
+            return currentWieldableIndex;
+        }
 
 
         public void EquipNewItem(ItemDatabase item)
@@ -95,53 +96,55 @@ namespace LPSurvivalEngine
         private bool isRequestingAuthority = false;
 
         public void RequestStateAuthorityForEquipItem(ItemDatabase item)
-{
-    // 防止重复开启协程
-    if (!isRequestingAuthority)
-    {
-        requestAuthorityCoroutine = StartCoroutine(RequestAuthorityLoop(item));
-    }
-}
-
-private IEnumerator RequestAuthorityLoop(ItemDatabase item)
-{
-    isRequestingAuthority = true;
-
-    // 你可以自定义一个上限，防止死循环
-    int maxAttempts = 10; 
-    int attempts = 0;
-
-    while (!Object.HasStateAuthority && attempts < maxAttempts)
-    {
-        Object.RequestStateAuthority();
-        attempts++;
-
-        // 等待一小段时间再请求下一次
-        yield return new WaitForSeconds(0.1f);
-    }
-
-    // 请求结束，要么成功，要么超时
-    if (Object.HasStateAuthority)
-    {
-        Debug.Log($"成功拿到 StateAuthority，尝试次数: {attempts}");
-        // 在这之后你可以执行真正需要有权限才可以做的操作，比如 EquipNewItem()
-        Debug.Log("EquipNewItem");
-            equippedItem = item;
-            RPC_RequestEquipItem(Runner.LocalPlayer);
+        {
+            // 防止重复开启协程
+            if (!isRequestingAuthority)
+            {
+                requestAuthorityCoroutine = StartCoroutine(RequestAuthorityLoop(item));
+            }
         }
-    else
-    {
-        Debug.LogWarning($"多次尝试仍未拿到 StateAuthority，尝试次数: {attempts}");
-        // 你可以做一些 fallback 处理
-    }
 
-    isRequestingAuthority = false;
-    requestAuthorityCoroutine = null;
-}
+        private IEnumerator RequestAuthorityLoop(ItemDatabase item)
+        {
+            isRequestingAuthority = true;
 
-[Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+            // 你可以自定义一个上限，防止死循环
+            int maxAttempts = 10; 
+            int attempts = 0;
+
+            while (!Object.HasStateAuthority && attempts < maxAttempts)
+            {
+                Object.RequestStateAuthority();
+                attempts++;
+
+                // 等待一小段时间再请求下一次
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            // 请求结束，要么成功，要么超时
+            if (Object.HasStateAuthority)
+            {
+                Debug.Log($"成功拿到 StateAuthority，尝试次数: {attempts}");
+                // 在这之后你可以执行真正需要有权限才可以做的操作，比如 EquipNewItem()
+                Debug.Log("EquipNewItem");
+                    equippedItem = item;
+                    RPC_RequestEquipItem(Runner.LocalPlayer);
+            }
+            else
+            {
+                Debug.LogWarning($"多次尝试仍未拿到 StateAuthority，尝试次数: {attempts}");
+                // 你可以做一些 fallback 处理
+            }
+
+            isRequestingAuthority = false;
+            requestAuthorityCoroutine = null;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_RequestEquipItem(PlayerRef player)
         {
+            currentPlayerObject = Runner.GetPlayerObject(Runner.LocalPlayer);
+            currentPlayerObject.GetComponent<AnimatorManager>().IsHolding = true;
             if (!Object.HasStateAuthority) return;
 
             //GameObject.Find("CurrentPlayer").GetComponent<FirstPersonOptimizer>().Wield();
@@ -150,59 +153,59 @@ private IEnumerator RequestAuthorityLoop(ItemDatabase item)
         }
         
         public Transform CurrentWieldableRootTransform()
-{
-    if (equippedItem == null || equippedItem.wieldablePrefab == null) return null;
+        {
+            if (equippedItem == null || equippedItem.wieldablePrefab == null) return null;
 
-    var prefab = equippedItem.wieldablePrefab;
-    bool hasFlashlight = prefab.GetComponent<Flashlight>() != null;
-    bool hasConeDetection = prefab.GetComponent<ConeDetection>() != null;
+            var prefab = equippedItem.wieldablePrefab;
+            bool hasFlashlight = prefab.GetComponent<Flashlight>() != null;
+            bool hasConeDetection = prefab.GetComponent<ConeDetection>() != null;
 
-    GameObject playerObject = GameObject.Find("CurrentPlayer");
-    if (playerObject == null) return null;
+            GameObject playerObject = GameObject.Find("CurrentPlayer");
+            if (playerObject == null) return null;
 
-    if (!hasFlashlight && !hasConeDetection)
-    {
-        return playerObject.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
-    }
-    else if (!hasFlashlight && hasConeDetection)
-    {
-        return playerObject.transform.Find("UpperBody/CameraRoot/HoldCameraRoot");
-    }
-    else if (hasFlashlight && !hasConeDetection)
-    {
-        return playerObject.transform.Find("UpperBody/CameraRoot/FlashlightRoot");
-    }
+            if (!hasFlashlight && !hasConeDetection)
+            {
+                return playerObject.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
+            }
+            else if (!hasFlashlight && hasConeDetection)
+            {
+                return playerObject.transform.Find("UpperBody/CameraRoot/HoldCameraRoot");
+            }
+            else if (hasFlashlight && !hasConeDetection)
+            {
+                return playerObject.transform.Find("UpperBody/CameraRoot/FlashlightRoot");
+            }
 
-    return null;
-}
-
+            return null;
+        }
+        
         private void SpawnEquippedItem(PlayerRef player)
-{
-    Owner = player;
+        {
+            Owner = player;
 
-    Transform spawnTransform = CurrentWieldableRootTransform();
-    if (spawnTransform == null)
-    {
-        Debug.LogError($"Unexpected item type: {equippedItem.wieldablePrefab.name}");
-        return;
-    }
+            Transform spawnTransform = CurrentWieldableRootTransform();
+            if (spawnTransform == null)
+            {
+                Debug.LogError($"Unexpected item type: {equippedItem.wieldablePrefab.name}");
+                return;
+            }
 
-    // 使用世界空间中的身份旋转
-    Quaternion spawnRotation = Quaternion.identity;
-    
-    NetworkObject spawnedItem = Runner.Spawn(
-        equippedItem.wieldablePrefab, 
-        GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").position, 
-        spawnRotation  // 使用身份旋转
-    );
+            // 使用世界空间中的身份旋转
+            Quaternion spawnRotation = Quaternion.identity;
+            
+            NetworkObject spawnedItem = Runner.Spawn(
+                equippedItem.wieldablePrefab, 
+                GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").position, 
+                spawnRotation  // 使用身份旋转
+            );
 
-    if (spawnedItem == null)
-    {
-        Debug.LogError($"Failed to spawn item: {equippedItem.wieldablePrefab.name}");
-        return;
-    }
+            if (spawnedItem == null)
+            {
+                Debug.LogError($"Failed to spawn item: {equippedItem.wieldablePrefab.name}");
+                return;
+            }
 
-    if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
+            if (spawnedItem.TryGetComponent<Wieldable>(out var wieldable))
             {
                 currentWieldable = wieldable;
                 currentWieldable.player = player;
@@ -218,14 +221,14 @@ private IEnumerator RequestAuthorityLoop(ItemDatabase item)
             spawnedItem.transform.localPosition = Vector3.zero;
             spawnedItem.transform.localRotation = Quaternion.identity;
 
-            // NetworkObject playerObject = Runner.GetPlayerObject(player);
-            // if (playerObject != null)
-            // {
-            //     MaterialRenderTextureManager.Instance.AssignMaterialAndRenderTexture(playerObject);
-            // }
+                    // NetworkObject playerObject = Runner.GetPlayerObject(player);
+                    // if (playerObject != null)
+                    // {
+                    //     MaterialRenderTextureManager.Instance.AssignMaterialAndRenderTexture(playerObject);
+                    // }
 
-    //SetupSpawnedItem(spawnedItem, spawnTransform, player);
-}
+            //SetupSpawnedItem(spawnedItem, spawnTransform, player);
+        }
 
 //         private void SetupSpawnedItem(NetworkObject spawnedItem, Transform parent, PlayerRef player)
 // {
@@ -261,9 +264,14 @@ private IEnumerator RequestAuthorityLoop(ItemDatabase item)
 //         spawnedItem.transform.localRotation = Quaternion.identity;
 //     }
 // }
-
+        /// <summary>
+        /// 收起物体
+        /// </summary>
+        /// <param name="player"></param>
         public void DropWieldable(PlayerRef player)
         {
+            Debug.Log("正在调用收起物体的逻辑");
+            currentPlayerObject.GetComponent<AnimatorManager>().IsHolding = false;
             if (currentWieldable != null)
             {
             //     NetworkObject playerObject = Runner.GetPlayerObject(player);
@@ -271,8 +279,8 @@ private IEnumerator RequestAuthorityLoop(ItemDatabase item)
             // {
             //     MaterialRenderTextureManager.Instance.ReleaseMaterialAndRenderTexture(playerObject);
             // }
-                Destroy(currentWieldable.gameObject);
-                currentWieldable = null;
+            Destroy(currentWieldable.gameObject);
+            currentWieldable = null;
             }
         }
     }
