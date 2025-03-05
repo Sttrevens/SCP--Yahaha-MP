@@ -135,7 +135,7 @@ public class EnemyMovement : NetworkBehaviour
     /// 两种情况下随机点的生成逻辑
     /// </summary>
     /// <returns></returns>
-    private Vector3 GetRandomPatrolPoint()
+    public Vector3 GetRandomPatrolPoint()
     {
         if (patrolMode == PatrolMode.RandomCircle)
         {

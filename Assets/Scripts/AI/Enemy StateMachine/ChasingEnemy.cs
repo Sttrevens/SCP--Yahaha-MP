@@ -9,11 +9,28 @@ public class ChasingEnemy : EnemyMovement
     [HideInInspector] public Vector3 soundTargetPosition;
     public float chasingSpeed = 5f;
     public float hearingRadius = 10f;
+    public IEnemyState StateAfterChasing;
+    
+    [SerializeField] private string stateTypeString; // 在Inspector中设置
+    
+    private Dictionary<string, IEnemyState> stateDictionary 
+        = new Dictionary<string, IEnemyState>
+        {
+            { "PossessingState", new PossessingState() },
+            { "IdleState", new IdleState() }
+            // 也可以用反射或手动填更多映射
+        };
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
+        if (stateDictionary.TryGetValue(stateTypeString, out IEnemyState foundState))
+        {
+            StateAfterChasing = foundState;
+        }
+        else
+        {
+            StateAfterChasing = new AttackingState();
+        }
     }
 
     // Update is called once per frame

@@ -59,11 +59,11 @@ namespace LPSurvivalEngine
             IsPickedUp = true;
             Owner = player; // ��¼˭ʰȡ������
             if (Runner.TryGetPlayerObject(player, out var playerObject))
-            {
-                playerObject.GetComponent<AnimatorManager>().PickupCount++;
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.gameObject, pickupSound);
-            }
-            Debug.Log($"Ʒ {player} ʰȡ");
+{
+    Debug.Log($"pickup {player} ʰȡ");
+    playerObject.GetComponent<AnimatorManager>().PickupCount++;
+    AudioManager.Instance.PlaySFX(AudioManager.Instance.gameObject, pickupSound);
+}
         }
     
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

@@ -8,9 +8,18 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 {
     public List<GameObject> PlayerPrefabsPool;
     public Transform spawnPoint;
+    
+    public Dictionary<PlayerRef, NetworkObject> assignedObjects = new Dictionary<PlayerRef, NetworkObject>();
 
     // 只在本地维护对生成的播放器Prefab的引用，方便离开时回收
     private Dictionary<PlayerRef, GameObject> assignedPrefabs = new Dictionary<PlayerRef, GameObject>();
+
+    public static PlayerSpawner Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void PlayerJoined(PlayerRef player)
     {
@@ -36,6 +45,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 
             // 在服务器下进行 Spawn 操作
             NetworkObject plObject = Runner.Spawn(chosenPrefab, spawnPoint.position, spawnPoint.rotation, player);
+            assignedObjects[player] = plObject;
 
             // Debug 新实例的实际位置
             Debug.Log($"Spawned Object Position: {plObject.transform.position}, Rotation: {plObject.transform.rotation}");

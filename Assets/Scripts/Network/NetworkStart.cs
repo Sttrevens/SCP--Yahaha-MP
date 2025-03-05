@@ -8,7 +8,7 @@ public class NetworkStart : MonoBehaviour
 
     public string roomName;
 
-    public bool isSinglePlayerMode = false;
+    public bool isSinglePlayerMode;
 
     private void Awake()
     {

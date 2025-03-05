@@ -26,8 +26,8 @@ public class ChasingState : EnemyBaseState
                 // Check if the enemy should attack the player
                 if (EnemyAttack.ShouldAttackBasedOnChasingEnemy(ChasingEnemy))
                 {
-                    // Switch to AttackingState if conditions are met
-                    enemy.SwitchState(new AttackingState());
+                    // Switch to StateAfterChasing if conditions are met
+                    enemy.SwitchState(ChasingEnemy.StateAfterChasing);
                     return; // Exit early as we've already handled the state change
                 }
             }

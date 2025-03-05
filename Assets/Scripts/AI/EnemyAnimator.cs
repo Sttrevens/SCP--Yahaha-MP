@@ -14,6 +14,7 @@ public class EnemyAnimator : NetworkBehaviour
     private bool _lastVisiblePatrolling;
     private int _lastVisibleCastSpell;
     private bool _lastVisibleSpellBool;
+    private bool _lastVisibleSpecialState;
 
     // NetworkBehaviour INTERFACE
     public override void Spawned()
@@ -23,6 +24,7 @@ public class EnemyAnimator : NetworkBehaviour
         _lastVisiblePatrolling = _animatorManager.isPatrolling;
         _lastVisibleCastSpell = _animatorManager.CastSpellCount;
         _lastVisibleSpellBool = _animatorManager.spellingBool;
+        _lastVisibleSpecialState = _animatorManager.isinSpecialState;
     }
 
     public override void Render()
@@ -64,11 +66,17 @@ public class EnemyAnimator : NetworkBehaviour
             _animator.SetBool("Spell Bool", _animatorManager.spellingBool);
         }
 
+        if (_lastVisibleSpecialState != _animatorManager.isinSpecialState)
+        {
+            _animator.SetBool("IsInSpecialState", _animatorManager.isinSpecialState);
+        }
+
 
         _lastVisibleAttack = _animatorManager.AttackCount;
         _lastVisibleChasing = _animatorManager.isChasing;
         _lastVisiblePatrolling = _animatorManager.isPatrolling;
         _lastVisibleCastSpell = _animatorManager.CastSpellCount;
         _lastVisibleSpellBool = _animatorManager.spellingBool;
+        _lastVisibleSpecialState = _animatorManager.isinSpecialState;
     }
 }
