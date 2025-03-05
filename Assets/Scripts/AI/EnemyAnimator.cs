@@ -9,6 +9,7 @@ public class EnemyAnimator : NetworkBehaviour
     // PRIVATE MEMBERS
     private EnemyAnimatorManager _animatorManager;
     private Animator _animator;
+    
     private int _lastVisibleAttack;
     private bool _lastVisibleChasing;
     private bool _lastVisiblePatrolling;
@@ -78,5 +79,6 @@ public class EnemyAnimator : NetworkBehaviour
         _lastVisibleCastSpell = _animatorManager.CastSpellCount;
         _lastVisibleSpellBool = _animatorManager.spellingBool;
         _lastVisibleSpecialState = _animatorManager.isinSpecialState;
+        _animator.SetFloat("Speed", _animatorManager.Speed);
     }
 }

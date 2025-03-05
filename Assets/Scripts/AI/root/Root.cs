@@ -6,7 +6,6 @@ using Fusion;
 public class Root : NetworkBehaviour
 {
     public float detectionRange = 10f;
-    private EnemyBaseState currentStateBehavior;
     private Enemy enemy;
 
     public float fieldOfViewAngleHorizontal = 120f;

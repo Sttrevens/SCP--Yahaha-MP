@@ -21,6 +21,15 @@ public class EnemyMovement : NetworkBehaviour
     public float fieldOfViewAngleVertical = 90f;
     //处理巡航过程中的巡航点的索引
     [HideInInspector] public int currentPatrolIndex = 0;
+    
+public IEnemyState InitialState;
+    private Dictionary<string, IEnemyState> stateDictionary 
+        = new Dictionary<string, IEnemyState>
+        {
+            { "PossessingState", new PossessingState() },
+            { "IdleState", new IdleState() }
+            // 也可以用反射或手动填更多映射
+        };
 
     public enum PatrolMode
     {
@@ -49,17 +58,27 @@ public class EnemyMovement : NetworkBehaviour
         {
             enemy = GetComponent<Enemy>();
         }
+
+if (stateDictionary.TryGetValue(enemy.initialStateType, out IEnemyState foundState))
+        {
+            InitialState = foundState;
+        }
+        else
+        {
+            InitialState = new PatrollingState();
+        }
     }
 
     public override void Spawned()
     {
         //players = GameObject.FindGameObjectsWithTag("Player");
-        enemy.SwitchState(new PatrollingState());
+        enemy.SwitchState(InitialState);
     }
 
     public override void FixedUpdateNetwork()
     {
         RotateTowardsMovementDirection();
+        enemy._animatorManager.Speed = agent.velocity.magnitude;
     }
     /// <summary>
     /// 转向逻辑
@@ -79,8 +98,6 @@ public class EnemyMovement : NetworkBehaviour
             // 通过球面插值让敌人平滑地转向
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
         }
-        
-        Debug.Log("Velocity: " + agent.velocity);
     }
     /// <summary>
     /// 巡逻的协程

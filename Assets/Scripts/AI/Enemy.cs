@@ -17,7 +17,8 @@ public class Enemy : NetworkBehaviour
     public Animator animator;
 
     public EnemyAnimatorManager _animatorManager;
-    
+
+    public string initialStateType;
     [SerializeField] public List<AudioClipWithLabel> sfxClips = new List<AudioClipWithLabel>();
 
 [Serializable]

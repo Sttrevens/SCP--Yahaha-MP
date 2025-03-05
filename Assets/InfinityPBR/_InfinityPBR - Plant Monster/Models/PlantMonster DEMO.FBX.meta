@@ -1,261 +1,722 @@
 fileFormatVersion: 2
 guid: ad7b7bca9d51f4863ad5b09afbcb0982
-timeCreated: 1471382031
-licenseType: Store
 ModelImporter:
-  serializedVersion: 19
-  fileIDToRecycleName:
-    100000: ArmBones01
-    100002: ArmBones02
-    100004: ArmBones03
-    100006: ArmBones04
-    100008: ArmBones05
-    100010: ArmBones06
-    100012: ArmBones07
-    100014: ArmBones08
-    100016: ArmBones09
-    100018: ArmBones10
-    100020: ArmBones11
-    100022: ArmBones12
-    100024: ArmBones13
-    100026: ArmBones14
-    100028: ArmBones15
-    100030: ArmBones16
-    100032: ArmBones17
-    100034: ArmBones18
-    100036: ArmBones19
-    100038: ArmBones20
-    100040: FlowerBones01
-    100042: FlowerBones02
-    100044: FlowerBones03
-    100046: FlowerBones04
-    100048: FlowerBones05
-    100050: FlowerBones06
-    100052: FlowerBones07
-    100054: FlowerBones08
-    100056: FlowerBones09
-    100058: FlowerBones10
-    100060: FlowerBones11
-    100062: FlowerBones12
-    100064: Flowers
-    100066: LeafBones01
-    100068: LeafBones02
-    100070: LeafBones03
-    100072: LeafBones04
-    100074: LeafBones05
-    100076: LeafBones06
-    100078: LeafBones07
-    100080: LeafBones08
-    100082: LeafBones09
-    100084: LeafBones10
-    100086: LeafBones11
-    100088: LeafBones12
-    100090: LeafBones13
-    100092: LeafBones14
-    100094: LeafBones15
-    100096: LeafBones16
-    100098: Leaves
-    100100: LegRIG011
-    100102: LegRIG012
-    100104: LegRIG013
-    100106: LegRIG014
-    100108: LegRIG015
-    100110: LegRIG021
-    100112: LegRIG022
-    100114: LegRIG023
-    100116: LegRIG024
-    100118: LegRIG025
-    100120: LegRIG031
-    100122: LegRIG032
-    100124: LegRIG033
-    100126: LegRIG034
-    100128: LegRIG035
-    100130: LegRIG041
-    100132: LegRIG042
-    100134: LegRIG043
-    100136: LegRIG044
-    100138: LegRIG045
-    100140: LegRIGHub
-    100142: LegsDummy
-    100144: Plant
-    100146: PlantBone00
-    100148: PlantBone01
-    100150: PlantBone02
-    100152: PlantBone03
-    100154: PlantBone04
-    100156: //RootNode
-    100158: PlantRoot
-    100160: Point00
-    100162: Point01
-    100164: Point02
-    100166: Point03
-    100168: Point04
-    100170: PollenBones01
-    100172: PollenBones02
-    100174: PollenBones03
-    100176: PollenBones04
-    100178: PollenBones05
-    100180: PollenBones06
-    100182: PollenBones07
-    100184: PollenBones08
-    100186: Pollens
-    100188: Teeth
-    100190: Thorns
-    100192: Vines
-    100194: AnimatorRoot
-    400000: ArmBones01
-    400002: ArmBones02
-    400004: ArmBones03
-    400006: ArmBones04
-    400008: ArmBones05
-    400010: ArmBones06
-    400012: ArmBones07
-    400014: ArmBones08
-    400016: ArmBones09
-    400018: ArmBones10
-    400020: ArmBones11
-    400022: ArmBones12
-    400024: ArmBones13
-    400026: ArmBones14
-    400028: ArmBones15
-    400030: ArmBones16
-    400032: ArmBones17
-    400034: ArmBones18
-    400036: ArmBones19
-    400038: ArmBones20
-    400040: FlowerBones01
-    400042: FlowerBones02
-    400044: FlowerBones03
-    400046: FlowerBones04
-    400048: FlowerBones05
-    400050: FlowerBones06
-    400052: FlowerBones07
-    400054: FlowerBones08
-    400056: FlowerBones09
-    400058: FlowerBones10
-    400060: FlowerBones11
-    400062: FlowerBones12
-    400064: Flowers
-    400066: LeafBones01
-    400068: LeafBones02
-    400070: LeafBones03
-    400072: LeafBones04
-    400074: LeafBones05
-    400076: LeafBones06
-    400078: LeafBones07
-    400080: LeafBones08
-    400082: LeafBones09
-    400084: LeafBones10
-    400086: LeafBones11
-    400088: LeafBones12
-    400090: LeafBones13
-    400092: LeafBones14
-    400094: LeafBones15
-    400096: LeafBones16
-    400098: Leaves
-    400100: LegRIG011
-    400102: LegRIG012
-    400104: LegRIG013
-    400106: LegRIG014
-    400108: LegRIG015
-    400110: LegRIG021
-    400112: LegRIG022
-    400114: LegRIG023
-    400116: LegRIG024
-    400118: LegRIG025
-    400120: LegRIG031
-    400122: LegRIG032
-    400124: LegRIG033
-    400126: LegRIG034
-    400128: LegRIG035
-    400130: LegRIG041
-    400132: LegRIG042
-    400134: LegRIG043
-    400136: LegRIG044
-    400138: LegRIG045
-    400140: LegRIGHub
-    400142: LegsDummy
-    400144: Plant
-    400146: PlantBone00
-    400148: PlantBone01
-    400150: PlantBone02
-    400152: PlantBone03
-    400154: PlantBone04
-    400156: //RootNode
-    400158: PlantRoot
-    400160: Point00
-    400162: Point01
-    400164: Point02
-    400166: Point03
-    400168: Point04
-    400170: PollenBones01
-    400172: PollenBones02
-    400174: PollenBones03
-    400176: PollenBones04
-    400178: PollenBones05
-    400180: PollenBones06
-    400182: PollenBones07
-    400184: PollenBones08
-    400186: Pollens
-    400188: Teeth
-    400190: Thorns
-    400192: Vines
-    400194: AnimatorRoot
-    4300000: Plant
-    4300002: Vines
-    4300004: Flowers
-    4300006: Thorns
-    4300008: Leaves
-    4300010: Teeth
-    4300012: Pollens
-    7400000: Walk
-    7400002: WalkSkip
-    7400004: WalkBackward
-    7400006: IdlePlant
-    7400008: ComesAlive
-    7400010: AttackIdle
-    7400012: AttackIdleBreak
-    7400014: BigJump
-    7400016: GoToSleep
-    7400018: GotHit
-    7400020: Death
-    7400022: Attack01
-    7400024: Attack02
-    7400026: Magic01start
-    7400028: Magic01charge
-    7400030: Magic01end
-    9500000: //RootNode
-    13700000: Flowers
-    13700002: Leaves
-    13700004: Plant
-    13700006: Pollens
-    13700008: Teeth
-    13700010: Thorns
-    13700012: Vines
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: ArmBones01
+  - first:
+      1: 100002
+    second: ArmBones02
+  - first:
+      1: 100004
+    second: ArmBones03
+  - first:
+      1: 100006
+    second: ArmBones04
+  - first:
+      1: 100008
+    second: ArmBones05
+  - first:
+      1: 100010
+    second: ArmBones06
+  - first:
+      1: 100012
+    second: ArmBones07
+  - first:
+      1: 100014
+    second: ArmBones08
+  - first:
+      1: 100016
+    second: ArmBones09
+  - first:
+      1: 100018
+    second: ArmBones10
+  - first:
+      1: 100020
+    second: ArmBones11
+  - first:
+      1: 100022
+    second: ArmBones12
+  - first:
+      1: 100024
+    second: ArmBones13
+  - first:
+      1: 100026
+    second: ArmBones14
+  - first:
+      1: 100028
+    second: ArmBones15
+  - first:
+      1: 100030
+    second: ArmBones16
+  - first:
+      1: 100032
+    second: ArmBones17
+  - first:
+      1: 100034
+    second: ArmBones18
+  - first:
+      1: 100036
+    second: ArmBones19
+  - first:
+      1: 100038
+    second: ArmBones20
+  - first:
+      1: 100040
+    second: FlowerBones01
+  - first:
+      1: 100042
+    second: FlowerBones02
+  - first:
+      1: 100044
+    second: FlowerBones03
+  - first:
+      1: 100046
+    second: FlowerBones04
+  - first:
+      1: 100048
+    second: FlowerBones05
+  - first:
+      1: 100050
+    second: FlowerBones06
+  - first:
+      1: 100052
+    second: FlowerBones07
+  - first:
+      1: 100054
+    second: FlowerBones08
+  - first:
+      1: 100056
+    second: FlowerBones09
+  - first:
+      1: 100058
+    second: FlowerBones10
+  - first:
+      1: 100060
+    second: FlowerBones11
+  - first:
+      1: 100062
+    second: FlowerBones12
+  - first:
+      1: 100064
+    second: Flowers
+  - first:
+      1: 100066
+    second: LeafBones01
+  - first:
+      1: 100068
+    second: LeafBones02
+  - first:
+      1: 100070
+    second: LeafBones03
+  - first:
+      1: 100072
+    second: LeafBones04
+  - first:
+      1: 100074
+    second: LeafBones05
+  - first:
+      1: 100076
+    second: LeafBones06
+  - first:
+      1: 100078
+    second: LeafBones07
+  - first:
+      1: 100080
+    second: LeafBones08
+  - first:
+      1: 100082
+    second: LeafBones09
+  - first:
+      1: 100084
+    second: LeafBones10
+  - first:
+      1: 100086
+    second: LeafBones11
+  - first:
+      1: 100088
+    second: LeafBones12
+  - first:
+      1: 100090
+    second: LeafBones13
+  - first:
+      1: 100092
+    second: LeafBones14
+  - first:
+      1: 100094
+    second: LeafBones15
+  - first:
+      1: 100096
+    second: LeafBones16
+  - first:
+      1: 100098
+    second: Leaves
+  - first:
+      1: 100100
+    second: LegRIG011
+  - first:
+      1: 100102
+    second: LegRIG012
+  - first:
+      1: 100104
+    second: LegRIG013
+  - first:
+      1: 100106
+    second: LegRIG014
+  - first:
+      1: 100108
+    second: LegRIG015
+  - first:
+      1: 100110
+    second: LegRIG021
+  - first:
+      1: 100112
+    second: LegRIG022
+  - first:
+      1: 100114
+    second: LegRIG023
+  - first:
+      1: 100116
+    second: LegRIG024
+  - first:
+      1: 100118
+    second: LegRIG025
+  - first:
+      1: 100120
+    second: LegRIG031
+  - first:
+      1: 100122
+    second: LegRIG032
+  - first:
+      1: 100124
+    second: LegRIG033
+  - first:
+      1: 100126
+    second: LegRIG034
+  - first:
+      1: 100128
+    second: LegRIG035
+  - first:
+      1: 100130
+    second: LegRIG041
+  - first:
+      1: 100132
+    second: LegRIG042
+  - first:
+      1: 100134
+    second: LegRIG043
+  - first:
+      1: 100136
+    second: LegRIG044
+  - first:
+      1: 100138
+    second: LegRIG045
+  - first:
+      1: 100140
+    second: LegRIGHub
+  - first:
+      1: 100142
+    second: LegsDummy
+  - first:
+      1: 100144
+    second: Plant
+  - first:
+      1: 100146
+    second: PlantBone00
+  - first:
+      1: 100148
+    second: PlantBone01
+  - first:
+      1: 100150
+    second: PlantBone02
+  - first:
+      1: 100152
+    second: PlantBone03
+  - first:
+      1: 100154
+    second: PlantBone04
+  - first:
+      1: 100156
+    second: //RootNode
+  - first:
+      1: 100158
+    second: PlantRoot
+  - first:
+      1: 100160
+    second: Point00
+  - first:
+      1: 100162
+    second: Point01
+  - first:
+      1: 100164
+    second: Point02
+  - first:
+      1: 100166
+    second: Point03
+  - first:
+      1: 100168
+    second: Point04
+  - first:
+      1: 100170
+    second: PollenBones01
+  - first:
+      1: 100172
+    second: PollenBones02
+  - first:
+      1: 100174
+    second: PollenBones03
+  - first:
+      1: 100176
+    second: PollenBones04
+  - first:
+      1: 100178
+    second: PollenBones05
+  - first:
+      1: 100180
+    second: PollenBones06
+  - first:
+      1: 100182
+    second: PollenBones07
+  - first:
+      1: 100184
+    second: PollenBones08
+  - first:
+      1: 100186
+    second: Pollens
+  - first:
+      1: 100188
+    second: Teeth
+  - first:
+      1: 100190
+    second: Thorns
+  - first:
+      1: 100192
+    second: Vines
+  - first:
+      1: 100194
+    second: AnimatorRoot
+  - first:
+      4: 400000
+    second: ArmBones01
+  - first:
+      4: 400002
+    second: ArmBones02
+  - first:
+      4: 400004
+    second: ArmBones03
+  - first:
+      4: 400006
+    second: ArmBones04
+  - first:
+      4: 400008
+    second: ArmBones05
+  - first:
+      4: 400010
+    second: ArmBones06
+  - first:
+      4: 400012
+    second: ArmBones07
+  - first:
+      4: 400014
+    second: ArmBones08
+  - first:
+      4: 400016
+    second: ArmBones09
+  - first:
+      4: 400018
+    second: ArmBones10
+  - first:
+      4: 400020
+    second: ArmBones11
+  - first:
+      4: 400022
+    second: ArmBones12
+  - first:
+      4: 400024
+    second: ArmBones13
+  - first:
+      4: 400026
+    second: ArmBones14
+  - first:
+      4: 400028
+    second: ArmBones15
+  - first:
+      4: 400030
+    second: ArmBones16
+  - first:
+      4: 400032
+    second: ArmBones17
+  - first:
+      4: 400034
+    second: ArmBones18
+  - first:
+      4: 400036
+    second: ArmBones19
+  - first:
+      4: 400038
+    second: ArmBones20
+  - first:
+      4: 400040
+    second: FlowerBones01
+  - first:
+      4: 400042
+    second: FlowerBones02
+  - first:
+      4: 400044
+    second: FlowerBones03
+  - first:
+      4: 400046
+    second: FlowerBones04
+  - first:
+      4: 400048
+    second: FlowerBones05
+  - first:
+      4: 400050
+    second: FlowerBones06
+  - first:
+      4: 400052
+    second: FlowerBones07
+  - first:
+      4: 400054
+    second: FlowerBones08
+  - first:
+      4: 400056
+    second: FlowerBones09
+  - first:
+      4: 400058
+    second: FlowerBones10
+  - first:
+      4: 400060
+    second: FlowerBones11
+  - first:
+      4: 400062
+    second: FlowerBones12
+  - first:
+      4: 400064
+    second: Flowers
+  - first:
+      4: 400066
+    second: LeafBones01
+  - first:
+      4: 400068
+    second: LeafBones02
+  - first:
+      4: 400070
+    second: LeafBones03
+  - first:
+      4: 400072
+    second: LeafBones04
+  - first:
+      4: 400074
+    second: LeafBones05
+  - first:
+      4: 400076
+    second: LeafBones06
+  - first:
+      4: 400078
+    second: LeafBones07
+  - first:
+      4: 400080
+    second: LeafBones08
+  - first:
+      4: 400082
+    second: LeafBones09
+  - first:
+      4: 400084
+    second: LeafBones10
+  - first:
+      4: 400086
+    second: LeafBones11
+  - first:
+      4: 400088
+    second: LeafBones12
+  - first:
+      4: 400090
+    second: LeafBones13
+  - first:
+      4: 400092
+    second: LeafBones14
+  - first:
+      4: 400094
+    second: LeafBones15
+  - first:
+      4: 400096
+    second: LeafBones16
+  - first:
+      4: 400098
+    second: Leaves
+  - first:
+      4: 400100
+    second: LegRIG011
+  - first:
+      4: 400102
+    second: LegRIG012
+  - first:
+      4: 400104
+    second: LegRIG013
+  - first:
+      4: 400106
+    second: LegRIG014
+  - first:
+      4: 400108
+    second: LegRIG015
+  - first:
+      4: 400110
+    second: LegRIG021
+  - first:
+      4: 400112
+    second: LegRIG022
+  - first:
+      4: 400114
+    second: LegRIG023
+  - first:
+      4: 400116
+    second: LegRIG024
+  - first:
+      4: 400118
+    second: LegRIG025
+  - first:
+      4: 400120
+    second: LegRIG031
+  - first:
+      4: 400122
+    second: LegRIG032
+  - first:
+      4: 400124
+    second: LegRIG033
+  - first:
+      4: 400126
+    second: LegRIG034
+  - first:
+      4: 400128
+    second: LegRIG035
+  - first:
+      4: 400130
+    second: LegRIG041
+  - first:
+      4: 400132
+    second: LegRIG042
+  - first:
+      4: 400134
+    second: LegRIG043
+  - first:
+      4: 400136
+    second: LegRIG044
+  - first:
+      4: 400138
+    second: LegRIG045
+  - first:
+      4: 400140
+    second: LegRIGHub
+  - first:
+      4: 400142
+    second: LegsDummy
+  - first:
+      4: 400144
+    second: Plant
+  - first:
+      4: 400146
+    second: PlantBone00
+  - first:
+      4: 400148
+    second: PlantBone01
+  - first:
+      4: 400150
+    second: PlantBone02
+  - first:
+      4: 400152
+    second: PlantBone03
+  - first:
+      4: 400154
+    second: PlantBone04
+  - first:
+      4: 400156
+    second: //RootNode
+  - first:
+      4: 400158
+    second: PlantRoot
+  - first:
+      4: 400160
+    second: Point00
+  - first:
+      4: 400162
+    second: Point01
+  - first:
+      4: 400164
+    second: Point02
+  - first:
+      4: 400166
+    second: Point03
+  - first:
+      4: 400168
+    second: Point04
+  - first:
+      4: 400170
+    second: PollenBones01
+  - first:
+      4: 400172
+    second: PollenBones02
+  - first:
+      4: 400174
+    second: PollenBones03
+  - first:
+      4: 400176
+    second: PollenBones04
+  - first:
+      4: 400178
+    second: PollenBones05
+  - first:
+      4: 400180
+    second: PollenBones06
+  - first:
+      4: 400182
+    second: PollenBones07
+  - first:
+      4: 400184
+    second: PollenBones08
+  - first:
+      4: 400186
+    second: Pollens
+  - first:
+      4: 400188
+    second: Teeth
+  - first:
+      4: 400190
+    second: Thorns
+  - first:
+      4: 400192
+    second: Vines
+  - first:
+      4: 400194
+    second: AnimatorRoot
+  - first:
+      43: 4300000
+    second: Plant
+  - first:
+      43: 4300002
+    second: Vines
+  - first:
+      43: 4300004
+    second: Flowers
+  - first:
+      43: 4300006
+    second: Thorns
+  - first:
+      43: 4300008
+    second: Leaves
+  - first:
+      43: 4300010
+    second: Teeth
+  - first:
+      43: 4300012
+    second: Pollens
+  - first:
+      74: 7400000
+    second: Walk
+  - first:
+      74: 7400002
+    second: WalkSkip
+  - first:
+      74: 7400004
+    second: WalkBackward
+  - first:
+      74: 7400006
+    second: IdlePlant
+  - first:
+      74: 7400008
+    second: ComesAlive
+  - first:
+      74: 7400010
+    second: AttackIdle
+  - first:
+      74: 7400012
+    second: AttackIdleBreak
+  - first:
+      74: 7400014
+    second: BigJump
+  - first:
+      74: 7400016
+    second: GoToSleep
+  - first:
+      74: 7400018
+    second: GotHit
+  - first:
+      74: 7400020
+    second: Death
+  - first:
+      74: 7400022
+    second: Attack01
+  - first:
+      74: 7400024
+    second: Attack02
+  - first:
+      74: 7400026
+    second: Magic01start
+  - first:
+      74: 7400028
+    second: Magic01charge
+  - first:
+      74: 7400030
+    second: Magic01end
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Flowers
+  - first:
+      137: 13700002
+    second: Leaves
+  - first:
+      137: 13700004
+    second: Plant
+  - first:
+      137: 13700006
+    second: Pollens
+  - first:
+      137: 13700008
+    second: Teeth
+  - first:
+      137: 13700010
+    second: Thorns
+  - first:
+      137: 13700012
+    second: Vines
+  externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
       name: Walk
       takeName: Take 001
+      internalID: 0
       firstFrame: 50
       lastFrame: 80
       wrapMode: 0
@@ -520,6 +981,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WalkSkip
       takeName: Take 001
+      internalID: 0
       firstFrame: 150
       lastFrame: 180
       wrapMode: 0
@@ -749,6 +1211,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WalkBackward
       takeName: Take 001
+      internalID: 0
       firstFrame: 250
       lastFrame: 290
       wrapMode: 0
@@ -1006,6 +1469,7 @@ ModelImporter:
     - serializedVersion: 16
       name: IdlePlant
       takeName: Take 001
+      internalID: 0
       firstFrame: 350
       lastFrame: 510
       wrapMode: 0
@@ -1228,6 +1692,7 @@ ModelImporter:
     - serializedVersion: 16
       name: ComesAlive
       takeName: Take 001
+      internalID: 0
       firstFrame: 600
       lastFrame: 650
       wrapMode: 0
@@ -1471,6 +1936,7 @@ ModelImporter:
     - serializedVersion: 16
       name: AttackIdle
       takeName: Take 001
+      internalID: 0
       firstFrame: 700
       lastFrame: 770
       wrapMode: 0
@@ -1491,7 +1957,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: StartPatrolling
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -1693,6 +2166,7 @@ ModelImporter:
     - serializedVersion: 16
       name: AttackIdleBreak
       takeName: Take 001
+      internalID: 0
       firstFrame: 800
       lastFrame: 970
       wrapMode: 0
@@ -1929,6 +2403,7 @@ ModelImporter:
     - serializedVersion: 16
       name: BigJump
       takeName: Take 001
+      internalID: 0
       firstFrame: 1000
       lastFrame: 1060
       wrapMode: 0
@@ -2158,6 +2633,7 @@ ModelImporter:
     - serializedVersion: 16
       name: GoToSleep
       takeName: Take 001
+      internalID: 0
       firstFrame: 1100
       lastFrame: 1200
       wrapMode: 0
@@ -2387,6 +2863,7 @@ ModelImporter:
     - serializedVersion: 16
       name: GotHit
       takeName: Take 001
+      internalID: 0
       firstFrame: 1220
       lastFrame: 1270
       wrapMode: 0
@@ -2616,6 +3093,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Death
       takeName: Take 001
+      internalID: 0
       firstFrame: 1300
       lastFrame: 1370
       wrapMode: 0
@@ -2845,6 +3323,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack01
       takeName: Take 001
+      internalID: 0
       firstFrame: 1400
       lastFrame: 1435
       wrapMode: 0
@@ -2868,6 +3347,13 @@ ModelImporter:
       events:
       - time: 0
         functionName: PlayAudio
+        data: Attack1
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.52802503
+        functionName: Attack
         data: Attack1
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -3074,6 +3560,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack02
       takeName: Take 001
+      internalID: 0
       firstFrame: 1450
       lastFrame: 1550
       wrapMode: 0
@@ -3303,6 +3790,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Magic01start
       takeName: Take 001
+      internalID: 0
       firstFrame: 1600
       lastFrame: 1611
       wrapMode: 0
@@ -3539,6 +4027,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Magic01charge
       takeName: Take 001
+      internalID: 0
       firstFrame: 1612
       lastFrame: 1630
       wrapMode: 0
@@ -3761,6 +4250,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Magic01end
       takeName: Take 001
+      internalID: 0
       firstFrame: 1630
       lastFrame: 1675
       wrapMode: 0
@@ -4014,25 +4504,49 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -4042,11 +4556,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: PlantRoot
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

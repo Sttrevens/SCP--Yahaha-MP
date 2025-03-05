@@ -9,6 +9,7 @@ public class EnemyAnimatorManager : NetworkBehaviour
     [Networked, HideInInspector] public int CastSpellCount { get; set; }
     [Networked, HideInInspector] public bool spellingBool { get; set; }
     [Networked, HideInInspector] public bool isinSpecialState { get; set; }
+    [Networked, HideInInspector] public float Speed { get; set;}
     public override void Spawned()
     {
         if (HasStateAuthority)
@@ -19,6 +20,7 @@ public class EnemyAnimatorManager : NetworkBehaviour
             isPatrolling = false;
             spellingBool = false;
             isinSpecialState = false;
+            Speed = 0;
         }
     }
 }
