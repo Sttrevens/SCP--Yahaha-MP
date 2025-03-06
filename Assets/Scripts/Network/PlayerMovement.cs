@@ -69,11 +69,13 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
+        Gravity();
+        Move();
         UpdateUpperBodyRotationLocally();
         
         if (!PlayerController.instance.cursor)
             return;
-
+        
         if (HasStateAuthority && gameObject.tag == "Player")
         {
             if (Input.GetButtonDown("Jump"))
@@ -87,39 +89,21 @@ public class PlayerMovement : NetworkBehaviour
                     }
                 }
             }
-
-            if (!isAiming)
-            {
-                if ((Input.GetButton("Sprint") && isMoving) && GetComponent<HealthSystem>().stamina.currentValue > 0)
-                {
-                    _targetFOV = sprintFOV;
-                    _targetSpeed = sprintSpeed;
-                    issprinting = true;
-                }
-                else
-                {
-                    _targetFOV = defaultFOV;
-                    _targetSpeed = defaultSpeed;
-                    issprinting = false;
-                }
+            if((Input.GetButton("Sprint") && isMoving) && GetComponent<HealthSystem>().stamina.currentValue > 0){
+                _targetFOV = sprintFOV;
+                _targetSpeed = sprintSpeed;
+                issprinting = true;
             }
             else
             {
                 _targetFOV = defaultFOV;
-                _targetSpeed = aimSpeed;
+                _targetSpeed = defaultSpeed;
                 issprinting = false;
             }
-            
-            plCamera.fieldOfView =
-                Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Runner.DeltaTime);
-            playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Runner.DeltaTime);
+            // 插值使得更改更加平滑
+            plCamera.fieldOfView = Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Time.fixedDeltaTime);
+            playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Time.fixedDeltaTime);
         }
-    }
-
-    public override void FixedUpdateNetwork()
-    {
-        Gravity();
-        Move();
     }
 
     public void Move()
@@ -139,24 +123,26 @@ public class PlayerMovement : NetworkBehaviour
         Vector3 move = Vector3.zero;
         if (PlayerController.instance.cursor)
         {
-            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) *
-                   Runner.DeltaTime * playerSpeed;
+            // 优化小技巧：较小的数字不要过早的参与计算，应将小数字先相乘然后整体与大数相乘，能够减少浮点数的舍入精度误差
+            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.fixedDeltaTime * playerSpeed);
         }
+        _animatorManager.XAxis = Input.GetAxis("Horizontal");
+        _animatorManager.ZAxis = Input.GetAxis("Vertical");
         _animatorManager.Speed = move.magnitude * 100f;
-
+        
         if (_jumpPressed && _controller.isGrounded)
         {
             _animatorManager.JumpCount++;
             _velocity.y += jumpForce;
         }
 
-        Vector3 trueMove = move + _velocity * Runner.DeltaTime;
+        Vector3 trueMove = move + _velocity * Time.fixedDeltaTime;
         _controller.Move(trueMove);
 
         if (move != Vector3.zero)
         {
             // Only adjust the forward direction slightly based on the move direction when moving.
-            //transform.forward = Vector3.Slerp(transform.forward, move.normalized, 0.1f);
+            // transform.forward = Vector3.Slerp(transform.forward, move.normalized, 0.1f);
             isMoving = true;
         }
         else
@@ -169,7 +155,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void Gravity()
     {
-        _velocity.y += gravityValue * Runner.DeltaTime;
+        _velocity.y += gravityValue * Time.fixedDeltaTime;
     }
 
     void LateUpdate()
@@ -180,8 +166,8 @@ public class PlayerMovement : NetworkBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
 
         // Smoothly rotate the object towards the target rotation first.
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Runner.DeltaTime);
-        
+        transform.rotation = targetRotation;
+        //--------------------------------------控制骨骼旋转的逻辑--------------------------------------------------------------------------------
         // 本地控制的上半身旋转，基于摄像机的旋转
         if (upperBodys != null)
         {
@@ -191,7 +177,7 @@ public class PlayerMovement : NetworkBehaviour
                 if (HasStateAuthority)
                 {
                     //upperBody.rotation = Camera.transform.rotation;
-                    upperBody.rotation = Quaternion.Lerp(upperBody.rotation, plCamera.transform.rotation, Runner.DeltaTime * 30f);
+                    upperBody.rotation = Quaternion.Lerp(upperBody.rotation, plCamera.transform.rotation, Time.fixedDeltaTime * 30f);
                     // 同步上半身旋转到服务器
                     upperBodyRotation = upperBody.rotation;
                 }
@@ -248,4 +234,5 @@ public class PlayerMovement : NetworkBehaviour
             upperBodyRotation = upperBodys[0].rotation;  // 假设第一个上半身骨骼为主
         }
     }
+    // ---------------------------------------------骨骼旋转逻辑结束--------------------------------------------------
 }

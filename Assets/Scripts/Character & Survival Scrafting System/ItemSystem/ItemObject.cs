@@ -16,6 +16,7 @@ namespace LPSurvivalEngine
         [Networked] public float currentDurability { get; set; }
 
         public bool isDisplayedItem = false;
+        
 
         public string GetInteractText()
         {
@@ -56,24 +57,27 @@ namespace LPSurvivalEngine
 
         public void PickUp(PlayerRef player)
         {
+            print("现在的player是撒大大撒大大大"+player.IsMasterClient);
             IsPickedUp = true;
             Owner = player; // ��¼˭ʰȡ������
+            // if(Runner.GetPlayerObject(player) == null) Debug.Log("sdadadad"); 
             if (Runner.TryGetPlayerObject(player, out var playerObject))
-{
-    Debug.Log($"pickup {player} ʰȡ");
-    playerObject.GetComponent<AnimatorManager>().PickupCount++;
-    AudioManager.Instance.PlaySFX(AudioManager.Instance.gameObject, pickupSound);
-}
+            {
+                print("现在的playerObject");
+                playerObject.GetComponent<AnimatorManager>().PickupCount++;
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.gameObject, pickupSound);
+            }
+            Debug.Log($"Ʒ {player} ʰȡ");
         }
     
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RPC_OnPickedUp(PlayerRef player)
         {
-            // ֻ�� StateAuthority �����޸�����״̬
-            //if (Object.HasStateAuthority)
-            //{
+            //  // ֻ�� StateAuthority �����޸�����״̬
+            // if (Object.HasStateAuthority)
+            // {
                 PickUp(player);
-            //}
+            // }
         }
     }
 }

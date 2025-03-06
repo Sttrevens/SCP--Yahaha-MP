@@ -68,21 +68,21 @@ namespace LPSurvivalEngine
 
         public override void OnAttackInput()
         {
-            if (!hitting)
-            {
-                hitting = true;
-                if (isOneHanded)
-                {
-                    player.GetComponent<AnimatorManager>().WieldCount++;
-                }
-                else
-                {
-                    // anim.SetTrigger("TwoHandAttack");
-                    player.GetComponent<AnimatorManager>().TwoHandWieldCount++;
-                }
-                Invoke("OnCanAttack", hitRate);
-                //PlayerController.instance.SetIsAttacking(true);
-            }
+            // if (!hitting)
+            // {
+            //     hitting = true;
+            //     if (isOneHanded)
+            //     {
+            //         player.GetComponent<AnimatorManager>().ThrowCount++;
+            //     }
+            //     else
+            //     {
+            //         // anim.SetTrigger("TwoHandAttack");
+            //         player.GetComponent<AnimatorManager>().TwoHandWieldCount++;
+            //     }
+            //     Invoke("OnCanAttack", hitRate);
+            //     //PlayerController.instance.SetIsAttacking(true);
+            // }
         }
 
         void OnCanAttack()
