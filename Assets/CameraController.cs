@@ -140,7 +140,7 @@ namespace LPSurvivalEngine
 
             if (HasStateAuthority)
             {
-                transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("Model/IKGoal/HoldPos"));
+                transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
             }

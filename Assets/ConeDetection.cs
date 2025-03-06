@@ -86,6 +86,11 @@ public class ConeDetection : MonoBehaviour
                 cachedTargets.Add(obj.gameObject);
             }
         }
+
+        if (cachedTargets.Count == 0)
+        {
+            realtimeScore = 0f;
+        }
     }
 
     private void ProcessTargets()
@@ -106,28 +111,48 @@ public class ConeDetection : MonoBehaviour
             }
         }
 
+        FindBestTarget();
+    }
+
+    private TargetScore BestTarget(TargetScore nonVisibleBestTarget = null)
+    {
+        if (nonVisibleBestTarget != null)
+        {
+                targetScores.Remove(nonVisibleBestTarget);
+        }
+        
+        var bestTarget = targetScores[0];
+        float maxScore = float.MinValue;
+        foreach (var score in targetScores)
+        {
+            if (score.score > maxScore && score.isVisible)
+            {
+                maxScore = score.score;
+                bestTarget = score;
+            }
+        }
+        return bestTarget;
+    }
+
+    private void FindBestTarget()
+    {
         // 找出得分最高的目标
         if (targetScores.Count > 0)
         {
-            var bestTarget = targetScores[0];
-            float maxScore = float.MinValue;
-            foreach (var score in targetScores)
-            {
-                if (score.score > maxScore && score.isVisible)
-                {
-                    maxScore = score.score;
-                    bestTarget = score;
-                }
-            }
-
             // 更新最佳目标的信息
-            if (bestTarget.isVisible)
+            if (BestTarget().isVisible)
             {
-                realtimeScore = bestTarget.score;
+                realtimeScore = BestTarget().score;
                 accumulatedScore += realtimeScore;
+            }
+            else
+            {
+                var nonVisibleBestTarget = BestTarget();
+                BestTarget(nonVisibleBestTarget);
             }
         }
     }
+    
     /// <summary>
     /// 处理单个目标
     /// </summary>
