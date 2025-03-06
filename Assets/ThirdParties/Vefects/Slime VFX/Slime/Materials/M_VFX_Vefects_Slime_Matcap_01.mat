@@ -62,6 +62,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
+    - _AxisFalloffErosion: 0
+    - _AxisFalloffSmoothness: 1
+    - _AxisOffset: 0
+    - _AxisWorldorVertex: 0
     - _EmissionMultiply: 1
     - _EnvironmentReflections: 1
     - _FrBias: 0
@@ -69,9 +73,11 @@ Material:
     - _FrScale: 1
     - _HueShift: 0
     - _HueShiftSpeed: 0
+    - _MatcapDesaturate: 0
     - _Metallic: 0
     - _NormalIntensity: 0.2
     - _NormalTiling: 0.7
+    - _NormalTriplanarContrast: 1
     - _OverallTilesMultiply: 1
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -81,12 +87,15 @@ Material:
     - _Specular: 0.1
     - _SpecularHighlights: 1
     - _TriplanarContrast: 1
+    - _WPOAxisMask: 0
     - _WPOIntensity: 1
     - _WPOTriplanarContrast: 0
     - __dirty: 0
     m_Colors:
+    - _AxisMaskSelector: {r: 0, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _FrColor: {r: 0.5176471, g: 1, b: 0, a: 0}
+    - _MatcapTint: {r: 1, g: 1, b: 1, a: 0}
     - _NoiseSpeed: {r: 0.1, g: 0.3, b: 0, a: 0}
     - _NormalTile: {r: 0.2, g: 0.05, b: 0.2, a: 0}
     - _NormalTileOffsetCustom: {r: 0, g: 0, b: 0, a: 0}
@@ -95,4 +104,3 @@ Material:
     - _WPOTileOffsetCustom: {r: 0, g: 0, b: 0, a: 0}
     - _WPOTileSpeed: {r: 0, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
-  m_AllowLocking: 1

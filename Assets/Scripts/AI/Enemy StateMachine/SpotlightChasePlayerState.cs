@@ -14,14 +14,13 @@ public class SpotlightChasePlayerState : EnemyBaseState
         // 进入玩家跟踪状态时的初始化逻辑
         Debug.Log("进入玩家跟随模式");
         stateEnterTime = Time.timeSinceLevelLoad; // 记录状态进入时间
+        spotlight = enemy.GetComponent<SpotlightBase>();
         
         AudioManager.instance.PlaySFX(spotlight.spotlightColliderObject, spotlight.spotlightSound);
     }
 
     public override void UpdateState(Enemy enemy)
     {
-        spotlight = enemy.GetComponent<SpotlightBase>();
-        
         // 如果玩家超出范围，切回普通巡逻
         if (!spotlight.DetectPlayer())
         {

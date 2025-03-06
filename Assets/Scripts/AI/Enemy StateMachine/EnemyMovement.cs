@@ -40,6 +40,7 @@ public IEnemyState InitialState;
 
     public PatrolMode patrolMode = PatrolMode.RandomCircle;
     [Header("巡航相关参数")]
+    public bool isSpecialPatrolMode = false;
     public Transform[] patrolPoints;
     public float patrolRange = 10f;
     public float patrolWidth = 10f;
@@ -105,6 +106,9 @@ if (stateDictionary.TryGetValue(enemy.initialStateType, out IEnemyState foundSta
     /// <returns></returns>
     public IEnumerator Patrol()
     {
+        if (isSpecialPatrolMode)
+            yield break;
+        
         //如果听到了玩家发出的声音直接把玩家发出声音的位子加入到agent的巡航中去
         if (GetComponent<ChasingEnemy>().PlayerHeard())
         {

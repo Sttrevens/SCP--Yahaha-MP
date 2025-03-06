@@ -8,31 +8,30 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: LethalCompany_Ground01
-  m_Shader: {fileID: 4800000, guid: e8708ea10119adb4ea0a47374ddd5ed9, type: 3}
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _OUTLINETYPE_NORMAL
-  - _OVERLAYMODE1_NONE
-  - _OVERLAYMODE_NONE
-  - _RIMSPLITCOLOR_NOSPLIT
-  - _USEADDITIONALLIGHTSDIFFUSE_ON
-  - _USEHATCHINGCONSTANTSCALE_ON
-  - _USELIGHTRAMP_STEP
-  - _USEPURESKETCH_ON
-  - _USESPECULAR_ON
-  m_InvalidKeywords:
-  - _USESHADOWS_ON
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: f0ae4d94c0a8e1249bd5b47cac8b6b2e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Back:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -73,6 +72,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Ceiling:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -107,6 +110,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Emissive_01:
         m_Texture: {fileID: 2800000, guid: 03db659f8a637b744943d87d1a6d7c5e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Floor:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GroundMask:
@@ -201,6 +208,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 99e0b922816cbe64799f178686a4f5d5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Normals:
+        m_Texture: {fileID: 2800000, guid: 49488522764f02748bae0cb0e5083004, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Normals_Cliff:
         m_Texture: {fileID: 2800000, guid: 03ce7476eabe2d54999a37995c7174ec, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -218,6 +229,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Props:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -281,8 +296,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TriplanarTexture_1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TriplanarTexture_2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Wall:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _White_Triplanar:
         m_Texture: {fileID: 2800000, guid: 358612fdf9c718f4fa6f01d88164b407, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindowAlpha:
+        m_Texture: {fileID: 2800000, guid: a451e81424298fc4b87bdb35a0592adb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -315,12 +346,14 @@ Material:
     - _AlphaClip: 0
     - _AlphaCutoff: 0.5
     - _AlphaToMask: 0
+    - _BackWallTexTiling: 0
     - _BacklightAmount: 0.5
     - _BacklightHardness: 0
     - _BacklightIntensity: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
+    - _CeilingTexTiling: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cliff_Defail_Power: 1
@@ -329,6 +362,8 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _Darken: 0
+    - _DecalTransparency_1: 1
+    - _DecalTransparency_2: 1
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DetailTilingLarge: 0.0202
@@ -343,9 +378,12 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _FacadeSmoothness: 0.2
+    - _FacadeTiling: 0
     - _FallOff: 100
     - _FallOff1: 100
     - _Float4: 0.296
+    - _FloorTexTiling: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -354,6 +392,8 @@ Material:
     - _Ground_Falloff: 65
     - _Ground_Noise_Scale: 0
     - _Ground_Pebble_Scale: 0.0361
+    - _GrungeDecalSwitch_1: 1
+    - _GrungeDecalSwitch_2: 1
     - _HalftoneEdgeOffset: 0.1
     - _HalftoneSmoothness: 0.3
     - _HalftoneThreshold: 0.1
@@ -364,11 +404,14 @@ Material:
     - _InverseMask: 0
     - _LightRampOffset: 0
     - _Lighten: 0
+    - _LinkTiling_1useXonly: 1
+    - _LinkTiling_2useXonly: 1
     - _MEtallic: 0.421
     - _MainLightIntesity: 1
     - _MaxScaleDependingOnCamera: 1
     - _Metallic: 0
     - _Mode: 0
+    - _NormalAmount: 1
     - _NormalMapStrength: 1
     - _OcclusionStrength: 1
     - _OutlineDynamicSpeed: 0
@@ -382,6 +425,7 @@ Material:
     - _OverlayUVTilling: 0
     - _PaperTilling: 1
     - _Parallax: 0.02
+    - _PropsTexTiling: 0
     - _QueueControl: -1
     - _QueueOffset: 0
     - _RampDiffuseTextureLoaded: 1
@@ -391,7 +435,10 @@ Material:
     - _RimSmoothness: 0
     - _RimSplitColor: 0
     - _RimThickness: 1
+    - _RoomEmission: 1
+    - _RoomTile: 0
     - _ShapeSmoothness: 0.2
+    - _ShowFacade: 0
     - _SideShineAmount: 0.2717647
     - _SideShineHardness: 0
     - _SideShineIntensity: 1
@@ -414,13 +461,19 @@ Material:
     - _StepOffset: 0
     - _Strength: 0
     - _Surface: 0
+    - _SwitchPlane: 0
     - _Thicnkess: 0
+    - _TogglePropLayer: 0
     - _TransAmbient: 0.179
     - _TransDirect: 0.496
     - _TransNormalDistortion: 0.34
     - _TransScattering: 2.9
     - _TransShadow: 0.232
     - _Translucency: 0
+    - _TriplanarTiling_1_X: 1
+    - _TriplanarTiling_1_Y: 1
+    - _TriplanarTiling_2_X: 1
+    - _TriplanarTiling_2_Y: 1
     - _UVAnimationSpeed: 0
     - _UVAnimationSpeedSpec: 0
     - _UVAnimationSpeedWarp: 0
@@ -452,6 +505,9 @@ Material:
     - _UseShadows: 1
     - _UseSpecular: 1
     - _UseSpecularMask: 0
+    - _WallEmission: 1
+    - _WallGlowThreshold: 0.95
+    - _WalltexTiling: 0
     - _WarpStrength: 0
     - _WarpTextureRotation: 0
     - _WarpTextureScale: 1
@@ -462,10 +518,10 @@ Material:
     - _smoothness: 0.175
     - _translkucency: 0.443
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.38364768, g: 0.38364768, b: 0.38364768, a: 1}
     - _CliffColour: {r: 0, g: 0.110750526, b: 0.17647058, a: 0}
     - _Cliff_Colour: {r: 0.61764705, g: 0.20891005, b: 0.20891005, a: 0}
-    - _Color: {r: 0.42138356, g: 0.42138356, b: 0.42138356, a: 1}
+    - _Color: {r: 0.38364765, g: 0.38364765, b: 0.38364765, a: 1}
     - _Color2: {r: 0.38235295, g: 0.35319176, b: 0.33737025, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColor: {r: 1, g: 1, b: 1, a: 0}
@@ -476,6 +532,7 @@ Material:
     - _HalftoneColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 0}
+    - _PositionOffsetXYZroomsWprops: {r: 0, g: 0, b: 0, a: 0}
     - _RimColor: {r: 0.2555147, g: 1, b: 0.9269017, a: 0}
     - _RimColor1: {r: 0.1614143, g: 0.1380298, b: 0.8161765, a: 0}
     - _RimShadowColor: {r: 0, g: 0.055514283, b: 0.9622641, a: 0}
@@ -484,6 +541,8 @@ Material:
     - _Rock_Colour: {r: 0.5943396, g: 0.50579304, b: 0.35083658, a: 1}
     - _Rock_Colour_Primary: {r: 0.17766005, g: 0.24931695, b: 0.3897059, a: 0}
     - _Rock_Colour_Secondary: {r: 1, g: 0.16911763, b: 0.16911763, a: 0}
+    - _RoomTint: {r: 0, g: 0, b: 0, a: 0}
+    - _RoomsXYZPropsW: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

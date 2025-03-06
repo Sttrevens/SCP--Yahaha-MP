@@ -39,6 +39,7 @@ public class ChasingState : EnemyBaseState
 
             if (Vector3.Distance(enemy.transform.position, ChasingEnemy.targetPlayer.transform.position) > ChasingEnemy.detectionRange)
             {
+                Debug.Log("Out of detection range" + ChasingEnemy.detectionRange);
                 // If the player is out of detection range, switch to PatrollingState
                 enemy.SwitchState(new PatrollingState());
                 ChasingEnemy.targetPlayer = null;

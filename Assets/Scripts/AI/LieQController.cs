@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
-using UnityEngine.Serialization;
 using Quaternion = System.Numerics.Quaternion;
 
 public class LieQController : NetworkBehaviour
@@ -142,6 +139,18 @@ else
     {
         enemy.animator.SetTrigger("goAlive");
     }
+    
+    public void GoAlive()
+{
+    if (targetPlayer != null)
+    {
+        Vector3 direction = targetPlayer.transform.position - transform.position;
+        UnityEngine.Quaternion targetRotation = UnityEngine.Quaternion.LookRotation(direction);
+        // Smoothly rotate with Slerp
+        transform.rotation = UnityEngine.Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        Debug.Log($"Smoothly rotating towards target: {targetPlayer.name}");
+    }
+}
     
     public IEnumerator RestrainPlayer()
     {

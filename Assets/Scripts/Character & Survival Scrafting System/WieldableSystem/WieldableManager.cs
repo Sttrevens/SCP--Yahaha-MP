@@ -217,7 +217,7 @@ namespace LPSurvivalEngine
                 cameraController.gameObject.GetComponentInChildren<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
             }
 
-            spawnedItem.transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find(cameraPositonPath));
+            spawnedItem.transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/FlashlightRoot"));
             spawnedItem.transform.localPosition = Vector3.zero;
             spawnedItem.transform.localRotation = Quaternion.identity;
 
