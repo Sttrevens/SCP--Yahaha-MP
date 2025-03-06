@@ -25,7 +25,7 @@ public class ConeDetection : MonoBehaviour
 
     // 评分相关
     public float accumulatedScore = 0f;  // 累积的分数
-    [HideInInspector] public float realtimeScore = 0f;
+    public float realtimeScore = 0f;
 
     // 缓存目标对象列表 目的是减少FindObjectsOfType的调用次数
     private List<GameObject> cachedTargets = new List<GameObject>();

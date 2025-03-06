@@ -198,6 +198,10 @@ namespace LPSurvivalEngine
         {
             // 声音还没写
             // AudioManager.Instance.PlaySFX(AudioManager.Instance.gameObject, );
+            //播放扔的动画
+            currentPlayerObject.GetComponent<AnimatorManager>().ThrowCount++;
+            //改变人物状态
+            currentPlayerObject.GetComponent<AnimatorManager>().IsHolding = false;
             Prompt.instance.CustomPrompt(string.Format("{0} has been thrown!", selectedItem.item.name));
             throwedItem = item;
             currentThrowingItemDurability = selectedItem.currentDurability;
@@ -432,10 +436,6 @@ namespace LPSurvivalEngine
         /// </summary>
         public void DropItem()
         {
-            //播放扔的动画
-            currentPlayerObject.GetComponent<AnimatorManager>().ThrowCount++;
-            //改变人物状态
-            currentPlayerObject.GetComponent<AnimatorManager>().IsHolding = false;
             if (selectedItem== null || selectedItem.item == null)
                 return;
 

@@ -21,6 +21,8 @@ public class ScoreManager : NetworkBehaviour
     /// 计时器，用于达到随机区间就+1分那一套逻辑。
     /// </summary>
     private float timer = 0f;
+    
+    private ConeDetection[] allConeDetections;
 
     // 你可以根据需要，单独提供总分的访问器：
     private float accumulatedTotalScore
@@ -39,12 +41,19 @@ public class ScoreManager : NetworkBehaviour
     [Header("Revenue Settings")]
     [SerializeField] private int revenueRatio = 240;
     [Networked] public float revenueRate { get; set; }
+    
+    [Networked] public int CurrentViewers { get; set; }
 
     public override void FixedUpdateNetwork()
     {
         if (!HasStateAuthority) return;
         networkedTotalScore = (int)accumulatedTotalScore;
         revenueRate = Mathf.Round(networkedTotalScore / (float)revenueRatio * 100) / 100f;
+        // 每1秒更新 CurrentViewers
+        if (Time.frameCount % Mathf.RoundToInt(1f / Time.fixedDeltaTime) == 0)
+        {
+            CurrentViewers = (int)(allConeDetections.Sum(cd => cd.realtimeScore)  * 1000);
+        }
     }
 
     private void Update()
@@ -63,7 +72,7 @@ public class ScoreManager : NetworkBehaviour
         bool hasLiveCamera = false;
         
         // 找出所有的 camera，对外是 ConeDetection 脚本
-        var allConeDetections = FindObjectsOfType<ConeDetection>();
+        allConeDetections = FindObjectsOfType<ConeDetection>();
         // 判断是否有至少一个 LiveCamera
         foreach (var cd in allConeDetections)
         {

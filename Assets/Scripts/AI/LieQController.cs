@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using Quaternion = System.Numerics.Quaternion;
 
 public class LieQController : NetworkBehaviour
 {
     public float detectionRange = 10f;
     private Enemy enemy;
+    private ChasingEnemy _chasingEnemy;
 
     public float fieldOfViewAngleHorizontal = 120f;
     public float fieldOfViewAngleVertical = 90f;
@@ -20,11 +23,49 @@ public class LieQController : NetworkBehaviour
     public bool isRestraining = false; // 是否正在牵制
     public bool isCooldown = false;   // 是否处于冷却中
 
+    public float jumpingDistance = 5f; // 判断跳跃追逐的距离
+    private float _originalSpeed;
+
     public Coroutine restrainCoroutine = null;
 
     private void Start()
     {
         enemy = GetComponent<Enemy>();
+        _chasingEnemy = GetComponent<ChasingEnemy>();
+    }
+
+    void Update()
+    {
+        if (enemy.CurrentState is ChasingState)
+        {
+            if (_chasingEnemy != null)
+            {
+                if (Vector3.Distance(enemy.transform.position, _chasingEnemy.targetPlayer.transform.position) >
+                    jumpingDistance)
+                {
+                    if (_chasingEnemy.agent.speed != 0)
+                    {
+                        _originalSpeed = _chasingEnemy.agent.speed;
+                        _chasingEnemy.agent.speed = 0;
+
+                        if (!enemy.animator.GetCurrentAnimatorStateInfo(0).IsName("BigJump"))
+                        {
+                            Rpc_Jump();
+                        }
+                    }
+                }
+                else
+                {
+                    _chasingEnemy.agent.speed = _originalSpeed;
+                }
+            }
+        }
+    }
+    
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void Rpc_Jump()
+    {
+        enemy.animator.SetTrigger("Jump");
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
