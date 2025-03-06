@@ -21,7 +21,7 @@ public class PhotoCameraOptimizer : MonoBehaviour
         {
             // Get both SkinnedMeshRenderer and MeshRenderer components under the highest parent object
             SkinnedMeshRenderer skinnedMeshRenderers = thisCameraMan.transform.Find("Model/Male_01").GetComponent<SkinnedMeshRenderer>();
-                thisCamera.cullingMask &= ~(1 << skinnedMeshRenderers.gameObject.layer);
+            thisCamera.cullingMask &= ~(1 << skinnedMeshRenderers.gameObject.layer);
         }
     }
 
