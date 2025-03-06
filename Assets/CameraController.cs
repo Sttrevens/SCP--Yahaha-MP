@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 namespace LPSurvivalEngine
 {
     /// <summary>
-    /// ����������������������Ҽ��߼� ����ʹ�õ���Ӳ������еİ�
+    /// 
     /// </summary>
     public class CameraController : Wieldable
     {
@@ -48,29 +48,29 @@ namespace LPSurvivalEngine
         public string altInputHint;
 
         private void DrainDurability()
-    {
-        // 通过 WieldableManager 获取当前装备的物品槽
-        ItemSlot currentSlot = WieldableManager.instance.GetCurrentWieldableSlot();
-        if (currentSlot != null)
         {
-            // 计算这一帧要消耗的耐久度
-            float drainAmount = durabilityDrainPerSecond * Time.fixedDeltaTime;
-            
-            // 通过 Inventory 更新耐久度
-            Inventory.instance.UpdateItemDurability(WieldableManager.instance.GetCurrentWieldableIndex(), drainAmount);
+            // 通过 WieldableManager 获取当前装备的物品槽
+            ItemSlot currentSlot = WieldableManager.instance.GetCurrentWieldableSlot();
+            if (currentSlot != null)
+            {
+                // 计算这一帧要消耗的耐久度
+                float drainAmount = durabilityDrainPerSecond * Time.fixedDeltaTime;
+                
+                // 通过 Inventory 更新耐久度
+                Inventory.instance.UpdateItemDurability(WieldableManager.instance.GetCurrentWieldableIndex(), drainAmount);
 
-                // 更新电池图标显示
-                UpdateBatteryIcons(currentSlot.currentDurability);
+                    // 更新电池图标显示
+                    UpdateBatteryIcons(currentSlot.currentDurability);
 
-                if (currentSlot.currentDurability <= 0)
-                {
-                    Debug.Log("[CameraController] Camera battery depleted!");
-                    CameraInCamera.enabled = false;
-                }
-                else
-                {
-                    CameraInCamera.enabled = true;
-                }
+                    if (currentSlot.currentDurability <= 0)
+                    {
+                        Debug.Log("[CameraController] Camera battery depleted!");
+                        CameraInCamera.enabled = false;
+                    }
+                    else
+                    {
+                        CameraInCamera.enabled = true;
+                    }
             }
         }
 
@@ -140,7 +140,7 @@ namespace LPSurvivalEngine
 
             if (HasStateAuthority)
             {
-                transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
+                transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("Model/IKGoal/HoldPos"));
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
             }

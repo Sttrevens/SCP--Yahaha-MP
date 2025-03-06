@@ -7,6 +7,9 @@ using TMPro;
 
 namespace LPSurvivalEngine
 {
+    /// <summary>
+    /// 处理网络生成，以及游戏世界系统的耦合
+    /// </summary>
     public class WieldableManager : NetworkBehaviour
     {
         [Space]
@@ -16,9 +19,9 @@ namespace LPSurvivalEngine
 
         public Transform wieldablesPosition;
         public Transform flashlightPosition;
-        public string cameraPositonPath = "UpperBody/CameraRoot/HoldCameraRoot";
+        private string cameraPositonPath = "Model/Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/IndexFinger_01 1/IndexFinger_02 1/IndexFinger_03 1/IndexFinger_04 1";
         public Transform aimPositon;
-
+        
         [SerializeField] private TextMeshProUGUI hintActionText;
         [SerializeField] private PlayerInput playerInput;
 
@@ -216,7 +219,7 @@ namespace LPSurvivalEngine
             {
                 cameraController.gameObject.GetComponentInChildren<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
             }
-
+            Debug.Log("现在的相机位置"+cameraPositonPath);
             spawnedItem.transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find(cameraPositonPath));
             spawnedItem.transform.localPosition = Vector3.zero;
             spawnedItem.transform.localRotation = Quaternion.identity;
