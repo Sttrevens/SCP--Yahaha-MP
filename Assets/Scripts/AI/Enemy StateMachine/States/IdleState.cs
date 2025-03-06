@@ -43,7 +43,8 @@ public class IdleState : EnemyBaseState
     
     private bool IsPlayerInRange(Vector3 position, float radius)
 {
-    Collider[] hits = Physics.OverlapSphere(position, radius);
+    int playerLayerMask = LayerMask.GetMask("Player");
+    Collider[] hits = Physics.OverlapSphere(position, radius, playerLayerMask);
     foreach (var hit in hits)
     {
         Debug.Log("hit something: " + hit.name);

@@ -9,12 +9,7 @@ public class LieQController : NetworkBehaviour
     private Enemy enemy;
     private ChasingEnemy _chasingEnemy;
 
-    public float fieldOfViewAngleHorizontal = 120f;
-    public float fieldOfViewAngleVertical = 90f;
-
     [HideInInspector] public GameObject targetPlayer;
-    public float stepAngle = 5f; // 多射线之间的步进角度
-
     public float pullRadius = 5f;       // 牵制范围：腐根为中心半径
     public float breakFreeThreshold = 1000f; // 挣脱角速度的累计阈值
     public float escapeCooldown = 15f;  // 逃脱后的冷却时间

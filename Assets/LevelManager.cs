@@ -89,7 +89,7 @@ public class LevelManager : NetworkBehaviour, IInteractable
 
     public void LoadLevel()
     {
-        Rpc_UpdateDirectionalLight(1f);
+        Rpc_UpdateDirectionalLight(0.1f);
         RPC_LoadLevel();
     }
 

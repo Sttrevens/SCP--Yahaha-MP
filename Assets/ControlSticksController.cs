@@ -14,7 +14,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         Landing
     }
     
-    [Networked] public SpaceshipState CurrentState { get; set; } = SpaceshipState.PreparingForTakeoff; 
+    [Networked] public SpaceshipState CurrentState { get; set; }
 
     public bool ReciveIsFlying;
 

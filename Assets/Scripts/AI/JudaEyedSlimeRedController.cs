@@ -19,11 +19,13 @@ public class JudaEyedSlimeRedController : NetworkBehaviour
     {
         _chasingEnemy = GetComponent<ChasingEnemy>();
         _enemy = GetComponent<Enemy>();
+        
+        originalDetectionRange = _chasingEnemy.detectionRange;
     }
 
     public override void Spawned()
     {
-        originalDetectionRange = _chasingEnemy.detectionRange;
+        
     }
 
     // Update is called once per frame
