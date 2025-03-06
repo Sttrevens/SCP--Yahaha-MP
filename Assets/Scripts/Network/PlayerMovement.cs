@@ -69,14 +69,12 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        Gravity();
-        Move();
         UpdateUpperBodyRotationLocally();
         
         if (!PlayerController.instance.cursor)
             return;
-        
-        if (HasStateAuthority && gameObject.tag == "Player")
+
+        if (HasStateAuthority && gameObject.CompareTag("Player"))
         {
             if (Input.GetButtonDown("Jump"))
             {
@@ -89,21 +87,39 @@ public class PlayerMovement : NetworkBehaviour
                     }
                 }
             }
-            if((Input.GetButton("Sprint") && isMoving) && GetComponent<HealthSystem>().stamina.currentValue > 0){
-                _targetFOV = sprintFOV;
-                _targetSpeed = sprintSpeed;
-                issprinting = true;
+
+            if (!isAiming)
+            {
+                if ((Input.GetButton("Sprint") && isMoving) && GetComponent<HealthSystem>().stamina.currentValue > 0)
+                {
+                    _targetFOV = sprintFOV;
+                    _targetSpeed = sprintSpeed;
+                    issprinting = true;
+                }
+                else
+                {
+                    _targetFOV = defaultFOV;
+                    _targetSpeed = defaultSpeed;
+                    issprinting = false;
+                }
             }
             else
             {
                 _targetFOV = defaultFOV;
-                _targetSpeed = defaultSpeed;
+                _targetSpeed = aimSpeed;
                 issprinting = false;
             }
             // 插值使得更改更加平滑
-            plCamera.fieldOfView = Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Time.fixedDeltaTime);
-            playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Time.fixedDeltaTime);
+            plCamera.fieldOfView =
+                Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Runner.DeltaTime);
+            playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Runner.DeltaTime);
         }
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        Gravity();
+        Move();
     }
 
     public void Move()
