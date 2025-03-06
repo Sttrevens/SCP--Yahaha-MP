@@ -16,7 +16,7 @@ namespace LPSurvivalEngine
 
         public Transform wieldablesPosition;
         public Transform flashlightPosition;
-        public Transform cameraPositon;
+        public string cameraPositonPath = "UpperBody/CameraRoot/HoldCameraRoot";
         public Transform aimPositon;
 
         [SerializeField] private TextMeshProUGUI hintActionText;
@@ -169,7 +169,7 @@ namespace LPSurvivalEngine
             }
             else if (!hasFlashlight && hasConeDetection)
             {
-                return playerObject.transform.Find("UpperBody/CameraRoot/HoldCameraRoot");
+                return playerObject.transform.Find(cameraPositonPath);
             }
             else if (hasFlashlight && !hasConeDetection)
             {
@@ -195,7 +195,7 @@ namespace LPSurvivalEngine
             
             NetworkObject spawnedItem = Runner.Spawn(
                 equippedItem.wieldablePrefab, 
-                GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").position, 
+                GameObject.Find("CurrentPlayer").transform.Find(cameraPositonPath).position, 
                 spawnRotation  // 使用身份旋转
             );
 
@@ -217,7 +217,7 @@ namespace LPSurvivalEngine
                 cameraController.gameObject.GetComponentInChildren<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
             }
 
-            spawnedItem.transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
+            spawnedItem.transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find(cameraPositonPath));
             spawnedItem.transform.localPosition = Vector3.zero;
             spawnedItem.transform.localRotation = Quaternion.identity;
 

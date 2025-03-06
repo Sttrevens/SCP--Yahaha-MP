@@ -50,13 +50,6 @@ public class FirstPersonOptimizer : MonoBehaviour
         }
     }
 
-    public void Wield()
-    {
-        WieldableManager.instance.cameraPositon = cameraPosition;
-        WieldableManager.instance.aimPositon = aimPosition;
-        WieldableManager.instance.flashlightPosition = flashlightPosition;
-    }
-
     public Vector3 GetCameraForward()
     {
         return Camera.main.transform.forward;
