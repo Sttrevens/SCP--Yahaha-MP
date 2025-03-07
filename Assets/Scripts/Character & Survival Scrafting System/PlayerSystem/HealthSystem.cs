@@ -372,7 +372,7 @@ else
             sanity.Subtract(amount);
         }
 
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
         public void Rpc_Die()
         {
             Die();
@@ -416,7 +416,7 @@ else
                 viewerBobojian.SetActive(true);
         }
 
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
         public void Rpc_Respawn()
         {
             StopAllCoroutines();
