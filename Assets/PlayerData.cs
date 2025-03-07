@@ -12,6 +12,11 @@ public class PlayerData : NetworkBehaviour
 
     private void Start()
     {
+
+    }
+
+    public override void Spawned()
+    {
         if (HasStateAuthority && TitleScreenUI.playerName != null)
         {
             // 如果是这个玩家自己，可以设置名字（例如通过输入框、UI 等方式）
