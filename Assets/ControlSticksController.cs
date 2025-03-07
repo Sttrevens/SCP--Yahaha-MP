@@ -190,8 +190,8 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
 
     if (allDied)
     {
-        if (CurrentState == SpaceshipState.Landing)
-            StartCoroutine(HandleSpaceshipState());
+        Debug.Log("All players are dead");
+        StartCoroutine(HandleSpaceshipState());
     }
 }
 }

@@ -274,11 +274,6 @@ else
                 isTired = false;
                 GlobalPostProcessing.instance.ChangeMohuState(false);
             }
-
-            if (playerHealth <= 0)
-            {
-                gameObject.tag = "Untagged";
-            }
         }
 
         private void UpdateUIAndSync()
@@ -514,6 +509,15 @@ else
         public void SynchronousPlayerSanityRpc()
         {
             playerSanity = sanity.currentValue;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SynchronousPlayerTagRpc()
+        {
+            if (playerHealth <= 0)
+            {
+                gameObject.tag = "Untagged";
+            }
         }
 
         #endregion

@@ -31,10 +31,10 @@ public class CenterRayChecker : MonoBehaviour
                     if (lastBillboard != null)
                     {
                         Debug.Log($"关闭上一次的Billboard: {lastBillboard.name}");
-                        lastBillboard.Rpc_SetBillboardEnabled(false);
+                        lastBillboard.SetBillboardEnabled(false);
                     }
                     Debug.Log($"启用新的Billboard: {billboard.name}");
-                    billboard.Rpc_SetBillboardEnabled(true);
+                    billboard.SetBillboardEnabled(true);
                     lastBillboard = billboard;
                 }
             }
@@ -46,7 +46,7 @@ public class CenterRayChecker : MonoBehaviour
                 if (lastBillboard != null)
                 {
                     Debug.Log($"关闭上一次的Billboard: {lastBillboard.name}");
-                    lastBillboard.Rpc_SetBillboardEnabled(false);
+                    lastBillboard.SetBillboardEnabled(false);
                     lastBillboard = null;
                 }
             }
@@ -59,7 +59,7 @@ public class CenterRayChecker : MonoBehaviour
             if (lastBillboard != null)
             {
                 Debug.Log($"关闭上一次的Billboard: {lastBillboard.name}");
-                lastBillboard.Rpc_SetBillboardEnabled(false);
+                lastBillboard.SetBillboardEnabled(false);
                 lastBillboard = null;
             }
         }
