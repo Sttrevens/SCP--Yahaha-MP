@@ -420,7 +420,7 @@ else
                 viewerBobojian.SetActive(true);
         }
 
-        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        [Rpc(RpcSources.All, RpcTargets.All)]
         public void Rpc_Respawn()
         {
             StopAllCoroutines();
