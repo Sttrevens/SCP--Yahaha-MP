@@ -223,7 +223,7 @@ else
                 health.Subtract(sanityHealthdecay * Time.fixedDeltaTime);
             }
         
-            if (health.currentValue == 0.0f && gameObject.CompareTag("Player"))
+            if (playerHealth == 0.0f && gameObject.CompareTag("Player"))
             {
                 Rpc_Die();
             }
@@ -299,6 +299,8 @@ else
             {
                 SynchronousPlayerSanityRpc();
             }
+
+            SynchronousPlayerTagRpc();
 
             // if (isScared)
             // {
