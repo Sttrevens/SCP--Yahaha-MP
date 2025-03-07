@@ -26,7 +26,7 @@ public class IKChange : StateMachineBehaviour
     public override void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         this.animator = animator;
-        targetIKPosition = animator.transform.Find("IKGoal");
+        targetIKPosition = animator.transform.Find("IKGoalIdle");
         Debug.Log("当前的目标是"+targetIKPosition.name);
         animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1); // 权重设为1表示完全控制
         animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
@@ -34,7 +34,7 @@ public class IKChange : StateMachineBehaviour
         animator.SetIKRotation(AvatarIKGoal.RightHand, targetIKPosition.rotation);
         Debug.Log("设置animator的");
     }
-
+    
     // public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     // {
     //     if (animator != null)
