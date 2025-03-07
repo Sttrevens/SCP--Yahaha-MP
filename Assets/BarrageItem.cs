@@ -17,10 +17,20 @@ public class BarrageItem : NetworkBehaviour
         userNameText = UserNameClass.GetRandomName().nickName + ": ";
         textText = data.desc;
     }
-    void Update() {
+
+    public override void Spawned()
+    {
         userName.text = userNameText;
         text.text = textText;
         GetComponent<RectTransform>().localScale = Vector3.one;
     }
+
+    public override void FixedUpdateNetwork()
+    {
+        userName.text = userNameText;
+        text.text = textText;
+        GetComponent<RectTransform>().localScale = Vector3.one;
+    }
+    
 }
 
