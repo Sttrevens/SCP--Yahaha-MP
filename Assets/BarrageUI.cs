@@ -41,18 +41,22 @@ public class BarrageUI : NetworkBehaviour
         Debug.Log("弹幕类初始化成功");
     }
 
-    void Update()
+    public override void FixedUpdateNetwork()
     {
-        // 添加空检查
-        // if (barrageClass == null)
-        // {
-        //     Debug.LogError("弹幕类为空，重新初始化");
-        //     barrageClass = new BarrageClass();
-        //     return;
-        // }
-        
         SetBarrageList(BarrageType.day);
     }
+
+    // {
+    //     // 添加空检查
+    //     // if (barrageClass == null)
+    //     // {
+    //     //     Debug.LogError("弹幕类为空，重新初始化");
+    //     //     barrageClass = new BarrageClass();
+    //     //     return;
+    //     // }
+    //     
+    //     
+    // }
 
 
 
