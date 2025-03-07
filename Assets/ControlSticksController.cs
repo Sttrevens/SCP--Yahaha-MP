@@ -181,6 +181,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
 
     foreach (var player in players)
     {
+        Debug.Log("Player " + player.name + " health: " + player.playerHealth);
         if (player.playerHealth > 0)
         {
             allDied = false;
@@ -191,7 +192,8 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
     if (allDied)
     {
         Debug.Log("All players are dead");
-        StartCoroutine(HandleSpaceshipState());
+        if (CurrentState == SpaceshipState.Landing)
+            StartCoroutine(HandleSpaceshipState());
     }
 }
 }
