@@ -300,6 +300,8 @@ else
                 SynchronousPlayerSanityRpc();
             }
 
+            SynchronousPlayerTagRpc();
+
             // if (isScared)
             // {
             //     GameObject.FindObjectOfType<Test>().GetComponent<Test>().Mohu();
