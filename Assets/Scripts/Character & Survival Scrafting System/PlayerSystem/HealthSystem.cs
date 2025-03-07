@@ -393,6 +393,7 @@ else
             GetComponent<Rigidbody>().useGravity = true;
             Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = true;
             GetComponent<NavMeshObstacle>().enabled = false;
+            RpcSetTag("Untagged");
             foreach (var item in Inventory.instance.slots)
             {
                 if (item != null)
@@ -444,7 +445,7 @@ else
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = false;
             GetComponent<NavMeshObstacle>().enabled = true;
-            gameObject.tag = "Player";
+            RpcSetTag("Player");
             health.currentValue = health.maxValue;
             stamina.currentValue = stamina.maxValue;
             sanity.currentValue = sanity.maxValue;
@@ -510,14 +511,24 @@ else
         {
             playerSanity = sanity.currentValue;
         }
-
-        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void SynchronousPlayerTagRpc()
         {
             if (playerHealth <= 0)
             {
                 gameObject.tag = "Untagged";
             }
+            else
+            {
+                gameObject.tag = "Player";
+            }
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RpcSetTag(string newTag)
+        {
+            gameObject.tag = newTag;
         }
 
         #endregion
