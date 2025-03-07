@@ -37,6 +37,9 @@ namespace LPSurvivalEngine
         public float oxygenHealthdecay;
 
         public bool isInOxygenRoom;
+        [Networked] public bool isDeadNetworked { get; set; } = false;
+
+        private bool isDead = false;
         
         [Header("Effects")]
         
@@ -172,10 +175,23 @@ namespace LPSurvivalEngine
         private bool canRegenStamina = false;
         void FixedUpdate()
         {
-            if (gameObject.tag != "Player")
+            if (playerHealth <= 0.0f && !isDeadNetworked)
+            {
+                Debug.Log("Player " + GetComponent<PlayerData>().PlayerName + " died.");
+                Rpc_Die();
+            }
+
+            if (HasStateAuthority)
+            {
+                UpdateUIAndSync();
+                HandlePlayerEffects();
+            }
+            
+            if (isDeadNetworked)
             {
                 return;
             }
+            
             if (!(Input.GetButton("Sprint") && GetComponent<PlayerMovement>().isMoving))
 {
     if (!IsInvoking(nameof(DelayedStaminaRegen)) && !canRegenStamina && stamina.currentValue < stamina.maxValue)
@@ -221,17 +237,6 @@ else
             if (sanity.currentValue <= 0.0f)
             {
                 health.Subtract(sanityHealthdecay * Time.fixedDeltaTime);
-            }
-        
-            if (playerHealth == 0.0f && gameObject.CompareTag("Player"))
-            {
-                Rpc_Die();
-            }
-
-            if (HasStateAuthority)
-            {
-                UpdateUIAndSync();
-                HandlePlayerEffects();
             }
         }
         
@@ -298,6 +303,11 @@ else
             if (playerSanity != sanity.currentValue)
             {
                 SynchronousPlayerSanityRpc();
+            }
+
+            if (isDeadNetworked != isDead)
+            {
+                SynchronousPlayerDeadStateRpc();
             }
 
             SynchronousPlayerTagRpc();
@@ -396,6 +406,7 @@ else
             Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = true;
             GetComponent<NavMeshObstacle>().enabled = false;
             RpcSetTag("Untagged");
+            isDead = true;
             foreach (var item in Inventory.instance.slots)
             {
                 if (item != null)
@@ -409,6 +420,7 @@ else
 
         private IEnumerator Dying()
         {
+            yield return new WaitForSeconds(0.1f);
             ControlSticksController.Instance.Rpc_HandlePlayerDeath();
             if (screenFade != null)
                 screenFade.TriggerScreenFadeOnly();
@@ -448,6 +460,7 @@ else
             Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = false;
             GetComponent<NavMeshObstacle>().enabled = true;
             RpcSetTag("Player");
+            isDead = false;
             health.currentValue = health.maxValue;
             stamina.currentValue = stamina.maxValue;
             sanity.currentValue = sanity.maxValue;
@@ -526,6 +539,13 @@ else
                 gameObject.tag = "Player";
             }
         }
+        
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SynchronousPlayerDeadStateRpc()
+        {
+            isDeadNetworked = isDead;
+        }
+
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void RpcSetTag(string newTag)

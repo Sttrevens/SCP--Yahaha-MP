@@ -181,8 +181,8 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
 
     foreach (var player in players)
     {
-        Debug.Log("Player " + player.name + " health: " + player.playerHealth);
-        if (player.playerHealth > 0)
+        Debug.Log("Player " + player.name + " is dead: " + player.isDeadNetworked);
+        if (!player.isDeadNetworked)
         {
             allDied = false;
             break;

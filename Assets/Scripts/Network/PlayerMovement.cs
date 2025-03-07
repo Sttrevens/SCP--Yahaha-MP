@@ -43,6 +43,7 @@ public class PlayerMovement : NetworkBehaviour
     private CharacterController _controller;
     private AnimatorManager _animatorManager;
     public Transform cameraRoot;
+    private HealthSystem _healthSystem;
     
     //瞄准移动速度减慢相关参数
     [Header("Aim Movement")]
@@ -53,7 +54,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         _controller = GetComponent<CharacterController>();
         _animatorManager = GetComponent<AnimatorManager>();
-
+        _healthSystem = GetComponent<HealthSystem>();
     }
 
     public override void Spawned()
@@ -74,16 +75,16 @@ public class PlayerMovement : NetworkBehaviour
         if (!PlayerController.instance.cursor)
             return;
 
-        if (HasStateAuthority && gameObject.CompareTag("Player"))
+        if (HasStateAuthority && !_healthSystem.isDeadNetworked)
         {
             if (Input.GetButtonDown("Jump"))
             {
-                if (GetComponent<HealthSystem>().stamina.currentValue > 10f)
+                if (_healthSystem.stamina.currentValue > 10f)
                 {
                     _jumpPressed = true;
                     if (_controller.isGrounded)
                     {
-                        GetComponent<HealthSystem>().stamina.Subtract(10f);
+                        _healthSystem.stamina.Subtract(10f);
                     }
                 }
             }
@@ -125,7 +126,7 @@ public class PlayerMovement : NetworkBehaviour
     public void Move()
     {
         // Only move own player and not every other player. Each player controls its own player object.
-        if (HasStateAuthority == false || !gameObject.CompareTag("Player"))
+        if (HasStateAuthority == false || _healthSystem.isDeadNetworked)
         {
             return;
         }
@@ -176,7 +177,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void LateUpdate()
     {
-        if (!gameObject.CompareTag("Player")) return;
+        if (_healthSystem.isDeadNetworked) return;
         
         // Calculate the target rotation based on the camera's yaw rotation.
         Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);

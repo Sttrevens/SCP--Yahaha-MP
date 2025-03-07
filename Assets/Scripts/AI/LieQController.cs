@@ -73,7 +73,7 @@ public class LieQController : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void Rpc_Jump()
     {
-        enemy.animator.SetTrigger("Jump");
+        GetComponent<NetworkMecanimAnimator>().SetTrigger("Jump");
     }
 
     public void Jump()
@@ -132,7 +132,7 @@ else
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void Rpc_GoAlive()
     {
-        enemy.animator.SetTrigger("goAlive");
+        GetComponent<NetworkMecanimAnimator>().SetTrigger("goAlive");
     }
     
     public void GoAlive()
