@@ -24,12 +24,5 @@ public class Billboard : MonoBehaviour
     {
         isBillboardEnabled = isEnabled;
         gameObject.SetActive(isEnabled);
-
-        SetPlayerName();
-    }
-
-    private void SetPlayerName()
-    {
-        GetComponent<PlayerNameTracker>().SetPlayerName();
     }
 }
