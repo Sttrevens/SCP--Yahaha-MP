@@ -1,7 +1,6 @@
 using UnityEngine;
-using Fusion;
 
-public class Billboard : NetworkBehaviour
+public class Billboard : MonoBehaviour
 {
     private Camera mainCamera;
     private bool isBillboardEnabled = true;
@@ -20,9 +19,8 @@ public class Billboard : NetworkBehaviour
                              mainCamera.transform.rotation * Vector3.up);
         }
     }
-
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void Rpc_SetBillboardEnabled(bool isEnabled)
+    
+    public void SetBillboardEnabled(bool isEnabled)
     {
         isBillboardEnabled = isEnabled;
         gameObject.SetActive(isEnabled);
