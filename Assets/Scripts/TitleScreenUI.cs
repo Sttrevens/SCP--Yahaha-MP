@@ -39,55 +39,58 @@ public class TitleScreenUI : MonoBehaviour
 
     public async void RefreshRegionDropdown()
     {
+        // 当玩家在 UI 上切换下拉选项时，通过索引从 _regions 列表取得对应 RegionCode
         playerRegionName.onValueChanged.AddListener(index =>
         {
-            // 每次选项更新时获取对应RegionCode
-            Region = GetSelectedRegionCode();
-            Debug.Log($"Player selected region: {Region}");
+            // 下标 index 与 _regions[index] 匹配
+            Region = _regions[index].RegionCode;
+            Debug.Log($"玩家选择的区域: {Region}");
         });
-        
+    
         _tokenSource = new CancellationTokenSource();
 
-        // 获取原始区域数据
+        // 1. 获取可用的区域数据
         var regions = await NetworkRunner.GetAvailableRegions(cancellationToken: _tokenSource.Token);
-
-        // 按Ping排序
+    
+        // 2. 按 Ping 值排序
         var sortedRegions = regions.OrderBy(reg => reg.RegionPing).ToList();
-
-        // 更新_regions，确保与下拉框的顺序一致
-        _regions = sortedRegions;
-
-        // 清空并加载排序后的下拉按钮选项
+        _regions = sortedRegions; // 同步给全局 _regions，保证与下拉选项一一对应
+    
+        // 3. 构建 Dropdown 选项
         playerRegionName.options.Clear();
-        playerRegionName.AddOptions(sortedRegions.Select(reg =>
-        {
-            string displayName = reg.RegionCode switch
+        playerRegionName.AddOptions(
+            sortedRegions.Select(reg =>
             {
-                "hk" => "Hong Kong",
-                "us" => "United States",
-                "eu" => "Europe",
-                "asia" => "Asia",
-                "au" => "Australia",
-                "usw" => "US West",
-                "uae" => "UAE",
-                "tr" => "Turkey",
-                "cae" => "Canada East",
-                "ussc" => "US South Central",
-                "jp" => "Japan",
-                "in" => "India",
-                "kr" => "Korea",
-                "sa" => "South America",
-                "cn" => "Mainland China",
-                _ => reg.RegionCode
-            };
-            return new TMP_Dropdown.OptionData($"{displayName}. ping: {reg.RegionPing}");
-        }).ToList());
+                // 将 RegionCode 转成人类可读的名称
+                string displayName = reg.RegionCode switch
+                {
+                    "hk"   => "Hong Kong",
+                    "us"   => "United States",
+                    "eu"   => "Europe",
+                    "asia" => "Asia",
+                    "au"   => "Australia",
+                    "usw"  => "US West",
+                    "uae"  => "UAE",
+                    "tr"   => "Turkey",
+                    "cae"  => "Canada East",
+                    "ussc" => "US South Central",
+                    "jp"   => "Japan",
+                    "in"   => "India",
+                    "kr"   => "Korea",
+                    "sa"   => "South America",
+                    "cn"   => "Mainland China",
+                    _      => reg.RegionCode
+                };
+                // 此处只显示友好名称和 ping，不需要直接在文本中嵌入 RegionCode
+                return new TMP_Dropdown.OptionData($"{displayName}. ping: {reg.RegionPing}");
+            }).ToList()
+        );
 
-        // 自动设置默认选项为第一个选项
+        // 4. 默认选中 Ping 最小的选项
         if (playerRegionName.options.Count > 0)
         {
-            playerRegionName.value = 0; // 默认选中第一个（Ping最小的）
-            Debug.Log($"Default selected region: {_regions[0].RegionCode}");
+            playerRegionName.value = 0;
+            Debug.Log($"默认选择的区域: {_regions[0].RegionCode}");
         }
     }
 
@@ -149,7 +152,7 @@ public class TitleScreenUI : MonoBehaviour
         playerName = playerNameInputField.text;
         try
         {
-            Region = playerRegionName.options[playerRegionName.value].text;
+            Region = _regions[playerRegionName.value].RegionCode;
         }
         catch
         {

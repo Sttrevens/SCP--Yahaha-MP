@@ -17,7 +17,10 @@ public class NetworkStart : MonoBehaviour
         if (TitleScreenUI.roomName != null)
         {
             bootstrap.DefaultRoomName = TitleScreenUI.roomName;
-            
+        }
+
+        if (TitleScreenUI.Region != null)
+        {
             PhotonAppSettings.Global.AppSettings.FixedRegion = TitleScreenUI.Region;
         }
 
