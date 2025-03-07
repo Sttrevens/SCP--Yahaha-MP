@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using LPSurvivalEngine;
 
 public class ChasingEnemy : EnemyMovement
 {
@@ -81,7 +82,7 @@ public bool PlayerInSight()
 {
     if (targetPlayer != null)
     {
-        if (targetPlayer.tag != "Player")
+        if (targetPlayer.tag != "Player" || targetPlayer.GetComponent<HealthSystem>().isDeadNetworked)
         {
             targetPlayer = null;
             return false;

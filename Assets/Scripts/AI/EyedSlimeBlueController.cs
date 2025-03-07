@@ -34,10 +34,10 @@ public class EyedSlimeBlueController : NetworkBehaviour
     {
         if (hitCollider.CompareTag("Player") && hitCollider.gameObject == _chasingEnemy.targetPlayer)
         {
-            _animator.SetBool("IsTaunting", true);
+            GetComponent<NetworkMecanimAnimator>().SetTrigger("Taunt");
             return;
         }
     }
-    _animator.SetBool("IsTaunting", false);
+    GetComponent<NetworkMecanimAnimator>().SetTrigger("CancelTaunt");
 }
 }

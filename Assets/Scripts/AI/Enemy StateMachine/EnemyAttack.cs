@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Fusion;
+using LPSurvivalEngine;
 
 public class EnemyAttack : NetworkBehaviour
 {
@@ -39,6 +40,11 @@ public class EnemyAttack : NetworkBehaviour
         // First check if target player exists and is within attack range
         if (enemy.targetPlayer != null)
         {
+            if (enemy.targetPlayer.GetComponent<HealthSystem>().isDeadNetworked)
+            {
+                return false;
+            }
+            
             //计算与要攻击的玩家的距离
             float distanceToTarget = Vector3.Distance(enemy.transform.position, enemy.targetPlayer.transform.position);
             if (distanceToTarget <= attackRange)

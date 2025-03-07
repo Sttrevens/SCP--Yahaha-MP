@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4200555582778035693, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4200555582778035693, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[5]
@@ -39,7 +39,7 @@ PrefabInstance:
     - target: {fileID: 4200555582778035693, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[6]
       value: 
-      objectReference: {fileID: 5814726736045396480}
+      objectReference: {fileID: 7149692703874062753}
     - target: {fileID: 4502373642208449530, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
       propertyPath: SortKey
       value: 2892111302
@@ -110,6 +110,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 191068282315392365, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6179359247734315289}
+    - targetCorrespondingSourceObject: {fileID: 191068282315392365, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7149692703874062753}
     - targetCorrespondingSourceObject: {fileID: 5021499160595167618, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3236875313383152820}
@@ -131,17 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73567e316ae16bd4da3191515d791154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5814726736045396480 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3844029363514813210, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
+--- !u!95 &5675169191242137987 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3110002938063485081, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
   m_PrefabInstance: {fileID: 7343879498033232154}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2325336937431892120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7443461625762004087 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 191068282315392365, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
@@ -160,3 +157,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tauntingRange: 2
+--- !u!114 &7149692703874062753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7443461625762004087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Animator: {fileID: 5675169191242137987}
+  TotalWords: 1
+  ApplyTiming: 2
+  SyncSettings: 79
+  StateHashes: 00000000738e8b49403dae7ea3f1977b9042b24cedb25a4ff72360a557e353d64d72693c9e810ff81aa2d917422906ffc60ad010d07cc57dcaedff9731ec7771da2fff8cb85813eafbf620e968cb96fc4b7b955a789bde7ba6309f18c6f20f85be4c07e4c757077645184bf3c63906bf421ad05032edce8b7143fd887f041088fd4b5c0d37b935014e73a6a7
+  TriggerHashes: 000000000d286c4032edce8b
