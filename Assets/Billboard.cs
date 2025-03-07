@@ -1,6 +1,7 @@
 using UnityEngine;
+using Fusion;
 
-public class Billboard : MonoBehaviour
+public class Billboard : NetworkBehaviour
 {
     private Camera mainCamera;
     private bool isBillboardEnabled = true;
@@ -20,9 +21,17 @@ public class Billboard : MonoBehaviour
         }
     }
 
-    public void SetBillboardEnabled(bool isEnabled)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void Rpc_SetBillboardEnabled(bool isEnabled)
     {
         isBillboardEnabled = isEnabled;
         gameObject.SetActive(isEnabled);
+
+        SetPlayerName();
+    }
+
+    private void SetPlayerName()
+    {
+        GetComponent<PlayerNameTracker>().SetPlayerName();
     }
 }

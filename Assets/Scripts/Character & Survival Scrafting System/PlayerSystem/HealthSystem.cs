@@ -274,6 +274,11 @@ else
                 isTired = false;
                 GlobalPostProcessing.instance.ChangeMohuState(false);
             }
+
+            if (playerHealth <= 0)
+            {
+                gameObject.tag = "Untagged";
+            }
         }
 
         private void UpdateUIAndSync()
@@ -372,7 +377,7 @@ else
             sanity.Subtract(amount);
         }
 
-        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void Rpc_Die()
         {
             Die();
@@ -393,7 +398,6 @@ else
             GetComponent<Rigidbody>().useGravity = true;
             Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = true;
             GetComponent<NavMeshObstacle>().enabled = false;
-            gameObject.tag = "Untagged";
             foreach (var item in Inventory.instance.slots)
             {
                 if (item != null)

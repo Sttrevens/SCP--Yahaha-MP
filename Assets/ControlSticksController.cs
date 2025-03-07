@@ -181,7 +181,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
 
     foreach (var player in players)
     {
-        if (player.gameObject.CompareTag("Player"))
+        if (player.playerHealth > 0)
         {
             allDied = false;
             break;
