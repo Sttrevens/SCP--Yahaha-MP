@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using LPSurvivalEngine;
+using Fusion;
 
-public class PossessEffect : MonoBehaviour
+public class PossessEffect : NetworkBehaviour
 {
     public Enemy enemy;
 
@@ -18,13 +19,20 @@ public class PossessEffect : MonoBehaviour
     public void Possess(int possessTime)
     {
         PlayAttackSFX(enemy);
+        RpcPossess(possessTime);
+    }
 
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RpcPossess(int possessTime)
+    {
+        
         if (_chasingEnemy.targetPlayer != null)
         {
             
             StartCoroutine(PossessDuration(possessTime));
         }
     }
+    
 
     private IEnumerator PossessDuration(int possessTime)
     {
@@ -73,6 +81,13 @@ public class PossessEffect : MonoBehaviour
 
     public void EnterPossessing()
     {
+        RpcEnterPossess();
+    }
+    
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RpcEnterPossess()
+    {
+        
         StartCoroutine(Possessing());
     }
     
