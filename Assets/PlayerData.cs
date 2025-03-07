@@ -26,11 +26,13 @@ public class PlayerData : NetworkBehaviour
         {
             // 如果是这个玩家自己，可以设置名字（例如通过输入框、UI 等方式）
             PlayerName = TitleScreenUI.playerName;
-
-            SetPlayerName();
         }
+        
+        RpcSetPlayerName();
     }
-    public void SetPlayerName()
+    
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RpcSetPlayerName()
     {
         playerName.text = PlayerName;
     }

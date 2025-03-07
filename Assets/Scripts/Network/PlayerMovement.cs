@@ -252,4 +252,9 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
     // ---------------------------------------------骨骼旋转逻辑结束--------------------------------------------------
+
+    public void BePossessed(Transform target)
+    {
+        transform.SetParent(target);
+    }
 }
