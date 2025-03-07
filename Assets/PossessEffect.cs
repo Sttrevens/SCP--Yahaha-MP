@@ -42,14 +42,14 @@ public class PossessEffect : NetworkBehaviour
         {
             if (_chasingEnemy.targetPlayer != null)
             {
-                _chasingEnemy.targetPlayer.transform.SetParent(this.transform, false);
-                _chasingEnemy.targetPlayer.transform.position = transform.position;
-                _chasingEnemy.targetPlayer.transform.rotation = transform.rotation;
+                _chasingEnemy.targetPlayer.GetComponent<PlayerMovement>().BePossessed(transform);
+                _chasingEnemy.targetPlayer.transform.localPosition = Vector3.zero;
+                _chasingEnemy.targetPlayer.transform.localRotation = Quaternion.identity;
             }
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        _chasingEnemy.targetPlayer.transform.SetParent(null);
+        _chasingEnemy.targetPlayer.GetComponent<PlayerMovement>().BePossessed(null);
         EnterCD();
     }
 
