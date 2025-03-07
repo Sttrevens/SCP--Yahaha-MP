@@ -172,8 +172,9 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
     {
         CurrentState = newState;
     }
-
-    public void HandlePlayerDeath()
+    
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void Rpc_HandlePlayerDeath()
 {
     HealthSystem[] players = GameObject.FindObjectsOfType<HealthSystem>();
     bool allDied = true;

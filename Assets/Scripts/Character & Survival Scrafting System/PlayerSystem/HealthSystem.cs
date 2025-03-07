@@ -407,7 +407,7 @@ else
 
         private IEnumerator Dying()
         {
-            ControlSticksController.Instance.HandlePlayerDeath();
+            ControlSticksController.Instance.Rpc_HandlePlayerDeath();
             if (screenFade != null)
                 screenFade.TriggerScreenFadeOnly();
             viewerBobojian = GameObject.Find("BobojianSystem").transform.Find("ViewerBobojian").gameObject;
