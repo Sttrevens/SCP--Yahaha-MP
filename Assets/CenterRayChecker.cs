@@ -5,7 +5,7 @@ public class CenterRayChecker : MonoBehaviour
     [SerializeField] private float maxDistance = 50f;    // 射线的最大检测距离
     private Billboard lastBillboard = null;             // 记录上一次启用的Billboard
 
-    void Update()
+    public void FixedUpdate()
     {
         // 1. 从屏幕中心发射射线（(0.5f,0.5f)表示屏幕中心）
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
@@ -15,7 +15,7 @@ public class CenterRayChecker : MonoBehaviour
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
             // 尝试在命中的物体或其子物体上获取Billboard组件
-            Billboard billboard = hit.transform.GetComponentInChildren<Billboard>();
+            Billboard billboard = hit.transform.GetComponent<PlayerData>().billboard;
 
             if (billboard != null)
             {
@@ -24,9 +24,9 @@ public class CenterRayChecker : MonoBehaviour
                 {
                     if (lastBillboard != null)
                     {
-                        lastBillboard.SetBillboardEnabled(false);
+                        lastBillboard.Rpc_SetBillboardEnabled(false);
                     }
-                    billboard.SetBillboardEnabled(true);
+                    billboard.Rpc_SetBillboardEnabled(true);
                     lastBillboard = billboard;
                 }
             }
@@ -35,7 +35,7 @@ public class CenterRayChecker : MonoBehaviour
                 // 命中物体不存在Billboard时，关闭上一次的并清空
                 if (lastBillboard != null)
                 {
-                    lastBillboard.SetBillboardEnabled(false);
+                    lastBillboard.Rpc_SetBillboardEnabled(false);
                     lastBillboard = null;
                 }
             }
@@ -45,7 +45,7 @@ public class CenterRayChecker : MonoBehaviour
             // 没有命中任何物体时，若上一次Billboard还在启用则将其关闭
             if (lastBillboard != null)
             {
-                lastBillboard.SetBillboardEnabled(false);
+                lastBillboard.Rpc_SetBillboardEnabled(false);
                 lastBillboard = null;
             }
         }

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Fusion;
 
-public class PlayerNameTracker : MonoBehaviour
+public class PlayerNameTracker : NetworkBehaviour
 {
     [SerializeField] private TextMeshProUGUI playerName;
     [SerializeField] private PlayerData playerData;
@@ -14,7 +15,7 @@ public class PlayerNameTracker : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void SetPlayerName()
     {
         playerName.text = playerData.PlayerName;
     }

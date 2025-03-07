@@ -76,7 +76,6 @@ GameObject:
   - component: {fileID: 4362069824977445400}
   - component: {fileID: 2297052892381837441}
   - component: {fileID: 6733523936374838755}
-  - component: {fileID: 7980497093739239370}
   m_Layer: 5
   m_Name: Player Info UI
   m_TagString: Untagged
@@ -179,20 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 895abee0149cc314db6925f259923406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7980497093739239370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 118402127746258807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82ace559fa3bc7c46a91b2f4325913d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: {fileID: 481926891485189034}
-  playerData: {fileID: 2904240422611391486}
 --- !u!1 &155550627531446765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,6 +1928,7 @@ GameObject:
   - component: {fileID: 397341189134474547}
   - component: {fileID: 3352045113354941783}
   - component: {fileID: 7057388831754074905}
+  - component: {fileID: 7974564230828695987}
   m_Layer: 8
   m_Name: '[Game]A_Real_Character'
   m_TagString: Player
@@ -2069,6 +2055,8 @@ MonoBehaviour:
   - {fileID: 2904240422611391486}
   - {fileID: 3352045113354941783}
   - {fileID: 7057388831754074905}
+  - {fileID: 7974564230828695987}
+  - {fileID: 6733523936374838755}
 --- !u!114 &1122259457492835225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2407,6 +2395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PlayerName: Default Player
   _characterMaterialIndex: 0
+  billboard: {fileID: 6733523936374838755}
 --- !u!208 &397341189134474547
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -2475,6 +2464,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnemyInSight: 0
+--- !u!114 &7974564230828695987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ace559fa3bc7c46a91b2f4325913d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: {fileID: 481926891485189034}
+  playerData: {fileID: 2904240422611391486}
 --- !u!1 &5385546817467512204
 GameObject:
   m_ObjectHideFlags: 0

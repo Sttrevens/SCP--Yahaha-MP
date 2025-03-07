@@ -9,6 +9,8 @@ public class PlayerData : NetworkBehaviour
     public string PlayerName { get; set; }
 
     [Networked] public int characterMaterialIndex { get; set; }
+    
+    public Billboard billboard;
 
     private void Start()
     {
