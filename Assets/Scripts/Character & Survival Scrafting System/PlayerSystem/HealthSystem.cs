@@ -511,7 +511,7 @@ else
             playerSanity = sanity.currentValue;
         }
 
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
         public void SynchronousPlayerTagRpc()
         {
             if (playerHealth <= 0)

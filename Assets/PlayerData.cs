@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using TMPro;
 
 public class PlayerData : NetworkBehaviour
 {
@@ -9,6 +10,8 @@ public class PlayerData : NetworkBehaviour
     public string PlayerName { get; set; }
 
     [Networked] public int characterMaterialIndex { get; set; }
+    
+    [SerializeField] private TextMeshProUGUI playerName;
     
     public Billboard billboard;
 
@@ -23,7 +26,13 @@ public class PlayerData : NetworkBehaviour
         {
             // 如果是这个玩家自己，可以设置名字（例如通过输入框、UI 等方式）
             PlayerName = TitleScreenUI.playerName;
+
+            SetPlayerName();
         }
+    }
+    public void SetPlayerName()
+    {
+        playerName.text = PlayerName;
     }
 
     // Update is called once per frame
