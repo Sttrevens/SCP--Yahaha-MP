@@ -27,7 +27,7 @@ public class NetworkStart : MonoBehaviour
         roomName = bootstrap.DefaultRoomName;
 
         isSinglePlayerMode = TitleScreenUI.IsSpGame;
-        Debug.Log("isSinglePlayerMode: " + isSinglePlayerMode);
+        
         if (isSinglePlayerMode)
         {
             bootstrap.StartSinglePlayer();
