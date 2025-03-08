@@ -349,9 +349,7 @@ MonoBehaviour:
   - {fileID: 2069253587594827427}
   - {fileID: 3252406231328768597}
   - {fileID: 5573379982605422121}
-  - {fileID: 4867535530127033759}
   - {fileID: 116199814827926348}
-  - {fileID: 8154134392387309449}
   - {fileID: 6909435090151724456}
   - {fileID: 549821391542998740}
   - {fileID: 9135362484099096157}
@@ -359,6 +357,7 @@ MonoBehaviour:
   - {fileID: 2556934311452024678}
   - {fileID: 503201377582265443}
   - {fileID: 6391770736466878366}
+  - {fileID: 496101026135481002}
   NetworkedBehaviours:
   - {fileID: 5774139772713792541}
 --- !u!114 &1646935975507563589
@@ -496,15 +495,14 @@ Transform:
   - {fileID: 4953866141654217168}
   - {fileID: 8442562730937214246}
   - {fileID: 1535801957691730266}
-  - {fileID: 1647244842540795927}
   - {fileID: 6045906808526607778}
-  - {fileID: 2963810738837268730}
   - {fileID: 771236118454687776}
   - {fileID: 6469984902000352302}
   - {fileID: 2354266181954950311}
   - {fileID: 7885121433803022632}
   - {fileID: 6219879067907806578}
   - {fileID: 1001175895445459478}
+  - {fileID: 6379870145615548496}
   m_Father: {fileID: 3695569826703566149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5774139772713792541
@@ -1279,6 +1277,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toon Ghost-Trans
       objectReference: {fileID: 0}
+    - target: {fileID: 7467663394760474739, guid: 0e5cb37c0c386a14ab1aae8a621b34d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8773340364296863324, guid: 0e5cb37c0c386a14ab1aae8a621b34d9, type: 3}
       propertyPath: patrolMode
       value: 0
@@ -1808,7 +1810,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
       propertyPath: prefabArray.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
       propertyPath: prefabArray.Array.data[0]
@@ -1830,6 +1832,10 @@ PrefabInstance:
       propertyPath: prefabArray.Array.data[4]
       value: 
       objectReference: {fileID: 8196943402164591541, guid: 59f5807a989eb40448baf1bdf8f2d883, type: 3}
+    - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
+      propertyPath: prefabArray.Array.data[5]
+      value: 
+      objectReference: {fileID: 3901550995532059235, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
     - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
       propertyPath: prefabArray.Array.data[0].RawGuidValue.Array.data[0]
       value: 0
@@ -2691,6 +2697,10 @@ PrefabInstance:
     - target: {fileID: 7847366243756474999, guid: e40c1535831411840a649103d7ded94b, type: 3}
       propertyPath: m_Name
       value: Shell Turtle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7847366243756474999, guid: e40c1535831411840a649103d7ded94b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4587,6 +4597,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toon Plant Monster-Purple-NoMovement (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2276814548383471931, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774933199598968567, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
       propertyPath: SortKey
       value: 573310697
@@ -6385,6 +6399,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LieQ
       objectReference: {fileID: 0}
+    - target: {fileID: 6327799869586673241, guid: 1ce0bafbb6bea0d4aa91e320bace448c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7118,6 +7136,10 @@ PrefabInstance:
     - target: {fileID: 4268554706764865200, guid: b2e1d0cf2293da546bfe277331a259ac, type: 3}
       propertyPath: m_Name
       value: Cactus Monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 4268554706764865200, guid: b2e1d0cf2293da546bfe277331a259ac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8588748967071775325, guid: b2e1d0cf2293da546bfe277331a259ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7894,6 +7916,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toon Plant Monster-Pink
       objectReference: {fileID: 0}
+    - target: {fileID: 5153400332146600106, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.5548553
@@ -8240,7 +8266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
       propertyPath: prefabArray.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
       propertyPath: prefabArray.Array.data[0]
@@ -8265,7 +8291,7 @@ PrefabInstance:
     - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
       propertyPath: prefabArray.Array.data[5]
       value: 
-      objectReference: {fileID: 513229352100526564, guid: d4b8b873eec169e418248ea7b29a2223, type: 3}
+      objectReference: {fileID: 3901550995532059235, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9601,6 +9627,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toon Plant Monster-Purple-NoMovement
       objectReference: {fileID: 0}
+    - target: {fileID: 2276814548383471931, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774933199598968567, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
       propertyPath: SortKey
       value: 1805125302
@@ -10419,6 +10449,87 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4735145090847216, guid: 4688a00e224224640866b57d462990a4, type: 3}
   m_PrefabInstance: {fileID: 4456303095536344006}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4495546686968784655
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4586020050584273394}
+    m_Modifications:
+    - target: {fileID: 1378106872198515247, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_Name
+      value: Fugen
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378106872198515247, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4071784738706587045, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: SortKey
+      value: 1301541273
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.848999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.8637626
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.721
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6244372
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.781075
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -102.718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+--- !u!114 &496101026135481002 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4071784738706587045, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+  m_PrefabInstance: {fileID: 4495546686968784655}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &6379870145615548496 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7415944232117843807, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+  m_PrefabInstance: {fileID: 4495546686968784655}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4530290835531133219
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10496,6 +10607,10 @@ PrefabInstance:
     - target: {fileID: 1378106872198515247, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
       propertyPath: m_Name
       value: Fugen
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378106872198515247, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4071784738706587045, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
       propertyPath: SortKey
@@ -11120,6 +11235,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toon Plant Monster-Purple-NoMovement (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2276814548383471931, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6774933199598968567, guid: e030c245a8218cb43a2c9c0070eb5f15, type: 3}
       propertyPath: SortKey
       value: 2444279454
@@ -11505,6 +11624,10 @@ PrefabInstance:
     - target: {fileID: 1378106872198515247, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
       propertyPath: m_Name
       value: Fugen (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378106872198515247, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4071784738706587045, guid: d21b0b606250492448a0e2ef50a0b6c0, type: 3}
       propertyPath: SortKey
@@ -12401,83 +12524,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4370125238876972, guid: e9bcfd3b8da4e534eb4795a33c761bdf, type: 3}
   m_PrefabInstance: {fileID: 5297903926805598332}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &5401000113686780772
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4586020050584273394}
-    m_Modifications:
-    - target: {fileID: 682507801166454523, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: SortKey
-      value: 4259733837
-      objectReference: {fileID: 0}
-    - target: {fileID: 3901550995532059235, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_Name
-      value: Toon Ghost-Green
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.3661118
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.432666
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -30.746605
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
---- !u!4 &1647244842540795927 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-  m_PrefabInstance: {fileID: 5401000113686780772}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4867535530127033759 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 682507801166454523, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
-  m_PrefabInstance: {fileID: 5401000113686780772}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5409436889631258473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14151,6 +14197,10 @@ PrefabInstance:
     - target: {fileID: 3901550995532059235, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
       propertyPath: m_Name
       value: Toon Ghost-Green (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901550995532059235, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6640562633417692019, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28796,6 +28846,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Juda Eyed Slime Red
       objectReference: {fileID: 0}
+    - target: {fileID: 8196943402164591541, guid: 59f5807a989eb40448baf1bdf8f2d883, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29782,7 +29836,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
       propertyPath: prefabArray.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
       propertyPath: prefabArray.Array.data[0]
@@ -29804,6 +29858,10 @@ PrefabInstance:
       propertyPath: prefabArray.Array.data[4]
       value: 
       objectReference: {fileID: 8196943402164591541, guid: 59f5807a989eb40448baf1bdf8f2d883, type: 3}
+    - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
+      propertyPath: prefabArray.Array.data[5]
+      value: 
+      objectReference: {fileID: 3901550995532059235, guid: aa4032568421280438ca5122ebc36ff1, type: 3}
     - target: {fileID: 5689253344186216980, guid: 91051994bbe69e04ab14cd3941db5a4a, type: 3}
       propertyPath: prefabArray.Array.data[0].RawGuidValue.Array.data[0]
       value: 0
@@ -29911,132 +29969,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4104772416759906, guid: 3b2a668bd8ac6584f81cdfe02f163998, type: 3}
   m_PrefabInstance: {fileID: 8579385966064899100}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8588500098814484719
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4586020050584273394}
-    m_Modifications:
-    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: SortKey
-      value: 1750170297
-      objectReference: {fileID: 0}
-    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: NetworkedBehaviours.Array.size
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: NetworkedBehaviours.Array.data[5]
-      value: 
-      objectReference: {fileID: 766224385193795595}
-    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: NetworkedBehaviours.Array.data[6]
-      value: 
-      objectReference: {fileID: 2350131781480465689}
-    - target: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: NetworkedBehaviours.Array.data[7]
-      value: 
-      objectReference: {fileID: 5720431759175572538}
-    - target: {fileID: 5153400332146600106, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_Name
-      value: Toon Plant Monster-Pink (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 19.442818
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.5640543
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -60.750107
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
---- !u!114 &766224385193795595 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9048389514993156324, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-  m_PrefabInstance: {fileID: 8588500098814484719}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 484f381c65bc5d44bba02e4a5ec77b3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2350131781480465689 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6317744547195610614, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-  m_PrefabInstance: {fileID: 8588500098814484719}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d88152b1077365c428b9d0b9979a999f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &2963810738837268730 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6778455650048182293, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-  m_PrefabInstance: {fileID: 8588500098814484719}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5720431759175572538 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4058716565870968021, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-  m_PrefabInstance: {fileID: 8588500098814484719}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3005a45b056898b499974940eabf8f97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8154134392387309449 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 439441060690931558, guid: 35884a0408877da4fa2967f5f0f1b713, type: 3}
-  m_PrefabInstance: {fileID: 8588500098814484719}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8718517080692770762
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class PossessingState : EnemyBaseState
     {
         base.EnterState(enemy);
 
-        enemy._animatorManager.isinSpecialState = true;
+        enemy._animatorManager.AttackCount++;
         if (enemy.GetComponent<EnemyDefend>() != null)
         {
             enemy.GetComponent<EnemyDefend>().enabled = false;

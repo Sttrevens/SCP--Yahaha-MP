@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23009028866060476}
   - component: {fileID: 64773852927700614}
   - component: {fileID: -2505519461313767380}
+  - component: {fileID: 4041431429745941324}
   m_Layer: 0
   m_Name: SM_Env_Plant_Fester_03
   m_TagString: Untagged
@@ -28,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1922400701258650}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.84532106, y: 0.8453207, z: 0.84532106}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 04e71246c75bcad4bb526ab1430652ce, type: 2}
+  - {fileID: 2100000, guid: 7555b7b272e534f4cb533c9399dd7cfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,7 +105,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 43148256630234858, guid: 5dc011e70eeadd3408a301935b8cc16c, type: 2}
 --- !u!114 &-2505519461313767380
@@ -121,3 +122,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   damageRate: 1
+--- !u!65 &4041431429745941324
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922400701258650}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.1580265, y: 6.35632, z: 3.2209725}
+  m_Center: {x: -0.32484087, y: 2.4117215, z: -0.2501789}

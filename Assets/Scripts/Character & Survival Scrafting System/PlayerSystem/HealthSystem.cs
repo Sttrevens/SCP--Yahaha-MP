@@ -403,7 +403,8 @@ else
             //Inventory.instance.inventoryWindow.SetActive(true);
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             GetComponent<Rigidbody>().useGravity = true;
-            Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = true;
+            if (Camera.main != null)
+                Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = true;
             GetComponent<NavMeshObstacle>().enabled = false;
             RpcSetTag("Untagged");
             isDead = true;

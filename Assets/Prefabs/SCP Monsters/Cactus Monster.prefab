@@ -10183,6 +10183,7 @@ MonoBehaviour:
   isFlyingEnemy: 0
   animator: {fileID: 0}
   _animatorManager: {fileID: 0}
+  initialStateType: 
   sfxClips: []
 --- !u!114 &2687222387807620275
 MonoBehaviour:
@@ -10282,6 +10283,8 @@ MonoBehaviour:
   _isPatrolling: 0
   _CastSpellCount: 0
   _spellingBool: 0
+  _isinSpecialState: 0
+  _Speed: 0
 --- !u!114 &8847562461911446890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10302,6 +10305,7 @@ MonoBehaviour:
   fieldOfViewAngleVertical: 60
   currentPatrolIndex: 0
   patrolMode: 1
+  isSpecialPatrolMode: 0
   patrolPoints: []
   patrolRange: 10
   patrolWidth: 10
@@ -10311,6 +10315,7 @@ MonoBehaviour:
   soundTargetPosition: {x: 0, y: 0, z: 0}
   chasingSpeed: 7
   hearingRadius: 10
+  stateTypeString: 
   stepAngle: 10
   drawGizmos: 0
 --- !u!114 &4676449541512774918
@@ -10341,7 +10346,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4268554706764865200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a19aa76743dbe44b369b9cf7b92439, type: 3}
+  m_Script: {fileID: 11500000, guid: 32328e33aea4d054b96e347f5d971e3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 251276048767268380}
