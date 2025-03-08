@@ -55,11 +55,11 @@ public class EnemyAttack : NetworkBehaviour
                 //模拟眼球的位置
                 Vector3 raycastStart = enemy.transform.position + Vector3.up;
                 // Calculate directions for two rays with a 30° spread (15° to the left and 15° to the right)
-                Vector3 leftDirection = Quaternion.Euler(0f, 30f, 0f) * enemy.transform.forward;
-                Vector3 rightDirection = Quaternion.Euler(0f, -30f, 0f) * enemy.transform.forward;
+                Vector3 leftDirection = Quaternion.Euler(0f, 20f, 0f) * enemy.transform.forward;
+                Vector3 rightDirection = Quaternion.Euler(0f, -20f, 0f) * enemy.transform.forward;
                 Vector3 raycastDirection = enemy.transform.forward;
-                Vector3 leftSideDirection = Quaternion.Euler(0f, 60f, 0f) * enemy.transform.forward;
-                Vector3 rightSideDirection = Quaternion.Euler(0f, -60f, 0f) * enemy.transform.forward;
+                Vector3 leftSideDirection = Quaternion.Euler(0f, 45f, 0f) * enemy.transform.forward;
+                Vector3 rightSideDirection = Quaternion.Euler(0f, -45f, 0f) * enemy.transform.forward;
                 
                 RaycastHit hit;
                 if (Physics.Raycast(raycastStart, leftDirection, out hit, attackRange * 0.8f))
@@ -109,11 +109,11 @@ public class EnemyAttack : NetworkBehaviour
     {
         Gizmos.color = Color.yellow;
         Vector3 raycastStart = transform.position + Vector3.up;
-        Vector3 leftDirection = Quaternion.Euler(0f, 30f, 0f) * transform.forward;
-        Vector3 rightDirection = Quaternion.Euler(0f, -30f, 0f) * transform.forward;
+        Vector3 leftDirection = Quaternion.Euler(0f, 20f, 0f) * transform.forward;
+        Vector3 rightDirection = Quaternion.Euler(0f, -20f, 0f) * transform.forward;
         Vector3 raycastDirection = transform.forward;
-        Vector3 leftSideDirection = Quaternion.Euler(0f, 60f, 0f) * transform.forward;
-        Vector3 rightSideDirection = Quaternion.Euler(0f, -60f, 0f) * transform.forward;
+        Vector3 leftSideDirection = Quaternion.Euler(0f, 45f, 0f) * transform.forward;
+        Vector3 rightSideDirection = Quaternion.Euler(0f, -45f, 0f) * transform.forward;
         Gizmos.DrawRay(raycastStart, leftDirection * attackRange * 0.8f);
         Gizmos.DrawRay(raycastStart, rightDirection * attackRange * 0.8f);
         Gizmos.DrawRay(raycastStart, raycastDirection * attackRange);
