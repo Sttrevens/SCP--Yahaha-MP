@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23163420813612302}
   - component: {fileID: 64650552004213894}
   - component: {fileID: -5918309452588942259}
+  - component: {fileID: 5343422558715475052}
   m_Layer: 0
   m_Name: SM_Env_Plant_Fester_01
   m_TagString: Untagged
@@ -121,3 +122,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   damageRate: 1
+--- !u!65 &5343422558715475052
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065270581552082}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.406921, y: 9.187335, z: 3.6901312}
+  m_Center: {x: -0.63197863, y: 4.0966797, z: -0.16049552}

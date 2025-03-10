@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using LPSurvivalEngine;
+using UnityEngine.Serialization;
 
 public class ChasingEnemy : EnemyMovement
 {
@@ -12,7 +13,7 @@ public class ChasingEnemy : EnemyMovement
     public float hearingRadius = 10f;
     public IEnemyState StateAfterChasing;
     
-    [SerializeField] private string stateTypeString; // 在Inspector中设置
+    [SerializeField] private string stateAfterChasingString; // 在Inspector中设置
     
     private Dictionary<string, IEnemyState> stateDictionary 
         = new Dictionary<string, IEnemyState>
@@ -24,7 +25,7 @@ public class ChasingEnemy : EnemyMovement
 
     private void Start()
     {
-        if (stateDictionary.TryGetValue(stateTypeString, out IEnemyState foundState))
+        if (stateDictionary.TryGetValue(stateAfterChasingString, out IEnemyState foundState))
         {
             StateAfterChasing = foundState;
         }
