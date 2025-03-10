@@ -628,10 +628,10 @@ namespace LPSurvivalEngine
                 {
                     if (InventorySlots[slotIndex].equipped)
                     {
-                        DisableItem(slotIndex);
+                        //DisableItem(slotIndex);
                     }
-                    slots[slotIndex].item = null;
-                    slots[slotIndex].quantity = 0;
+                    //slots[slotIndex].item = null;
+                    //slots[slotIndex].quantity = 0;
                 }
                 
                 UpdateUI();

@@ -37,6 +37,8 @@ namespace LPSurvivalEngine
         [Header("Durability Settings")]
         [SerializeField] private float durabilityDrainPerSecond = 0.2f;
 
+        [SerializeField] private GameObject[] diedObjects;
+
         [Header("UI")]
         [SerializeField] private GameObject[] batteryIcons = new GameObject[3]; // 三个电池图标
         [FormerlySerializedAs("bobojian")] [SerializeField] private string bobojianReferenceinScene;
@@ -65,11 +67,17 @@ namespace LPSurvivalEngine
                     if (currentSlot.currentDurability <= 0)
                     {
                         Debug.Log("[CameraController] Camera battery depleted!");
-                        CameraInCamera.enabled = false;
+                        foreach (var go in diedObjects)
+                        {
+                            go.SetActive(false);
+                        }
                     }
                     else
                     {
-                        CameraInCamera.enabled = true;
+                        foreach (var go in diedObjects)
+                        {
+                            go.SetActive(true);
+                        }
                     }
             }
         }

@@ -1,5 +1,6 @@
 using LPSurvivalEngine;
 using System.Xml.Serialization;
+using Fusion;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -70,12 +71,18 @@ public class ExitMenu : MonoBehaviour
 
     public void RegretExitGame()
     {
-        allButtons.SetActive(true) ;
+        allButtons.SetActive(true);
         exitConfirm.SetActive(false);
     }
 
     public void ConfirmExitGame()
     {
+        TitleScreenUI.roomName = "";
+TitleScreenUI.playerName = "";
+TitleScreenUI.Region = "";
+TitleScreenUI.IsSpGame = false;
+TitleScreenUI.IsSpectator = false;
+        FindFirstObjectByType<NetworkRunner>().Shutdown();
         SceneManager.LoadScene(titleMenuSceneName);
     }
 }
