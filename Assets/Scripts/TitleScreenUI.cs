@@ -159,6 +159,7 @@ public class TitleScreenUI : MonoBehaviour
         {
             Region = string.Empty;
         }
+
         SceneManager.LoadScene(gameSceneName);
     }
 

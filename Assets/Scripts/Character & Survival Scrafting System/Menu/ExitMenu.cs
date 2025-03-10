@@ -82,7 +82,10 @@ TitleScreenUI.playerName = "";
 TitleScreenUI.Region = "";
 TitleScreenUI.IsSpGame = false;
 TitleScreenUI.IsSpectator = false;
-        FindFirstObjectByType<NetworkRunner>().Shutdown();
-        SceneManager.LoadScene(titleMenuSceneName);
+NetworkSceneManagerDefault sceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>();
+sceneManager.Initialize(FindFirstObjectByType<NetworkRunner>());
+FindFirstObjectByType<NetworkRunner>().Shutdown(destroyGameObject: true, 
+    shutdownReason: ShutdownReason.Ok);
+SceneManager.LoadScene(titleMenuSceneName);
     }
 }
