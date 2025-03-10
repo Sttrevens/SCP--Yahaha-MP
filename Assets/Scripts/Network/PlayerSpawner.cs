@@ -8,12 +8,20 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 {
     public List<GameObject> PlayerPrefabsPool;
     public Transform spawnPoint;
+    public GameObject spectatorPanel;
 
     // 只在本地维护对生成的播放器Prefab的引用，方便离开时回收
     private Dictionary<PlayerRef, GameObject> assignedPrefabs = new Dictionary<PlayerRef, GameObject>();
 
     public void PlayerJoined(PlayerRef player)
     {
+        if (TitleScreenUI.IsSpectator)
+        {
+            if (Camera.main != null)
+                Camera.main.GetComponent<AudioListener>().enabled = false;
+            spectatorPanel.SetActive(true);
+            return;
+        }
         
         // 当前加入的玩家是第几个 => chosenIndex
         int chosenIndex = Runner.ActivePlayers.Count() - 1;

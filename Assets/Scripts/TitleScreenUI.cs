@@ -23,6 +23,7 @@ public class TitleScreenUI : MonoBehaviour
     public static string playerName;
     public static string Region;
     public static bool IsSpGame = false;
+    public static bool IsSpectator = false;
 
     public string gameSceneName;
     
@@ -183,6 +184,11 @@ public class TitleScreenUI : MonoBehaviour
     {
         tmpText.gameObject.SetActive(false);
         buttonsParent.SetActive(true);
+    }
+
+    public void OnSpectatorButton()
+    {
+        IsSpectator = true;
     }
 
     public void OnExitButton()
