@@ -46,7 +46,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Run"",
+                    ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""eb8f6d8e-f8dc-4fc0-a039-d90a23b4b622"",
                     ""expectedControlType"": ""Button"",
@@ -308,7 +308,18 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""id"": ""098f615d-78c9-43a8-aa57-5155f4dc9063"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=0.05,y=0.05)"",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07f83c94-4c80-4262-a08e-1fe392e00181"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": ""StickDeadzone"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -321,7 +332,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Run"",
+                    ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -521,7 +532,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
         m_Main_Move = m_Main.FindAction("Move", throwIfNotFound: true);
         m_Main_Look = m_Main.FindAction("Look", throwIfNotFound: true);
-        m_Main_Run = m_Main.FindAction("Run", throwIfNotFound: true);
+        m_Main_Sprint = m_Main.FindAction("Sprint", throwIfNotFound: true);
         m_Main_Jump = m_Main.FindAction("Jump", throwIfNotFound: true);
         m_Main_Inventory = m_Main.FindAction("Inventory", throwIfNotFound: true);
         m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
@@ -599,7 +610,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private List<IMainActions> m_MainActionsCallbackInterfaces = new List<IMainActions>();
     private readonly InputAction m_Main_Move;
     private readonly InputAction m_Main_Look;
-    private readonly InputAction m_Main_Run;
+    private readonly InputAction m_Main_Sprint;
     private readonly InputAction m_Main_Jump;
     private readonly InputAction m_Main_Inventory;
     private readonly InputAction m_Main_Interact;
@@ -620,7 +631,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         public MainActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Main_Move;
         public InputAction @Look => m_Wrapper.m_Main_Look;
-        public InputAction @Run => m_Wrapper.m_Main_Run;
+        public InputAction @Sprint => m_Wrapper.m_Main_Sprint;
         public InputAction @Jump => m_Wrapper.m_Main_Jump;
         public InputAction @Inventory => m_Wrapper.m_Main_Inventory;
         public InputAction @Interact => m_Wrapper.m_Main_Interact;
@@ -650,9 +661,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @Run.started += instance.OnRun;
-            @Run.performed += instance.OnRun;
-            @Run.canceled += instance.OnRun;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -705,9 +716,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @Run.started -= instance.OnRun;
-            @Run.performed -= instance.OnRun;
-            @Run.canceled -= instance.OnRun;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -771,7 +782,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnRun(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);

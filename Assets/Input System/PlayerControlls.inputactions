@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Run",
+                    "name": "Sprint",
                     "type": "Button",
                     "id": "eb8f6d8e-f8dc-4fc0-a039-d90a23b4b622",
                     "expectedControlType": "Button",
@@ -286,7 +286,18 @@
                     "id": "098f615d-78c9-43a8-aa57-5155f4dc9063",
                     "path": "<Mouse>/delta",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=0.05,y=0.05)",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07f83c94-4c80-4262-a08e-1fe392e00181",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
                     "groups": "",
                     "action": "Look",
                     "isComposite": false,
@@ -299,7 +310,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Run",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
