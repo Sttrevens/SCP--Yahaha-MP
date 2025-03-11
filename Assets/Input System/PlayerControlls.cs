@@ -46,7 +46,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Run"",
+                    ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""eb8f6d8e-f8dc-4fc0-a039-d90a23b4b622"",
                     ""expectedControlType"": ""Button"",
@@ -179,6 +179,15 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SelectSlotGamePad"",
+                    ""type"": ""Value"",
+                    ""id"": ""ee30f982-ef67-4d18-8e45-f6ecd44802bd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -250,8 +259,30 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""31bfdb84-8be6-4b97-84b2-680c46a267dd"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""263a0f69-7cc8-41f6-b8dd-2f1c367a2c89"",
-                    ""path"": ""<Keyboard>/#(E)"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bddd9c9-9aaa-4730-bb66-32e8dc3816f6"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -272,8 +303,41 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""853b5be9-e87a-454c-8561-aadf47a666c1"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""fb06480d-7e6b-48af-bf97-a1c3898be4a3"",
                     ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AltAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""940d0833-d77f-489d-b14c-9944a811262b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AltAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cfee425-9a05-4ab4-b4e1-fa4fb144db34"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -308,7 +372,18 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""id"": ""098f615d-78c9-43a8-aa57-5155f4dc9063"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=0.05,y=0.05)"",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07f83c94-4c80-4262-a08e-1fe392e00181"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": ""StickDeadzone"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -321,7 +396,29 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Run"",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c2c160e-3863-4997-a69a-c7dfc2e8530a"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c369e2e2-c4f2-4df1-8c41-b65622afcaf5"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -481,6 +578,17 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""15225290-aa8a-41c1-ab87-c42c56871216"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": ""Hold(duration=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a80e82b8-0c01-42c1-9fe7-d55319ed4eb7"",
                     ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
@@ -503,12 +611,67 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""0a1b9ee8-95e3-498a-b1cb-2cf82b032cb7"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d4e77614-0ff0-4006-bdca-80ab45735b23"",
                     ""path"": ""<Mouse>/scroll"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42a96aab-00b1-44ca-b615-77a9dac34e80"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlotGamePad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2b51533-330b-4f07-9ee1-c44dfc3ce53b"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlotGamePad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89286fb6-df86-4a9a-b203-1dc3346ae293"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlotGamePad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f036085-0e19-45ba-a942-79e73b155e33"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlotGamePad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -521,7 +684,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
         m_Main_Move = m_Main.FindAction("Move", throwIfNotFound: true);
         m_Main_Look = m_Main.FindAction("Look", throwIfNotFound: true);
-        m_Main_Run = m_Main.FindAction("Run", throwIfNotFound: true);
+        m_Main_Sprint = m_Main.FindAction("Sprint", throwIfNotFound: true);
         m_Main_Jump = m_Main.FindAction("Jump", throwIfNotFound: true);
         m_Main_Inventory = m_Main.FindAction("Inventory", throwIfNotFound: true);
         m_Main_Interact = m_Main.FindAction("Interact", throwIfNotFound: true);
@@ -536,6 +699,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Main_Crouch = m_Main.FindAction("Crouch", throwIfNotFound: true);
         m_Main_Escape = m_Main.FindAction("Escape", throwIfNotFound: true);
         m_Main_Zoom = m_Main.FindAction("Zoom", throwIfNotFound: true);
+        m_Main_SelectSlotGamePad = m_Main.FindAction("SelectSlotGamePad", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -599,7 +763,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private List<IMainActions> m_MainActionsCallbackInterfaces = new List<IMainActions>();
     private readonly InputAction m_Main_Move;
     private readonly InputAction m_Main_Look;
-    private readonly InputAction m_Main_Run;
+    private readonly InputAction m_Main_Sprint;
     private readonly InputAction m_Main_Jump;
     private readonly InputAction m_Main_Inventory;
     private readonly InputAction m_Main_Interact;
@@ -614,13 +778,14 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Crouch;
     private readonly InputAction m_Main_Escape;
     private readonly InputAction m_Main_Zoom;
+    private readonly InputAction m_Main_SelectSlotGamePad;
     public struct MainActions
     {
         private @PlayerControlls m_Wrapper;
         public MainActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Main_Move;
         public InputAction @Look => m_Wrapper.m_Main_Look;
-        public InputAction @Run => m_Wrapper.m_Main_Run;
+        public InputAction @Sprint => m_Wrapper.m_Main_Sprint;
         public InputAction @Jump => m_Wrapper.m_Main_Jump;
         public InputAction @Inventory => m_Wrapper.m_Main_Inventory;
         public InputAction @Interact => m_Wrapper.m_Main_Interact;
@@ -635,6 +800,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Main_Crouch;
         public InputAction @Escape => m_Wrapper.m_Main_Escape;
         public InputAction @Zoom => m_Wrapper.m_Main_Zoom;
+        public InputAction @SelectSlotGamePad => m_Wrapper.m_Main_SelectSlotGamePad;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -650,9 +816,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @Run.started += instance.OnRun;
-            @Run.performed += instance.OnRun;
-            @Run.canceled += instance.OnRun;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -695,6 +861,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Zoom.started += instance.OnZoom;
             @Zoom.performed += instance.OnZoom;
             @Zoom.canceled += instance.OnZoom;
+            @SelectSlotGamePad.started += instance.OnSelectSlotGamePad;
+            @SelectSlotGamePad.performed += instance.OnSelectSlotGamePad;
+            @SelectSlotGamePad.canceled += instance.OnSelectSlotGamePad;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
@@ -705,9 +874,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @Run.started -= instance.OnRun;
-            @Run.performed -= instance.OnRun;
-            @Run.canceled -= instance.OnRun;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -750,6 +919,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Zoom.started -= instance.OnZoom;
             @Zoom.performed -= instance.OnZoom;
             @Zoom.canceled -= instance.OnZoom;
+            @SelectSlotGamePad.started -= instance.OnSelectSlotGamePad;
+            @SelectSlotGamePad.performed -= instance.OnSelectSlotGamePad;
+            @SelectSlotGamePad.canceled -= instance.OnSelectSlotGamePad;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -771,7 +943,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnRun(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
@@ -786,5 +958,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
+        void OnSelectSlotGamePad(InputAction.CallbackContext context);
     }
 }

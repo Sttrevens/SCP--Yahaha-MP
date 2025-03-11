@@ -2,41 +2,73 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InputRelaySink : MonoBehaviour
 {
     [SerializeField] RectTransform CanvasTransform;
 
-    GraphicRaycaster Raycaster;
-    List<GameObject> DragTargets = new List<GameObject>();
-    GameObject lastHoveredObject = null; // Keep track of the last hovered object.
+    private GraphicRaycaster Raycaster;
+    private List<GameObject> DragTargets = new List<GameObject>();
+    private GameObject lastHoveredObject = null; 
+
+    public PlayerInput playerInput;
+    private InputAction action;
+    private InputAction interact;
+
+    // 用来记录上一帧动作是按下还是没按下
+    private bool wasDown = false; 
 
     void Start()
     {
         Raycaster = GetComponent<GraphicRaycaster>();
+
+        if (playerInput != null)
+        {
+            // 在 PlayerInput actions 中找名为 "Action" 的 InputAction
+            action = playerInput.actions.FindAction("Action");
+            interact = playerInput.actions.FindAction("Interact");
+            if (action != null)
+            {
+                // 启用该 Action（如果尚未启用）
+                action.Enable();
+                interact.Enable();
+            }
+        }
+        else
+        {
+            playerInput = FindObjectOfType<PlayerInput>();
+        }
     }
 
     public void OnCursorInput(Vector2 normalisedPosition)
     {
-        // Calculate the position in canvas space.
-        Vector3 mousePosition = new Vector3(CanvasTransform.sizeDelta.x * normalisedPosition.x,
-                                            CanvasTransform.sizeDelta.y * normalisedPosition.y,
-                                            0f);
+        // 1. 先基于 Action 计算“是否按下”“刚按下”和“刚抬起”
+        float inputVal = Mathf.Max(action != null ? action.ReadValue<float>() : 0f, interact != null ? interact.ReadValue<float>() : 0f);
+        // 大于 0.5f 算作“按下”
+        bool isMouseDown = (inputVal > 0.5f);
+        bool sendMouseDown = isMouseDown && !wasDown;
+        bool sendMouseUp   = !isMouseDown && wasDown;
 
-        // Construct our pointer event.
+        // 更新 wasDown，为下次进入时做对比
+        wasDown = isMouseDown;
+
+        // 2. 计算鼠标（或光标）在 Canvas 内的坐标
+        Vector3 mousePosition = new Vector3(
+            CanvasTransform.sizeDelta.x * normalisedPosition.x,
+            CanvasTransform.sizeDelta.y * normalisedPosition.y,
+            0f
+        );
+
+        // 3. 构造 PointerEventData，用于 UI Raycast
         PointerEventData mouseEvent = new PointerEventData(EventSystem.current);
         mouseEvent.position = mousePosition;
 
-        // Perform a raycast using the graphics raycaster.
         List<RaycastResult> results = new List<RaycastResult>();
         Raycaster.Raycast(mouseEvent, results);
 
-        bool sendMouseDown = Input.GetMouseButtonDown(0);
-        bool sendMouseUp = Input.GetMouseButtonUp(0);
-        bool isMouseDown = Input.GetMouseButton(0);
-
-        // Handle end drag events.
+        // 4. 若松开，先处理“结束拖拽”
         if (sendMouseUp)
         {
             foreach (var target in DragTargets)
@@ -47,28 +79,25 @@ public class InputRelaySink : MonoBehaviour
             DragTargets.Clear();
         }
 
-        // Keep track of the hovered object for pointer enter/exit events.
+        // 5. 处理指针 enter / exit
         GameObject currentHoveredObject = results.Count > 0 ? results[0].gameObject : null;
-
         if (currentHoveredObject != lastHoveredObject)
         {
-            // Trigger pointer exit on the last hovered object.
+            // 之前悬停的物体，执行 pointerExit
             if (lastHoveredObject != null)
             {
                 ExecuteEvents.Execute(lastHoveredObject, mouseEvent, ExecuteEvents.pointerExitHandler);
             }
-
-            // Trigger pointer enter on the new hovered object.
+            // 新悬停物体，执行 pointerEnter
             if (currentHoveredObject != null)
             {
                 ExecuteEvents.Execute(currentHoveredObject, mouseEvent, ExecuteEvents.pointerEnterHandler);
             }
-
-            // Update the last hovered object.
+            // 更新记录
             lastHoveredObject = currentHoveredObject;
         }
 
-        // Process raycast results.
+        // 6. 遍历所有检测到的 UI 元素，发事件
         foreach (var result in results)
         {
             PointerEventData eventData = new PointerEventData(EventSystem.current);
@@ -80,6 +109,7 @@ public class InputRelaySink : MonoBehaviour
 
             var slider = result.gameObject.GetComponentInParent<UnityEngine.UI.Slider>();
 
+            // 如果刚按下，处理 beginDrag
             if (sendMouseDown)
             {
                 if (ExecuteEvents.Execute(result.gameObject, eventData, ExecuteEvents.beginDragHandler))
@@ -88,11 +118,11 @@ public class InputRelaySink : MonoBehaviour
                 if (slider != null)
                 {
                     slider.OnInitializePotentialDrag(eventData);
-
                     if (!DragTargets.Contains(result.gameObject))
                         DragTargets.Add(result.gameObject);
                 }
             }
+            // 如果处于拖拽
             else if (DragTargets.Contains(result.gameObject))
             {
                 eventData.dragging = true;
@@ -104,6 +134,7 @@ public class InputRelaySink : MonoBehaviour
                 }
             }
 
+            // 处理 pointerDown / pointerUp / pointerClick
             if (sendMouseDown)
             {
                 if (ExecuteEvents.Execute(result.gameObject, eventData, ExecuteEvents.pointerDownHandler))

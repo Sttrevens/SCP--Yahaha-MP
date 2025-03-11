@@ -2,6 +2,7 @@ using System;
 using Fusion;
 using UnityEngine;
 using LPSurvivalEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public class PlayerMovement : NetworkBehaviour
@@ -49,6 +50,46 @@ public class PlayerMovement : NetworkBehaviour
     [Header("Aim Movement")]
     public float aimSpeed = 2f;
     public bool isAiming = false;
+    
+    [Header("Input System")]
+    private PlayerInput playerInput;
+    private InputAction jumpAction;
+    private InputAction sprintAction;
+
+    private void OnEnable()
+    {
+        playerInput = FindObjectOfType<PlayerInput>();
+        
+        // 1. 从 PlayerInput 里找到你配置好的 "Look" Action
+        if (playerInput != null)
+        {
+            jumpAction = playerInput.actions.FindAction("Jump");
+            if (jumpAction != null)
+            {
+                jumpAction.Enable(); // 确保启用
+            }
+            
+            sprintAction = playerInput.actions.FindAction("Sprint");
+            if (sprintAction != null)
+            {
+                sprintAction.Enable(); // 确保启用
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        // 脚本禁用时，禁用 Look Action（可选）
+        if (jumpAction != null)
+        {
+            jumpAction.Disable();
+        }
+        
+        if (sprintAction != null)
+        {
+            sprintAction.Disable();
+        }
+    }
 
     private void Awake()
     {
@@ -77,7 +118,9 @@ public class PlayerMovement : NetworkBehaviour
 
         if (HasStateAuthority && !_healthSystem.isDeadNetworked)
         {
-            if (Input.GetButtonDown("Jump"))
+            // 改用新Input：
+            // 判断这帧是否按下（用于替代旧的GetButtonDown）
+            if (jumpAction != null && jumpAction.WasPressedThisFrame())
             {
                 if (_healthSystem.stamina.currentValue > 10f)
                 {
@@ -91,7 +134,11 @@ public class PlayerMovement : NetworkBehaviour
 
             if (!isAiming)
             {
-                if ((Input.GetButton("Sprint") && isMoving) && GetComponent<HealthSystem>().stamina.currentValue > 0)
+                // 判断是否被按住（用于替代旧的GetButton）
+                if (sprintAction != null &&
+                    sprintAction.IsPressed() &&
+                    isMoving                          &&
+                    _healthSystem.stamina.currentValue > 0)
                 {
                     _targetFOV = sprintFOV;
                     _targetSpeed = sprintSpeed;
@@ -110,12 +157,14 @@ public class PlayerMovement : NetworkBehaviour
                 _targetSpeed = aimSpeed;
                 issprinting = false;
             }
-            // 插值使得更改更加平滑
+
+            // 视野和速度平滑插值
             plCamera.fieldOfView =
                 Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Runner.DeltaTime);
             playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Runner.DeltaTime);
         }
     }
+
 
     public override void FixedUpdateNetwork()
     {

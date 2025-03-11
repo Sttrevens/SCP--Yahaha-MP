@@ -67,6 +67,10 @@ MonoBehaviour:
   MaxFOV: 60
   isRightMouseButtonDown: 0
   durabilityDrainPerSecond: 0.2
+  diedObjects:
+  - {fileID: 8540076340833062624}
+  - {fileID: 1246979066746601712}
+  - {fileID: 6967005505638068852}
   batteryIcons:
   - {fileID: 0}
   - {fileID: 0}
@@ -152,7 +156,7 @@ MonoBehaviour:
   SyncScale: 0
   SyncParent: 1
   _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 0
+  DisableSharedModeInterpolation: 1
 --- !u!82 &2041010698924757834
 AudioSource:
   m_ObjectHideFlags: 0

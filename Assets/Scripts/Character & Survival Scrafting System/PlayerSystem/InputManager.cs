@@ -26,6 +26,7 @@ namespace LPSurvivalEngine
         private InputAction runAction;
         private InputAction jumpAction;
         private InputAction slotSelectAction;
+        private InputAction slotSlectActionGamePad;
         private InputAction attackActionTwoHand;
         private InputAction attackActionOneHand;
 
@@ -45,9 +46,10 @@ namespace LPSurvivalEngine
 
             moveAction = currentMap.FindAction("Move");
             lookAction = currentMap.FindAction("Look");
-            runAction = currentMap.FindAction("Run");
+            runAction = currentMap.FindAction("Sprint");
             jumpAction = currentMap.FindAction("Jump");
             slotSelectAction = currentMap.FindAction("SelectSlot");
+            slotSlectActionGamePad = currentMap.FindAction("SelectSlotGamePad");
             attackActionTwoHand = currentMap.FindAction("TwoHandAttack");
             attackActionOneHand = currentMap.FindAction("OneHandAttack");
             crouchAction = currentMap.FindAction("Crouch");
@@ -62,6 +64,8 @@ namespace LPSurvivalEngine
             runAction.performed += onRun;
             jumpAction.performed += onJump;
             slotSelectAction.canceled += OnSelectSlot;
+            slotSlectActionGamePad.canceled += OnSlotSelectGamePad;
+
             ScrollAction.performed += onScroll;
 
             dropAction.started += OnDrop;
@@ -124,14 +128,26 @@ private void onScroll(InputAction.CallbackContext context)
         }
 
         private void OnSelectSlot(InputAction.CallbackContext context)
+{
+    string keypressed = context.control.displayName;
+    if (keypressed == "0") SlotIndex = 9;
+    else SlotIndex = int.Parse(keypressed) - 1;
+
+    Inventory.instance.SelectItem(SlotIndex);
+}
+        
+        private void OnSlotSelectGamePad(InputAction.CallbackContext context)
         {
+            Debug.Log("[GamePad Select Canceled]");
             string keypressed = context.control.displayName;
-
-            if (keypressed == "0") SlotIndex = 9;
-            else SlotIndex = int.Parse(keypressed) - 1;
-
+            if (keypressed == "D-Pad/Left") SlotIndex = 1;
+            else if (keypressed == "D-Pad/Down") SlotIndex = 2;
+            else if (keypressed == "D-Pad/Right") SlotIndex = 3;
+            else if (keypressed == "D-Pad/Up") SlotIndex = 4;
             Inventory.instance.SelectItem(SlotIndex);
+            
         }
+
 
         private void OnUse(InputAction.CallbackContext context)
         {

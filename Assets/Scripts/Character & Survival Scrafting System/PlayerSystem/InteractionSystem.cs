@@ -49,18 +49,29 @@ namespace LPSurvivalEngine
         {
             cam = Camera.main;
             
-            PlayerInput = GameObject.Find("InputManager").GetComponent<PlayerInput>();
-            
-            if (PlayerInput != null) {
-                interactAction = PlayerInput.actions.FindAction("Interact");
-                interactAction.canceled += OnInteractInput;
-            }
-
             crosshairOriginalIcon = crosshairImage.sprite;
 
             hintObjectText.text = "";
             hintInteractText.text = "";
             hintLiftText.text = "";
+        }
+        
+        private void OnEnable()
+        {
+            PlayerInput = FindObjectOfType<PlayerInput>();
+        
+            if (PlayerInput != null) {
+                interactAction = PlayerInput.actions.FindAction("Interact");
+                interactAction.canceled += OnInteractInput;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (interactAction != null)
+            {
+                interactAction.Disable();
+            }
         }
 
         private void Update()
