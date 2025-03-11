@@ -6,27 +6,26 @@ public class IKWeightController : StateMachineBehaviour
     public float targetExitWeight = 0f;
     public float weightChangeSpeed = 2f;
 
-    private IKWeightManager weightManager;
+    private RigController _rigController;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (weightManager == null)
-            weightManager = animator.GetComponent<IKWeightManager>();
+        if (_rigController == null)
+            _rigController = animator.GetComponent<RigController>();
 
-        if (weightManager != null)
-            weightManager.ChangeWeight(targetEnterWeight, weightChangeSpeed);
+        if (_rigController != null)
+            _rigController.SwitchToHipFire(2.0f);
         else
             Debug.LogError("未找到 IKWeightManager，请确保角色已挂载 IKWeightManager 脚本！");
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("退出状态");
-        if (weightManager == null)
-            weightManager = animator.GetComponent<IKWeightManager>();
+        if (_rigController == null)
+            _rigController = animator.GetComponent<RigController>();
 
-        if (weightManager != null)
-            weightManager.ChangeWeight(targetExitWeight, weightChangeSpeed/2);
+        if (_rigController != null)
+            _rigController.SwitchToIdle(2.0f);
         else
             Debug.LogError("未找到 IKWeightManager，请确保角色已挂载 IKWeightManager 脚本！");
     }
