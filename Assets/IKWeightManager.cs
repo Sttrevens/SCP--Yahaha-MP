@@ -7,6 +7,7 @@ public class IKWeightManager : MonoBehaviour
 {
     public Rig rig;
     private Coroutine weightCoroutine;
+    public RigBuilder rigBuilder;
 
     private void Awake()
     {

@@ -6,44 +6,44 @@ using UnityEngine;
 public class IntersectVolume : MonoBehaviour
 {
     [SerializeField]
-    private Camera targetCamera; // Ïà»ú£¬Ä¬ÈÏÊÇÖ÷ÉãÏñ»ú
+    private Camera targetCamera; // ç›¸æœºï¼Œé»˜è®¤æ˜¯ä¸»æ‘„åƒæœº
     [SerializeField]
-    private GameObject targetObject; // Ä¿±êÎïÌå
+    private GameObject targetObject; // ç›®æ ‡ç‰©ä½“
     [SerializeField]
-    private int sampleCount = 100; // Ã¿¸ö·½Ïò²ÉÑùµãÊı
-    private float intersectVolume; // ½»¼¯Ìå»ı
+    private int sampleCount = 100; // æ¯ä¸ªæ–¹å‘é‡‡æ ·ç‚¹æ•°
+    private float intersectVolume; // äº¤é›†ä½“ç§¯
 
     void Start()
     {
-        // Èç¹ûÃ»ÓĞÉèÖÃÏà»ú£¬Ä¬ÈÏÊ¹ÓÃÖ÷ÉãÏñ»ú
+        // å¦‚æœæ²¡æœ‰è®¾ç½®ç›¸æœºï¼Œé»˜è®¤ä½¿ç”¨ä¸»æ‘„åƒæœº
         if (targetCamera == null)
         {
             targetCamera = Camera.main;
         }
 
-        // ¼ÆËãÊÓ×¶ÌåºÍÎïÌåµÄÏà½»Ìå»ı
+        // è®¡ç®—è§†é”¥ä½“å’Œç‰©ä½“çš„ç›¸äº¤ä½“ç§¯
         intersectVolume = CalculateIntersectVolume();
         Debug.Log($"Intersect Volume: {intersectVolume}");
     }
 
     /// <summary>
-    /// ÅĞ¶ÏµãÊÇ·ñÔÚÏà»úÊÓ×¶ÌåÄÚ
+    /// åˆ¤æ–­ç‚¹æ˜¯å¦åœ¨ç›¸æœºè§†é”¥ä½“å†…
     /// </summary>
     private bool IsInFrustum(Camera cam, Vector3 point)
     {
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(cam);
         foreach (Plane plane in planes)
         {
-            if (plane.GetDistanceToPoint(point) < 0) // µãÔÚÈÎÒâÆ½ÃæÍâ²à
+            if (plane.GetDistanceToPoint(point) < 0) // ç‚¹åœ¨ä»»æ„å¹³é¢å¤–ä¾§
             {
                 return false;
             }
         }
-        return true; // µãÔÚËùÓĞÆ½ÃæµÄÄÚ²à
+        return true; // ç‚¹åœ¨æ‰€æœ‰å¹³é¢çš„å†…ä¾§
     }
 
     /// <summary>
-    /// ÅĞ¶ÏµãÊÇ·ñÔÚÎïÌåÄÚ²¿
+    /// åˆ¤æ–­ç‚¹æ˜¯å¦åœ¨ç‰©ä½“å†…éƒ¨
     /// </summary>
     private bool IsInCollider(MeshCollider other, Vector3 center, Vector3 point)
     {
@@ -53,14 +53,14 @@ public class IntersectVolume : MonoBehaviour
         {
             if (hit.collider == other)
             {
-                return false; // µãÔÚÎïÌåÍâ²¿
+                return false; // ç‚¹åœ¨ç‰©ä½“å¤–éƒ¨
             }
         }
-        return true; // µãÔÚÎïÌåÄÚ²¿
+        return true; // ç‚¹åœ¨ç‰©ä½“å†…éƒ¨
     }
 
     /// <summary>
-    /// ¼ÆËãÊÓ×¶ÌåÓëÎïÌåµÄÏà½»Ìå»ı
+    /// è®¡ç®—è§†é”¥ä½“ä¸ç‰©ä½“çš„ç›¸äº¤ä½“ç§¯
     /// </summary>
     private float CalculateIntersectVolume()
     {
@@ -85,7 +85,7 @@ public class IntersectVolume : MonoBehaviour
         float[] y = new float[vertices.Length];
         float[] z = new float[vertices.Length];
 
-        // ×ª»»¶¥µãµ½ÊÀ½ç×ø±ê
+        // è½¬æ¢é¡¶ç‚¹åˆ°ä¸–ç•Œåæ ‡
         for (int i = 0; i < vertices.Length; i++)
         {
             Vector3 worldVertex = localToWorld.MultiplyPoint3x4(vertices[i]);
@@ -94,7 +94,7 @@ public class IntersectVolume : MonoBehaviour
             z[i] = worldVertex.z;
         }
 
-        // °üÎ§ºĞ·¶Î§
+        // åŒ…å›´ç›’èŒƒå›´
         Array.Sort(x);
         Array.Sort(y);
         Array.Sort(z);
@@ -103,7 +103,7 @@ public class IntersectVolume : MonoBehaviour
         float yLength = y[y.Length - 1] - y[0];
         float zLength = z[z.Length - 1] - z[0];
 
-        // ²ÉÑù²½³¤
+        // é‡‡æ ·æ­¥é•¿
         float stepX = xLength / sampleCount;
         float stepY = yLength / sampleCount;
         float stepZ = zLength / sampleCount;
@@ -133,7 +133,7 @@ public class IntersectVolume : MonoBehaviour
             }
         }
 
-        // ¼ÆËãÏà½»Ìå»ı
+        // è®¡ç®—ç›¸äº¤ä½“ç§¯
         return (float)intersectInside / (sampleCount * sampleCount * sampleCount) * (xLength * yLength * zLength);
     }
 }
