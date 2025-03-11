@@ -179,6 +179,15 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SelectSlotGamePad"",
+                    ""type"": ""Value"",
+                    ""id"": ""ee30f982-ef67-4d18-8e45-f6ecd44802bd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -262,7 +271,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""263a0f69-7cc8-41f6-b8dd-2f1c367a2c89"",
-                    ""path"": ""<Keyboard>/#(E)"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -602,7 +611,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f6291663-39cc-43ed-8854-a351a5070f88"",
+                    ""id"": ""0a1b9ee8-95e3-498a-b1cb-2cf82b032cb7"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -619,6 +628,50 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""42a96aab-00b1-44ca-b615-77a9dac34e80"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlotGamePad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2b51533-330b-4f07-9ee1-c44dfc3ce53b"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlotGamePad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89286fb6-df86-4a9a-b203-1dc3346ae293"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlotGamePad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f036085-0e19-45ba-a942-79e73b155e33"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSlotGamePad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -646,6 +699,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Main_Crouch = m_Main.FindAction("Crouch", throwIfNotFound: true);
         m_Main_Escape = m_Main.FindAction("Escape", throwIfNotFound: true);
         m_Main_Zoom = m_Main.FindAction("Zoom", throwIfNotFound: true);
+        m_Main_SelectSlotGamePad = m_Main.FindAction("SelectSlotGamePad", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -724,6 +778,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Crouch;
     private readonly InputAction m_Main_Escape;
     private readonly InputAction m_Main_Zoom;
+    private readonly InputAction m_Main_SelectSlotGamePad;
     public struct MainActions
     {
         private @PlayerControlls m_Wrapper;
@@ -745,6 +800,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Main_Crouch;
         public InputAction @Escape => m_Wrapper.m_Main_Escape;
         public InputAction @Zoom => m_Wrapper.m_Main_Zoom;
+        public InputAction @SelectSlotGamePad => m_Wrapper.m_Main_SelectSlotGamePad;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -805,6 +861,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Zoom.started += instance.OnZoom;
             @Zoom.performed += instance.OnZoom;
             @Zoom.canceled += instance.OnZoom;
+            @SelectSlotGamePad.started += instance.OnSelectSlotGamePad;
+            @SelectSlotGamePad.performed += instance.OnSelectSlotGamePad;
+            @SelectSlotGamePad.canceled += instance.OnSelectSlotGamePad;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
@@ -860,6 +919,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Zoom.started -= instance.OnZoom;
             @Zoom.performed -= instance.OnZoom;
             @Zoom.canceled -= instance.OnZoom;
+            @SelectSlotGamePad.started -= instance.OnSelectSlotGamePad;
+            @SelectSlotGamePad.performed -= instance.OnSelectSlotGamePad;
+            @SelectSlotGamePad.canceled -= instance.OnSelectSlotGamePad;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -896,5 +958,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
+        void OnSelectSlotGamePad(InputAction.CallbackContext context);
     }
 }

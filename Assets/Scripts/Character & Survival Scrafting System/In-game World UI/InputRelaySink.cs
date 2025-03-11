@@ -15,6 +15,7 @@ public class InputRelaySink : MonoBehaviour
 
     public PlayerInput playerInput;
     private InputAction action;
+    private InputAction interact;
 
     // 用来记录上一帧动作是按下还是没按下
     private bool wasDown = false; 
@@ -27,10 +28,12 @@ public class InputRelaySink : MonoBehaviour
         {
             // 在 PlayerInput actions 中找名为 "Action" 的 InputAction
             action = playerInput.actions.FindAction("Action");
+            interact = playerInput.actions.FindAction("Interact");
             if (action != null)
             {
                 // 启用该 Action（如果尚未启用）
                 action.Enable();
+                interact.Enable();
             }
         }
         else
@@ -42,7 +45,7 @@ public class InputRelaySink : MonoBehaviour
     public void OnCursorInput(Vector2 normalisedPosition)
     {
         // 1. 先基于 Action 计算“是否按下”“刚按下”和“刚抬起”
-        float inputVal = action != null ? action.ReadValue<float>() : 0f;
+        float inputVal = Mathf.Max(action != null ? action.ReadValue<float>() : 0f, interact != null ? interact.ReadValue<float>() : 0f);
         // 大于 0.5f 算作“按下”
         bool isMouseDown = (inputVal > 0.5f);
         bool sendMouseDown = isMouseDown && !wasDown;
