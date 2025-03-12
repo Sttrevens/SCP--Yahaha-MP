@@ -45,6 +45,9 @@ public class PlayerMovement : NetworkBehaviour
     private AnimatorManager _animatorManager;
     public Transform cameraRoot;
     private HealthSystem _healthSystem;
+    private float verticalRotation;
+    private float horizontalRotation;
+    public float MouseSensitivity = 10f;
     
     //瞄准移动速度减慢相关参数
     [Header("Other Movement")]
@@ -272,12 +275,20 @@ public class PlayerMovement : NetworkBehaviour
         {
             // 获取当前的欧拉角
             Vector3 currentRotation = headBone.localRotation.eulerAngles;
-
+            float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = Input.GetAxis("Mouse Y");
+ 
+            verticalRotation -= mouseY * MouseSensitivity;
+            verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
+ 
+            horizontalRotation += mouseX * MouseSensitivity;
+ 
+            transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
             // 在原有旋转基础上修改X轴的值
             headBone.localRotation = Quaternion.Euler(
-                currentRotation.x + (NetworkedLookAngle * headRotationRatio),
+                currentRotation.x,
                 currentRotation.y,
-                currentRotation.z
+                currentRotation.z+ (NetworkedLookAngle * headRotationRatio)
             );
         }
 
