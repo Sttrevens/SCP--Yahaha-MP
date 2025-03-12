@@ -13,39 +13,43 @@ public class FirstPersonOptimizer : MonoBehaviour
     [Header("Shadow Casting Mode")]
     [SerializeField] private ShadowCastingMode shadowCastingMode;
 
+    [SerializeField] private SkinnedMeshRenderer[] skinnedMeshRenderers;
+    [SerializeField] private MeshRenderer[] meshRenderers;
+
     private void Start()
     {
         GameObject currentPlayerObject = GameObject.Find("CurrentPlayer");
         if (currentPlayerObject != null)
         {
-            // Get both SkinnedMeshRenderer and MeshRenderer components
-            SkinnedMeshRenderer[] skinnedMeshRenderers = currentPlayerObject.GetComponentsInChildren<SkinnedMeshRenderer>();
-            MeshRenderer[] meshRenderers = currentPlayerObject.GetComponentsInChildren<MeshRenderer>();
-
-            // Handle SkinnedMeshRenderers
-            foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers)
+            if (skinnedMeshRenderers != null)
             {
-                /*// Set the renderer to only be invisible to the main camera
-                renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");
-                
-                // Make sure the main camera's culling mask excludes the FirstPerson layer
-                Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));*/
+                // Handle SkinnedMeshRenderers
+                foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers)
+                {
+                    /*// Set the renderer to only be invisible to the main camera
+                    renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");
 
-                renderer.shadowCastingMode = shadowCastingMode;
+                    // Make sure the main camera's culling mask excludes the FirstPerson layer
+                    Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));*/
+
+                    renderer.shadowCastingMode = shadowCastingMode;
+                }
             }
 
-            // Handle MeshRenderers
-            foreach (MeshRenderer renderer in meshRenderers)
+            if (skinnedMeshRenderers != null)
             {
-                /*// Make sure the main camera's culling mask excludes the FirstPerson layer
-                Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
-                if (renderer.transform.parent != null && renderer.transform.parent.GetComponent<CameraController>() != null)
+                foreach (MeshRenderer renderer in meshRenderers)
                 {
-                    return;
+                    /*// Make sure the main camera's culling mask excludes the FirstPerson layer
+                    Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
+                    if (renderer.transform.parent != null && renderer.transform.parent.GetComponent<CameraController>() != null)
+                    {
+                        return;
+                    }
+                    renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");*/
+
+                    renderer.shadowCastingMode = shadowCastingMode;
                 }
-                renderer.gameObject.layer = LayerMask.NameToLayer("FirstPerson");*/
-                
-                renderer.shadowCastingMode = shadowCastingMode;
             }
         }
     }

@@ -48,6 +48,7 @@ public class PlayerMovement : NetworkBehaviour
     private AnimatorManager _animatorManager;
     public Transform cameraRoot;
     private HealthSystem _healthSystem;
+    private float _originalCameraNearClipPlane;
     
     //瞄准移动速度减慢相关参数
     [Header("Other Movement")]
@@ -109,6 +110,7 @@ public class PlayerMovement : NetworkBehaviour
             plCamera = Camera.main;
             _firstPersonCamera = plCamera.GetComponent<FirstPersonCamera>();
             _firstPersonCamera.Target = cameraRoot;
+            _originalCameraNearClipPlane = plCamera.nearClipPlane;
 
             StartCoroutine(FindFirstObjectByType<GameStartEffect>().FadeFromBlack());
         }
@@ -139,6 +141,7 @@ public class PlayerMovement : NetworkBehaviour
 
             if (!isAiming)
             {
+                plCamera.nearClipPlane = _originalCameraNearClipPlane;
                 // 判断是否被按住（用于替代旧的GetButton）
                 if (sprintAction != null &&
                     sprintAction.IsPressed() &&
@@ -161,6 +164,7 @@ public class PlayerMovement : NetworkBehaviour
                 _targetFOV = defaultFOV;
                 _targetSpeed = aimSpeed;
                 issprinting = false;
+                plCamera.nearClipPlane = 0.15f;
             }
 
             // 视野和速度平滑插值
