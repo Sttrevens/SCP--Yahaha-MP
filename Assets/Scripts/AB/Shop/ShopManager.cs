@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using AB.Shop;
 
 
 public class ShopManager : MonoBehaviour
@@ -8,9 +8,10 @@ public class ShopManager : MonoBehaviour
     public static ShopManager instance;
 
     public Transform itemListPanel;
-    public GameObject itemButtonPrefab;
-    public Text playerMoneyText;
+    public GameObject itemPrefab;
+    public TextMeshProUGUI playerMoneyText;
     public int playerMoney = 100;
+    public Shop shop;
 
     private void Awake()
     {
@@ -27,12 +28,6 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
-        if (Shop.instance == null)
-        {
-            Debug.LogError("Shop needs to be in.");
-            return;
-        }
-
         UpdatePlayerMoneyText();
         LoadShopItems();
     }
@@ -41,13 +36,18 @@ public class ShopManager : MonoBehaviour
     {
         foreach (Transform child in itemListPanel)
         {
-            Destroy(child.gameObject);
+            if (child != null)
+            {
+                Destroy(child.gameObject);
+            }
         }
-
-        foreach (ShopItem item in Shop.instance.availableItems)
+        
+        foreach (ShopItem item in shop.availableItems)
         {
-            GameObject itemButton = Instantiate(itemButtonPrefab, itemListPanel);
-            ShopItemInteraction button = itemButton.GetComponent<ShopItemInteraction>();
+            print(item.name);
+            GameObject itemObject = Instantiate(itemPrefab, itemListPanel);
+            itemObject.name = item.itemName;
+            ShopItemInteraction button = itemObject.GetComponent<ShopItemInteraction>();
             button.Setup(item);
         }
     }

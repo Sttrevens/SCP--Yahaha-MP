@@ -1,10 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopItemInteraction : MonoBehaviour
 {
-    public Text itemNameText;
-    public Text itemPriceText;
+    public TextMeshProUGUI itemNameText;
+    public TextMeshProUGUI itemPriceText;
     public Image itemIconImage;
 
     private ShopItem shopItem;
@@ -16,12 +17,9 @@ public class ShopItemInteraction : MonoBehaviour
         itemNameText.text = item.itemName;
         itemPriceText.text = "Price: " + item.price.ToString();
         itemIconImage.sprite = item.itemIcon;
-
-        Button button = GetComponent<Button>();
-        button.onClick.AddListener(OnClick);
     }
 
-    void OnClick()
+    public void Buy()
     {
        ShopManager.instance.BuyItem(shopItem);
     }
