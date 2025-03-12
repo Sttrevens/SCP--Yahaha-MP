@@ -2219,6 +2219,7 @@ GameObject:
   - component: {fileID: 397341189134474547}
   - component: {fileID: 3352045113354941783}
   - component: {fileID: 7057388831754074905}
+  - component: {fileID: 4455728772946267660}
   m_Layer: 8
   m_Name: '[Game]A_Real_Character'
   m_TagString: Player
@@ -2345,6 +2346,7 @@ MonoBehaviour:
   - {fileID: 2904240422611391486}
   - {fileID: 3352045113354941783}
   - {fileID: 7057388831754074905}
+  - {fileID: 4455728772946267660}
 --- !u!114 &1122259457492835225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2426,6 +2428,7 @@ MonoBehaviour:
   cameraRoot: {fileID: 4992387614600776163}
   aimSpeed: 2
   isAiming: 0
+  isEmoting: 0
 --- !u!114 &-2697029352120812069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2558,6 +2561,8 @@ MonoBehaviour:
   _DieCount: 0
   _DyingCount: 0
   _IsHolding: 0
+  _IsAiming: 0
+  _IsTwerkDancing: 0
 --- !u!114 &4015699918195571167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2754,6 +2759,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnemyInSight: 0
+--- !u!114 &4455728772946267660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Animator: {fileID: 955730383679289374}
+  TotalWords: 6
+  ApplyTiming: 2
+  SyncSettings: 79
+  StateHashes: 00000000e9d0506ada63755d28a981077af3fe2ecb3c324688920145336e528eb1211e0b37b935014e73a6a7ffa4c8127deb84976856e4eb2bf8d7e8e538b0296777fcacff36d7373d441695d4d21d713f11958cf51b339478294cbaf53b8e04e83c4943b694a43574e66597a76005b13b1771c65f5186608149048feef32509ad072d5ec71eafa08527114d
+  TriggerHashes: 0000000028a98107cb3c3246336e528e37b93501ffa4c812ff36d737550e6746f53b8e04b8a66478
 --- !u!1 &5385546817467512204
 GameObject:
   m_ObjectHideFlags: 0

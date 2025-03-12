@@ -11,7 +11,7 @@ public class AimStateBehaviour : StateMachineBehaviour
     {
         if (rigController == null)
             rigController = animator.GetComponent<RigController>();
-        
+        animator.SetBool("isHolding", false);
         rigController?.SwitchToAim(2.0f);
     }
 

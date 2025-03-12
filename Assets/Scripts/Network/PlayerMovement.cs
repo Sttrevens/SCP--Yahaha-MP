@@ -47,9 +47,10 @@ public class PlayerMovement : NetworkBehaviour
     private HealthSystem _healthSystem;
     
     //瞄准移动速度减慢相关参数
-    [Header("Aim Movement")]
+    [Header("Other Movement")]
     public float aimSpeed = 2f;
     public bool isAiming = false;
+    public bool isEmoting;
     
     [Header("Input System")]
     private PlayerInput playerInput;
@@ -113,7 +114,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         UpdateUpperBodyRotationLocally();
         
-        if (!PlayerController.instance.cursor)
+        if (!PlayerController.instance.cursor || isEmoting)
             return;
 
         if (HasStateAuthority && !_healthSystem.isDeadNetworked)

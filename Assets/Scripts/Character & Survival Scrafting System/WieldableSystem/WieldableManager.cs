@@ -147,7 +147,8 @@ namespace LPSurvivalEngine
         public void RPC_RequestEquipItem(PlayerRef player)
         {
             currentPlayerObject = Runner.GetPlayerObject(Runner.LocalPlayer);
-            currentPlayerObject.GetComponent<AnimatorManager>().IsHolding = true;
+            if (equippedItem.wieldablePrefab.GetComponent<Wieldable>() != null)
+                currentPlayerObject.GetComponent<AnimatorManager>().IsHolding = true;
             if (!Object.HasStateAuthority) return;
 
             //GameObject.Find("CurrentPlayer").GetComponent<FirstPersonOptimizer>().Wield();
@@ -186,12 +187,12 @@ namespace LPSurvivalEngine
         {
             Owner = player;
 
-            Transform spawnTransform = CurrentWieldableRootTransform();
+            /*Transform spawnTransform = CurrentWieldableRootTransform();
             if (spawnTransform == null)
             {
                 Debug.LogError($"Unexpected item type: {equippedItem.wieldablePrefab.name}");
                 return;
-            }
+            }*/
 
             // 使用世界空间中的身份旋转
             Quaternion spawnRotation = Quaternion.identity;
@@ -275,6 +276,7 @@ namespace LPSurvivalEngine
         {
             Debug.Log("正在调用收起物体的逻辑");
             currentPlayerObject.GetComponent<AnimatorManager>().IsHolding = false;
+            currentPlayerObject.GetComponent<AnimatorManager>().IsAiming = false;
             if (currentWieldable != null)
             {
             //     NetworkObject playerObject = Runner.GetPlayerObject(player);
@@ -282,7 +284,7 @@ namespace LPSurvivalEngine
             // {
             //     MaterialRenderTextureManager.Instance.ReleaseMaterialAndRenderTexture(playerObject);
             // }
-            Destroy(currentWieldable.gameObject);
+            Runner.Despawn(currentWieldable.gameObject.GetComponent<NetworkObject>());
             currentWieldable = null;
             }
         }

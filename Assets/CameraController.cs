@@ -221,7 +221,7 @@ namespace LPSurvivalEngine
                 // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.rotation;
                 // Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
 
-                GetComponent<NetworkMecanimAnimator>().SetTrigger("Aim");
+                GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = true;
             }
             else
             {
@@ -229,7 +229,7 @@ namespace LPSurvivalEngine
                 // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.rotation;
                 // Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
 
-                GetComponent<NetworkMecanimAnimator>().SetTrigger("CancelAim");
+                GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = false;
             }
         }
 

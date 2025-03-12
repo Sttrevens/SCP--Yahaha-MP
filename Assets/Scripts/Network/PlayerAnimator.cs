@@ -15,6 +15,7 @@ public class PlayerAnimator : NetworkBehaviour
     private int _lastVisibleDie;
     private int _lastVisibleDying;
     private bool _lastIsPickup;
+    private bool _lastIsAiming;
     // NetworkBehaviour INTERFACE
     public override void Spawned()
     {
@@ -24,6 +25,7 @@ public class PlayerAnimator : NetworkBehaviour
         _lastVisibleDie = _animatorManager.DieCount;
         _lastVisibleDying = _animatorManager.DyingCount;
         _lastIsPickup = _animatorManager.IsHolding;
+        _lastIsAiming = _animatorManager.IsAiming;
     }
 
     public override void Render()
@@ -92,6 +94,11 @@ public class PlayerAnimator : NetworkBehaviour
             Debug.Log("有反转");
             _animator.SetBool("Holding", _animatorManager.IsHolding);
         }
+
+        if (_lastIsAiming != _animatorManager.IsAiming)
+        {
+            _animator.SetBool("Aiming", _animatorManager.IsAiming);
+        }
         
         _lastVisibleJump = _animatorManager.JumpCount;
         _lastVisiblePickup = _animatorManager.PickupCount;
@@ -99,6 +106,7 @@ public class PlayerAnimator : NetworkBehaviour
         _lastVisibleDie = _animatorManager.DieCount;
         _lastVisibleDying = _animatorManager.DyingCount;
         _lastIsPickup = _animatorManager.IsHolding;
+        _lastIsAiming = _animatorManager.IsAiming;
         _animator.SetFloat("Speed", _animatorManager.Speed);
         _animator.SetFloat("XAxis",_animatorManager.XAxis);
         _animator.SetFloat("ZAxis", _animatorManager.ZAxis);

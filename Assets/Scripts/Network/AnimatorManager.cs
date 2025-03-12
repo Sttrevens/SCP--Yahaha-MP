@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
@@ -22,7 +23,10 @@ public class AnimatorManager : NetworkBehaviour
     public int DyingCount          { get; set;}
     [Networked, HideInInspector]
     public bool IsHolding               { get; set;}
-    
+    [Networked, HideInInspector]
+    public bool IsAiming               { get; set;}
+    [Networked, HideInInspector]
+    public bool IsTwerkDancing            { get; set;}
     public override void Spawned()
     {
         if (HasStateAuthority)
@@ -33,6 +37,8 @@ public class AnimatorManager : NetworkBehaviour
             DieCount = 0;
             DyingCount = 0;
             IsHolding = false;
+            IsAiming = false;
+            IsTwerkDancing = false;
         }
     }
 }
