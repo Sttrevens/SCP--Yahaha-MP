@@ -12,9 +12,9 @@ public class FirstPersonCamera : MonoBehaviour
     public bool isCameraLocked = false;
 
     // 记录俯仰角、水平角
-    private float verticalRotation;
-    private float horizontalRotation;
-
+    public float verticalRotation;
+    public float horizontalRotation;
+    
     // 用来获取场景里带有 PlayerInput 的对象
     [SerializeField] private PlayerInput playerInput;
     private InputAction lookAction;

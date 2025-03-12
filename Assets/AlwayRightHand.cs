@@ -29,7 +29,7 @@ public class AlwayRightHand : MonoBehaviour
         }
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (Camera.main != null)
         {

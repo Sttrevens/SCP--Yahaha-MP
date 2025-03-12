@@ -16,6 +16,8 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private float headRotationRatio = 0.7f;
     [SerializeField] private float spineRotationRatio = 0.3f;
     [SerializeField] private Transform[] upperBodys;
+
+    [SerializeField] private Transform lookAtTarget;
     //网络同步相关的参数
     [Networked] private float NetworkedLookAngle { get; set; }
     [Networked] public Quaternion upperBodyRotation { get; set; }
@@ -41,6 +43,7 @@ public class PlayerMovement : NetworkBehaviour
     public bool issprinting = false;
     //角色上面挂载的其他组件
     public Camera plCamera;
+    private FirstPersonCamera _firstPersonCamera;
     private CharacterController _controller;
     private AnimatorManager _animatorManager;
     public Transform cameraRoot;
@@ -104,7 +107,8 @@ public class PlayerMovement : NetworkBehaviour
         if (HasStateAuthority)
         {
             plCamera = Camera.main;
-            plCamera.GetComponent<FirstPersonCamera>().Target = cameraRoot;
+            _firstPersonCamera = plCamera.GetComponent<FirstPersonCamera>();
+            _firstPersonCamera.Target = cameraRoot;
 
             StartCoroutine(FindFirstObjectByType<GameStartEffect>().FadeFromBlack());
         }
@@ -230,7 +234,8 @@ public class PlayerMovement : NetworkBehaviour
         if (_healthSystem.isDeadNetworked) return;
         
         // Calculate the target rotation based on the camera's yaw rotation.
-        Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
+        //Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
+        Quaternion targetRotation = Quaternion.Euler(0, _firstPersonCamera.horizontalRotation, 0);
 
         // Smoothly rotate the object towards the target rotation first.
         transform.rotation = targetRotation;
@@ -258,7 +263,7 @@ public class PlayerMovement : NetworkBehaviour
         if (HasStateAuthority && plCamera != null)
         {
             // 获取相机俯仰角
-            float pitch = plCamera.transform.eulerAngles.x;
+            float pitch = _firstPersonCamera.verticalRotation;
             if (pitch > 180) pitch -= 360;  // 转换到 -180 到 180 度范围
 
             // 限制角度范围
@@ -281,7 +286,7 @@ public class PlayerMovement : NetworkBehaviour
             );
         }
 
-        if (spineBone != null)
+        /*if (spineBone != null)
         {
             Vector3 currentSpineRotation = spineBone.localRotation.eulerAngles;
             spineBone.localRotation = Quaternion.Euler(
@@ -289,7 +294,7 @@ public class PlayerMovement : NetworkBehaviour
                 currentSpineRotation.y,
                 currentSpineRotation.z
             );
-        }
+        }*/
     }
 
     // 用于同步上半身旋转到网络上的函数

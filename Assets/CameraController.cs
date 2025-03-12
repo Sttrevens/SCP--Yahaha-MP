@@ -148,7 +148,7 @@ namespace LPSurvivalEngine
 
             if (HasStateAuthority)
             {
-                transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("Model/Root/Hips/Spine_01/Spine_02/Spine_03/Neck/Head/UpperBody/CameraRoot/HoldCameraRoot/GameObject"));
+                transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("Model/Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/PadHandle"));
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
             }
