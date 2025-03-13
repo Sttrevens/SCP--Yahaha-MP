@@ -4115,9 +4115,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8200082852372869155}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.20643608, y: 0.32565525, z: -0.7704963, w: -0.5076103}
-  m_LocalPosition: {x: 0.131, y: 1.571, z: 0.675}
-  m_LocalScale: {x: 0.24, y: 0.24, z: 0.24}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6059926770793324385}
@@ -4136,7 +4136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceFromCamera: 0.4
   viewportOffset: {x: 1, y: 0.05}
-  additionalRotationOffset: {x: 0, y: 0, z: 0}
+  additionalRotationOffset: {x: 43.5, y: 359.1, z: 112.69}
+  initialRotationOffset: {x: 0, y: 0, z: 0, w: 0}
+  nowOffet: {x: -0, y: 0, z: 0, w: 0}
 --- !u!114 &8418949932962042742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4170,6 +4172,7 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 2279840087508404542}
   - {fileID: 8418949932962042742}
 --- !u!1 &8390323953191466095
 GameObject:
