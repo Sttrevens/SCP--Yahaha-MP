@@ -410,12 +410,11 @@ namespace LPSurvivalEngine
                 return;
             
             selectedItem = slots[index];
+            selectedItemIndex = index;
             UpdateUI();
 
             if (selectedItem.item != null)
             {
-                selectedItemIndex = index;
-                
                 if (selectedItem.item.type == ItemType.Consumable)
                     Prompt.instance.SlotItemPrompt(selectedItem.item);
                 else if (selectedItem.item.type == ItemType.Wieldable)
