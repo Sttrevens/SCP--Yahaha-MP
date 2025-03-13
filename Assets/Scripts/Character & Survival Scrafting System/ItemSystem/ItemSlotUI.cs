@@ -13,6 +13,7 @@ namespace LPSurvivalEngine
 
       public Image icon; //物品的贴图
       public TextMeshProUGUI quantityText;  //物品的数量
+      public Image highlightImage;
       
 
       public int index;
@@ -33,7 +34,16 @@ namespace LPSurvivalEngine
 
          quantityText.text = slot.quantity > 1 ? slot.quantity.ToString() : string.Empty;   
       }
+
+      public void OnSelected()
+      {
+         highlightImage.color = new Color(1, 1, 1, 1f);
+      }
       
+      public void OnDeselected()
+      {
+         highlightImage.color = new Color(1, 1, 1, 0f);
+      }
 
       public void Clear()
       {

@@ -109,6 +109,8 @@ namespace LPSurvivalEngine
             {
                 Debug.LogError("ContainerSlots has not been properly initialized.");
             }
+            
+            UpdateUI();
         }
 
         public void OnInventoryButton(InputAction.CallbackContext context)
@@ -362,6 +364,18 @@ namespace LPSurvivalEngine
                 {
                     InventorySlots[x].Clear();
                 }
+
+                for (int i = 0; i < slots.Length; i++)
+                {
+                    if (i == selectedItemIndex)
+                    {
+                        InventorySlots[i].OnSelected();
+                    }
+                    else
+                    {
+                        InventorySlots[i].OnDeselected();
+                    }
+                }
             }
         }
 
@@ -394,18 +408,24 @@ namespace LPSurvivalEngine
             //Debug.Log("Current Selected Item: " + selectedItem);
             if (slots[index].item == null)
                 return;
-
+            
             selectedItem = slots[index];
-            selectedItemIndex = index;
+            UpdateUI();
 
             if (selectedItem.item != null)
             {
+                selectedItemIndex = index;
+                
                 if (selectedItem.item.type == ItemType.Consumable)
                     Prompt.instance.SlotItemPrompt(selectedItem.item);
                 else if (selectedItem.item.type == ItemType.Wieldable)
                     EquipWieldableItem();
                 else
                     Prompt.instance.SlotItemPrompt(selectedItem.item); //显示提示
+            }
+            else
+            {
+                selectedItemIndex = -1;
             }
         }
 

@@ -133,7 +133,7 @@ namespace LPSurvivalEngine
                 {
                     if (hit.collider.gameObject.tag != "Player" && hit.collider.gameObject.GetComponent<Rigidbody>() != null)
                     {
-                        hintLiftText.text = string.Format("Hold {0} to lift", "E");
+                        hintLiftText.text = string.Format("HOLD {0} TO LIFT", "E");
                     }
                     else
                     {
@@ -153,7 +153,7 @@ namespace LPSurvivalEngine
                 if (currentInteractGameObject.GetComponent<ItemObject>() != null)
                 {
                     hintObjectText.text = currentInteractGameObject.GetComponent<ItemObject>().item.displayName;
-                    hintInteractText.text = string.Format("Use {0} to pick up", "E");
+                    hintInteractText.text = string.Format("USE {0} TO PICK UP", "E");
                 }
                 else
                 {
@@ -172,7 +172,7 @@ namespace LPSurvivalEngine
                 if (currentInteractGameObject.GetComponent<SPItemObject>() != null)
                 {
                     hintObjectText.text = currentInteractGameObject.GetComponent<SPItemObject>().item.displayName;
-                    hintInteractText.text = string.Format("Use {0} to pick up", "E");
+                    hintInteractText.text = string.Format("USE {0} TO PICK UP", "E");
                 }
                 else
                 {

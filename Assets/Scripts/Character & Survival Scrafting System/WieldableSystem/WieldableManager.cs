@@ -55,7 +55,7 @@ namespace LPSurvivalEngine
         {
             if (currentWieldable != null && currentWieldable.altInputHint != null)
             {
-                hintActionText.text = string.Format(currentWieldable.altInputHint, "Right Mouse Button");
+                hintActionText.text = string.Format(currentWieldable.altInputHint, "RMB");
             }
             else
             {
