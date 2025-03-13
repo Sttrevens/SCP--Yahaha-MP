@@ -28,7 +28,7 @@ namespace LPSurvivalEngine
         [HideInInspector] public Wieldable currentWieldable;
         [Networked] public PlayerRef Owner { get; set; }
 
-        private ItemDatabase equippedItem;
+        public ItemDatabase equippedItem;
         public static WieldableManager instance;
         private NetworkObject currentPlayerObject;
 

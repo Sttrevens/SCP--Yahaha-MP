@@ -21,7 +21,6 @@ public class PlayerMovement : NetworkBehaviour
     //网络同步相关的参数
     [Networked] private float NetworkedLookAngle { get; set; }
     [Networked] public Quaternion upperBodyRotation { get; set; }
-    [Networked] private Quaternion headBoneRotation { get; set; }
 
     [Header("Player Settings")]
     //角色属性(本身的属性和第一人称的属性)
@@ -56,7 +55,6 @@ public class PlayerMovement : NetworkBehaviour
     [Header("Other Movement")]
     public float aimSpeed = 2f;
     public bool isAiming = false;
-    public bool isEmoting;
     
     [Header("Input System")]
     private PlayerInput playerInput;
@@ -121,18 +119,8 @@ public class PlayerMovement : NetworkBehaviour
     void Update()
     {
         UpdateUpperBodyRotationLocally();
-        Debug.Log("Is emoting： " + isEmoting);
-        if (isMoving && isEmoting)
-        {
-            if (WieldableManager.instance.GetCurrentWieldableSlot().item.wieldablePrefab
-                    .GetComponent<EmoteController>() != null)
-            {
-                WieldableManager.instance.DropWieldable(Runner.LocalPlayer);
-                isEmoting = false;
-            }
-        }
 
-        if (!PlayerController.instance.cursor || isEmoting)
+        if (!PlayerController.instance.cursor)
             return;
 
         if (HasStateAuthority && !_healthSystem.isDeadNetworked)

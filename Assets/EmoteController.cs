@@ -26,15 +26,9 @@ public class EmoteController : NetworkBehaviour
             }
         }
     }
-
-    public override void FixedUpdateNetwork()
-    {
-        _playerMovement.isEmoting = true;
-    }
     
     public void OnDestroyed()
     {
-        _playerMovement.isEmoting = false;
         _animator.SetTrigger("Cancel " + emoteName);
         
         Debug.Log("Emote Destroyed");
