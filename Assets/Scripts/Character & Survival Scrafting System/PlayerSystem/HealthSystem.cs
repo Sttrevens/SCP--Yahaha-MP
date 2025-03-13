@@ -397,11 +397,13 @@ else
         {
             //Player.SetActive(false);
             //UIPlayer.SetActive(false);
+            GetComponent<NetworkMecanimAnimator>().SetTrigger("Die");
             screenFade = FindObjectOfType<ScreenFade>();
             Cursor.lockState = CursorLockMode.None;
             GetComponent<Rigidbody>().isKinematic = false;
             //Inventory.instance.inventoryWindow.SetActive(true);
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
             GetComponent<Rigidbody>().useGravity = true;
             if (Camera.main != null)
                 Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = true;
@@ -460,6 +462,7 @@ else
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = false;
             GetComponent<NavMeshObstacle>().enabled = true;
+            GetComponent<NetworkMecanimAnimator>().SetTrigger("Respawn");
             RpcSetTag("Player");
             isDead = false;
             health.currentValue = health.maxValue;

@@ -1,11 +1,12 @@
 using UnityEngine;
+using Fusion;
 
-public class UpdateCrosshairPositionWithoutRay : MonoBehaviour
+public class UpdateCrosshairPositionWithoutRay : NetworkBehaviour
 {
     // 距离摄像机中心沿前方的距离
     public float distanceFromCamera = 10f;
 
-    void Update()
+    public override void FixedUpdateNetwork()
     {
         // 获取主摄像机
         Camera cam = Camera.main;

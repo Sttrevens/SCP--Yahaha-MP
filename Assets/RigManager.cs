@@ -78,5 +78,6 @@ public class RigController : MonoBehaviour
     {
         SetRigWeight("AimRig", 0f, speed);
         SetRigWeight("IdleRig", 0f, speed);
+        SetRigWeight("AnyWayRig", 1f, speed);
     }
 }

@@ -32,7 +32,7 @@ public class EmoteController : NetworkBehaviour
         _playerMovement.isEmoting = true;
     }
     
-    void OnDestroy()
+    public void OnDestroyed()
     {
         _playerMovement.isEmoting = false;
         _animator.SetTrigger("Cancel " + emoteName);

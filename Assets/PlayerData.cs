@@ -31,7 +31,7 @@ public class PlayerData : NetworkBehaviour
         RpcSetPlayerName();
     }
     
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RpcSetPlayerName()
     {
         playerName.text = PlayerName;

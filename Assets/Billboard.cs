@@ -4,6 +4,7 @@ public class Billboard : MonoBehaviour
 {
     private Camera mainCamera;
     private bool isBillboardEnabled = true;
+    public GameObject billboardText;
 
     void Start()
     {
@@ -23,6 +24,6 @@ public class Billboard : MonoBehaviour
     public void SetBillboardEnabled(bool isEnabled)
     {
         isBillboardEnabled = isEnabled;
-        gameObject.SetActive(isEnabled);
+        billboardText.SetActive(isEnabled);
     }
 }

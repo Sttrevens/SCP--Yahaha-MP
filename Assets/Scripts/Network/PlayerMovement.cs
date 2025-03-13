@@ -21,6 +21,8 @@ public class PlayerMovement : NetworkBehaviour
     //网络同步相关的参数
     [Networked] private float NetworkedLookAngle { get; set; }
     [Networked] public Quaternion upperBodyRotation { get; set; }
+    [Networked] private Quaternion headBoneRotation { get; set; }
+
     [Header("Player Settings")]
     //角色属性(本身的属性和第一人称的属性)
     [SerializeField]private Vector3 _velocity;
@@ -119,28 +121,37 @@ public class PlayerMovement : NetworkBehaviour
     void Update()
     {
         UpdateUpperBodyRotationLocally();
-        
+        Debug.Log("Is emoting： " + isEmoting);
+        if (isMoving && isEmoting)
+        {
+            if (WieldableManager.instance.GetCurrentWieldableSlot().item.wieldablePrefab
+                    .GetComponent<EmoteController>() != null)
+            {
+                WieldableManager.instance.DropWieldable(Runner.LocalPlayer);
+                isEmoting = false;
+            }
+        }
+
         if (!PlayerController.instance.cursor || isEmoting)
             return;
 
         if (HasStateAuthority && !_healthSystem.isDeadNetworked)
         {
-            // 改用新Input：
-            // 判断这帧是否按下（用于替代旧的GetButtonDown）
-            if (jumpAction != null && jumpAction.WasPressedThisFrame())
-            {
-                if (_healthSystem.stamina.currentValue > 10f)
-                {
-                    _jumpPressed = true;
-                    if (_controller.isGrounded)
-                    {
-                        _healthSystem.stamina.Subtract(10f);
-                    }
-                }
-            }
-
             if (!isAiming)
             {
+                // 改用新Input：
+                // 判断这帧是否按下（用于替代旧的GetButtonDown）
+                if (jumpAction != null && jumpAction.WasPressedThisFrame())
+                {
+                    if (_healthSystem.stamina.currentValue > 10f)
+                    {
+                        _jumpPressed = true;
+                        if (_controller.isGrounded)
+                        {
+                            _healthSystem.stamina.Subtract(10f);
+                        }
+                    }
+                }
                 plCamera.nearClipPlane = _originalCameraNearClipPlane;
                 // 判断是否被按住（用于替代旧的GetButton）
                 if (sprintAction != null &&
@@ -203,7 +214,7 @@ public class PlayerMovement : NetworkBehaviour
         }
         _animatorManager.XAxis = Input.GetAxis("Horizontal");
         _animatorManager.ZAxis = Input.GetAxis("Vertical");
-        _animatorManager.Speed = move.magnitude * 100f;
+        _animatorManager.Speed = Mathf.Lerp(_animatorManager.Speed, move.magnitude * 100f, Time.fixedDeltaTime * 1f);
         
         if (_jumpPressed && _controller.isGrounded)
         {
@@ -264,7 +275,7 @@ public class PlayerMovement : NetworkBehaviour
                 }
             }
         }
-        if (HasStateAuthority && plCamera != null)
+        /*if (HasStateAuthority && plCamera != null)
         {
             // 获取相机俯仰角
             float pitch = _firstPersonCamera.verticalRotation;
@@ -275,20 +286,30 @@ public class PlayerMovement : NetworkBehaviour
 
             // 同步到网络
             NetworkedLookAngle = clampedAngle;
-        }
-         // 应用旋转
-        if (headBone != null)
-        {
-            // 获取当前的欧拉角
-            Vector3 currentRotation = headBone.localRotation.eulerAngles;
+        }*/
 
-            // 在原有旋转基础上修改X轴的值
-            headBone.localRotation = Quaternion.Euler(
-                currentRotation.x,
-                currentRotation.y,
-                currentRotation.z+ (NetworkedLookAngle * headRotationRatio)
-            );
+        /*if (HasStateAuthority)
+        {
+            // 应用旋转
+            if (headBone != null)
+            {
+                // 获取当前的欧拉角
+                Vector3 currentRotation = headBone.localRotation.eulerAngles;
+
+                // 在原有旋转基础上修改X轴的值
+                headBone.localRotation = Quaternion.Euler(
+                    currentRotation.x,
+                    currentRotation.y,
+                    currentRotation.z + (NetworkedLookAngle * headRotationRatio)
+                );
+
+                headBoneRotation = headBone.localRotation;
+            }
         }
+        else
+        {
+            headBone.localRotation = headBoneRotation;
+        }*/
 
         /*if (spineBone != null)
         {

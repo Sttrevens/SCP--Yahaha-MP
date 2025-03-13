@@ -284,7 +284,12 @@ namespace LPSurvivalEngine
             // {
             //     MaterialRenderTextureManager.Instance.ReleaseMaterialAndRenderTexture(playerObject);
             // }
-            Runner.Despawn(currentWieldable.gameObject.GetComponent<NetworkObject>());
+            EmoteController emoteController = currentWieldable.GetComponent<EmoteController>();
+            if (emoteController != null)
+            {
+                emoteController.OnDestroyed();
+            }
+            Destroy(currentWieldable.gameObject);
             currentWieldable = null;
             }
         }
