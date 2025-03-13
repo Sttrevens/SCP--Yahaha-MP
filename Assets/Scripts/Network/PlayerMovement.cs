@@ -9,19 +9,19 @@ public class PlayerMovement : NetworkBehaviour
 {
     //角色视角转变动画相关的参数
     [Header("Look Animation")]
-    [SerializeField] private Transform headBone;      // 头部骨骼
-    [SerializeField] private Transform spineBone;     // 脊椎骨骼
+    // [SerializeField] private Transform headBone;      // 头部骨骼
+    // [SerializeField] private Transform spineBone;     // 脊椎骨骼
     [SerializeField] private float maxLookUpAngle = 45f;    // 最大抬头角度
     [SerializeField] private float maxLookDownAngle = 45f;  // 最大低头角度
     [SerializeField] private float headRotationRatio = 0.7f;
     [SerializeField] private float spineRotationRatio = 0.3f;
-    [SerializeField] private Transform[] upperBodys;
+    // [SerializeField] private Transform[] upperBodys;
 
     [SerializeField] private Transform lookAtTarget;
     //网络同步相关的参数
-    [Networked] private float NetworkedLookAngle { get; set; }
-    [Networked] public Quaternion upperBodyRotation { get; set; }
-    [Networked] private Quaternion headBoneRotation { get; set; }
+    // [Networked] private float NetworkedLookAngle { get; set; }
+    // [Networked] public Quaternion upperBodyRotation { get; set; }
+    // [Networked] private Quaternion headBoneRotation { get; set; }
 
     [Header("Player Settings")]
     //角色属性(本身的属性和第一人称的属性)
@@ -120,7 +120,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        UpdateUpperBodyRotationLocally();
+        // UpdateUpperBodyRotationLocally();
         Debug.Log("Is emoting： " + isEmoting);
         if (isMoving && isEmoting)
         {
@@ -185,6 +185,8 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
+   
+
 
     public override void FixedUpdateNetwork()
     {
@@ -210,11 +212,11 @@ public class PlayerMovement : NetworkBehaviour
         if (PlayerController.instance.cursor)
         {
             // 优化小技巧：较小的数字不要过早的参与计算，应将小数字先相乘然后整体与大数相乘，能够减少浮点数的舍入精度误差
-            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.fixedDeltaTime * playerSpeed);
+            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Runner.DeltaTime * playerSpeed);
         }
         _animatorManager.XAxis = Input.GetAxis("Horizontal");
         _animatorManager.ZAxis = Input.GetAxis("Vertical");
-        _animatorManager.Speed = Mathf.Lerp(_animatorManager.Speed, move.magnitude * 100f, Time.fixedDeltaTime * 1f);
+        _animatorManager.Speed = Mathf.Lerp(_animatorManager.Speed, move.magnitude * 100f, Runner.DeltaTime * 5f);
         
         if (_jumpPressed && _controller.isGrounded)
         {
@@ -222,7 +224,7 @@ public class PlayerMovement : NetworkBehaviour
             _velocity.y += jumpForce;
         }
 
-        Vector3 trueMove = move + _velocity * Time.fixedDeltaTime;
+        Vector3 trueMove = move + _velocity * Runner.DeltaTime;
         _controller.Move(trueMove);
 
         if (move != Vector3.zero)
@@ -241,7 +243,8 @@ public class PlayerMovement : NetworkBehaviour
 
     void Gravity()
     {
-        _velocity.y += gravityValue * Time.fixedDeltaTime;
+        
+        _velocity.y += gravityValue * Runner.DeltaTime;
     }
 
     void LateUpdate()
@@ -255,26 +258,27 @@ public class PlayerMovement : NetworkBehaviour
         // Smoothly rotate the object towards the target rotation first.
         transform.rotation = targetRotation;
         //--------------------------------------控制骨骼旋转的逻辑--------------------------------------------------------------------------------
-        // 本地控制的上半身旋转，基于摄像机的旋转
-        if (upperBodys != null)
-        {
-            foreach (Transform upperBody in upperBodys)
-            {
-                // 本地客户端更新上半身旋转
-                if (HasStateAuthority)
-                {
-                    //upperBody.rotation = Camera.transform.rotation;
-                    upperBody.rotation = Quaternion.Lerp(upperBody.rotation, plCamera.transform.rotation, Time.fixedDeltaTime * 30f);
-                    // 同步上半身旋转到服务器
-                    upperBodyRotation = upperBody.rotation;
-                }
-                else
-                {
-                    // 其他客户端通过网络同步的旋转来更新
-                    upperBody.rotation = upperBodyRotation;
-                }
-            }
-        }
+        // // 本地控制的上半身旋转，基于摄像机的旋转
+        // if (upperBodys != null)
+        // {
+        //     foreach (Transform upperBody in upperBodys)
+        //     {
+        //         // 本地客户端更新上半身旋转
+        //         if (HasStateAuthority)
+        //         {
+        //             //upperBody.rotation = Camera.transform.rotation;
+        //             upperBody.rotation = Quaternion.Lerp(upperBody.rotation, plCamera.transform.rotation, Runner.DeltaTime * 30f);
+        //             // 同步上半身旋转到服务器
+        //             upperBodyRotation = upperBody.rotation;
+        //         }
+        //         else
+        //         {
+        //             // 其他客户端通过网络同步的旋转来更新
+        //             upperBody.rotation = upperBodyRotation;
+        //         }
+        //     }
+        // }
+        // -------------------------------------使用Rig约束之后不再使用下面的硬编码的形式进行头骨的旋转-----------------------------
         /*if (HasStateAuthority && plCamera != null)
         {
             // 获取相机俯仰角
@@ -320,17 +324,18 @@ public class PlayerMovement : NetworkBehaviour
                 currentSpineRotation.z
             );
         }*/
+        // ------------------------------------------------------
     }
 
     // 用于同步上半身旋转到网络上的函数
-    private void UpdateUpperBodyRotationLocally()
-    {
-        // 在本地客户端，每帧将上半身的旋转传递到网络
-        if (upperBodys != null && upperBodys.Length > 0)
-        {
-            upperBodyRotation = upperBodys[0].rotation;  // 假设第一个上半身骨骼为主
-        }
-    }
+    // private void UpdateUpperBodyRotationLocally()
+    // {
+    //     // 在本地客户端，每帧将上半身的旋转传递到网络
+    //     if (upperBodys != null && upperBodys.Length > 0)
+    //     {
+    //         upperBodyRotation = upperBodys[0].rotation;  // 假设第一个上半身骨骼为主
+    //     }
+    // }
     // ---------------------------------------------骨骼旋转逻辑结束--------------------------------------------------
 
     public void BePossessed(Transform target)
