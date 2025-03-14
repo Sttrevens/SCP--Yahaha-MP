@@ -16,6 +16,11 @@ public class PlayerAnimator : NetworkBehaviour
     private int _lastVisibleDying;
     private bool _lastIsPickup;
     private bool _lastIsAiming;
+    protected void Awake()
+    {
+        _animatorManager = GetComponent<AnimatorManager>();
+        _animator = model.GetComponent<Animator>();
+    }
     // NetworkBehaviour INTERFACE
     public override void Spawned()
     {
@@ -28,17 +33,26 @@ public class PlayerAnimator : NetworkBehaviour
         _lastIsAiming = _animatorManager.IsAiming;
     }
 
-    public override void Render()
+    public override void FixedUpdateNetwork()
     {
         UpdateAnimations();
+        _lastVisibleJump = _animatorManager.JumpCount;
+        _lastVisiblePickup = _animatorManager.PickupCount;
+        _lastVisibleThrow = _animatorManager.ThrowCount;
+        _lastVisibleDie = _animatorManager.DieCount;
+        _lastVisibleDying = _animatorManager.DyingCount;
+        _lastIsPickup = _animatorManager.IsHolding;
+        _lastIsAiming = _animatorManager.IsAiming;
+        _animator.SetFloat("Speed", _animatorManager.Speed);
+        _animator.SetFloat("XAxis",_animatorManager.XAxis);
+        _animator.SetFloat("ZAxis", _animatorManager.ZAxis);
     }
 
-    // MONOBEHAVIOUR
-    protected void Awake()
+    public override void Render()
     {
-        _animatorManager = GetComponent<AnimatorManager>();
-        _animator = model.GetComponent<Animator>();
+        
     }
+    
 
     // PRIVATE METHODS
     private void UpdateAnimations()
@@ -99,16 +113,5 @@ public class PlayerAnimator : NetworkBehaviour
         {
             _animator.SetBool("Aiming", _animatorManager.IsAiming);
         }
-        
-        _lastVisibleJump = _animatorManager.JumpCount;
-        _lastVisiblePickup = _animatorManager.PickupCount;
-        _lastVisibleThrow = _animatorManager.ThrowCount;
-        _lastVisibleDie = _animatorManager.DieCount;
-        _lastVisibleDying = _animatorManager.DyingCount;
-        _lastIsPickup = _animatorManager.IsHolding;
-        _lastIsAiming = _animatorManager.IsAiming;
-        _animator.SetFloat("Speed", _animatorManager.Speed);
-        _animator.SetFloat("XAxis",_animatorManager.XAxis);
-        _animator.SetFloat("ZAxis", _animatorManager.ZAxis);
     }
 }

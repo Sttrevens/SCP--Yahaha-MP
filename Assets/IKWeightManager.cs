@@ -2,7 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using System.Collections;
-
+/// <summary>
+/// 这个是之前用来调试Rig约束权重的脚本，现在应该是没有用了
+/// </summary>
 public class IKWeightManager : MonoBehaviour
 {
     public Rig rig;
