@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e38498b791211488c7ec520c6450a8, type: 3}
+  m_Name: Tranquilizer
+  m_EditorClassIdentifier: 
+  displayName: Tranquilizer
+  description: Calm down!
+  type: 2
+  icon: {fileID: 21300000, guid: 8099cf34de4a7415a9ac7c72235de4e7, type: 3}
+  dropPrefab: {fileID: 6047698843393170323, guid: a67733e0e051ff5439812a83569afdf4, type: 3}
+  canStackItem: 0
+  maxStackamount: 5
+  consumables:
+  - type: 2
+    value: 50
+  canBeCooked: 0
+  cookTime: 20
+  cookedItem: {fileID: 0}
+  wieldablePrefab: {fileID: 0}
+  maxDurability: 0
+  targetItem: {fileID: 0}
+  refillDurabilityAmount: 0
+  isPot: 0
+  potType: 0
+  startCookingSound: {fileID: 0}
+  cookingSound: {fileID: 0}
+  cookedSound: {fileID: 0}

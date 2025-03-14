@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Battery
   description: 
-  type: 2
+  type: 0
   icon: {fileID: 21300000, guid: fe16ccba8a7c447b59663b5eabc5703c, type: 3}
   dropPrefab: {fileID: 3614522994352831049, guid: db11940eb86c00449aa28b80e1fcb170, type: 3}
   canStackItem: 0
@@ -25,6 +25,8 @@ MonoBehaviour:
   cookedItem: {fileID: 0}
   wieldablePrefab: {fileID: 0}
   maxDurability: 0
+  targetItem: {fileID: 11400000, guid: 631b65e9d1bc51a439dd3f69eaf1aaf0, type: 2}
+  refillDurabilityAmount: 25
   isPot: 0
   potType: 0
   startCookingSound: {fileID: 0}

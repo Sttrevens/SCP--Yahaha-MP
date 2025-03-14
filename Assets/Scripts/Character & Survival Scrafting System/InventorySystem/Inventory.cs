@@ -457,6 +457,28 @@ namespace LPSurvivalEngine
             Prompt.instance.UseItemPrompt(selectedItem.item);
 
         }
+        
+        void UseResourceItem()
+        {
+            Debug.Log("调用Resource喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵喵");
+            if (selectedItem.item.targetItem == null)
+                return;
+            
+            for (int x = 0; x < slots.Length; x++)
+            {
+                if (slots[x].item == selectedItem.item.targetItem)
+                {
+                    slots[x].currentDurability += selectedItem.item.refillDurabilityAmount;
+                    if (slots[x].currentDurability >= slots[x].item.maxDurability)
+                    {
+                        slots[x].currentDurability = slots[x].item.maxDurability;
+                    }
+                }
+            }
+            RemoveSelectedItem();
+            Prompt.instance.UseItemPrompt(selectedItem.item);
+
+        }
 
         // public void OnDisableButton()
         // {
@@ -482,7 +504,8 @@ namespace LPSurvivalEngine
 
             if (selectedItem.item.type == ItemType.Consumable)
                 UseConsumableItem();
-            
+            else if (selectedItem.item.type == ItemType.Resource)
+                UseResourceItem();
         }
 
         public void EquipWieldableItem()
