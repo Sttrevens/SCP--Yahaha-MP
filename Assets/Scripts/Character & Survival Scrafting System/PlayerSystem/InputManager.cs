@@ -140,10 +140,10 @@ private void onScroll(InputAction.CallbackContext context)
         {
             Debug.Log("[GamePad Select Canceled]");
             string keypressed = context.control.displayName;
-            if (keypressed == "D-Pad/Left") SlotIndex = 1;
-            else if (keypressed == "D-Pad/Down") SlotIndex = 2;
-            else if (keypressed == "D-Pad/Right") SlotIndex = 3;
-            else if (keypressed == "D-Pad/Up") SlotIndex = 4;
+            if (keypressed == "D-Pad Left") SlotIndex = 0;
+            else if (keypressed == "D-Pad Down") SlotIndex = 1;
+            else if (keypressed == "D-Pad Right") SlotIndex = 2;
+            else if (keypressed == "D-Pad Up") SlotIndex = 3;
             Inventory.instance.SelectItem(SlotIndex);
             
         }
