@@ -12,20 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e38498b791211488c7ec520c6450a8, type: 3}
   m_Name: Battery
   m_EditorClassIdentifier: 
-  displayName: Bandage
+  displayName: Battery
   description: 
   type: 2
-  icon: {fileID: 21300000, guid: 1c699339475aea04badc4515dedd0c56, type: 3}
-  dropPrefab: {fileID: 4693495492951217074, guid: 2c6ea36f8dfd0674b83da036942523ae, type: 3}
-  canStackItem: 1
+  icon: {fileID: 21300000, guid: fe16ccba8a7c447b59663b5eabc5703c, type: 3}
+  dropPrefab: {fileID: 3614522994352831049, guid: db11940eb86c00449aa28b80e1fcb170, type: 3}
+  canStackItem: 0
   maxStackamount: 5
-  consumables:
-  - type: 2
-    value: 10
+  consumables: []
   canBeCooked: 0
   cookTime: 20
   cookedItem: {fileID: 0}
   wieldablePrefab: {fileID: 0}
+  maxDurability: 0
   isPot: 0
   potType: 0
   startCookingSound: {fileID: 0}
