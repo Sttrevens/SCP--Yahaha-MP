@@ -503,7 +503,7 @@ Transform:
   m_GameObject: {fileID: 1246979066746601712}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1757, z: 0.033}
+  m_LocalPosition: {x: 0, y: 0.1757, z: 0.0389}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -548,7 +548,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4162846717
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: b55ff6f37a2c01a47aef3e7b492a8277, type: 2}
   m_TargetDisplay: 0
@@ -627,7 +627,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246979066746601712}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0874e69b95d9d064c9d99e856419e873, type: 3}
   m_Name: 
@@ -745,7 +745,7 @@ Transform:
   m_GameObject: {fileID: 6967005505638068852}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0000021904732, y: -0.0020614113, z: 0.99999785, w: 0.000000004515478}
-  m_LocalPosition: {x: 0, y: -0.011, z: 0.064}
+  m_LocalPosition: {x: 0.0095, y: 0.1773, z: 0.0347}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -769,7 +769,7 @@ Light:
   m_InnerSpotAngle: 20
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -827,7 +827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Version: 3
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
+  m_AdditionalLightsShadowResolutionTier: 0
   m_LightLayerMask: 1
   m_RenderingLayers: 1
   m_CustomShadowLayers: 0
@@ -889,13 +889,13 @@ MonoBehaviour:
   m_SpotAngle: 30
   m_SpotAngleMultiplier: 1
   m_ConeRadiusStart: 0.1
-  m_Scalable: 1
+  m_Scalable: 0
   m_FallOffStart: 0
   m_FallOffEnd: 25
   m_FallOffEndMultiplier: 1
   m_AttenuationEquation: 1
   m_SideSoftness: 10
-  m_RaymarchingQualityID: 2
+  m_RaymarchingQualityID: 1
   m_JitteringFactor: 0
   m_JitteringFrameRate: 60
   m_JitteringLerpRange:
