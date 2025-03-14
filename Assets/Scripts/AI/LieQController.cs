@@ -137,6 +137,17 @@ else
     
     public void GoAlive()
 {
+    if (enemy.sfxClips != null)
+    {
+        foreach (var clip in enemy.sfxClips)
+        {
+            if (clip.label == "Awake")
+            {
+                AudioManager.instance.PlaySFX(enemy.gameObject, clip.clip);
+                break;
+            }
+        }
+    }
     if (targetPlayer != null)
     {
         Vector3 direction = targetPlayer.transform.position - transform.position;

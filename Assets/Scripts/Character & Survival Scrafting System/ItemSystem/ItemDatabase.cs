@@ -74,6 +74,12 @@ namespace LPSurvivalEngine
     public GameObject wieldablePrefab;
     public float maxDurability;
 
+    [Space] [Header("Resource")] [Space]
+    
+    public ItemDatabase targetItem;
+
+    public int refillDurabilityAmount;
+
         [Space]
         [Header("Cooking Pot")]
         [Space]

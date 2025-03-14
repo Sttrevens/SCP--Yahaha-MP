@@ -14,6 +14,9 @@ public class ShopManager : NetworkBehaviour
     public Shop shop;
     
     private ShopItem _selectedItem;
+    
+    [SerializeField] private AudioClip purchaseSFX;
+    [SerializeField] private AudioClip noMoneySFX;
 
     private void Awake()
     {
@@ -30,8 +33,12 @@ public class ShopManager : NetworkBehaviour
 
     public override void Spawned()
     {
-        UpdatePlayerMoneyText();
         LoadShopItems();
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        UpdatePlayerMoneyText();
     }
 
     void LoadShopItems()
@@ -66,7 +73,6 @@ public class ShopManager : NetworkBehaviour
         if (ScoreManager.Instance.revenueRate >= _selectedItem.price)
         {
             ScoreManager.Instance.revenueRate -= _selectedItem.price;
-            UpdatePlayerMoneyText();
             // 如果需要把物品加到玩家背包（与拾取一样的方法）
             // 可以在这里写与 Inventory.instance.PickupItem(...); 类似的逻辑
             GivePurchasedItemToPlayer(playerRef, _selectedItem);
@@ -74,6 +80,7 @@ public class ShopManager : NetworkBehaviour
         }
         else
         {
+            AudioManager.Instance.PlaySFX(gameObject, noMoneySFX);
             Debug.Log("Not enough money to buy " + _selectedItem.itemName);
         }
     }
@@ -87,9 +94,7 @@ public class ShopManager : NetworkBehaviour
         if (Runner.TryGetPlayerObject(playerRef, out var playerObject))
         {
             Inventory.instance.PurchaseItem(itemBought.itemdata);
-
-            // 也可以播放相应的音效、动画等
-            // AudioManager.Instance.PlaySFX(...);
+            AudioManager.Instance.PlaySFX(gameObject, purchaseSFX);
         }
     }
 

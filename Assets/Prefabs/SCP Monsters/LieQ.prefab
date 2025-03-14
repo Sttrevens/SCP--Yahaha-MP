@@ -2801,7 +2801,11 @@ MonoBehaviour:
   animator: {fileID: 0}
   _animatorManager: {fileID: 0}
   initialStateType: IdleState
-  sfxClips: []
+  sfxClips:
+  - clip: {fileID: 8300000, guid: 8d1a5126192489244913d3bb9a9024cf, type: 3}
+    label: Bite
+  - clip: {fileID: 8300000, guid: 6565a4fe38edb5541a4bb15c8d3bf9bb, type: 3}
+    label: Awake
 --- !u!114 &7680522318694474725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2851,7 +2855,7 @@ MonoBehaviour:
   soundTargetPosition: {x: 0, y: 0, z: 0}
   chasingSpeed: 3
   hearingRadius: 10
-  stateTypeString: 
+  stateAfterChasingString: 
   stepAngle: 5
   drawGizmos: 0
 --- !u!195 &2292535808475648127

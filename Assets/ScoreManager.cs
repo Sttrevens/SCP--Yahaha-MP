@@ -53,11 +53,30 @@ public class ScoreManager : NetworkBehaviour
     
     [Networked] public int CurrentViewers { get; set; }
 
+    // 用来记录此前我们已经计算过的累计份数，以免重复给 revenueRate 加值
+    [Networked] private int _consumedScoreForRevenue { get; set; }
+    
     public override void FixedUpdateNetwork()
     {
         if (!HasStateAuthority) return;
         networkedTotalScore = (int)accumulatedTotalScore;
-        revenueRate = Mathf.Round(networkedTotalScore / (float)revenueRatio * 100) / 100f;
+        // 只有 StateAuthority（或服务器）才能修改分数、更新 revenueRate
+        if (Object.HasStateAuthority)
+        {
+            // 计算这次又增加了多少总分
+            int newlyAddedScore = networkedTotalScore - _consumedScoreForRevenue;
+            if (newlyAddedScore >= revenueRatio)
+            {
+                // 计算增长了多少整份 revenueRatio
+                int chunkCount = newlyAddedScore / revenueRatio;
+                
+                // 每个整份，就增长 0.01
+                revenueRate += chunkCount * 0.01f;
+
+                // 记录下来“扣除”这部分分数
+                _consumedScoreForRevenue += chunkCount * revenueRatio;
+            }
+        }
         // 每1秒更新 CurrentViewers
         if (Time.frameCount % Mathf.RoundToInt(1f / Time.fixedDeltaTime) == 0)
         {

@@ -215,9 +215,6 @@ namespace LPSurvivalEngine
             {
                 topParent = topParent.parent;
             }
-            PlayerMovement plMovement = topParent.GetComponent<PlayerMovement>();
-            if (plMovement != null)
-                plMovement.isAiming = isRightMouseButtonDown;
 
             if (HasStateAuthority)
             {

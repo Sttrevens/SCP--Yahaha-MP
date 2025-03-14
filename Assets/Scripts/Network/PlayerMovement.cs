@@ -55,8 +55,6 @@ public class PlayerMovement : NetworkBehaviour
     //瞄准移动速度减慢相关参数
     [Header("Other Movement")]
     public float aimSpeed = 2f;
-    public bool isAiming = false;
-    public bool isEmoting;
     
     [Header("Input System")]
     private PlayerInput playerInput;
@@ -120,24 +118,9 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        // UpdateUpperBodyRotationLocally();
-        Debug.Log("Is emoting： " + isEmoting);
-        if (isMoving && isEmoting)
-        {
-            if (WieldableManager.instance.GetCurrentWieldableSlot().item.wieldablePrefab
-                    .GetComponent<EmoteController>() != null)
-            {
-                WieldableManager.instance.DropWieldable(Runner.LocalPlayer);
-                isEmoting = false;
-            }
-        }
-
-        if (!PlayerController.instance.cursor || isEmoting)
-            return;
-
         if (HasStateAuthority && !_healthSystem.isDeadNetworked)
         {
-            if (!isAiming)
+            if (!_animatorManager.IsAiming)
             {
                 // 改用新Input：
                 // 判断这帧是否按下（用于替代旧的GetButtonDown）

@@ -1,9 +1,8 @@
 using System;
-using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AlwayRightHand : NetworkBehaviour
+public class AlwayRightHand : MonoBehaviour
 {
     // 距离摄像机的距离，根据你的场景调整
     public float distanceFromCamera = 2f;
@@ -15,11 +14,14 @@ public class AlwayRightHand : NetworkBehaviour
     // 用于存储初始的旋转偏移量
     public Quaternion initialRotationOffset;
     public Quaternion nowOffet;
+    
+    private Camera _camera;
 
     void Start()
     {
         if (Camera.main != null)
         {
+            _camera = Camera.main;
             // 计算物体原始旋转与摄像机初始旋转之间的偏移量
             // 公式：物体原始旋转 = 摄像机初始旋转 * 初始偏移量
             // 所以初始偏移量 = 摄像机初始旋转的逆 * 物体原始旋转
@@ -39,18 +41,18 @@ public class AlwayRightHand : NetworkBehaviour
         nowOffet = initialRotationOffset *Quaternion.Euler(additionalRotationOffset);
     }
 #endif
-    public override void FixedUpdateNetwork()
+    void LateUpdate()
     {
 
-        if (Camera.main != null)
+        if (_camera != null)
         {
             // 更新位置
             Vector3 viewportPos = new Vector3(viewportOffset.x, viewportOffset.y, distanceFromCamera);
-            Vector3 worldPos = Camera.main.ViewportToWorldPoint(viewportPos);
+            Vector3 worldPos = _camera.ViewportToWorldPoint(viewportPos);
             transform.position = worldPos;
             
             // 更新旋转：让物体在保持初始旋转偏移的基础上，跟随摄像机旋转
-            transform.rotation = Camera.main.transform.rotation * nowOffet;
+            transform.rotation = _camera.transform.rotation * nowOffet;
         }
     }
     
