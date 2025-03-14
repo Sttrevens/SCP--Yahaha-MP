@@ -24,6 +24,13 @@ public class ScoreManager : NetworkBehaviour
     
     private ConeDetection[] allConeDetections;
 
+    public static ScoreManager Instance;
+    
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     // 你可以根据需要，单独提供总分的访问器：
     private float accumulatedTotalScore
     {

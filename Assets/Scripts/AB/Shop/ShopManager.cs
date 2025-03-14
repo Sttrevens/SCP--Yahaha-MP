@@ -1,17 +1,19 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using Fusion;
+using LPSurvivalEngine;
 
 
-public class ShopManager : MonoBehaviour
+public class ShopManager : NetworkBehaviour
 {
     public static ShopManager instance;
 
     public Transform itemListPanel;
     public GameObject itemPrefab;
     public TextMeshProUGUI playerMoneyText;
-    public int playerMoney = 100;
     public Shop shop;
+    
+    private ShopItem _selectedItem;
 
     private void Awake()
     {
@@ -26,7 +28,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public override void Spawned()
     {
         UpdatePlayerMoneyText();
         LoadShopItems();
@@ -54,20 +56,46 @@ public class ShopManager : MonoBehaviour
 
     public void BuyItem(ShopItem item)
     {
-        if (playerMoney >= item.price)
+        _selectedItem = item;
+        RPC_OnPurchased(Runner.LocalPlayer);
+    }
+    
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_OnPurchased(PlayerRef playerRef)
+    {
+        if (ScoreManager.Instance.revenueRate >= _selectedItem.price)
         {
-            playerMoney -= item.price;
+            ScoreManager.Instance.revenueRate -= _selectedItem.price;
             UpdatePlayerMoneyText();
-            Debug.Log("Bought " + item.itemName);
+            // 如果需要把物品加到玩家背包（与拾取一样的方法）
+            // 可以在这里写与 Inventory.instance.PickupItem(...); 类似的逻辑
+            GivePurchasedItemToPlayer(playerRef, _selectedItem);
+            Debug.Log($"玩家 {playerRef} 成功购买了物品：{_selectedItem.itemName}");
         }
         else
         {
-            Debug.Log("Not enough money to buy " + item.itemName);
+            Debug.Log("Not enough money to buy " + _selectedItem.itemName);
         }
     }
 
+    /// <summary>
+    /// 示例：这里演示给玩家背包增加物品（或者做其他“玩家得到物品”的处理）
+    /// </summary>
+    private void GivePurchasedItemToPlayer(PlayerRef playerRef, ShopItem itemBought)
+    {
+        // 此处仅作示例，你可以与Inventory系统配合，实现物品加入背包
+        if (Runner.TryGetPlayerObject(playerRef, out var playerObject))
+        {
+            Inventory.instance.PurchaseItem(itemBought.itemdata);
+
+            // 也可以播放相应的音效、动画等
+            // AudioManager.Instance.PlaySFX(...);
+        }
+    }
+
+
     void UpdatePlayerMoneyText()
     {
-        playerMoneyText.text = "Money: " + playerMoney.ToString();
+        playerMoneyText.text = ScoreManager.Instance.revenueRate.ToString();
     }
 }

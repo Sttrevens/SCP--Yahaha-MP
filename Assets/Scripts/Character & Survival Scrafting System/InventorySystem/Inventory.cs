@@ -163,6 +163,18 @@ namespace LPSurvivalEngine
             }
             
         }
+        
+        public void PurchaseItem(ItemDatabase item)
+        {
+            currentPlayerObject = Runner.GetPlayerObject(Runner.LocalPlayer);
+            currentPlayerObject.GetComponent<AnimatorManager>().PickupCount++;
+            if (item != null)
+            {
+                AddItem(item, item.maxDurability); // 确保传递当前耐久度
+            }
+            
+        }
+        
         /// <summary>
         /// 加入item到slot中
         /// </summary>
