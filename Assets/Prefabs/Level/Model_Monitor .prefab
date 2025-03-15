@@ -280,8 +280,6 @@ GameObject:
   - component: {fileID: 6738478469635560170}
   - component: {fileID: 3257148877879245437}
   - component: {fileID: 2109477161037850750}
-  - component: {fileID: 1104886890685441535}
-  - component: {fileID: 4990466232120708502}
   m_Layer: 15
   m_Name: LevelSelection
   m_TagString: In-game Screen Canvas
@@ -402,37 +400,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRange: 100
---- !u!114 &1104886890685441535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201415981924869524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80afa70e45a9cef4c924bdd48333718f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shopPanel: {fileID: 3999417835178579421}
-  levelPanel: {fileID: 8121258944069259567}
---- !u!114 &4990466232120708502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201415981924869524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 0
-  ObjectInterest: 1
-  Flags: 262144
-  NestedObjects: []
-  NetworkedBehaviours: []
 --- !u!1 &269808435569862394
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,6 +2368,8 @@ GameObject:
   - component: {fileID: 280752088558777171}
   - component: {fileID: 5439784769885516301}
   - component: {fileID: 4255440792624866477}
+  - component: {fileID: 9018854365471945865}
+  - component: {fileID: 2749659492038438031}
   m_Layer: 15
   m_Name: Shop
   m_TagString: Untagged
@@ -2568,7 +2537,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1104886890685441535}
+      - m_Target: {fileID: 9018854365471945865}
         m_TargetAssemblyTypeName: UIInteractionNetwork, Assembly-CSharp
         m_MethodName: RPC_ClickShopButton
         m_Mode: 6
@@ -2580,6 +2549,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &9018854365471945865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2901023613671489951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80afa70e45a9cef4c924bdd48333718f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopPanel: {fileID: 3999417835178579421}
+  levelPanel: {fileID: 8121258944069259567}
+--- !u!114 &2749659492038438031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2901023613671489951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 0
+  ObjectInterest: 1
+  Flags: 262144
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &3079872295604035726
 GameObject:
   m_ObjectHideFlags: 0
@@ -4359,10 +4359,10 @@ RectTransform:
   - {fileID: 4082162356699821810}
   m_Father: {fileID: 4603361908254469982}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 850, y: -125}
+  m_SizeDelta: {x: 500, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6240336336464076342
 CanvasRenderer:
@@ -4924,6 +4924,8 @@ GameObject:
   - component: {fileID: 708656859649467614}
   - component: {fileID: 7931082162178858778}
   - component: {fileID: 1573874436981500422}
+  - component: {fileID: 4033129823665418169}
+  - component: {fileID: 931900785416024519}
   m_Layer: 15
   m_Name: Shop
   m_TagString: Untagged
@@ -5091,7 +5093,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1104886890685441535}
+      - m_Target: {fileID: 4033129823665418169}
         m_TargetAssemblyTypeName: UIInteractionNetwork, Assembly-CSharp
         m_MethodName: RPC_ClickShopButton
         m_Mode: 6
@@ -5103,6 +5105,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4033129823665418169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7169059439614339469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80afa70e45a9cef4c924bdd48333718f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopPanel: {fileID: 3999417835178579421}
+  levelPanel: {fileID: 8121258944069259567}
+--- !u!114 &931900785416024519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7169059439614339469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 0
+  ObjectInterest: 1
+  Flags: 262144
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &7226921160437267350
 GameObject:
   m_ObjectHideFlags: 0
@@ -8426,10 +8459,10 @@ RectTransform:
   - {fileID: 3479941475452894335}
   m_Father: {fileID: 4603361908254469982}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -125}
+  m_SizeDelta: {x: 500, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9206797737998059552
 CanvasRenderer:

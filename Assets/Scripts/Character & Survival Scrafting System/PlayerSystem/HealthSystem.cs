@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 namespace LPSurvivalEngine
 {
@@ -377,7 +378,21 @@ else
             {
                 Debug.Log("δ�ҵ�tagΪ ������");
             }
+
+if (Gamepad.current != null)
+{
+    StartCoroutine(VibrateController());
+}
         }
+
+        private IEnumerator VibrateController()
+    {
+        Gamepad.current.SetMotorSpeeds(0.5f, 0.5f);
+
+        yield return new WaitForSeconds(0.5f);
+
+        Gamepad.current.SetMotorSpeeds(0f, 0f);
+    }
         
         public void Scared(float amount)
         {
