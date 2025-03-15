@@ -5559,6 +5559,8 @@ MonoBehaviour:
   _isPatrolling: 0
   _CastSpellCount: 0
   _spellingBool: 0
+  _isinSpecialState: 0
+  _Speed: 0
 --- !u!114 &1812885780332336775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5589,7 +5591,10 @@ MonoBehaviour:
   isFlyingEnemy: 0
   animator: {fileID: 0}
   _animatorManager: {fileID: 0}
-  sfxClips: []
+  initialStateType: 
+  sfxClips:
+  - clip: {fileID: 8300000, guid: 8d1a5126192489244913d3bb9a9024cf, type: 3}
+    label: Bite
 --- !u!114 &458332622941395381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5629,6 +5634,7 @@ MonoBehaviour:
   fieldOfViewAngleVertical: 60
   currentPatrolIndex: 0
   patrolMode: 2
+  isSpecialPatrolMode: 0
   patrolPoints: []
   patrolRange: 15
   patrolWidth: 15
@@ -5638,6 +5644,7 @@ MonoBehaviour:
   soundTargetPosition: {x: 0, y: 0, z: 0}
   chasingSpeed: 5
   hearingRadius: 10
+  stateAfterChasingString: 
   stepAngle: 10
   drawGizmos: 0
 --- !u!114 &6317744547195610614

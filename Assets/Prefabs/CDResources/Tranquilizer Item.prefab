@@ -15,9 +15,8 @@ GameObject:
   - component: {fileID: 1021813588980415517}
   - component: {fileID: 6726538095283163011}
   - component: {fileID: 3935502625591090387}
-  - component: {fileID: 8971408125494792300}
   - component: {fileID: 926421826561934642}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tranquilizer Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +65,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!114 &8602976406614345405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,20 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineLayer: 4
---- !u!114 &8971408125494792300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6047698843393170323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: bbc626cd5b4b0f74dad80b10ba0ffc22
 --- !u!136 &926421826561934642
 CapsuleCollider:
   m_ObjectHideFlags: 0

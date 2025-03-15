@@ -358,6 +358,17 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f9957c74-b131-4a3a-97a3-9e6334211c49"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""bbb49720-27a1-4904-91e8-b19487f0a6cf"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
