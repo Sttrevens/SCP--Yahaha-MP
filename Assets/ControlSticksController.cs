@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Fusion;
 using LPSurvivalEngine;
+using TMPro;
 
 public class ControlSticksController : NetworkBehaviour, IInteractable
 {
@@ -35,9 +36,10 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
     [Networked]
     public int currentDays { get; set; } = 1;
 
+    [SerializeField] private TextMeshProUGUI hintDaysLeftText;
+
     private void Awake()
     {
-     
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -47,6 +49,8 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
             Instance = this;
             DontDestroyOnLoad(gameObject); 
         }
+
+        hintDaysLeftText.text = currentDays + " DAYS LEFT";
     }
 
     public override void Spawned()
@@ -54,7 +58,6 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         CurrentState = SpaceshipState.PreparingForTakeoff;
         initialRotation = transform.localRotation;
         IsPulled = false;
-        
     }
 
     public string GetInteractText()
@@ -132,6 +135,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 if (currentDays < 3)
                 {
                     currentDays++;
+                    hintDaysLeftText.text = currentDays + " DAYS LEFT";
                 }
 
                 foreach (var player in GameObject.FindObjectsOfType<HealthSystem>())

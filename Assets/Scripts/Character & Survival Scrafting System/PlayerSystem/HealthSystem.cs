@@ -57,6 +57,31 @@ namespace LPSurvivalEngine
         public bool isScared = false;
         public bool isDying = false;
         public bool isTired = false;
+
+private PlayerInput playerInput;
+        private InputAction sprintAction;
+
+    private void OnEnable()
+    {
+        playerInput = FindObjectOfType<PlayerInput>();
+        
+        if (playerInput != null)
+        {
+            sprintAction = playerInput.actions.FindAction("Sprint");
+            if (sprintAction != null)
+            {
+                sprintAction.Enable(); // 确保启用
+            }
+        }
+    }
+
+    private void OnDisable()
+    {   
+        if (sprintAction != null)
+        {
+            sprintAction.Disable();
+        }
+    }
         
         void Start()
         {
@@ -193,7 +218,7 @@ namespace LPSurvivalEngine
                 return;
             }
             
-            if (!(Input.GetButton("Sprint") && GetComponent<PlayerMovement>().isMoving))
+            if (!(sprintAction.IsPressed() && GetComponent<PlayerMovement>().isMoving))
 {
     if (!IsInvoking(nameof(DelayedStaminaRegen)) && !canRegenStamina && stamina.currentValue < stamina.maxValue)
     {
@@ -387,7 +412,7 @@ if (Gamepad.current != null)
 
         private IEnumerator VibrateController()
     {
-        Gamepad.current.SetMotorSpeeds(0.5f, 0.5f);
+        Gamepad.current.SetMotorSpeeds(2f, 2f);
 
         yield return new WaitForSeconds(0.5f);
 
