@@ -412,7 +412,7 @@ if (Gamepad.current != null)
 
         private IEnumerator VibrateController()
     {
-        Gamepad.current.SetMotorSpeeds(2f, 2f);
+        Gamepad.current.SetMotorSpeeds(4f, 4f);
 
         yield return new WaitForSeconds(0.5f);
 
