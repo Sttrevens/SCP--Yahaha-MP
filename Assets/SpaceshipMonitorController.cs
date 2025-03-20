@@ -25,12 +25,12 @@ public class SpaceshipMonitorController : MonoBehaviour
         controlSticksController = FindObjectOfType<ControlSticksController>();
 
         var fusionBootstrap = FindObjectOfType<FusionBootstrap>();
-        if (fusionBootstrap != null)
-            fusionBootstrap.startGame += () =>
-            {
-                Debug.LogError("FUSION STARTED!!!!!!!!");
-            };
-        
+        // if (fusionBootstrap != null)
+        //     fusionBootstrap.startGame += () =>
+        //     {
+        //         Debug.LogError("FUSION STARTED!!!!!!!!");
+        //     };
+        //
         // Initialize UI texts
         if (playerNamesText == null || totalScoreText == null || roomNameText == null)
         {
