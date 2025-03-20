@@ -2448,7 +2448,7 @@ GameObject:
   - component: {fileID: 3352045113354941783}
   - component: {fileID: 7057388831754074905}
   - component: {fileID: 4455728772946267660}
-  - component: {fileID: 5287245255753072403}
+  - component: {fileID: 1245955274798987042}
   m_Layer: 8
   m_Name: '[Game]A_Real_Character'
   m_TagString: Player
@@ -2586,6 +2586,7 @@ MonoBehaviour:
   - {fileID: 3352045113354941783}
   - {fileID: 7057388831754074905}
   - {fileID: 4455728772946267660}
+  - {fileID: 1245955274798987042}
 --- !u!114 &1122259457492835225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3010,7 +3011,7 @@ MonoBehaviour:
   SyncSettings: 79
   StateHashes: 00000000e9d0506ada63755d28a981077af3fe2ecb3c324688920145336e528eb1211e0b37b935014e73a6a7ffa4c8127deb84976856e4eb2bf8d7e8e538b0296777fcacff36d7373d441695d4d21d713f11958cf51b339478294cbaf53b8e04e83c4943b694a43574e66597a76005b13b1771c65f5186608149048feef32509ad072d5ec71eafa08527114d
   TriggerHashes: 0000000028a98107cb3c3246336e528e37b93501ffa4c812ff36d737550e6746f53b8e04b8a66478f3813327f51b3394
---- !u!114 &5287245255753072403
+--- !u!114 &1245955274798987042
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3019,15 +3020,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5250024112804794185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd7fea91fe63f4e1b884ef1e16a975c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6376dd7fc23b3764483a7349b58502e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playDelayConfig:
-    Low: 200
-    High: 200
-    Max: 1000
-    SpeedUpPerc: 5
-  restartOnDeviceChange: 1
 --- !u!1 &5385546817467512204
 GameObject:
   m_ObjectHideFlags: 0
