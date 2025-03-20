@@ -5,6 +5,7 @@ using LPSurvivalEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
+[DefaultExecutionOrder(0)]
 public class PlayerMovement : NetworkBehaviour
 {
     //角色视角转变动画相关的参数

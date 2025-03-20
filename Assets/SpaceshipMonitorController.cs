@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,13 @@ public class SpaceshipMonitorController : MonoBehaviour
         networkStart = FindObjectOfType<NetworkStart>();
         controlSticksController = FindObjectOfType<ControlSticksController>();
 
+        var fusionBootstrap = FindObjectOfType<FusionBootstrap>();
+        if (fusionBootstrap != null)
+            fusionBootstrap.startGame += () =>
+            {
+                Debug.LogError("FUSION STARTED!!!!!!!!");
+            };
+        
         // Initialize UI texts
         if (playerNamesText == null || totalScoreText == null || roomNameText == null)
         {

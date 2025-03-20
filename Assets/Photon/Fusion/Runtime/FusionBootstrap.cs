@@ -9,6 +9,7 @@ namespace Fusion {
   using System.Linq;
   using Statistics;
   using UnityEngine.Serialization;
+  using Unity.VisualScripting;
 
 #if UNITY_EDITOR
   using UnityEditor;
@@ -44,6 +45,7 @@ namespace Fusion {
       AllConnected,
     }
 
+    public Action startGame;
     [Serializable]
     class StartCommand : FusionMppmCommand {
       public string RoomName;
@@ -227,7 +229,7 @@ namespace Fusion {
             Destroy(gui);
           }
 
-          Destroy(this);
+          // Destroy(this);
           return;
         } else {
           // If no RunnerPrefab is supplied, use the scene runner.
@@ -335,8 +337,16 @@ namespace Fusion {
     [DrawIf(nameof(IsShutdown), Hide = true)]
     public virtual void StartSharedClient() {
       if (TryGetSceneRef(out var sceneRef)) {
-        StartCoroutine(StartWithClients(GameMode.Shared, sceneRef, 1));
+         // StartCoroutine(StartWithClients(GameMode.Shared, sceneRef, 1));
+         CoroutineRunner.Instance.StartCoroutine(Test(sceneRef));
+         //CoroutineRunner.Instance.ExecuteCoroutine(StartWithClients(GameMode.Shared, sceneRef, 1), startGame);
       }
+    }
+
+    private IEnumerator Test(SceneRef sceneRef)
+    {
+      yield return StartWithClients(GameMode.Shared, sceneRef, 1);
+      startGame?.Invoke();
     }
     
     [EditorButton("Start Auto Host Or Client", EditorButtonVisibility.PlayMode)]
@@ -539,7 +549,8 @@ namespace Fusion {
         // this action is called after InitializeNetworkRunner for the server has completed startup
         yield return StartClients(clientCount, serverMode, sceneRef);
       } else {
-        yield return StartClients(clientCount, serverMode, sceneRef);
+        yield return CoroutineRunner.Instance.StartCoroutine(StartClients(clientCount, serverMode, sceneRef));
+        startGame?.Invoke();
       }
       
       if (FusionMppm.Status == FusionMppmStatus.MainInstance && serverMode != GameMode.Single) {
@@ -608,6 +619,11 @@ namespace Fusion {
 #endif
 
       return clientTask;
+    }
+
+    private void OnDestroy()
+    {
+      Debug.LogError("DESTROY");
     }
 
     protected IEnumerator StartClients(int clientCount, GameMode serverMode, SceneRef sceneRef = default) {

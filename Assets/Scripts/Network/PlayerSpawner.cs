@@ -15,6 +15,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
 
     public void PlayerJoined(PlayerRef player)
     {
+        Debug.Log("回调");
         if (TitleScreenUI.IsSpectator)
         {
             if (Camera.main != null)

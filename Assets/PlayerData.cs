@@ -37,12 +37,6 @@ public class PlayerData : NetworkBehaviour
         playerName.text = PlayerName;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // public override void Render()
     // {
     //     CharacterMaterialSet charMatSet = MaterialRenderTextureManager.Instance.availableCharacterMaterialSets[characterMaterialIndex];
