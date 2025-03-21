@@ -69,7 +69,8 @@ public class AlwayRightHand : MonoBehaviour
             // transform.position = Vector3.SmoothDamp(transform.position, worldPos, ref zero, 0.05f);
             transform.position = worldPos;
             // 更新旋转：让物体在保持初始旋转偏移的基础上，跟随摄像机旋转
-            // transform.rotation = _camera.transform.rotation * nowOffet;
+            transform.rotation = _camera.transform.rotation * nowOffet;
         }
     }
+    
 }
