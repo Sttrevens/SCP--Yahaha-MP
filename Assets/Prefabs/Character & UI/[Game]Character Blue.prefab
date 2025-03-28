@@ -14,8 +14,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 315316993976097765, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 315316993976097765, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 4339343381134191817}
     - target: {fileID: 675727263048989761, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: SortKey
       value: 2549773360
@@ -36,10 +40,6 @@ PrefabInstance:
       propertyPath: SortKey
       value: 3399537156
       objectReference: {fileID: 0}
-    - target: {fileID: 1918114668200504125, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
-      propertyPath: SortKey
-      value: 641855015
-      objectReference: {fileID: 0}
     - target: {fileID: 2084166851769006222, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: SortKey
       value: 1132166546
@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2548396677291062928, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2548396677291062928, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[7]
@@ -95,10 +95,6 @@ PrefabInstance:
     - target: {fileID: 5250024112804794185, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: m_Name
       value: '[Game]Character Blue'
-      objectReference: {fileID: 0}
-    - target: {fileID: 5326124401363047006, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
-      propertyPath: SortKey
-      value: 2762424792
       objectReference: {fileID: 0}
     - target: {fileID: 5522668091040432390, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: m_Layer
@@ -148,14 +144,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6126805308852524463, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
-      propertyPath: SortKey
-      value: 1311803355
-      objectReference: {fileID: 0}
-    - target: {fileID: 6551604088768524292, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
-      propertyPath: SortKey
-      value: 2913925445
-      objectReference: {fileID: 0}
     - target: {fileID: 7540993180885595974, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: SortKey
       value: 4019522776
@@ -180,10 +168,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 8681973807784096998, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
-      propertyPath: SortKey
-      value: 2451263757
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -198,6 +182,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a124f3edccf61e947b91abcd06014c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4339343381134191817 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8418949932962042742, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+  m_PrefabInstance: {fileID: 5255260461182648255}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7379909740323179240 stripped

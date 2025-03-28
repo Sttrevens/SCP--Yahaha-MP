@@ -1,10 +1,12 @@
+using System;
 using Fusion;
 using LPSurvivalEngine;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Fusion.Sockets;
 
-public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
+public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
 {
     public List<GameObject> PlayerPrefabsPool;
     public Transform spawnPoint;
@@ -13,8 +15,110 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
     // 只在本地维护对生成的播放器Prefab的引用，方便离开时回收
     private Dictionary<PlayerRef, GameObject> assignedPrefabs = new Dictionary<PlayerRef, GameObject>();
 
-    public void PlayerJoined(PlayerRef player)
+    #region callbacks
+    
+    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
     {
+        
+    }
+
+    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
+    {
+
+    }
+
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        Debug.LogError("玩家加入");
+        PlayerJoined(runner, player);
+    }
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        Debug.LogError("玩家离开");
+        PlayerLeft(runner, player);
+    }
+
+    public void OnInput(NetworkRunner runner, NetworkInput input)
+    {
+        
+    }
+
+    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
+    {
+       
+    }
+
+    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
+    {
+        Debug.LogError("玩家离开");
+
+    }
+
+    public void OnConnectedToServer(NetworkRunner runner)
+    {
+
+    }
+
+    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
+    {
+        
+    }
+
+    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
+    {
+        
+    }
+
+    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
+    {
+        
+    }
+
+    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
+    {
+        
+    }
+
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+    {
+        
+    }
+
+    public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
+    {
+        
+    }
+
+    public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
+    {
+        
+    }
+
+    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
+    {
+        
+    }
+
+    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
+    {
+        
+    }
+
+    public void OnSceneLoadDone(NetworkRunner runner)
+    {
+        
+    }
+
+    public void OnSceneLoadStart(NetworkRunner runner)
+    {
+        
+    }
+
+    #endregion
+    public void PlayerJoined(NetworkRunner Runner, PlayerRef player)
+    {
+        Debug.Log("回调");
         if (TitleScreenUI.IsSpectator)
         {
             if (Camera.main != null)
@@ -70,7 +174,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
         }
     }
 
-    public void PlayerLeft(PlayerRef player)
+    public void PlayerLeft(NetworkRunner Runner, PlayerRef player)
     {
         // 如果玩家名下有Prefab的引用，则将其归还至本地池子并 Despawn
         if (assignedPrefabs.TryGetValue(player, out var usedPrefab))
@@ -85,4 +189,6 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
             }
         }
     }
+
+
 }
