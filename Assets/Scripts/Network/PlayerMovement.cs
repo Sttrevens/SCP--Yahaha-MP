@@ -167,9 +167,6 @@ public class PlayerMovement : NetworkBehaviour
                 Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Runner.DeltaTime);
             playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Runner.DeltaTime);
         }
-        
-        Gravity();
-        Move();
     }
 
    
@@ -177,7 +174,8 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        
+        Gravity();
+        Move();
     }
 
     public void Move()
