@@ -128,8 +128,8 @@ public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
         }
         
         // 当前加入的玩家是第几个 => chosenIndex
-        int chosenIndex = Runner.ActivePlayers.Count() % 4 - 1;
-
+        int chosenIndex = Runner.ActivePlayers.Count() % 4;
+        
         // 判断 index 是否在可用范围内
         if (chosenIndex < 0 || chosenIndex >= PlayerPrefabsPool.Count)
         {

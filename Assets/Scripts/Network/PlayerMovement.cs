@@ -239,8 +239,8 @@ public class PlayerMovement : NetworkBehaviour
         //Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
         Quaternion targetRotation = Quaternion.Euler(0, _firstPersonCamera.horizontalRotation, 0);
 
-        // Smoothly rotate the object towards the target rotation first.
-        transform.rotation = targetRotation;
+// Smoothly rotate the object towards the target rotation first using Lerp for a smoother effect.
+transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         //--------------------------------------控制骨骼旋转的逻辑--------------------------------------------------------------------------------
         // // 本地控制的上半身旋转，基于摄像机的旋转
         // if (upperBodys != null)
