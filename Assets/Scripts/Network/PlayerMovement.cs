@@ -167,6 +167,9 @@ public class PlayerMovement : NetworkBehaviour
                 Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Runner.DeltaTime);
             playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Runner.DeltaTime);
         }
+        
+        Gravity();
+        Move();
     }
 
    
@@ -174,8 +177,7 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        Gravity();
-        Move();
+        
     }
 
     public void Move()
@@ -231,7 +233,7 @@ public class PlayerMovement : NetworkBehaviour
         _velocity.y += gravityValue * Runner.DeltaTime;
     }
 
-    void LateUpdate()
+    void OnRenderObject()
     {
         if (_healthSystem.isDeadNetworked) return;
         
