@@ -169,9 +169,6 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
-   
-
-
     public override void FixedUpdateNetwork()
     {
         Gravity();
@@ -231,16 +228,9 @@ public class PlayerMovement : NetworkBehaviour
         _velocity.y += gravityValue * Runner.DeltaTime;
     }
 
-    void OnRenderObject()
+    void LateUpdate()
     {
-        if (_healthSystem.isDeadNetworked) return;
-        
-        // Calculate the target rotation based on the camera's yaw rotation.
-        //Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
-        Quaternion targetRotation = Quaternion.Euler(0, _firstPersonCamera.horizontalRotation, 0);
-
-// Smoothly rotate the object towards the target rotation first using Lerp for a smoother effect.
-transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        RotatePlayerTowardsCamera();
         //--------------------------------------控制骨骼旋转的逻辑--------------------------------------------------------------------------------
         // // 本地控制的上半身旋转，基于摄像机的旋转
         // if (upperBodys != null)
@@ -309,6 +299,19 @@ transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotatio
             );
         }*/
         // ------------------------------------------------------
+    }
+
+    private void RotatePlayerTowardsCamera()
+    {
+        if (_healthSystem.isDeadNetworked) return;
+        
+        // Calculate the target rotation based on the camera's yaw rotation.
+        //Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
+        Quaternion targetRotation = Quaternion.Euler(0, _firstPersonCamera.horizontalRotation, 0);
+
+// Smoothly rotate the object towards the target rotation first using Lerp for a smoother effect.
+        //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime * 3);
+        transform.rotation = targetRotation;
     }
 
     // 用于同步上半身旋转到网络上的函数
