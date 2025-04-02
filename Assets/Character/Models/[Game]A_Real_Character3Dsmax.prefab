@@ -1970,7 +1970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2548396677291062928, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: NestedObjects.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2548396677291062928, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: NestedObjects.Array.data[0]
@@ -1999,7 +1999,11 @@ PrefabInstance:
     - target: {fileID: 2548396677291062928, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: NestedObjects.Array.data[6]
       value: 
-      objectReference: {fileID: 6328435792292694940}
+      objectReference: {fileID: 6624795103742180538}
+    - target: {fileID: 2548396677291062928, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+      propertyPath: NestedObjects.Array.data[7]
+      value: 
+      objectReference: {fileID: 6624795103742180538}
     - target: {fileID: 2548396677291062928, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
       value: 10
@@ -2072,6 +2076,10 @@ PrefabInstance:
       propertyPath: NetworkedBehaviours.Array.data[0]
       value: 
       objectReference: {fileID: 2264211400464080282}
+    - target: {fileID: 5028602352072729976, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+      propertyPath: SortKey
+      value: 3264205075
+      objectReference: {fileID: 0}
     - target: {fileID: 5250024112804794185, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: m_Name
       value: '[Game]A_Real_Character3Dsmax'
@@ -2080,6 +2088,18 @@ PrefabInstance:
       propertyPath: SortKey
       value: 884523703
       objectReference: {fileID: 0}
+    - target: {fileID: 5326124401363047006, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+      propertyPath: NestedObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5326124401363047006, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+      propertyPath: NestedObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 6624795103742180538}
+    - target: {fileID: 5326124401363047006, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+      propertyPath: NestedObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 6624795103742180538}
     - target: {fileID: 5712146917242757908, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: m_Transforms.Array.data[0]
       value: 
@@ -2332,6 +2352,10 @@ PrefabInstance:
       propertyPath: m_Data.m_Target
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7390351212725128012, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+      propertyPath: SortKey
+      value: 4009133421
+      objectReference: {fileID: 0}
     - target: {fileID: 7540993180885595974, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
       propertyPath: Flags
       value: 1
@@ -2490,6 +2514,17 @@ Transform:
 --- !u!114 &6328435792292694940 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5326124401363047006, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
+  m_PrefabInstance: {fileID: 2177823839683189186}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6624795103742180538 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5028602352072729976, guid: 04d2c83e14c21b941ad8ef4d7e68219d, type: 3}
   m_PrefabInstance: {fileID: 2177823839683189186}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

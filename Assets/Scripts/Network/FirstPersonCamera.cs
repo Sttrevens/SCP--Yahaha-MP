@@ -41,7 +41,7 @@ public class FirstPersonCamera : MonoBehaviour
         }
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (Target == null) return;
 

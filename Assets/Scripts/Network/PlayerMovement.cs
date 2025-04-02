@@ -228,7 +228,7 @@ public class PlayerMovement : NetworkBehaviour
         _velocity.y += gravityValue * Runner.DeltaTime;
     }
 
-    void LateUpdate()
+    void OnRenderObject()
     {
         RotatePlayerTowardsCamera();
         //--------------------------------------控制骨骼旋转的逻辑--------------------------------------------------------------------------------
