@@ -62,7 +62,7 @@ MonoBehaviour:
   toggleSound: {fileID: 0}
   CameraInCamera: {fileID: 6624644879885053158}
   zoomSound: {fileID: 8300000, guid: 5475d097d08653341b61829399c12c55, type: 3}
-  ZoomSpeed: 5
+  ZoomSpeed: 50
   MinFOV: 20
   MaxFOV: 60
   isRightMouseButtonDown: 0
@@ -93,6 +93,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: d1a04b9fbdc376848b8d19f9a5d10619, type: 2}
   - {fileID: 2100000, guid: c4cd272129c05cd45a0313cc87f87f30, type: 2}
   - {fileID: 2100000, guid: 8bb77bd13ff71a5429c27478eb683a2f, type: 2}
+  soundVolume: 0.3
+  minSoundInterval: 0.3
+  scrollStep: 0.5
 --- !u!114 &2699190968527061108
 MonoBehaviour:
   m_ObjectHideFlags: 0

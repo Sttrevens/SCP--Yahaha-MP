@@ -8,7 +8,7 @@ public class RigController : MonoBehaviour
     public RigBuilder rigBuilder;
     
 
-    private Dictionary<string, Rig> rigs = new Dictionary<string, Rig>();
+    public Dictionary<string, Rig> rigs = new Dictionary<string, Rig>();
     private Dictionary<Rig, Coroutine> rigCoroutines = new Dictionary<Rig, Coroutine>();
 
     private void Awake()
@@ -66,12 +66,21 @@ public class RigController : MonoBehaviour
     {
         SetRigWeight("AimRig", 1f, speed);
         SetRigWeight("IdleRig", 0f, speed);
+        SetRigWeight("HippieRig", 0f, speed);
+    }
+
+    public void SwitchToHippie(float speed)
+    {
+        SetRigWeight("HippieRig", 1f, speed);
+        SetRigWeight("AimRig", 0f, speed);
     }
 
     public void SwitchToHipFire(float speed)
     {
         SetRigWeight("AimRig", 0f, speed);
-        SetRigWeight("IdleRig", 1f, speed);
+        SetRigWeight("IdleRig", 0f, speed);
+        SetRigWeight("AnyWayRig", 1f, speed);
+        SetRigWeight("HippieRig", 0f, speed);
     }
 
     public void SwitchToIdle(float speed)
@@ -79,5 +88,6 @@ public class RigController : MonoBehaviour
         SetRigWeight("AimRig", 0f, speed);
         SetRigWeight("IdleRig", 0f, speed);
         SetRigWeight("AnyWayRig", 1f, speed);
+        SetRigWeight("HippieRig", 0f, speed);
     }
 }

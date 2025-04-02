@@ -112,6 +112,8 @@ namespace LPSurvivalEngine
                 batteryIcons[2].SetActive(currentDurability > 0);
             }
         }
+        
+        private RigController _rigController;
 
         private void Awake()
         {
@@ -180,6 +182,7 @@ namespace LPSurvivalEngine
                 Debug.LogWarning("[CameraController] 没有可用的字符串可以使用，可能超过了 4 台摄像机限制。");
             }
 
+            _rigController = GameObject.Find("CurrentPlayer").transform.Find("Model").GetComponent<RigController>();
         }
 
         public override void Spawned()
@@ -218,7 +221,14 @@ namespace LPSurvivalEngine
 
             if (HasStateAuthority)
             {
-                transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("Model/Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/PadHandle"));
+                if (_rigController.rigs["AimRig"].weight == 1)
+                {
+                    transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("AimTargetForPad/PadHandle"));
+                }
+                else
+                {
+                    transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("Model/Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/PadHandle"));
+                }
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
             }
@@ -303,33 +313,69 @@ namespace LPSurvivalEngine
             }
         }
 
+        public float soundVolume = 0.3f;    // 声音音量
+        public float minSoundInterval = 0.3f;   // 两次声音播放的最小间隔
+        public float scrollStep = 0.1f;   // 定义每经过多少累计滚动单位播放一次声音
+        private int lastZoomStep = 0;
         private float lastSoundTime = 0f;
+        
+        // 累计的滚轮输入量
+        private float accumulatedScroll = 0f;
+        private float baseFOV = 40f;
 
-        private float lastScrollInput = 0f;
-        private float previousScrollTime = 0f;
+        private bool pendingSwitchState = false;
 
 void HandleZoom()
 {
-    float ScrollInput = InputManager.Instance.Scroll.y;
-    if (ScrollInput != 0)
-    {
-        // 使用 Lerp 实现平滑缩放
-        float targetFOV = CameraInCamera.fieldOfView - (ScrollInput * ZoomSpeed);
-        targetFOV = Mathf.Clamp(targetFOV, MinFOV, MaxFOV);
-        CameraInCamera.fieldOfView = Mathf.Lerp(CameraInCamera.fieldOfView, targetFOV, Time.fixedDeltaTime * 10f);
+    // 使用 Input.GetAxis 获取滚轮增量（如使用新输入系统请做相应修改）
+    float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+    
+        // 累计滚轮输入量，方向也会保留（正值或负值）
+        accumulatedScroll += scrollInput;
+        accumulatedScroll = Mathf.Clamp(accumulatedScroll, (baseFOV - MaxFOV) / ZoomSpeed, (baseFOV - MinFOV) / ZoomSpeed);
 
-        // 声音播放逻辑保持不变
-        if (ScrollInput != lastScrollInput && Time.time - lastSoundTime >= 0.3f)
+        // 根据累计输入量计算目标 FOV
+        float targetFOV = baseFOV - (accumulatedScroll * ZoomSpeed);
+        targetFOV = Mathf.Clamp(targetFOV, MinFOV, MaxFOV);
+        Debug.Log("Accumulated scroll: " + accumulatedScroll);
+        Debug.Log("Target FOV: " + targetFOV);
+
+        // 平滑过渡到目标 FOV
+        CameraInCamera.fieldOfView = Mathf.Lerp(CameraInCamera.fieldOfView, targetFOV, Runner.DeltaTime * 10f);
+
+        // 计算当前累计滚动量对应的步进（负值也会被计算进去）
+        int currentStep = Mathf.FloorToInt(accumulatedScroll / scrollStep);
+        // 当步进发生变化并且满足时间间隔后播放声音
+        if (currentStep != lastZoomStep && Time.time - lastSoundTime >= minSoundInterval)
         {
-            AudioManager.Instance.PlaySFX(this.gameObject, zoomSound, 0.3f);
-            lastScrollInput = ScrollInput;
+            AudioManager.Instance.PlaySFX(this.gameObject, zoomSound, soundVolume);
+            lastZoomStep = currentStep;
             lastSoundTime = Time.time;
         }
-    }
-    else
-    {
-        lastScrollInput = 0f;
-    }
+
+        if (Mathf.Abs(scrollInput) > 0.001f)
+        {
+            if (CameraInCamera.fieldOfView >= MaxFOV * 0.95f)
+            {
+                if (!pendingSwitchState)
+                    StartCoroutine(BeingPending());
+                else
+                {
+                    _rigController.SwitchToHippie(3f);
+                    pendingSwitchState = false;
+                }
+            }
+            else
+            {
+                _rigController.SwitchToAim(3f);
+            }
+        }
+}
+
+IEnumerator BeingPending()
+{
+    yield return new WaitForSeconds(0.5f);
+    pendingSwitchState = true;
 }
 
 public void SetMaterialAndRenderTexture(Material material, RenderTexture renderTexture)
