@@ -110,7 +110,8 @@ public class LevelManager : NetworkBehaviour, IInteractable
 
         foreach (var enemy in GameObject.FindObjectsOfType<Enemy>())
         {
-            Destroy(enemy.gameObject);
+            if (!enemy.GetComponent<EyedSlimeBlueController>())
+                Destroy(enemy.gameObject);
         }
         //RPC_BuildNavMesh();
     }

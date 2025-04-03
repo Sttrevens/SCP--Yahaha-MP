@@ -41,8 +41,19 @@ public class AlwayRightHand : MonoBehaviour
         nowOffet = initialRotationOffset *Quaternion.Euler(additionalRotationOffset);
     }
 #endif
-    void LateUpdate()
-    {
+    void Update()
+    {if (_camera != null)
+        {
+            // 更新位置
+            Vector3 viewportPos = new Vector3(viewportOffset.x, viewportOffset.y, distanceFromCamera);
+            Vector3 worldPos = _camera.ViewportToWorldPoint(viewportPos);
+            // var targetLocalPosition = transform.parent.InverseTransformPoint(worldPos);
+            Vector3 zero = Vector3.zero;
+            transform.position = Vector3.SmoothDamp(transform.position, worldPos, ref zero, 0.05f);
+            //transform.position = worldPos;
+            // 更新旋转：让物体在保持初始旋转偏移的基础上，跟随摄像机旋转
+            transform.rotation = _camera.transform.rotation * nowOffet;
+        }
         // if (_camera != null)
         // {
         //     // 更新位置
@@ -59,18 +70,7 @@ public class AlwayRightHand : MonoBehaviour
 
     private void OnRenderObject()
     {
-        if (_camera != null)
-        {
-            // 更新位置
-            Vector3 viewportPos = new Vector3(viewportOffset.x, viewportOffset.y, distanceFromCamera);
-            Vector3 worldPos = _camera.ViewportToWorldPoint(viewportPos);
-            // var targetLocalPosition = transform.parent.InverseTransformPoint(worldPos);
-            Vector3 zero = Vector3.zero;
-            // transform.position = Vector3.SmoothDamp(transform.position, worldPos, ref zero, 0.05f);
-            transform.position = worldPos;
-            // 更新旋转：让物体在保持初始旋转偏移的基础上，跟随摄像机旋转
-            transform.rotation = _camera.transform.rotation * nowOffet;
-        }
+        
     }
     
 }

@@ -904,7 +904,7 @@ Shader "Stylized Toon"
 			float4 Shadowmask1831(  )
 			{
 				 float2 lightmapUV;
-				    OUTPUT_LIGHTMAP_UV(LightmapUV, unity_LightmapST, lightmapUV);
+				    OUTPUT_LIGHTMAP_UV(lightmapUV, unity_LightmapST, lightmapUV);
 				return SAMPLE_SHADOWMASK(lightmapUV);
 			}
 			

@@ -117,7 +117,7 @@ public class ExitMenu : MonoBehaviour
 
     public void ConfirmExitGame()
     {
-        TitleScreenUI.roomName = "";
+        /*TitleScreenUI.roomName = "";
 TitleScreenUI.playerName = "";
 TitleScreenUI.Region = "";
 TitleScreenUI.IsSpGame = false;
@@ -126,6 +126,8 @@ NetworkSceneManagerDefault sceneManager = gameObject.AddComponent<NetworkSceneMa
 sceneManager.Initialize(FindFirstObjectByType<NetworkRunner>());
 FindFirstObjectByType<NetworkRunner>().Shutdown(destroyGameObject: true, 
     shutdownReason: ShutdownReason.Ok);
-SceneManager.LoadScene(titleMenuSceneName);
+SceneManager.LoadScene(titleMenuSceneName);*/
+        
+        Application.Quit();
     }
 }

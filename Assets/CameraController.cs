@@ -24,13 +24,12 @@ namespace LPSurvivalEngine
         public float ZoomSpeed = 2.0f;
         public float MinFOV = 20f;
         public float MaxFOV = 60f;
+        public float baseFOV = 60f;
 
         private Vector3 aimPosition;
         private Quaternion aimRotation;
         private Vector3 cameraPosition;
         private Quaternion cameraRotation;
-
-        public bool isRightMouseButtonDown = false;
 
         [Header("Durability Settings")]
         [SerializeField] private float durabilityDrainPerSecond = 0.2f;
@@ -209,7 +208,7 @@ namespace LPSurvivalEngine
             // 消耗耐久度
             DrainDurability();
 
-            if (isRightMouseButtonDown)
+            if (GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming)
             {
                 HandleZoom();
             }
@@ -221,16 +220,31 @@ namespace LPSurvivalEngine
 
             if (HasStateAuthority)
             {
-                if (_rigController.rigs["AimRig"].weight == 1)
+                /*if (_rigController.rigs["AimRig"].weight == 1)
                 {
                     transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("AimTargetForPad/PadHandle"));
                 }
                 else
-                {
+                {*/
                     transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("Model/Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R/PadHandle"));
-                }
+                //}
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
+                
+                /*if (transform.root.gameObject.name == "CurrentPlayer")
+                {
+                    foreach (Transform child in transform)
+                    {
+                        if (child.gameObject.layer == LayerMask.NameToLayer("TransparentFX"))
+                        {
+                            MeshRenderer childRenderer = child.gameObject.GetComponent<MeshRenderer>();
+                            if (childRenderer != null && childRenderer.enabled)
+                            {
+                                childRenderer.enabled = false;
+                            }
+                        }
+                    }
+                }*/
             }
         }
 
@@ -255,8 +269,6 @@ namespace LPSurvivalEngine
         /// </summary>
         public override void OnAltAttackInput()
         {
-            isRightMouseButtonDown = !isRightMouseButtonDown;
-            Debug.Log("[CameraController] OnAltAttackInput - Aim State: " + isRightMouseButtonDown);
             Aim();
         }
 
@@ -295,7 +307,7 @@ namespace LPSurvivalEngine
 
         void Aim()
         {
-            if (isRightMouseButtonDown)
+            if (!GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming)
             {
                 // transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.position;
                 // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.rotation;
@@ -321,7 +333,6 @@ namespace LPSurvivalEngine
         
         // 累计的滚轮输入量
         private float accumulatedScroll = 0f;
-        private float baseFOV = 40f;
 
         private bool pendingSwitchState = false;
 

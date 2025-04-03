@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem; // 新 Input System 命名空间
 using UnityEngine.InputSystem.LowLevel; 
@@ -41,12 +42,20 @@ public class FirstPersonCamera : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Target == null) return;
+        
+        transform.SetParent(Target);
+        transform.localPosition = new Vector3(0, Height, 0);
+    }
+
     void LateUpdate()
     {
         if (Target == null) return;
 
         // 保持相机跟随角色
-        transform.position = Target.position + new Vector3(0, Height, 0);
+        //transform.position = Target.position + new Vector3(0, Height, 0);
 
         // 与原脚本相同：只有在 cursor 未锁定时才旋转
         isCameraLocked = !PlayerController.instance.cursor;
@@ -72,6 +81,7 @@ public class FirstPersonCamera : MonoBehaviour
         horizontalRotation += mouseX * MouseSensitivity;
 
         // 5. 更新相机最终旋转
-        transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+        //transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+        //transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 }

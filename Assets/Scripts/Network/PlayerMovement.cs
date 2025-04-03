@@ -61,6 +61,11 @@ public class PlayerMovement : NetworkBehaviour
     private PlayerInput playerInput;
     private InputAction jumpAction;
     private InputAction sprintAction;
+    private InputAction lookAction;
+    
+    [Header("FP Camera")]
+    public float verticalRotation;
+    public float horizontalRotation;
 
     private void OnEnable()
     {
@@ -81,6 +86,16 @@ public class PlayerMovement : NetworkBehaviour
                 sprintAction.Enable(); // 确保启用
             }
         }
+        
+        // 1. 从 PlayerInput 里找到你配置好的 "Look" Action
+        if (playerInput != null)
+        {
+            lookAction = playerInput.actions.FindAction("Look");
+            if (lookAction != null)
+            {
+                lookAction.Enable(); // 确保启用
+            }
+        }
     }
 
     private void OnDisable()
@@ -94,6 +109,12 @@ public class PlayerMovement : NetworkBehaviour
         if (sprintAction != null)
         {
             sprintAction.Disable();
+        }
+        
+        // 脚本禁用时，禁用 Look Action（可选）
+        if (lookAction != null)
+        {
+            lookAction.Disable();
         }
     }
 
@@ -121,8 +142,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (HasStateAuthority && !_healthSystem.isDeadNetworked)
         {
-            if (!_animatorManager.IsAiming)
-            {
+            
                 // 改用新Input：
                 // 判断这帧是否按下（用于替代旧的GetButtonDown）
                 if (jumpAction != null && jumpAction.WasPressedThisFrame())
@@ -132,6 +152,10 @@ public class PlayerMovement : NetworkBehaviour
                         _jumpPressed = true;
                         if (_controller.isGrounded)
                         {
+                            if (_animatorManager.IsAiming)
+                            {
+                                _animatorManager.IsAiming = false;
+                            }
                             _healthSystem.stamina.Subtract(10f);
                         }
                     }
@@ -146,6 +170,10 @@ public class PlayerMovement : NetworkBehaviour
                     _targetFOV = sprintFOV;
                     _targetSpeed = sprintSpeed;
                     issprinting = true;
+                    if (_animatorManager.IsAiming)
+                    {
+                        _animatorManager.IsAiming = false;
+                    }
                 }
                 else
                 {
@@ -153,9 +181,9 @@ public class PlayerMovement : NetworkBehaviour
                     _targetSpeed = defaultSpeed;
                     issprinting = false;
                 }
-            }
-            else
-            {
+            
+        if (_animatorManager.IsAiming)
+        {
                 _targetFOV = defaultFOV;
                 _targetSpeed = aimSpeed;
                 issprinting = false;
@@ -174,7 +202,11 @@ public class PlayerMovement : NetworkBehaviour
         Gravity();
         Move();
     }
-
+    
+    private float _smoothXAxis = 0f;
+    private float _smoothZAxis = 0f;
+    private float _smoothVelocity = 0f;
+    
     public void Move()
     {
         // Only move own player and not every other player. Each player controls its own player object.
@@ -195,9 +227,17 @@ public class PlayerMovement : NetworkBehaviour
             // 优化小技巧：较小的数字不要过早的参与计算，应将小数字先相乘然后整体与大数相乘，能够减少浮点数的舍入精度误差
             move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Runner.DeltaTime * playerSpeed);
         }
-        _animatorManager.XAxis = Input.GetAxis("Horizontal");
-        _animatorManager.ZAxis = Input.GetAxis("Vertical");
-        _animatorManager.Speed = Mathf.Lerp(_animatorManager.Speed, move.magnitude * 100f, Runner.DeltaTime * 5f);
+        // 获取目标值
+        float targetX = Input.GetAxis("Horizontal");
+        float targetZ = Input.GetAxis("Vertical");
+
+// 使用 SmoothDamp 平滑过渡，smoothingTime 可根据需求调整
+        float smoothingTime = 0.1f; // 可调整为更大或更小的值
+
+        _animatorManager.XAxis = Mathf.SmoothDamp(_animatorManager.XAxis, targetX, ref _smoothXAxis, smoothingTime);
+        _animatorManager.ZAxis = Mathf.SmoothDamp(_animatorManager.ZAxis, targetZ, ref _smoothZAxis, smoothingTime);
+        _animatorManager.Speed = Mathf.SmoothDamp(_animatorManager.Speed, move.magnitude * 100f, ref _smoothVelocity, smoothingTime);
+
         
         if (_jumpPressed && _controller.isGrounded)
         {
@@ -228,7 +268,7 @@ public class PlayerMovement : NetworkBehaviour
         _velocity.y += gravityValue * Runner.DeltaTime;
     }
 
-    void OnRenderObject()
+    void LateUpdate()
     {
         RotatePlayerTowardsCamera();
         //--------------------------------------控制骨骼旋转的逻辑--------------------------------------------------------------------------------
@@ -304,14 +344,42 @@ public class PlayerMovement : NetworkBehaviour
     private void RotatePlayerTowardsCamera()
     {
         if (_healthSystem.isDeadNetworked) return;
-        
+
         // Calculate the target rotation based on the camera's yaw rotation.
         //Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
-        Quaternion targetRotation = Quaternion.Euler(0, _firstPersonCamera.horizontalRotation, 0);
+        //Quaternion targetRotation = Quaternion.Euler(0, _firstPersonCamera.horizontalRotation, 0);
 
 // Smoothly rotate the object towards the target rotation first using Lerp for a smoother effect.
         //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime * 3);
-        transform.rotation = targetRotation;
+        //transform.rotation = targetRotation;
+        
+        // 2. 使用新 Input System 的 Look Action 取值
+        Vector2 lookDelta = Vector2.zero;
+        if (lookAction != null)
+        {
+            lookDelta = lookAction.ReadValue<Vector2>();
+        }
+        
+        float mouseX = 0;
+        float mouseY = 0;
+
+        if (PlayerController.instance.cursor)
+        {
+            // 将取到的 x / y 分别用于水平旋转和垂直旋转
+            mouseX = lookDelta.x;
+            mouseY = lookDelta.y;
+        }
+
+        // 3. 计算俯仰角并加以限制
+        verticalRotation -= mouseY * _firstPersonCamera.MouseSensitivity;
+        verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
+
+        // 4. 计算水平旋转
+        horizontalRotation += mouseX * _firstPersonCamera.MouseSensitivity;
+
+        // 5. 更新相机最终旋转
+        transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);
+        cameraRoot.transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
     }
 
     // 用于同步上半身旋转到网络上的函数
