@@ -37,7 +37,7 @@ public class SpaceshipMonitorController : MonoBehaviour,INetworkRunnerCallbacks
         // UpdateRoomName();
     }
 
-    private void UpdatePlayerNames()
+    public void UpdatePlayerNames()
     {
         if (playerNamesText == null)
         {
@@ -92,7 +92,7 @@ public class SpaceshipMonitorController : MonoBehaviour,INetworkRunnerCallbacks
         }
     }
 
-    private void UpdateRoomName()
+    public void UpdateRoomName()
     {
         if (roomNameText == null)
         {

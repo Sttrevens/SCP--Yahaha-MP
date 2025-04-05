@@ -35,33 +35,6 @@ public class PlayerSFXSystem : NetworkBehaviour
         HandleHealthStateAudio(healthSystem.isTired, Rpc_PlayTiredAudio, false);
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void Rpc_PlayFootstep()
-    {
-        PlayFootstepSound();
-    }
-
-    // 动画事件调用
-    public void PlayFootstepSound()
-    {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, raycastDistance))
-        {
-            HandleFootstepSfxByTag(hit.collider.tag);
-        }
-    }
-
-    private void HandleFootstepSfxByTag(string tag)
-    {
-        if (tag == MudTag)
-        {
-            PlaySfx(mudFootstepClips);
-        }
-        else if (tag == MetalTag)
-        {
-            PlaySfx(metalFootstepClips);
-        }
-    }
-
     private void HandleHealthStateAudio(bool condition, System.Action PlayMethod, bool stopIfFalse)
     {
         if (condition)

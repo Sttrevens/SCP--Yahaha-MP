@@ -182,6 +182,10 @@ public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
             GameObject.Find("WieldManager").GetComponent<WieldableManager>().wieldablesPosition =
                 plObject.transform.Find("Model/Armature/Root_M/Spine1_M/Spine2_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R/jointItemR");
         }
+        
+        SpaceshipMonitorController spaceshipMonitorController = FindObjectOfType<SpaceshipMonitorController>();
+        spaceshipMonitorController.UpdatePlayerNames();
+        spaceshipMonitorController.UpdateRoomName();
     }
 
     public void PlayerLeft(NetworkRunner Runner, PlayerRef player)
@@ -198,5 +202,8 @@ public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
                 Runner.Despawn(netObj);
             }
         }
+        
+        SpaceshipMonitorController spaceshipMonitorController = FindObjectOfType<SpaceshipMonitorController>();
+        spaceshipMonitorController.UpdatePlayerNames();
     }
 }
