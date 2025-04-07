@@ -70,5 +70,4 @@ Shader "Custom/FatigueVerigo"
             ENDHLSL
         }
     }
-    Fallback "Hidden/InternalErrorShader"
 }
