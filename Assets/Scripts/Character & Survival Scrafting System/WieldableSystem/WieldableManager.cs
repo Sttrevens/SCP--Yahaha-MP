@@ -56,6 +56,7 @@ namespace LPSurvivalEngine
             if (currentWieldable != null && currentWieldable.altInputHint != null)
             {
                 hintActionText.text = string.Format(currentWieldable.altInputHint, "RMB");
+                hintActionText.text = hintActionText.text.Replace ("\\n", "\n");  
             }
             else
             {

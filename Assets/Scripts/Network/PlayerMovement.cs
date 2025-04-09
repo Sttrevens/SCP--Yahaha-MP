@@ -33,7 +33,7 @@ public class PlayerMovement : NetworkBehaviour
     private Quaternion _cameraRotationY;
     [SerializeField] private float defaultFOV = 40f;
     [SerializeField] private float sprintFOV = 60f;
-    [SerializeField] private float defaultSpeed = 4f;
+    public float defaultSpeed = 4f;
     [SerializeField] private float sprintSpeed = 6f;
     [SerializeField] private float fovChangeSpeed = 4f;
     [SerializeField] private float speedChangeSpeed = 4f;
@@ -125,9 +125,9 @@ public class PlayerMovement : NetworkBehaviour
         _healthSystem = GetComponent<HealthSystem>();
     }
 
-    public override void Spawned()
+    void Start()
     {
-        if (HasStateAuthority)
+        if (gameObject.name == "CurrentPlayer")
         {
             plCamera = Camera.main;
             _firstPersonCamera = plCamera.GetComponent<FirstPersonCamera>();
@@ -140,9 +140,8 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        if (HasStateAuthority && !_healthSystem.isDeadNetworked)
+        if (gameObject.name == "CurrentPlayer" && !_healthSystem.isDeadNetworked)
         {
-            
                 // 改用新Input：
                 // 判断这帧是否按下（用于替代旧的GetButtonDown）
                 if (jumpAction != null && jumpAction.WasPressedThisFrame())
@@ -192,12 +191,12 @@ public class PlayerMovement : NetworkBehaviour
 
             // 视野和速度平滑插值
             plCamera.fieldOfView =
-                Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Runner.DeltaTime);
-            playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Runner.DeltaTime);
+                Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Time.fixedDeltaTime);
+            playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Time.fixedDeltaTime);
         }
     }
 
-    public override void FixedUpdateNetwork()
+    void FixedUpdate()
     {
         Gravity();
         Move();
@@ -210,7 +209,7 @@ public class PlayerMovement : NetworkBehaviour
     public void Move()
     {
         // Only move own player and not every other player. Each player controls its own player object.
-        if (HasStateAuthority == false || _healthSystem.isDeadNetworked)
+        if (gameObject.name != "CurrentPlayer" || _healthSystem.isDeadNetworked)
         {
             return;
         }
@@ -225,7 +224,7 @@ public class PlayerMovement : NetworkBehaviour
         if (PlayerController.instance.cursor)
         {
             // 优化小技巧：较小的数字不要过早的参与计算，应将小数字先相乘然后整体与大数相乘，能够减少浮点数的舍入精度误差
-            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Runner.DeltaTime * playerSpeed);
+            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.fixedDeltaTime * playerSpeed);
         }
         // 获取目标值
         float targetX = Input.GetAxis("Horizontal");
@@ -245,7 +244,7 @@ public class PlayerMovement : NetworkBehaviour
             _velocity.y += jumpForce;
         }
 
-        Vector3 trueMove = move + _velocity * Runner.DeltaTime;
+        Vector3 trueMove = move + _velocity * Time.fixedDeltaTime;
         _controller.Move(trueMove);
 
         if (move != Vector3.zero)
@@ -264,8 +263,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void Gravity()
     {
-        
-        _velocity.y += gravityValue * Runner.DeltaTime;
+        _velocity.y += gravityValue * Time.fixedDeltaTime;
     }
 
     void LateUpdate()
@@ -343,7 +341,11 @@ public class PlayerMovement : NetworkBehaviour
 
     private void RotatePlayerTowardsCamera()
     {
-        if (_healthSystem.isDeadNetworked) return;
+        if (_healthSystem.isDeadNetworked)
+        {
+            Debug.Log("player is dead");
+            return;
+        }
 
         // Calculate the target rotation based on the camera's yaw rotation.
         //Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
@@ -365,17 +367,18 @@ public class PlayerMovement : NetworkBehaviour
 
         if (PlayerController.instance.cursor)
         {
+            Debug.Log("playercontroller.cursor is true");
             // 将取到的 x / y 分别用于水平旋转和垂直旋转
             mouseX = lookDelta.x;
             mouseY = lookDelta.y;
         }
 
         // 3. 计算俯仰角并加以限制
-        verticalRotation -= mouseY * _firstPersonCamera.MouseSensitivity;
+        verticalRotation -= mouseY * _firstPersonCamera.MouseSensitivity * 20f * Time.fixedDeltaTime;
         verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
 
         // 4. 计算水平旋转
-        horizontalRotation += mouseX * _firstPersonCamera.MouseSensitivity;
+        horizontalRotation += mouseX * _firstPersonCamera.MouseSensitivity * 20f * Time.fixedDeltaTime;
 
         // 5. 更新相机最终旋转
         transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);

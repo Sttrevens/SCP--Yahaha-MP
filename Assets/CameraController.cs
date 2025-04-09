@@ -113,6 +113,8 @@ namespace LPSurvivalEngine
         }
         
         private RigController _rigController;
+        private PlayerMovement _playerMovement;
+        private float _originalAimSpeed;
 
         private void Awake()
         {
@@ -182,6 +184,8 @@ namespace LPSurvivalEngine
             }
 
             _rigController = GameObject.Find("CurrentPlayer").transform.Find("Model").GetComponent<RigController>();
+            _playerMovement = GameObject.Find("CurrentPlayer").GetComponent<PlayerMovement>();
+            _originalAimSpeed = _playerMovement.aimSpeed;
         }
 
         public override void Spawned()
@@ -373,12 +377,14 @@ void HandleZoom()
                 else
                 {
                     _rigController.SwitchToHippie(3f);
+                    _playerMovement.aimSpeed = _playerMovement.defaultSpeed;
                     pendingSwitchState = false;
                 }
             }
             else
             {
                 _rigController.SwitchToAim(3f);
+                _playerMovement.aimSpeed = _originalAimSpeed;
             }
         }
 }

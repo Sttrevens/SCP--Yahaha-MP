@@ -52,7 +52,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Target == null) return;
+        /*if (Target == null) return;
 
         // 保持相机跟随角色
         //transform.position = Target.position + new Vector3(0, Height, 0);
@@ -78,7 +78,7 @@ public class FirstPersonCamera : MonoBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
 
         // 4. 计算水平旋转
-        horizontalRotation += mouseX * MouseSensitivity;
+        horizontalRotation += mouseX * MouseSensitivity;*/
 
         // 5. 更新相机最终旋转
         //transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);

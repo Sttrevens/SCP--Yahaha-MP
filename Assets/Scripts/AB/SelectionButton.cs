@@ -17,7 +17,7 @@ public class SelectionButton : NetworkBehaviour
         button.onClick.AddListener(() => RPC_ToggleSelection(index));
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_ToggleSelection(int index)
     {
         AudioManager.Instance.PlayStartButtonSound();

@@ -60,7 +60,7 @@ public class Prompt : MonoBehaviour
                 break;
 
             default:
-                text = string.Format("{0} Can't be used here! (Press {1} to throw away)", item.name, "Q");
+                text = string.Format("Press LMB to use {0} (Press {1} to throw away)", item.name, "Q");
                 break;
         }
 

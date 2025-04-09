@@ -33,15 +33,16 @@ public class ShopManager : NetworkBehaviour
 
     public override void Spawned()
     {
-        LoadShopItems();
+        RPC_LoadShopItems();
     }
 
-    public override void FixedUpdateNetwork()
+    void Update()
     {
         UpdatePlayerMoneyText();
     }
 
-    void LoadShopItems()
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_LoadShopItems()
     {
         foreach (Transform child in itemListPanel)
         {
@@ -101,6 +102,6 @@ public class ShopManager : NetworkBehaviour
 
     void UpdatePlayerMoneyText()
     {
-        playerMoneyText.text = ScoreManager.Instance.revenueRate.ToString();
+        playerMoneyText.text = ScoreManager.Instance.revenueRate.ToString("F2");
     }
 }
