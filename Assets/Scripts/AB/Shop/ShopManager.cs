@@ -65,11 +65,10 @@ public class ShopManager : NetworkBehaviour
     public void BuyItem(ShopItem item)
     {
         _selectedItem = item;
-        RPC_OnPurchased(Runner.LocalPlayer);
+        OnPurchased(Runner.LocalPlayer);
     }
     
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_OnPurchased(PlayerRef playerRef)
+    public void OnPurchased(PlayerRef playerRef)
     {
         if (ScoreManager.Instance.revenueRate >= _selectedItem.price)
         {

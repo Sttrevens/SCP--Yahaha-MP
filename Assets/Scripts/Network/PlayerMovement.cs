@@ -98,7 +98,7 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
-    private void OnDisable()
+    /*private void OnDisable()
     {
         // 脚本禁用时，禁用 Look Action（可选）
         if (jumpAction != null)
@@ -116,7 +116,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             lookAction.Disable();
         }
-    }
+    }*/
 
     private void Awake()
     {
@@ -162,24 +162,31 @@ public class PlayerMovement : NetworkBehaviour
                 plCamera.nearClipPlane = _originalCameraNearClipPlane;
                 // 判断是否被按住（用于替代旧的GetButton）
                 if (sprintAction != null &&
-                    sprintAction.IsPressed() &&
-                    isMoving                          &&
-                    _healthSystem.stamina.currentValue > 0)
-                {
-                    _targetFOV = sprintFOV;
-                    _targetSpeed = sprintSpeed;
-                    issprinting = true;
-                    if (_animatorManager.IsAiming)
-                    {
-                        _animatorManager.IsAiming = false;
-                    }
-                }
-                else
-                {
-                    _targetFOV = defaultFOV;
-                    _targetSpeed = defaultSpeed;
-                    issprinting = false;
-                }
+    sprintAction.IsPressed())
+{
+    if (isMoving && _healthSystem.stamina.currentValue > 0)
+    {
+        _targetFOV = sprintFOV;
+        _targetSpeed = sprintSpeed;
+        issprinting = true;
+        if (_animatorManager.IsAiming)
+        {
+            _animatorManager.IsAiming = false;
+        }
+    }
+    else
+    {
+        _targetFOV = defaultFOV;
+        _targetSpeed = defaultSpeed;
+        issprinting = false;
+    }
+}
+else
+{
+    _targetFOV = defaultFOV;
+    _targetSpeed = defaultSpeed;
+    issprinting = false;
+}
             
         if (_animatorManager.IsAiming)
         {
@@ -193,6 +200,16 @@ public class PlayerMovement : NetworkBehaviour
             plCamera.fieldOfView =
                 Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Time.fixedDeltaTime);
             playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Time.fixedDeltaTime);
+        }
+
+        if (sprintAction == null)
+        {
+            Debug.Log("sprintAction is null");
+        }
+
+        if (!sprintAction.enabled)
+        {
+            Debug.Log("sprintAction is disabled");
         }
     }
 
