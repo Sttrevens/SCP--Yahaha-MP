@@ -30,7 +30,7 @@ public class ConeDetection : MonoBehaviour
     // 缓存目标对象列表 目的是减少FindObjectsOfType的调用次数
     private List<GameObject> cachedTargets = new List<GameObject>();
     private float updateTargetInterval = 0.5f;  // 更新目标列表的时间间隔
-    private float nextUpdateTime = 0f;
+    private float nextUpdateTime = 0.5f;
 
     // 用于存储多个目标的评分
     public class TargetScore
@@ -52,11 +52,9 @@ public class ConeDetection : MonoBehaviour
     {
         if (cam == null)
         {
-            Debug.Log("未找到相机引用！设置为主相机");
             cam = Camera.main;
             if (cam == null)
             {
-                Debug.LogError("未找到相机引用！请手动指定或确保场景中有主相机。");
                 enabled = false;
                 return;
             }
@@ -107,11 +105,14 @@ public class ConeDetection : MonoBehaviour
                 if (targetScore.isVisible)
                 {
                     hasTargetInView = true;
+                    FindBestTarget();
+                }
+                else
+                {
+                    realtimeScore = 0f;
                 }
             }
         }
-
-        FindBestTarget();
     }
 
     private TargetScore BestTarget(TargetScore nonVisibleBestTarget = null)
