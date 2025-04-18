@@ -178,8 +178,17 @@ public class BarrageUI : NetworkBehaviour
             return;
         }
         
-        min = BarrageClass.instance.getBarrageByType(type).min;
-        max = BarrageClass.instance.getBarrageByType(type).max;
+        int viewers = ScoreManager.Instance.CurrentViewers;
+if (viewers >= 500)
+{
+    min = 2;
+    max = 2;
+}
+else
+{
+    min = Mathf.Lerp(5, 2, viewers / 500f);
+    max = Mathf.Lerp(10, (float)min, viewers / 500f);
+}
         Debug.Log($"弹幕速度范围: {min} - {max}");
         
         if (!BarrageClass.TYPE_Barrage.ContainsKey(barrageType))
