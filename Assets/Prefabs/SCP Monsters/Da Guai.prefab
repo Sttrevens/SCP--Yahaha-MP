@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7549295921899508581}
   - component: {fileID: 6335806273245980268}
   - component: {fileID: 986657782359005338}
+  - component: {fileID: 3319845377468986969}
   m_Layer: 14
   m_Name: Da Guai
   m_TagString: Untagged
@@ -202,6 +203,7 @@ MonoBehaviour:
   isFlyingEnemy: 0
   animator: {fileID: 0}
   _animatorManager: {fileID: 0}
+  initialStateType: 
   sfxClips: []
 --- !u!114 &6335806273245980268
 MonoBehaviour:
@@ -253,6 +255,22 @@ MonoBehaviour:
   spotlightColliderObject: {fileID: 7076263523949770756}
   spotlightCollider: {fileID: 0}
   spotlightSound: {fileID: 8300000, guid: 03059e6d23ecd0745bb82a8e8d7a2db7, type: 3}
+--- !u!114 &3319845377468986969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696340544093521484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a9cc6a42a57eb499483c9540c234c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAestheticFatigueValue: 100
+  currentAestheticFatigueValue: 100
+  aestheticLevel: 10
+  targetTag: 
 --- !u!1 &6757433380079480361
 GameObject:
   m_ObjectHideFlags: 0

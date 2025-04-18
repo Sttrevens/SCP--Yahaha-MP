@@ -4,10 +4,15 @@ using UnityEngine;
 using System.IO;
 public enum BarrageType{
     newbie,
-    day,
-    night,
+    good,
+    bad,
     success,
-    fail
+    fail,
+    goodenemy,
+    badenemy,
+    spam,
+    goodEyedSlimeBlue,
+    badEyedSlimeBlue
 }
 
 [Serializable]
@@ -145,10 +150,15 @@ public class BarrageClass
     {
         // ... existing code ...
         TYPE_Barrage.Add(BarrageType.newbie, getBarrageListByType(BarrageType.newbie));
-        TYPE_Barrage.Add(BarrageType.day, getBarrageListByType(BarrageType.day));
-        TYPE_Barrage.Add(BarrageType.night, getBarrageListByType(BarrageType.night));
+        TYPE_Barrage.Add(BarrageType.good, getBarrageListByType(BarrageType.good));
+        TYPE_Barrage.Add(BarrageType.bad, getBarrageListByType(BarrageType.bad));
         TYPE_Barrage.Add(BarrageType.success, getBarrageListByType(BarrageType.success));
         TYPE_Barrage.Add(BarrageType.fail, getBarrageListByType(BarrageType.fail));
+        TYPE_Barrage.Add(BarrageType.spam, getBarrageListByType(BarrageType.spam));
+        TYPE_Barrage.Add(BarrageType.goodenemy, getBarrageListByType(BarrageType.goodenemy));
+        TYPE_Barrage.Add(BarrageType.badenemy, getBarrageListByType(BarrageType.badenemy));
+        TYPE_Barrage.Add(BarrageType.goodEyedSlimeBlue, getBarrageListByType(BarrageType.goodEyedSlimeBlue));
+        TYPE_Barrage.Add(BarrageType.badEyedSlimeBlue, getBarrageListByType(BarrageType.badEyedSlimeBlue));
         
         // 创建临时包装类来序列化列表
         var wrapper = new BarrageItemsJsonWrapper { items = TYPE_Barrage[BarrageType.newbie].ToArray() };

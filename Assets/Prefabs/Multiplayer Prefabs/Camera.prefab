@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba98d4f347dff44fa15ef1bc17e6d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetClassName: Enemy
+  targetClassName: FilmTarget
   hasTargetInView: 0
   visibleRatio: 0
   centerOffsetDistance: 0
@@ -57,6 +57,7 @@ MonoBehaviour:
   cam: {fileID: 8422162903330514959}
   accumulatedScore: 0
   realtimeScore: 0
+  cachedTargets: []
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -145,6 +146,7 @@ MonoBehaviour:
   cam: {fileID: 8422162903330514959}
   accumulatedScore: 0
   realtimeScore: 0
+  cachedTargets: []
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -544,10 +546,6 @@ MonoBehaviour:
   Target: {fileID: 0}
   Height: 0
   MouseSensitivity: 3
-  isCameraLocked: 0
-  verticalRotation: 0
-  horizontalRotation: 0
-  playerInput: {fileID: 0}
 --- !u!114 &1283305404652967872
 MonoBehaviour:
   m_ObjectHideFlags: 0

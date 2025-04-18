@@ -28,9 +28,12 @@ public class ConeDetection : MonoBehaviour
     public float realtimeScore = 0f;
 
     // 缓存目标对象列表 目的是减少FindObjectsOfType的调用次数
-    private List<GameObject> cachedTargets = new List<GameObject>();
+    public List<GameObject> cachedTargets = new List<GameObject>();
     private float updateTargetInterval = 0.5f;  // 更新目标列表的时间间隔
     private float nextUpdateTime = 0.5f;
+    
+    private float updateScoreInterval = 0.1f;
+    private float nextCalculateTime = 0.1f;
 
     // 用于存储多个目标的评分
     public class TargetScore
@@ -69,8 +72,12 @@ public class ConeDetection : MonoBehaviour
             UpdateTargetsList();
             nextUpdateTime = Time.time + updateTargetInterval;
         }
-
-        ProcessTargets();
+        
+        if (Time.time >= nextCalculateTime)
+        {
+            ProcessTargets();
+            nextCalculateTime = Time.time + updateScoreInterval;
+        }
     }
 
     private void UpdateTargetsList()
@@ -105,7 +112,7 @@ public class ConeDetection : MonoBehaviour
                 if (targetScore.isVisible)
                 {
                     hasTargetInView = true;
-                    FindBestTarget();
+                    CalculateTotalScore();
                 }
                 else
                 {
@@ -135,24 +142,31 @@ public class ConeDetection : MonoBehaviour
         return bestTarget;
     }
 
-    private void FindBestTarget()
+    private void CalculateTotalScore()
     {
-        // 找出得分最高的目标
+        // 重置当前帧的得分
+        realtimeScore = 0f;
+    
+        // 计算所有可见目标的总分
         if (targetScores.Count > 0)
         {
-            // 更新最佳目标的信息
-            if (BestTarget().isVisible)
+            foreach (var targetScore in targetScores)
             {
-                realtimeScore = BestTarget().score;
-                accumulatedScore += realtimeScore;
+                if (targetScore.isVisible)
+                {
+                    // 累加每个可见目标的分数
+                    realtimeScore += targetScore.score;
+                }
             }
-            else
+        
+            // 将当前帧的总分累加到总积分中
+            if (realtimeScore > 0)
             {
-                var nonVisibleBestTarget = BestTarget();
-                BestTarget(nonVisibleBestTarget);
+                accumulatedScore += realtimeScore;
             }
         }
     }
+
     
     /// <summary>
     /// 处理单个目标
@@ -189,6 +203,8 @@ public class ConeDetection : MonoBehaviour
 
         // 计算得分
         float baseScore = CalculateScore(centerOffsetDistance, distanceToCamera, visibleRatio) * 10;
+
+        baseScore *= target.GetComponent<FilmTarget>().aestheticLevel;
 
         // 检查目标状态并调整分数
         var targetBehaviour = target.GetComponent<Enemy>(); // 假设TargetBehaviour脚本包含CurrentState字段

@@ -196,6 +196,9 @@ namespace LPSurvivalEngine
                 batteryIcons[1] = GameObject.Find(bobojianReferenceinScene).transform.Find("BatteryIcon/BatteryContent2").gameObject;
                 batteryIcons[2] = GameObject.Find(bobojianReferenceinScene).transform.Find("BatteryIcon/BatteryContent3").gameObject;
             }
+            
+            if (GetComponent<ConeDetection>())
+                BarrageUI.instance.padCameras.Add(GetComponent<ConeDetection>());
 
             if (HasStateAuthority)
             {

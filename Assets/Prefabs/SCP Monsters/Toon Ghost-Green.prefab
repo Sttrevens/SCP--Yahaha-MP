@@ -4942,6 +4942,7 @@ GameObject:
   - component: {fileID: 5611117118170815069}
   - component: {fileID: 4476147738338142209}
   - component: {fileID: 3812460681084587774}
+  - component: {fileID: 6907408818870820412}
   m_Layer: 0
   m_Name: Toon Ghost-Green
   m_TagString: Untagged
@@ -5076,6 +5077,8 @@ MonoBehaviour:
   _isPatrolling: 0
   _CastSpellCount: 0
   _spellingBool: 0
+  _isinSpecialState: 0
+  _Speed: 0
 --- !u!114 &2239356778546999095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5106,6 +5109,7 @@ MonoBehaviour:
   isFlyingEnemy: 0
   animator: {fileID: 0}
   _animatorManager: {fileID: 0}
+  initialStateType: 
   sfxClips: []
 --- !u!114 &5026041747504781391
 MonoBehaviour:
@@ -5146,6 +5150,7 @@ MonoBehaviour:
   fieldOfViewAngleVertical: 90
   currentPatrolIndex: 0
   patrolMode: 1
+  isSpecialPatrolMode: 0
   patrolPoints: []
   patrolRange: 10
   patrolWidth: 10
@@ -5171,6 +5176,7 @@ MonoBehaviour:
   fieldOfViewAngleVertical: 60
   currentPatrolIndex: 0
   patrolMode: 1
+  isSpecialPatrolMode: 0
   patrolPoints: []
   patrolRange: 10
   patrolWidth: 10
@@ -5180,6 +5186,7 @@ MonoBehaviour:
   soundTargetPosition: {x: 0, y: 0, z: 0}
   chasingSpeed: 5
   hearingRadius: 10
+  stateAfterChasingString: 
   stepAngle: 10
   drawGizmos: 0
 --- !u!114 &7920759076678503391
@@ -5259,6 +5266,22 @@ MonoBehaviour:
   PlayerCanSeeEnemy: 0
   CurrentChasingPlayer: {fileID: 0}
   ChasingEnemyInstance: {fileID: 0}
+--- !u!114 &6907408818870820412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3901550995532059235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a9cc6a42a57eb499483c9540c234c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAestheticFatigueValue: 100
+  currentAestheticFatigueValue: 100
+  aestheticLevel: 10
+  targetTag: 
 --- !u!1 &4257468397932735745
 GameObject:
   m_ObjectHideFlags: 0

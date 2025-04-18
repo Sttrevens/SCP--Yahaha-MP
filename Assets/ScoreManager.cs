@@ -102,7 +102,7 @@ public class ScoreManager : NetworkBehaviour
             CachedViewers *= Mathf.Pow(0.97f, Time.deltaTime); 
         } else {
             // 非活跃状态：平方根衰减
-            float decayRate = 0.1f * Mathf.Sqrt(CachedViewers);
+            float decayRate = 0.01f * Mathf.Sqrt(CachedViewers);
             CachedViewers *= (1 - decayRate * Time.deltaTime);
         }
     }

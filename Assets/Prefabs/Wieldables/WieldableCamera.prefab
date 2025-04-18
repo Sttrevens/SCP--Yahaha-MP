@@ -78,7 +78,7 @@ MonoBehaviour:
   - {fileID: 0}
   bobojianReferenceinScene: 
   screenRenderer: {fileID: 484767831476937785}
-  altInputHint: '{0} TO AIM\nPAD ZOOM IN/OUT - MOUSE SCROLL \nSWITCH TO HIPPIE STATE
+  altInputHint: '{0} TO AIM\nPAD ZOOM IN/OUT - MOUSE SCROLL\nSWITCH TO HIPPIE STATE
     - KEEP ZOOMING OUT'
   candidateStrings:
   - Bobojian
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba98d4f347dff44fa15ef1bc17e6d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetClassName: Enemy
+  targetClassName: FilmTarget
   hasTargetInView: 0
   visibleRatio: 0
   centerOffsetDistance: 0
@@ -121,6 +121,7 @@ MonoBehaviour:
   cam: {fileID: 6624644879885053158}
   accumulatedScore: 0
   realtimeScore: 0
+  cachedTargets: []
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 4160864255

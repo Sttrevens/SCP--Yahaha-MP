@@ -21,6 +21,22 @@ public class BarrageUI : NetworkBehaviour
     double min;//最小弹幕出现速度
     double max;//最大弹幕出现速度
     public bool isStop = true;//是否弹幕滚动停止了
+
+    public List<ConeDetection> padCameras;
+    private List<FilmTarget> _enemies;
+    private int _currentSumAestheticLevel;
+    
+    public static BarrageUI instance;
+
+    public int goodViewersAmount = 100;
+
+    void Awake()
+    {
+        instance = this;
+        padCameras = new List<ConeDetection>();
+        _enemies = new List<FilmTarget>();
+    }
+    
     public override void Spawned()
     {
         Debug.Log("弹幕UI初始化");
@@ -43,7 +59,98 @@ public class BarrageUI : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        SetBarrageList(BarrageType.day);
+        if (_enemies != null)
+            _enemies.Clear();
+        _currentSumAestheticLevel = 0;
+        foreach (var padCamera in padCameras)
+        {
+            if (padCamera.cachedTargets.Count >= 0)
+            {
+                foreach (var enemy in padCamera.cachedTargets)
+                {
+                    _enemies.Add(enemy.GetComponent<FilmTarget>());
+                }
+            }
+        }
+
+        foreach (var _enemy in _enemies)
+        {
+            _currentSumAestheticLevel += _enemy.aestheticLevel;
+        }
+
+        float contentBarrageChance = 0f;
+        if (_currentSumAestheticLevel >= 20)
+        {
+            contentBarrageChance = 0.7f;
+        }
+        else
+        {
+            contentBarrageChance = _currentSumAestheticLevel * 0.7f / 20f;
+        }
+
+        if (Random.value <= contentBarrageChance)
+        {
+            foreach (var _enemy in _enemies)
+            {
+                if (_enemy.targetTag != "")
+                {
+                    if (Random.value <= _enemy.aestheticLevel / _currentSumAestheticLevel)
+                    {
+                        // 动态构建BarrageType名称
+                        string barrageTypeName = ScoreManager.Instance.CurrentViewers >= goodViewersAmount 
+                            ? "good" + _enemy.targetTag 
+                            : "bad" + _enemy.targetTag;
+                
+                        // 尝试将字符串转换为枚举值
+                        if (System.Enum.TryParse(barrageTypeName, out BarrageType barrageType))
+                        {
+                            SetBarrageList(barrageType);
+                        }
+                        else
+                        {
+                            // 如果转换失败，可以使用默认值或记录错误
+                            Debug.LogWarning($"无法找到匹配的BarrageType: {barrageTypeName}");
+                        }
+            
+                        return;
+                    }
+                }
+            }
+
+            if (ScoreManager.Instance.CurrentViewers >= 100)
+                SetBarrageList(BarrageType.goodenemy);
+            else
+            {
+                SetBarrageList(BarrageType.badenemy);
+            }
+            return;
+        }
+        
+        if (ScoreManager.Instance.CurrentViewers > goodViewersAmount / 5 && ScoreManager.Instance.CurrentViewers < goodViewersAmount)
+        {
+            if (Random.value <= 0.9f)
+                SetBarrageList(BarrageType.bad);
+            else
+                SetBarrageList(BarrageType.spam);
+        }
+        else if (ScoreManager.Instance.CurrentViewers >= goodViewersAmount && ScoreManager.Instance.CurrentViewers < goodViewersAmount * 2)
+        {
+            if (Random.value <= 0.8f)
+                SetBarrageList(BarrageType.good);
+            else
+                SetBarrageList(BarrageType.spam);
+        }
+        else if (ScoreManager.Instance.CurrentViewers >= goodViewersAmount * 2)
+        {
+            if (Random.value <= 0.6f)
+                SetBarrageList(BarrageType.good);
+            else
+                SetBarrageList(BarrageType.spam);
+        }
+        else
+        {
+            SetBarrageList(BarrageType.bad);
+        }
     }
 
     // {
@@ -99,7 +206,7 @@ public class BarrageUI : NetworkBehaviour
         //设置弹幕滚动停止为false
         isStop = false;
 
-        if(barrageType == BarrageType.newbie){
+        /*if(barrageType == BarrageType.newbie){
                 // 
                 arrIndex = 1;//播放下一段新手弹幕
                 //拿到当前弹幕组合
@@ -108,7 +215,7 @@ public class BarrageUI : NetworkBehaviour
                 baragesArr = curBarrageArr.item;
                 //开始播放弹幕
                 StartCoroutine(nextBarrage());
-        }else if(barrageType == BarrageType.day || barrageType == BarrageType.night){//随机抽取一段弹幕
+        }else if((barrageType == BarrageType.good || barrageType == BarrageType.bad) || barrageType == BarrageType.spam){*/
             //随机抽取一段弹幕
             arrIndex = Random.Range(0, barrageItemsJson.Count);
             //拿到当前弹幕组合
@@ -116,10 +223,10 @@ public class BarrageUI : NetworkBehaviour
             //拿到当前弹幕组合的弹幕
             baragesArr = curBarrageArr.item;
             //初始化弹幕索引
-            index = 0;
+            index = Random.Range(0, baragesArr.Length);
             //开始播放弹幕
             StartCoroutine(nextBarrage());
-        }else if(barrageType == BarrageType.success || barrageType == BarrageType.fail){//特定场景下弹幕
+        /*}else if(barrageType == BarrageType.success || barrageType == BarrageType.fail){//特定场景下弹幕
             if(arrIndex < barrageItemsJson.Count){//依次播放成功失败段落的弹幕
                 curBarrageArr = barrageItemsJson[0];
                 baragesArr = curBarrageArr.item;
@@ -128,7 +235,7 @@ public class BarrageUI : NetworkBehaviour
                 StartCoroutine(nextBarrage());
                 arrIndex ++;
             }
-        }
+        }*/
     }
     void RandomList(BarrageItemJson[] barrageItemsArr, int count, out BarrageItemJson[] rangeArr){
         List<BarrageItemJson> barrageList = new List<BarrageItemJson>();
@@ -156,15 +263,15 @@ public class BarrageUI : NetworkBehaviour
         RPC_CreateItem();
         index ++;
         yield return new WaitForSeconds(Random.Range(((float)min), ((float)max)));
-        if(barrageType == BarrageType.newbie){//新手弹幕播放完后不会出新的内容
+        /*if(barrageType == BarrageType.newbie){//新手弹幕播放完后不会出新的内容
             if(index < baragesArr.Length){
                 StartCoroutine(nextBarrage());
             }else{
                 isStop = true;
             }
-        }else if(barrageType == BarrageType.day || barrageType == BarrageType.night){//白天和黑夜都为单独一句
+        }else if((barrageType == BarrageType.good || barrageType == BarrageType.bad) || barrageType == BarrageType.spam){*/
             NextBarrageArr();
-        }else if(barrageType == BarrageType.success || barrageType == BarrageType.fail){//成功失败
+        /*}else if(barrageType == BarrageType.success || barrageType == BarrageType.fail){//成功失败
             if(curBarrageArr.desc != "特定场景弹幕"){
                 NextBarrageArr();
             }else{
@@ -174,7 +281,7 @@ public class BarrageUI : NetworkBehaviour
                     isStop = true;
                 }
             }
-        }
+        }*/
     }
     
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

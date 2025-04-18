@@ -5422,6 +5422,7 @@ GameObject:
   - component: {fileID: 3642999550668730399}
   - component: {fileID: 4058716565870968021}
   - component: {fileID: 1665026072672249597}
+  - component: {fileID: -7026482039200063133}
   m_Layer: 0
   m_Name: Toon Plant Monster-Pink
   m_TagString: Untagged
@@ -5709,6 +5710,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 3892596574197940985}
+--- !u!114 &-7026482039200063133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153400332146600106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a9cc6a42a57eb499483c9540c234c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAestheticFatigueValue: 100
+  currentAestheticFatigueValue: 100
+  aestheticLevel: 10
+  targetTag: 
 --- !u!1 &5450283853927408730
 GameObject:
   m_ObjectHideFlags: 0

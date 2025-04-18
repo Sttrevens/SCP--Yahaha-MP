@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2084372981355554477}
   - component: {fileID: 3579731416780288463}
   - component: {fileID: 1555835001165355105}
+  - component: {fileID: 7736815279464457706}
   m_Layer: 0
   m_Name: Fugen
   m_TagString: Untagged
@@ -99,6 +100,7 @@ MonoBehaviour:
   isFlyingEnemy: 0
   animator: {fileID: 6301580459009742225}
   _animatorManager: {fileID: 0}
+  initialStateType: 
   sfxClips: []
 --- !u!135 &728695213962037212
 SphereCollider:
@@ -138,6 +140,8 @@ MonoBehaviour:
   _isPatrolling: 0
   _CastSpellCount: 0
   _spellingBool: 0
+  _isinSpecialState: 0
+  _Speed: 0
 --- !u!114 &3579731416780288463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +171,22 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
+--- !u!114 &7736815279464457706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378106872198515247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a9cc6a42a57eb499483c9540c234c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAestheticFatigueValue: 100
+  currentAestheticFatigueValue: 100
+  aestheticLevel: 10
+  targetTag: 
 --- !u!1 &7129478415791803264
 GameObject:
   m_ObjectHideFlags: 0

@@ -969,6 +969,7 @@ GameObject:
   - component: {fileID: 5170275399185516413}
   - component: {fileID: -1442742773304534709}
   - component: {fileID: 5218458570560675211}
+  - component: {fileID: -7491951580916418808}
   m_Layer: 14
   m_Name: Shell Turtle
   m_TagString: Untagged
@@ -1188,7 +1189,7 @@ MonoBehaviour:
   soundTargetPosition: {x: 0, y: 0, z: 0}
   chasingSpeed: 2
   hearingRadius: 10
-  stateTypeString: 
+  stateAfterChasingString: 
   stepAngle: 10
   drawGizmos: 0
 --- !u!114 &5170275399185516413
@@ -1239,6 +1240,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 3459248144430495394}
+--- !u!114 &-7491951580916418808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847366243756474999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a9cc6a42a57eb499483c9540c234c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAestheticFatigueValue: 100
+  currentAestheticFatigueValue: 100
+  aestheticLevel: 10
+  targetTag: 
 --- !u!1 &8075219047750246360
 GameObject:
   m_ObjectHideFlags: 0
