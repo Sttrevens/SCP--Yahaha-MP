@@ -29,7 +29,7 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField]private Vector3 _velocity;
     [SerializeField]private bool _jumpPressed;
     private float _targetFOV = 40f;
-    private float _targetSpeed = 6f;
+    public float _targetSpeed = 6f;
     private Quaternion _cameraRotationY;
     [SerializeField] private float defaultFOV = 40f;
     [SerializeField] private float sprintFOV = 60f;
@@ -171,7 +171,8 @@ public class PlayerMovement : NetworkBehaviour
         issprinting = true;
         if (_animatorManager.IsAiming)
         {
-            _animatorManager.IsAiming = false;
+            //_animatorManager.IsAiming = false;
+            transform.Find("Model").GetComponent<RigController>().SwitchToHippie(3f);
         }
     }
     else
@@ -187,14 +188,6 @@ else
     _targetSpeed = defaultSpeed;
     issprinting = false;
 }
-            
-        if (_animatorManager.IsAiming)
-        {
-                _targetFOV = defaultFOV;
-                _targetSpeed = aimSpeed;
-                issprinting = false;
-                plCamera.nearClipPlane = 0.15f;
-            }
 
             // 视野和速度平滑插值
             plCamera.fieldOfView =
@@ -416,5 +409,13 @@ else
     public void BePossessed(Transform target)
     {
         transform.SetParent(target);
+    }
+
+    public void AimState()
+    {
+        _targetFOV = defaultFOV;
+        _targetSpeed = aimSpeed;
+        issprinting = false;
+        plCamera.nearClipPlane = 0.15f;
     }
 }

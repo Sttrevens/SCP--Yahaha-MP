@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem; // 新 Input System 命名空间
-using UnityEngine.InputSystem.LowLevel; 
-using LPSurvivalEngine;
+using UnityEngine.Rendering;
 
 public class FirstPersonCamera : MonoBehaviour
 {

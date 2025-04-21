@@ -115,6 +115,8 @@ namespace LPSurvivalEngine
         private RigController _rigController;
         private PlayerMovement _playerMovement;
         private float _originalAimSpeed;
+        
+        public bool isHippie; 
 
         private void Awake()
         {
@@ -205,6 +207,7 @@ namespace LPSurvivalEngine
                 transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
+                _rigController.SwitchToHippie(3f);
             }
         }
 
@@ -215,10 +218,12 @@ namespace LPSurvivalEngine
             // 消耗耐久度
             DrainDurability();
 
-            if (GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming)
+            if (isHippie)
             {
                 HandleZoom();
+                _playerMovement.AimState();
             }
+            
             Transform topParent = gameObject.transform;
             while (topParent.parent != null)
             {
@@ -314,13 +319,15 @@ namespace LPSurvivalEngine
 
         void Aim()
         {
-            if (!GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming)
+            if (!isHippie)
             {
                 // transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.position;
                 // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.rotation;
                 // Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
 
-                GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = true;
+                //GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = true;
+                isHippie = true;
+                _rigController.SwitchToAim(3f);
             }
             else
             {
@@ -328,7 +335,9 @@ namespace LPSurvivalEngine
                 // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.rotation;
                 // Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
 
-                GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = false;
+                //GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = false;
+                isHippie = false;
+                _rigController.SwitchToHippie(3f);
             }
         }
 
@@ -371,7 +380,7 @@ void HandleZoom()
             lastSoundTime = Time.time;
         }
 
-        if (Mathf.Abs(scrollInput) > 0.001f)
+        /*if (Mathf.Abs(scrollInput) > 0.001f)
         {
             if (CameraInCamera.fieldOfView >= MaxFOV * 0.95f)
             {
@@ -389,7 +398,7 @@ void HandleZoom()
                 _rigController.SwitchToAim(3f);
                 _playerMovement.aimSpeed = _originalAimSpeed;
             }
-        }
+        }*/
 }
 
 IEnumerator BeingPending()

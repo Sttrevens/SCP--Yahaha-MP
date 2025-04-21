@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 8de9c00732b9dfe4ba02078479381ea1, type: 2}
     - target: {fileID: 1162714845100589249, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
       propertyPath: m_StoppingDistance
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3110002938063485081, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
       propertyPath: m_Controller
@@ -117,6 +117,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 191068282315392365, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7149692703874062753}
+    - targetCorrespondingSourceObject: {fileID: 191068282315392365, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3235929644754574853}
     - targetCorrespondingSourceObject: {fileID: 5021499160595167618, guid: 15a5bc6289e166c46bbe9c8246200f3a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3236875313383152820}
@@ -179,3 +182,16 @@ MonoBehaviour:
   SyncSettings: 79
   StateHashes: 00000000738e8b49403dae7ea3f1977b9042b24cedb25a4ff72360a557e353d64d72693c9e810ff81aa2d917422906ffc60ad010d07cc57dcaedff9731ec7771da2fff8cb85813eafbf620e968cb96fc4b7b955a789bde7ba6309f18c6f20f85be4c07e4c757077645184bf3c63906bf421ad05032edce8b7143fd887f041088fd4b5c0d37b935014e73a6a7
   TriggerHashes: 000000000d286c4032edce8bc75707769b5050c6
+--- !u!114 &3235929644754574853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7443461625762004087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bc72892f9e3cc45a30e55acac3f19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineLayer: 8

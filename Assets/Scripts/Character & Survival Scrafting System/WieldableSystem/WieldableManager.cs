@@ -220,6 +220,7 @@ namespace LPSurvivalEngine
             if (spawnedItem.TryGetComponent<CameraController>(out var cameraController))
             {
                 cameraController.gameObject.GetComponentInChildren<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("FirstPerson"));
+                GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = true;
             }
             Debug.Log("现在的相机位置"+cameraPositonPath);
             spawnedItem.transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find(cameraPositonPath));

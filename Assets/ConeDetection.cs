@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using LPSurvivalEngine;
 using UnityEngine;
+using System.Linq;
 
 public class ConeDetection : MonoBehaviour
 {
@@ -103,6 +105,8 @@ public class ConeDetection : MonoBehaviour
         targetScores.Clear();
         hasTargetInView = false;
 
+        int nonVisibleTargetCount = 0;
+
         foreach (var target in cachedTargets)
         {
             var targetScore = ProcessSingleTarget(target);
@@ -116,9 +120,14 @@ public class ConeDetection : MonoBehaviour
                 }
                 else
                 {
-                    realtimeScore = 0f;
+                    nonVisibleTargetCount++;
                 }
             }
+        }
+
+        if (nonVisibleTargetCount >= cachedTargets.Count)
+        {
+            realtimeScore = 0;
         }
     }
 
@@ -175,36 +184,69 @@ public class ConeDetection : MonoBehaviour
     /// <returns></returns>
     private TargetScore ProcessSingleTarget(GameObject target)
     {
-        var rend = target.GetComponentInChildren<Renderer>();
-        if (rend == null) return null;
+        var rends = target.GetComponents<Renderer>().Concat(target.GetComponentsInChildren<Renderer>()).Concat(target.GetComponentsInChildren<SkinnedMeshRenderer>()).ToArray();
+if (rends.Length == 0) return null;
 
-        var bounds = rend.bounds;
-        var targetScore = new TargetScore
-        {
-            target = target,
-            position = bounds.center,
-            isVisible = false
-        };
+var combinedBounds = rends[0].bounds;
+foreach (var rend in rends)
+{
+    combinedBounds.Encapsulate(rend.bounds);
+}
+
+var targetScore = new TargetScore
+{
+    target = target,
+    position = combinedBounds.center,
+    isVisible = false
+};
 
         // 视锥体检测
-        if (!IsInViewFrustum(bounds)) return targetScore;
+        if (!IsInViewFrustum(combinedBounds)) return targetScore;
 
         // 计算可见比例
-        float visibilityRatio = CalculateVisibleRatio(bounds);
+        float visibilityRatio = CalculateVisibleRatio(combinedBounds);
         if (visibilityRatio <= 0) return targetScore;
 
         targetScore.isVisible = true;
         visibleRatio = visibilityRatio;
 
         // 计算距离指标
-        Vector3 objectCenter = bounds.center;
+        Vector3 objectCenter = combinedBounds.center;
         distanceToCamera = Vector3.Distance(cam.transform.position, objectCenter);
         centerOffsetDistance = CalculateCenterOffset(objectCenter);
 
         // 计算得分
         float baseScore = CalculateScore(centerOffsetDistance, distanceToCamera, visibleRatio) * 10;
 
-        baseScore *= target.GetComponent<FilmTarget>().aestheticLevel;
+        if (GetComponent<CameraController>())
+        {
+            var filmTarget = target.GetComponent<FilmTarget>();
+            if (filmTarget != null)
+            {
+                baseScore *= filmTarget.aestheticLevel * filmTarget.currentAestheticFatigueValue;
+
+                // 随时间流逝，减少 currentAestheticFatigueValue
+                filmTarget.currentAestheticFatigueValue =
+                    Mathf.Max(0, filmTarget.currentAestheticFatigueValue - Time.fixedDeltaTime);
+            }
+
+            if (filmTarget.currentAestheticFatigueValue >= filmTarget.maxAestheticFatigueValue / 3 && distanceToCamera <= 5)
+            {
+                var outLine = target.GetComponent<HasOutLine>();
+                if (outLine != null)
+                {
+                    outLine.SetOutLine(true);
+                }
+            }
+            else
+            {
+                var outLine = target.GetComponent<HasOutLine>();
+                if (outLine != null)
+                {
+                    outLine.SetOutLine(false);
+                }
+            }
+        }
 
         // 检查目标状态并调整分数
         var targetBehaviour = target.GetComponent<Enemy>(); // 假设TargetBehaviour脚本包含CurrentState字段
