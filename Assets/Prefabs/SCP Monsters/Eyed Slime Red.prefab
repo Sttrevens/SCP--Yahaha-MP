@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 4739397128552776170}
   - component: {fileID: 5890031812073893347}
   - component: {fileID: -8797547206612358521}
+  - component: {fileID: 5261021990986966815}
   m_Layer: 14
   m_Name: Eyed Slime Red
   m_TagString: Untagged
@@ -289,8 +290,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAestheticFatigueValue: 10
   currentAestheticFatigueValue: 0
-  aestheticLevel: 10
+  aestheticLevel: 3
   targetTag: 
+--- !u!114 &5261021990986966815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191068282315392365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bc72892f9e3cc45a30e55acac3f19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineLayer: 8
 --- !u!1 &1798999583971922423
 GameObject:
   m_ObjectHideFlags: 0

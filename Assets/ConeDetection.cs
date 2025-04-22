@@ -31,6 +31,7 @@ public class ConeDetection : MonoBehaviour
 
     // 缓存目标对象列表 目的是减少FindObjectsOfType的调用次数
     public List<GameObject> cachedTargets = new List<GameObject>();
+    public List<GameObject> targetsInView = new List<GameObject>();
     private float updateTargetInterval = 0.5f;  // 更新目标列表的时间间隔
     private float nextUpdateTime = 0.5f;
     
@@ -155,6 +156,7 @@ public class ConeDetection : MonoBehaviour
     {
         // 重置当前帧的得分
         realtimeScore = 0f;
+        targetsInView.Clear();
     
         // 计算所有可见目标的总分
         if (targetScores.Count > 0)
@@ -165,6 +167,7 @@ public class ConeDetection : MonoBehaviour
                 {
                     // 累加每个可见目标的分数
                     realtimeScore += targetScore.score;
+                    targetsInView.Add(targetScore.target);
                 }
             }
         
@@ -230,7 +233,7 @@ var targetScore = new TargetScore
                     Mathf.Max(0, filmTarget.currentAestheticFatigueValue - Time.fixedDeltaTime);
             }
 
-            if (filmTarget.currentAestheticFatigueValue >= filmTarget.maxAestheticFatigueValue / 3 && distanceToCamera <= 5)
+            if (filmTarget.currentAestheticFatigueValue >= filmTarget.maxAestheticFatigueValue / 3 && visibleRatio >= 0.1f)
             {
                 var outLine = target.GetComponent<HasOutLine>();
                 if (outLine != null)

@@ -29,6 +29,7 @@ public class BarrageUI : NetworkBehaviour
     public static BarrageUI instance;
 
     public int goodViewersAmount = 100;
+    public float spamProbability;
 
     void Awake()
     {
@@ -58,100 +59,206 @@ public class BarrageUI : NetworkBehaviour
     }
 
     public override void FixedUpdateNetwork()
+{
+    // 更新敌人数据
+    UpdateEnemyData();
+
+    // 计算内容相关弹幕概率
+    float contentBarrageChance = CalculateContentBarrageChance();
+
+    // 计算观众趋势
+    float viewersTrend = CalculateViewersTrend(10f);
+    
+    // 获取当前观众数量
+    int currentViewers = ScoreManager.Instance.CurrentViewers;
+    
+    // 判断观众数量是否太少
+    bool forceBadBarrage = currentViewers < goodViewersAmount;
+
+    // 处理两种弹幕类型
+    if (Random.value <= contentBarrageChance)
     {
-        if (_enemies != null)
-            _enemies.Clear();
-        _currentSumAestheticLevel = 0;
-        foreach (var padCamera in padCameras)
+        // Content Barrage路径
+        HandleContentBarrage(viewersTrend, forceBadBarrage);
+    }
+    else
+    {
+        // 非Content Barrage路径
+        HandleRegularBarrage(viewersTrend, forceBadBarrage);
+    }
+}
+
+// 更新敌人数据
+private void UpdateEnemyData()
+{
+    if (_enemies != null)
+        _enemies.Clear();
+    
+    _currentSumAestheticLevel = 0;
+    
+    foreach (var padCamera in padCameras)
+    {
+        if (padCamera.cachedTargets.Count >= 0)
         {
-            if (padCamera.cachedTargets.Count >= 0)
+            foreach (var enemy in padCamera.targetsInView)
             {
-                foreach (var enemy in padCamera.cachedTargets)
-                {
-                    _enemies.Add(enemy.GetComponent<FilmTarget>());
-                }
+                _enemies.Add(enemy.GetComponent<FilmTarget>());
             }
-        }
-
-        foreach (var _enemy in _enemies)
-        {
-            _currentSumAestheticLevel += _enemy.aestheticLevel;
-        }
-
-        float contentBarrageChance = 0f;
-        if (_currentSumAestheticLevel >= 20)
-        {
-            contentBarrageChance = 0.7f;
-        }
-        else
-        {
-            contentBarrageChance = _currentSumAestheticLevel * 0.7f / 20f;
-        }
-
-        if (Random.value <= contentBarrageChance)
-        {
-            foreach (var _enemy in _enemies)
-            {
-                if (_enemy.targetTag != "")
-                {
-                    if (Random.value <= _enemy.aestheticLevel / _currentSumAestheticLevel)
-                    {
-                        // 动态构建BarrageType名称
-                        string barrageTypeName = ScoreManager.Instance.CurrentViewers >= goodViewersAmount 
-                            ? "good" + _enemy.targetTag 
-                            : "bad" + _enemy.targetTag;
-                
-                        // 尝试将字符串转换为枚举值
-                        if (System.Enum.TryParse(barrageTypeName, out BarrageType barrageType))
-                        {
-                            SetBarrageList(barrageType);
-                        }
-                        else
-                        {
-                            // 如果转换失败，可以使用默认值或记录错误
-                            Debug.LogWarning($"无法找到匹配的BarrageType: {barrageTypeName}");
-                        }
-            
-                        return;
-                    }
-                }
-            }
-
-            if (ScoreManager.Instance.CurrentViewers >= 100)
-                SetBarrageList(BarrageType.goodenemy);
-            else
-            {
-                SetBarrageList(BarrageType.badenemy);
-            }
-            return;
-        }
-        
-        if (ScoreManager.Instance.CurrentViewers > goodViewersAmount / 5 && ScoreManager.Instance.CurrentViewers < goodViewersAmount)
-        {
-            if (Random.value <= 0.9f)
-                SetBarrageList(BarrageType.bad);
-            else
-                SetBarrageList(BarrageType.spam);
-        }
-        else if (ScoreManager.Instance.CurrentViewers >= goodViewersAmount && ScoreManager.Instance.CurrentViewers < goodViewersAmount * 2)
-        {
-            if (Random.value <= 0.8f)
-                SetBarrageList(BarrageType.good);
-            else
-                SetBarrageList(BarrageType.spam);
-        }
-        else if (ScoreManager.Instance.CurrentViewers >= goodViewersAmount * 2)
-        {
-            if (Random.value <= 0.6f)
-                SetBarrageList(BarrageType.good);
-            else
-                SetBarrageList(BarrageType.spam);
-        }
-        else
-        {
-            SetBarrageList(BarrageType.bad);
         }
     }
+
+    foreach (var _enemy in _enemies)
+    {
+        _currentSumAestheticLevel += _enemy.aestheticLevel;
+    }
+}
+
+// 计算内容相关弹幕概率
+private float CalculateContentBarrageChance()
+{
+    if (_currentSumAestheticLevel >= 20)
+    {
+        return 0.7f;
+    }
+    else
+    {
+        return _currentSumAestheticLevel * 0.7f / 20f;
+    }
+}
+
+// 处理内容相关弹幕（Content Barrage）
+private void HandleContentBarrage(float viewersTrend, bool forceBadBarrage)
+{
+    // 尝试选择基于特定敌人标签的弹幕
+    foreach (var _enemy in _enemies)
+    {
+        if (_enemy.targetTag != "")
+        {
+            if (Random.value <= _enemy.aestheticLevel / _currentSumAestheticLevel)
+            {
+                // 如果观众少于阈值，强制使用坏弹幕
+                // 否则基于趋势判断
+                bool useGoodBarrage = !forceBadBarrage && 
+                                     (viewersTrend >= -0.1f);
+
+                string barrageTypeName = useGoodBarrage ? 
+                                       "good" + _enemy.targetTag : 
+                                       "bad" + _enemy.targetTag;
+                
+                // 尝试将字符串转换为枚举值
+                if (System.Enum.TryParse(barrageTypeName, out BarrageType barrageType))
+                {
+                    SetBarrageList(barrageType);
+                    return;
+                }
+                else
+                {
+                    Debug.LogWarning($"无法找到匹配的BarrageType: {barrageTypeName}");
+                    // 如果转换失败，回退到通用enemy弹幕
+                }
+            }
+        }
+    }
+    
+    // 如果没有成功使用特定敌人标签，使用通用enemy弹幕
+    // 强制坏弹幕或基于趋势判断
+    if (forceBadBarrage || viewersTrend < -0.1f)
+    {
+        SetBarrageList(BarrageType.badenemy);
+    }
+    else
+    {
+        SetBarrageList(BarrageType.goodenemy);
+    }
+}
+
+// 处理普通弹幕（非Content Barrage）
+private void HandleRegularBarrage(float viewersTrend, bool forceBadBarrage)
+{
+    var currentViewers = ScoreManager.Instance.CurrentViewers;
+    spamProbability = 0f;
+    
+    // 确定垃圾弹幕的概率
+    if (currentViewers < goodViewersAmount / 5)
+    {
+        // 观众太少，跳过垃圾弹幕判断，直接设置好/坏弹幕
+        SetRegularGoodBadBarrage(viewersTrend, forceBadBarrage);
+        return;
+    }
+    else if (currentViewers < goodViewersAmount)
+    {
+        spamProbability = 0.1f; // 观众少，10%概率显示垃圾弹幕
+    }
+    else if (currentViewers < goodViewersAmount * 2)
+    {
+        spamProbability = 0.2f; // 观众适中，20%概率显示垃圾弹幕
+    }
+    else // currentViewers >= goodViewersAmount * 2
+    {
+        spamProbability = 0.4f; // 观众很多，40%概率显示垃圾弹幕
+    }
+    
+    // 决定是否显示垃圾弹幕
+    if (Random.value <= spamProbability)
+    {
+        SetBarrageList(BarrageType.spam);
+    }
+    else
+    {
+        SetRegularGoodBadBarrage(viewersTrend, forceBadBarrage);
+    }
+}
+
+// 设置普通good/bad弹幕（非enemy类型）
+private void SetRegularGoodBadBarrage(float viewersTrend, bool forceBadBarrage)
+{
+    // 如果观众少于阈值，强制设置为bad
+    // 否则根据趋势判断
+    if (forceBadBarrage || viewersTrend < -0.1f)
+    {
+        SetBarrageList(BarrageType.bad);
+    }
+    else
+    {
+        SetBarrageList(BarrageType.good);
+    }
+}
+
+// 计算观众趋势
+private float CalculateViewersTrend(float timeWindow)
+{
+    // 获取当前和历史观众数据
+    var scoreManager = ScoreManager.Instance;
+    int currentViewers = scoreManager.CurrentViewers;
+    int lastFrameViewers = scoreManager.LastFrameViewers;
+    float timeElapsed = Time.time - scoreManager.LastViewersDecreaseTime;
+    
+    // 如果已经记录了足够长的下降时间
+    if (timeElapsed > 0 && timeElapsed <= timeWindow)
+    {
+        // 计算下降持续时间占比
+        float decreaseRatio = timeElapsed / timeWindow;
+        
+        // 根据下降持续时间评估趋势
+        if (decreaseRatio > 0.7f) // 如果下降超过70%的时间窗口
+        {
+            return -0.5f; // 明显的下降趋势
+        }
+        else if (decreaseRatio > 0.3f) // 如果下降超过30%的时间窗口
+        {
+            return -0.2f; // 轻微的下降趋势
+        }
+    }
+    
+    // 如果当前观众数量正在增加
+    if (currentViewers > lastFrameViewers)
+    {
+        return 0.3f; // 返回正值表示上升趋势
+    }
+    
+    // 默认返回轻微的正值（偏向积极判断）
+    return 0.1f;
+}
 
     // {
     //     // 添加空检查
@@ -164,8 +271,7 @@ public class BarrageUI : NetworkBehaviour
     //     
     //     
     // }
-
-
+    
 
     public void SetBarrageList(BarrageType type) 
     {
@@ -181,7 +287,7 @@ public class BarrageUI : NetworkBehaviour
         int viewers = ScoreManager.Instance.CurrentViewers;
 if (viewers >= 500)
 {
-    min = 2;
+    min = 1;
     max = 2;
 }
 else
@@ -268,10 +374,10 @@ else
     
     //下一条弹幕
     IEnumerator nextBarrage(){
+        yield return new WaitForSeconds(Random.Range(((float)min), ((float)max)));
         curBarrage = baragesArr[index];
         RPC_CreateItem();
         index ++;
-        yield return new WaitForSeconds(Random.Range(((float)min), ((float)max)));
         /*if(barrageType == BarrageType.newbie){//新手弹幕播放完后不会出新的内容
             if(index < baragesArr.Length){
                 StartCoroutine(nextBarrage());

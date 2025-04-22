@@ -80,7 +80,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 3
+  m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 8306f1eb0cdd830468caa35dc473b684, type: 2}
@@ -5001,7 +5001,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 4294967295
+  m_RenderingLayerMask: 4294967283
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 6a4461eb31125af4994229bd204b22ba, type: 2}
@@ -5423,6 +5423,7 @@ GameObject:
   - component: {fileID: 4058716565870968021}
   - component: {fileID: 1665026072672249597}
   - component: {fileID: -7026482039200063133}
+  - component: {fileID: 7364382136750290253}
   m_Layer: 0
   m_Name: Toon Plant Monster-Pink
   m_TagString: Untagged
@@ -5726,6 +5727,19 @@ MonoBehaviour:
   currentAestheticFatigueValue: 0
   aestheticLevel: 10
   targetTag: 
+--- !u!114 &7364382136750290253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5153400332146600106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bc72892f9e3cc45a30e55acac3f19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineLayer: 8
 --- !u!1 &5450283853927408730
 GameObject:
   m_ObjectHideFlags: 0

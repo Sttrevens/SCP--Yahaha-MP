@@ -4943,6 +4943,7 @@ GameObject:
   - component: {fileID: 4476147738338142209}
   - component: {fileID: 3812460681084587774}
   - component: {fileID: 6907408818870820412}
+  - component: {fileID: -3119688124603081479}
   m_Layer: 0
   m_Name: Toon Ghost-Green
   m_TagString: Untagged
@@ -5280,8 +5281,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAestheticFatigueValue: 10
   currentAestheticFatigueValue: 0
-  aestheticLevel: 10
+  aestheticLevel: 5
   targetTag: 
+--- !u!114 &-3119688124603081479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3901550995532059235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bc72892f9e3cc45a30e55acac3f19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineLayer: 8
 --- !u!1 &4257468397932735745
 GameObject:
   m_ObjectHideFlags: 0
@@ -5457,7 +5471,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 3
+  m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: b48d5aa8091001243adae3ea8f93ae4b, type: 2}

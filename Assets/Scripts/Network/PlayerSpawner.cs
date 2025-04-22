@@ -9,6 +9,7 @@ using Fusion.Sockets;
 public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
 {
     public List<GameObject> PlayerPrefabsPool;
+    public List<GameObject> originalPlayerPrefabsPool;
     public Transform spawnPoint;
     public GameObject spectatorPanel;
 
@@ -125,6 +126,15 @@ public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
                 Camera.main.GetComponent<AudioListener>().enabled = false;
             spectatorPanel.SetActive(true);
             return;
+        }
+
+        if (Runner.ActivePlayers.Count() == 1 && PlayerPrefabsPool.Count < 4)
+        {
+            PlayerPrefabsPool.Clear();
+            for (int i = 0; i < originalPlayerPrefabsPool.Count; i++)
+            {
+                PlayerPrefabsPool.Add(originalPlayerPrefabsPool[i]);
+            }
         }
         
         // 当前加入的玩家是第几个 => chosenIndex
