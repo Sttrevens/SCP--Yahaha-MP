@@ -114,7 +114,6 @@ namespace LPSurvivalEngine
         
         private RigController _rigController;
         private PlayerMovement _playerMovement;
-        private float _originalAimSpeed;
         
         public bool isHippie; 
 
@@ -187,7 +186,6 @@ namespace LPSurvivalEngine
 
             _rigController = GameObject.Find("CurrentPlayer").transform.Find("Model").GetComponent<RigController>();
             _playerMovement = GameObject.Find("CurrentPlayer").GetComponent<PlayerMovement>();
-            _originalAimSpeed = _playerMovement.aimSpeed;
         }
 
         public override void Spawned()
@@ -207,7 +205,7 @@ namespace LPSurvivalEngine
                 transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
-                _rigController.SwitchToHippie(3f);
+                ToggleHippiePose(false);
             }
         }
 
@@ -217,12 +215,6 @@ namespace LPSurvivalEngine
         {
             // 消耗耐久度
             DrainDurability();
-
-            if (isHippie)
-            {
-                HandleZoom();
-                _playerMovement.AimState();
-            }
             
             Transform topParent = gameObject.transform;
             while (topParent.parent != null)
@@ -230,8 +222,10 @@ namespace LPSurvivalEngine
                 topParent = topParent.parent;
             }
 
-            if (HasStateAuthority)
+            if (isHippie)
             {
+                HandleZoom();
+            }
                 /*if (_rigController.rigs["AimRig"].weight == 1)
                 {
                     transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("AimTargetForPad/PadHandle"));
@@ -257,7 +251,6 @@ namespace LPSurvivalEngine
                         }
                     }
                 }*/
-            }
         }
 
             //aimPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.position;
@@ -319,26 +312,7 @@ namespace LPSurvivalEngine
 
         void Aim()
         {
-            if (!isHippie)
-            {
-                // transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.position;
-                // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.rotation;
-                // Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
-
-                //GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = true;
-                isHippie = true;
-                _rigController.SwitchToAim(3f);
-            }
-            else
-            {
-                // transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.position;
-                // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.rotation;
-                // Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
-
-                //GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = false;
-                isHippie = false;
-                _rigController.SwitchToHippie(3f);
-            }
+            ToggleHippiePose(isHippie);
         }
 
         public float soundVolume = 0.3f;    // 声音音量
@@ -401,10 +375,18 @@ void HandleZoom()
         }*/
 }
 
-IEnumerator BeingPending()
+public void ToggleHippiePose(bool hippie)
 {
-    yield return new WaitForSeconds(0.1f);
-    pendingSwitchState = true;
+    if (!hippie)
+    {
+        isHippie = true;
+        _rigController.SwitchToAim(3f);
+    }
+    else
+    {
+        isHippie = false;
+        _rigController.SwitchToHippie(3f);
+    }
 }
 
 public void SetMaterialAndRenderTexture(Material material, RenderTexture renderTexture)

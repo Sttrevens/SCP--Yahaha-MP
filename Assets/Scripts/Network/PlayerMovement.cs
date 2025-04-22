@@ -6,8 +6,21 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 [DefaultExecutionOrder(0)]
-public class PlayerMovement : NetworkBehaviour
+public class PlayerMovement : NetworkBehaviour 
 {
+    private Transform GetDeepChildWithComponent<T>(Transform parent) where T : Component
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.GetComponent<T>() != null)
+                return child;
+
+            Transform result = GetDeepChildWithComponent<T>(child);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
     //角色视角转变动画相关的参数
     [Header("Look Animation")]
     // [SerializeField] private Transform headBone;      // 头部骨骼
@@ -151,15 +164,12 @@ public class PlayerMovement : NetworkBehaviour
                         _jumpPressed = true;
                         if (_controller.isGrounded)
                         {
-                            if (_animatorManager.IsAiming)
-                            {
-                                _animatorManager.IsAiming = false;
-                            }
                             _healthSystem.stamina.Subtract(10f);
                         }
                     }
                 }
                 plCamera.nearClipPlane = _originalCameraNearClipPlane;
+                Transform cameraChild = GetDeepChildWithComponent<CameraController>(transform);
                 // 判断是否被按住（用于替代旧的GetButton）
                 if (sprintAction != null &&
     sprintAction.IsPressed())
@@ -169,11 +179,10 @@ public class PlayerMovement : NetworkBehaviour
         _targetFOV = sprintFOV;
         _targetSpeed = sprintSpeed;
         issprinting = true;
-        if (_animatorManager.IsAiming)
-        {
-            //_animatorManager.IsAiming = false;
-            transform.Find("Model").GetComponent<RigController>().SwitchToHippie(3f);
-        }
+            if (cameraChild != null)
+            {
+                cameraChild.GetComponent<CameraController>().ToggleHippiePose(true);
+            }
     }
     else
     {
@@ -181,6 +190,10 @@ public class PlayerMovement : NetworkBehaviour
         _targetSpeed = defaultSpeed;
         issprinting = false;
     }
+}
+else if (cameraChild != null && cameraChild.GetComponent<CameraController>().isHippie)
+{
+    AimState();
 }
 else
 {
