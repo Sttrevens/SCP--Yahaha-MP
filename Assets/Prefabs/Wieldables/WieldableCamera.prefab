@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2041010698924757834}
   - component: {fileID: 4490970758372663443}
   - component: {fileID: 4163783752738669485}
+  - component: {fileID: 9130158957341386289}
   m_Layer: 0
   m_Name: WieldableCamera
   m_TagString: LiveCamera
@@ -123,6 +124,7 @@ MonoBehaviour:
   accumulatedScore: 0
   realtimeScore: 0
   cachedTargets: []
+  targetsInView: []
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 4160864255
@@ -314,6 +316,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9130158957341386289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a0db627d327274b8de66e215365bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraController: {fileID: -3222643352481867639}
+  requiredStreamTime: 3
+  checkInterval: 0.5
 --- !u!1 &176766
 GameObject:
   m_ObjectHideFlags: 0
