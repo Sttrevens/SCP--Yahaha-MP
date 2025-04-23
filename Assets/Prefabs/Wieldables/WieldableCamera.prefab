@@ -56,7 +56,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b17bd668968b0499a0b6c81e32176a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  altInputHint: '{0} to Aim'
+  altInputHint: '{0} TO AIM\nPAD ZOOM IN/OUT - MOUSE SCROLL\nSWITCH TO HIPPIE STATE
+    - KEEP ZOOMING OUT'
   cameraFlashLight: {fileID: 6081746952952103051}
   audioSource: {fileID: 0}
   toggleSound: {fileID: 0}
@@ -65,6 +66,7 @@ MonoBehaviour:
   ZoomSpeed: 50
   MinFOV: 20
   MaxFOV: 80
+  baseFOV: 60
   durabilityDrainPerSecond: 0.2
   diedObjects:
   - {fileID: 8540076340833062624}
@@ -76,7 +78,8 @@ MonoBehaviour:
   - {fileID: 0}
   bobojianReferenceinScene: 
   screenRenderer: {fileID: 484767831476937785}
-  altInputHint: '{0} to Aim'
+  altInputHint: '{0} TO AIM\nPAD ZOOM IN/OUT - MOUSE SCROLL\nSWITCH TO HIPPIE STATE
+    - KEEP ZOOMING OUT'
   candidateStrings:
   - Bobojian
   - Bobojian 1
@@ -92,6 +95,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: d1a04b9fbdc376848b8d19f9a5d10619, type: 2}
   - {fileID: 2100000, guid: c4cd272129c05cd45a0313cc87f87f30, type: 2}
   - {fileID: 2100000, guid: 8bb77bd13ff71a5429c27478eb683a2f, type: 2}
+  isHippie: 0
   soundVolume: 0.3
   minSoundInterval: 0.3
   scrollStep: 0.5
@@ -107,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba98d4f347dff44fa15ef1bc17e6d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetClassName: Enemy
+  targetClassName: FilmTarget
   hasTargetInView: 0
   visibleRatio: 0
   centerOffsetDistance: 0
@@ -118,6 +122,7 @@ MonoBehaviour:
   cam: {fileID: 6624644879885053158}
   accumulatedScore: 0
   realtimeScore: 0
+  cachedTargets: []
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 4160864255
@@ -491,7 +496,7 @@ GameObject:
   - component: {fileID: 3540395987962652090}
   m_Layer: 0
   m_Name: PhotoCamera
-  m_TagString: MainCamera
+  m_TagString: PadCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

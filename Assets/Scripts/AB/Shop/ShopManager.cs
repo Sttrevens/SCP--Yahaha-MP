@@ -33,15 +33,16 @@ public class ShopManager : NetworkBehaviour
 
     public override void Spawned()
     {
-        LoadShopItems();
+        RPC_LoadShopItems();
     }
 
-    public override void FixedUpdateNetwork()
+    void Update()
     {
         UpdatePlayerMoneyText();
     }
 
-    void LoadShopItems()
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_LoadShopItems()
     {
         foreach (Transform child in itemListPanel)
         {
@@ -64,11 +65,10 @@ public class ShopManager : NetworkBehaviour
     public void BuyItem(ShopItem item)
     {
         _selectedItem = item;
-        RPC_OnPurchased(Runner.LocalPlayer);
+        OnPurchased(Runner.LocalPlayer);
     }
     
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_OnPurchased(PlayerRef playerRef)
+    public void OnPurchased(PlayerRef playerRef)
     {
         if (ScoreManager.Instance.revenueRate >= _selectedItem.price)
         {
@@ -101,6 +101,6 @@ public class ShopManager : NetworkBehaviour
 
     void UpdatePlayerMoneyText()
     {
-        playerMoneyText.text = ScoreManager.Instance.revenueRate.ToString();
+        playerMoneyText.text = ScoreManager.Instance.revenueRate.ToString("F2");
     }
 }

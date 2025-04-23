@@ -746,6 +746,13 @@ namespace Linework.SoftOutline
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
             if (settings == null || softOutlinePass == null) return;
+            
+            // 检查相机是否有禁用标记
+            if (renderingData.cameraData.camera.GetComponent<Camera>() != null && renderingData.cameraData.camera.GetComponent<Camera>().CompareTag("PadCamera"))
+            {
+                // 有禁用标记，不添加渲染通道
+                return;
+            }
 
             // Don't render for some views.
             if (renderingData.cameraData.cameraType == CameraType.Preview

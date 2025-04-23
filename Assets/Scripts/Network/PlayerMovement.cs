@@ -6,8 +6,21 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 [DefaultExecutionOrder(0)]
-public class PlayerMovement : NetworkBehaviour
+public class PlayerMovement : NetworkBehaviour 
 {
+    private Transform GetDeepChildWithComponent<T>(Transform parent) where T : Component
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.GetComponent<T>() != null)
+                return child;
+
+            Transform result = GetDeepChildWithComponent<T>(child);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
     //角色视角转变动画相关的参数
     [Header("Look Animation")]
     // [SerializeField] private Transform headBone;      // 头部骨骼
@@ -29,11 +42,11 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField]private Vector3 _velocity;
     [SerializeField]private bool _jumpPressed;
     private float _targetFOV = 40f;
-    private float _targetSpeed = 6f;
+    public float _targetSpeed = 6f;
     private Quaternion _cameraRotationY;
     [SerializeField] private float defaultFOV = 40f;
     [SerializeField] private float sprintFOV = 60f;
-    [SerializeField] private float defaultSpeed = 4f;
+    public float defaultSpeed = 4f;
     [SerializeField] private float sprintSpeed = 6f;
     [SerializeField] private float fovChangeSpeed = 4f;
     [SerializeField] private float speedChangeSpeed = 4f;
@@ -98,7 +111,7 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
-    private void OnDisable()
+    /*private void OnDisable()
     {
         // 脚本禁用时，禁用 Look Action（可选）
         if (jumpAction != null)
@@ -116,7 +129,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             lookAction.Disable();
         }
-    }
+    }*/
 
     private void Awake()
     {
@@ -125,9 +138,9 @@ public class PlayerMovement : NetworkBehaviour
         _healthSystem = GetComponent<HealthSystem>();
     }
 
-    public override void Spawned()
+    void Start()
     {
-        if (HasStateAuthority)
+        if (gameObject.name == "CurrentPlayer")
         {
             plCamera = Camera.main;
             _firstPersonCamera = plCamera.GetComponent<FirstPersonCamera>();
@@ -140,9 +153,9 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        if (HasStateAuthority && !_healthSystem.isDeadNetworked)
+        if (gameObject.name == "CurrentPlayer" && !_healthSystem.isDeadNetworked)
         {
-            
+            Transform cameraChild = GetDeepChildWithComponent<CameraController>(transform);
                 // 改用新Input：
                 // 判断这帧是否按下（用于替代旧的GetButtonDown）
                 if (jumpAction != null && jumpAction.WasPressedThisFrame())
@@ -152,52 +165,63 @@ public class PlayerMovement : NetworkBehaviour
                         _jumpPressed = true;
                         if (_controller.isGrounded)
                         {
-                            if (_animatorManager.IsAiming)
-                            {
-                                _animatorManager.IsAiming = false;
-                            }
                             _healthSystem.stamina.Subtract(10f);
+                            cameraChild.GetComponent<CameraController>().ToggleHippiePose(true);
                         }
                     }
                 }
                 plCamera.nearClipPlane = _originalCameraNearClipPlane;
                 // 判断是否被按住（用于替代旧的GetButton）
                 if (sprintAction != null &&
-                    sprintAction.IsPressed() &&
-                    isMoving                          &&
-                    _healthSystem.stamina.currentValue > 0)
-                {
-                    _targetFOV = sprintFOV;
-                    _targetSpeed = sprintSpeed;
-                    issprinting = true;
-                    if (_animatorManager.IsAiming)
-                    {
-                        _animatorManager.IsAiming = false;
-                    }
-                }
-                else
-                {
-                    _targetFOV = defaultFOV;
-                    _targetSpeed = defaultSpeed;
-                    issprinting = false;
-                }
-            
-        if (_animatorManager.IsAiming)
-        {
-                _targetFOV = defaultFOV;
-                _targetSpeed = aimSpeed;
-                issprinting = false;
-                plCamera.nearClipPlane = 0.15f;
+    sprintAction.IsPressed())
+{
+    if (isMoving && _healthSystem.stamina.currentValue > 0)
+    {
+        _targetFOV = sprintFOV;
+        _targetSpeed = sprintSpeed;
+        issprinting = true;
+            if (cameraChild != null)
+            {
+                cameraChild.GetComponent<CameraController>().ToggleHippiePose(true);
             }
+    }
+    else
+    {
+        _targetFOV = defaultFOV;
+        _targetSpeed = defaultSpeed;
+        issprinting = false;
+    }
+}
+else if (cameraChild != null && cameraChild.GetComponent<CameraController>().isHippie)
+{
+    Debug.Log("isHippie");
+    AimState();
+}
+else
+{
+    _targetFOV = defaultFOV;
+    _targetSpeed = defaultSpeed;
+    issprinting = false;
+}
 
             // 视野和速度平滑插值
             plCamera.fieldOfView =
-                Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Runner.DeltaTime);
-            playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Runner.DeltaTime);
+                Mathf.Lerp(plCamera.fieldOfView, _targetFOV, fovChangeSpeed * Time.fixedDeltaTime);
+            playerSpeed = Mathf.Lerp(playerSpeed, _targetSpeed, speedChangeSpeed * Time.fixedDeltaTime);
+        }
+
+        if (sprintAction == null)
+        {
+            Debug.Log("sprintAction is null");
+        }
+
+        if (!sprintAction.enabled)
+        {
+            Debug.Log("sprintAction is disabled");
         }
     }
 
-    public override void FixedUpdateNetwork()
+    void FixedUpdate()
     {
         Gravity();
         Move();
@@ -210,7 +234,7 @@ public class PlayerMovement : NetworkBehaviour
     public void Move()
     {
         // Only move own player and not every other player. Each player controls its own player object.
-        if (HasStateAuthority == false || _healthSystem.isDeadNetworked)
+        if (gameObject.name != "CurrentPlayer" || _healthSystem.isDeadNetworked)
         {
             return;
         }
@@ -225,7 +249,7 @@ public class PlayerMovement : NetworkBehaviour
         if (PlayerController.instance.cursor)
         {
             // 优化小技巧：较小的数字不要过早的参与计算，应将小数字先相乘然后整体与大数相乘，能够减少浮点数的舍入精度误差
-            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Runner.DeltaTime * playerSpeed);
+            move = _cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.fixedDeltaTime * playerSpeed);
         }
         // 获取目标值
         float targetX = Input.GetAxis("Horizontal");
@@ -245,7 +269,7 @@ public class PlayerMovement : NetworkBehaviour
             _velocity.y += jumpForce;
         }
 
-        Vector3 trueMove = move + _velocity * Runner.DeltaTime;
+        Vector3 trueMove = move + _velocity * Time.fixedDeltaTime;
         _controller.Move(trueMove);
 
         if (move != Vector3.zero)
@@ -264,8 +288,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void Gravity()
     {
-        
-        _velocity.y += gravityValue * Runner.DeltaTime;
+        _velocity.y += gravityValue * Time.fixedDeltaTime;
     }
 
     void LateUpdate()
@@ -343,7 +366,11 @@ public class PlayerMovement : NetworkBehaviour
 
     private void RotatePlayerTowardsCamera()
     {
-        if (_healthSystem.isDeadNetworked) return;
+        if (_healthSystem.isDeadNetworked)
+        {
+            Debug.Log("player is dead");
+            return;
+        }
 
         // Calculate the target rotation based on the camera's yaw rotation.
         //Quaternion targetRotation = Quaternion.Euler(0, plCamera.transform.rotation.eulerAngles.y, 0);
@@ -365,17 +392,18 @@ public class PlayerMovement : NetworkBehaviour
 
         if (PlayerController.instance.cursor)
         {
+            Debug.Log("playercontroller.cursor is true");
             // 将取到的 x / y 分别用于水平旋转和垂直旋转
             mouseX = lookDelta.x;
             mouseY = lookDelta.y;
         }
 
         // 3. 计算俯仰角并加以限制
-        verticalRotation -= mouseY * _firstPersonCamera.MouseSensitivity;
+        verticalRotation -= mouseY * _firstPersonCamera.MouseSensitivity * 20f * Time.fixedDeltaTime;
         verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
 
         // 4. 计算水平旋转
-        horizontalRotation += mouseX * _firstPersonCamera.MouseSensitivity;
+        horizontalRotation += mouseX * _firstPersonCamera.MouseSensitivity * 20f * Time.fixedDeltaTime;
 
         // 5. 更新相机最终旋转
         transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);
@@ -396,5 +424,13 @@ public class PlayerMovement : NetworkBehaviour
     public void BePossessed(Transform target)
     {
         transform.SetParent(target);
+    }
+
+    public void AimState()
+    {
+        _targetFOV = defaultFOV;
+        _targetSpeed = aimSpeed;
+        issprinting = false;
+        plCamera.nearClipPlane = 0.15f;
     }
 }

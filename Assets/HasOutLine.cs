@@ -27,7 +27,6 @@ public class HasOutLine : MonoBehaviour
             rend.renderingLayerMask = enabled 
                 ? _originalLayer | 1u << (int)Mathf.Log(outlineLayer, 2)
                 : _originalLayer;  
-            Debug.Log("现在的mesh的LayerMask" + rend.renderingLayerMask);
         }
     }
 }

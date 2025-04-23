@@ -15,12 +15,12 @@ public class ShopItemInteraction : MonoBehaviour
         shopItem = item;
 
         itemNameText.text = item.itemName;
-        itemPriceText.text = "Price: " + item.price.ToString();
+        itemPriceText.text = "Price: " + item.price;
         itemIconImage.sprite = item.itemIcon;
     }
 
     public void Buy()
     {
-       ShopManager.instance.BuyItem(shopItem);
+        ShopManager.instance.BuyItem(shopItem);
     }
 }

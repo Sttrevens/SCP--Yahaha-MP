@@ -5035,7 +5035,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 4294967295
+  m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: cf9e8d32ee71cf84fb5ceed5f6b364fa, type: 2}
@@ -9873,7 +9873,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 4294967295
+  m_RenderingLayerMask: 4294967283
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: cf9e8d32ee71cf84fb5ceed5f6b364fa, type: 2}
@@ -10107,6 +10107,8 @@ GameObject:
   - component: {fileID: 7028833907988962808}
   - component: {fileID: 1654418733993109780}
   - component: {fileID: -8494697897089670968}
+  - component: {fileID: -5351725355736372519}
+  - component: {fileID: 8256710042297620024}
   m_Layer: 14
   m_Name: Cactus Monster
   m_TagString: Untagged
@@ -10315,7 +10317,7 @@ MonoBehaviour:
   soundTargetPosition: {x: 0, y: 0, z: 0}
   chasingSpeed: 7
   hearingRadius: 10
-  stateTypeString: 
+  stateAfterChasingString: 
   stepAngle: 10
   drawGizmos: 0
 --- !u!114 &4676449541512774918
@@ -10402,6 +10404,35 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
+--- !u!114 &-5351725355736372519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268554706764865200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a9cc6a42a57eb499483c9540c234c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAestheticFatigueValue: 10
+  currentAestheticFatigueValue: 0
+  aestheticLevel: 20
+  targetTag: 
+--- !u!114 &8256710042297620024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268554706764865200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bc72892f9e3cc45a30e55acac3f19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineLayer: 8
 --- !u!1 &4712823961995957407
 GameObject:
   m_ObjectHideFlags: 0
@@ -10799,7 +10830,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 3
+  m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 57a34e56d6a78f44ea620b927f06f8cd, type: 2}

@@ -1931,6 +1931,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3683356890000723357}
   - component: {fileID: 5064607566766967748}
+  - component: {fileID: 1238325830043673260}
+  - component: {fileID: 5522052724990231786}
   m_Layer: 0
   m_Name: AimPointForSpine
   m_TagString: Untagged
@@ -1966,6 +1968,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceFromCamera: 1.27
+--- !u!114 &1238325830043673260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3437811030355378261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 1
+--- !u!114 &5522052724990231786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3437811030355378261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3851287071
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1238325830043673260}
 --- !u!1 &3469202161316751358
 GameObject:
   m_ObjectHideFlags: 0
@@ -2905,6 +2941,7 @@ MonoBehaviour:
   - {fileID: 3367315931611609973}
   - {fileID: 5832785074450933015}
   - {fileID: 4772848371180937285}
+  - {fileID: 5522052724990231786}
   - {fileID: 5326124401363047006}
   - {fileID: 5028602352072729976}
   - {fileID: 2582133938236438832}

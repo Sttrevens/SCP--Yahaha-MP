@@ -29,7 +29,7 @@ public class InputDebugMonitor : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    /*private void OnDisable()
     {
         if (sprintAction != null)
         {
@@ -39,7 +39,7 @@ public class InputDebugMonitor : MonoBehaviour
 
             sprintAction.Disable();
         }
-    }
+    }*/
 
     private void OnSprintStarted(InputAction.CallbackContext context)
     {

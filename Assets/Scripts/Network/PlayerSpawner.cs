@@ -9,15 +9,13 @@ using Fusion.Sockets;
 public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
 {
     public List<GameObject> PlayerPrefabsPool;
+    public List<GameObject> originalPlayerPrefabsPool;
     public Transform spawnPoint;
     public GameObject spectatorPanel;
 
     // 只在本地维护对生成的播放器Prefab的引用，方便离开时回收
     private Dictionary<PlayerRef, GameObject> assignedPrefabs = new Dictionary<PlayerRef, GameObject>();
 
-    // 用于保存原始列表（不希望被删除的备份）
-    private List<GameObject> originalPool;
-    
     #region callbacks
     
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
@@ -129,19 +127,21 @@ public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
             spectatorPanel.SetActive(true);
             return;
         }
+
+        if (Runner.ActivePlayers.Count() == 1 && PlayerPrefabsPool.Count < 4)
+        {
+            PlayerPrefabsPool.Clear();
+            for (int i = 0; i < originalPlayerPrefabsPool.Count; i++)
+            {
+                PlayerPrefabsPool.Add(originalPlayerPrefabsPool[i]);
+            }
+        }
         
         // 当前加入的玩家是第几个 => chosenIndex
         int chosenIndex = Runner.ActivePlayers.Count() - 1;
-        
-        Debug.Log("original pool:" + originalPool.Count + " But Player pool: " + PlayerPrefabsPool.Count);
 
-        if (Runner.ActivePlayers.Count() == 1)
-        {
-            originalPool = new List<GameObject>(PlayerPrefabsPool);
-        }
-        
         // 判断 index 是否在可用范围内
-        if (chosenIndex < 0 || chosenIndex >= originalPool.Count)
+        if (chosenIndex < 0 || chosenIndex >= PlayerPrefabsPool.Count)
         {
             Debug.LogWarning("No valid prefab index in the local pool.");
             return;
@@ -151,8 +151,8 @@ public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
         if (player == Runner.LocalPlayer)
         {
             // 取出对应的Prefab并从本地池子中移除
-            GameObject chosenPrefab = originalPool[chosenIndex];
-            originalPool.RemoveAt(chosenIndex);
+            GameObject chosenPrefab = PlayerPrefabsPool[chosenIndex];
+            PlayerPrefabsPool.RemoveAt(chosenIndex);
 
             // 验证 spawnPoint 是否正确
             Debug.Log($"Spawning at Position: {spawnPoint.position}, Rotation: {spawnPoint.rotation}");
@@ -189,7 +189,7 @@ public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
         // 如果玩家名下有Prefab的引用，则将其归还至本地池子并 Despawn
         if (assignedPrefabs.TryGetValue(player, out var usedPrefab))
         {
-            originalPool.Add(usedPrefab);
+            PlayerPrefabsPool.Add(usedPrefab);
             assignedPrefabs.Remove(player);
 
             var netObj = Runner.GetPlayerObject(player);
@@ -199,4 +199,6 @@ public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
             }
         }
     }
+
+
 }

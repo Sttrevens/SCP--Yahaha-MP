@@ -26,6 +26,9 @@ public class ScoreManager : NetworkBehaviour
 
     public static ScoreManager Instance;
     
+    [Networked] public int LastFrameViewers { get; private set; }
+    [Networked] public float LastViewersDecreaseTime { get; private set; }
+    
     private void Awake()
     {
         Instance = this;
@@ -44,6 +47,9 @@ public class ScoreManager : NetworkBehaviour
     }
 
     private int _currentViewersBase;
+    private float ImmediateViewers;  // 即时观众（直接来自拍摄得分）
+    private float CachedViewers;    // 缓存观众（衰减缓冲池）
+    private float MaxImmediateViewers;
 
     [Networked] public int networkedTotalScore { get; set; }
     
@@ -60,6 +66,14 @@ public class ScoreManager : NetworkBehaviour
     {
         if (!HasStateAuthority) return;
         networkedTotalScore = (int)accumulatedTotalScore;
+    
+        // 更新LastFrameViewers和检查是否需要更新LastViewersDecreaseTime
+        if (CurrentViewers <= LastFrameViewers)
+        {
+            LastViewersDecreaseTime = (float)Runner.SimulationTime;
+        }
+        LastFrameViewers = CurrentViewers;
+
         // 只有 StateAuthority（或服务器）才能修改分数、更新 revenueRate
         if (Object.HasStateAuthority)
         {
@@ -80,7 +94,27 @@ public class ScoreManager : NetworkBehaviour
         // 每1秒更新 CurrentViewers
         if (Time.frameCount % Mathf.RoundToInt(1f / Time.fixedDeltaTime) == 0)
         {
-            CurrentViewers = (int)(allConeDetections.Sum(cd => cd.realtimeScore)  * 100 + timerAccumulatedScore);
+            CurrentViewers = (int)(ImmediateViewers + CachedViewers  + timerAccumulatedScore);
+        }
+    }
+    
+    void UpdateViewers() {
+        // 计算即时观众（原有逻辑增强）
+        float newImmediate = allConeDetections.Sum(cd => cd.realtimeScore);
+    
+        // 差值缓冲处理
+        float delta = newImmediate - ImmediateViewers;
+        ImmediateViewers += delta * Time.deltaTime * 10f; // 平滑过渡
+    
+        // 缓存池衰减（分状态处理）
+        if (newImmediate > 0.1f) {
+            // 活跃状态：缓存池增速渐缓
+            CachedViewers += ImmediateViewers * 0.5f * Time.deltaTime;
+            CachedViewers *= Mathf.Pow(0.97f, Time.deltaTime); 
+        } else {
+            // 非活跃状态：平方根衰减
+            float decayRate = 0.01f * Mathf.Sqrt(CachedViewers);
+            CachedViewers *= (1 - decayRate * Time.deltaTime);
         }
     }
 
@@ -89,6 +123,7 @@ public class ScoreManager : NetworkBehaviour
         // 每帧检查是否有LiveCamera，如果有，就对 timerAccumulatedScore + 1
         // 并刷新每个相机的分数到 cameraScoreMap
         UpdateTimerAndCameraScores();
+        UpdateViewers();
     }
 
     /// <summary>
@@ -136,7 +171,7 @@ public class ScoreManager : NetworkBehaviour
                 cameraScoreMap[instanceId] = 0f;
 
             // 将当前的 accumulatedScore 覆盖或更新到字典
-            cameraScoreMap[instanceId] = cd.accumulatedScore;
+            cameraScoreMap[instanceId] = cd.accumulatedScore * (1 - BarrageUI.instance.spamProbability);
         }
     }
 

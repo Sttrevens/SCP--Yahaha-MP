@@ -113,6 +113,9 @@ namespace LPSurvivalEngine
         }
         
         private RigController _rigController;
+        private PlayerMovement _playerMovement;
+        
+        public bool isHippie; 
 
         private void Awake()
         {
@@ -182,6 +185,7 @@ namespace LPSurvivalEngine
             }
 
             _rigController = GameObject.Find("CurrentPlayer").transform.Find("Model").GetComponent<RigController>();
+            _playerMovement = GameObject.Find("CurrentPlayer").GetComponent<PlayerMovement>();
         }
 
         public override void Spawned()
@@ -192,12 +196,16 @@ namespace LPSurvivalEngine
                 batteryIcons[1] = GameObject.Find(bobojianReferenceinScene).transform.Find("BatteryIcon/BatteryContent2").gameObject;
                 batteryIcons[2] = GameObject.Find(bobojianReferenceinScene).transform.Find("BatteryIcon/BatteryContent3").gameObject;
             }
+            
+            if (GetComponent<ConeDetection>())
+                BarrageUI.instance.padCameras.Add(GetComponent<ConeDetection>());
 
             if (HasStateAuthority)
             {
                 transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
+                ToggleHippiePose(true);
             }
         }
 
@@ -207,19 +215,17 @@ namespace LPSurvivalEngine
         {
             // 消耗耐久度
             DrainDurability();
-
-            if (GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming)
-            {
-                HandleZoom();
-            }
+            
             Transform topParent = gameObject.transform;
             while (topParent.parent != null)
             {
                 topParent = topParent.parent;
             }
 
-            if (HasStateAuthority)
+            if (isHippie)
             {
+                HandleZoom();
+            }
                 /*if (_rigController.rigs["AimRig"].weight == 1)
                 {
                     transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("AimTargetForPad/PadHandle"));
@@ -245,7 +251,6 @@ namespace LPSurvivalEngine
                         }
                     }
                 }*/
-            }
         }
 
             //aimPosition = GameObject.Find("CurrentPlayer").transform.Find("CameraRoot/AimRoot").transform.position;
@@ -289,7 +294,7 @@ namespace LPSurvivalEngine
             }
 
             if (cameraFlashLight != null)
-            {
+            {   
                 StartCoroutine(DisableFlashLight());
             }
         }
@@ -307,22 +312,7 @@ namespace LPSurvivalEngine
 
         void Aim()
         {
-            if (!GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming)
-            {
-                // transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.position;
-                // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/AimRoot").transform.rotation;
-                // Debug.Log("[CameraController] Aim - Aiming at position: " + transform.position);
-
-                GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = true;
-            }
-            else
-            {
-                // transform.position = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.position;
-                // transform.rotation = GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot").transform.rotation;
-                // Debug.Log("[CameraController] Aim - Reset to normal position: " + transform.position);
-
-                GameObject.Find("CurrentPlayer").GetComponent<AnimatorManager>().IsAiming = false;
-            }
+            ToggleHippiePose(isHippie);
         }
 
         public float soundVolume = 0.3f;    // 声音音量
@@ -364,7 +354,7 @@ void HandleZoom()
             lastSoundTime = Time.time;
         }
 
-        if (Mathf.Abs(scrollInput) > 0.001f)
+        /*if (Mathf.Abs(scrollInput) > 0.001f)
         {
             if (CameraInCamera.fieldOfView >= MaxFOV * 0.95f)
             {
@@ -373,20 +363,30 @@ void HandleZoom()
                 else
                 {
                     _rigController.SwitchToHippie(3f);
+                    _playerMovement.aimSpeed = _playerMovement.defaultSpeed;
                     pendingSwitchState = false;
                 }
             }
             else
             {
                 _rigController.SwitchToAim(3f);
+                _playerMovement.aimSpeed = _originalAimSpeed;
             }
-        }
+        }*/
 }
 
-IEnumerator BeingPending()
+public void ToggleHippiePose(bool hippie)
 {
-    yield return new WaitForSeconds(0.5f);
-    pendingSwitchState = true;
+    if (!hippie)
+    {
+        isHippie = true;
+        _rigController.SwitchToAim(3f);
+    }
+    else
+    {
+        isHippie = false;
+        _rigController.SwitchToHippie(3f);
+    }
 }
 
 public void SetMaterialAndRenderTexture(Material material, RenderTexture renderTexture)

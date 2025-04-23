@@ -75,13 +75,13 @@ private PlayerInput playerInput;
         }
     }
 
-    private void OnDisable()
+    /*private void OnDisable()
     {   
         if (sprintAction != null)
         {
             sprintAction.Disable();
         }
-    }
+    }*/
         
         void Start()
         {
@@ -445,8 +445,6 @@ if (Gamepad.current != null)
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
             GetComponent<Rigidbody>().useGravity = true;
-            if (Camera.main != null)
-                Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = true;
             GetComponent<NavMeshObstacle>().enabled = false;
             RpcSetTag("Untagged");
             isDead = true;
@@ -500,7 +498,6 @@ if (Gamepad.current != null)
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            Camera.main.GetComponent<FirstPersonCamera>().isCameraLocked = false;
             GetComponent<NavMeshObstacle>().enabled = true;
             GetComponent<NetworkMecanimAnimator>().SetTrigger("Respawn");
             RpcSetTag("Player");

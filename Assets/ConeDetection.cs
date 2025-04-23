@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using LPSurvivalEngine;
 using UnityEngine;
+using System.Linq;
 
 public class ConeDetection : MonoBehaviour
 {
@@ -28,9 +30,13 @@ public class ConeDetection : MonoBehaviour
     public float realtimeScore = 0f;
 
     // 缓存目标对象列表 目的是减少FindObjectsOfType的调用次数
-    private List<GameObject> cachedTargets = new List<GameObject>();
+    public List<GameObject> cachedTargets = new List<GameObject>();
+    public List<GameObject> targetsInView = new List<GameObject>();
     private float updateTargetInterval = 0.5f;  // 更新目标列表的时间间隔
-    private float nextUpdateTime = 0f;
+    private float nextUpdateTime = 0.5f;
+    
+    private float updateScoreInterval = 0.1f;
+    private float nextCalculateTime = 0.1f;
 
     // 用于存储多个目标的评分
     public class TargetScore
@@ -52,11 +58,9 @@ public class ConeDetection : MonoBehaviour
     {
         if (cam == null)
         {
-            Debug.Log("未找到相机引用！设置为主相机");
             cam = Camera.main;
             if (cam == null)
             {
-                Debug.LogError("未找到相机引用！请手动指定或确保场景中有主相机。");
                 enabled = false;
                 return;
             }
@@ -71,8 +75,12 @@ public class ConeDetection : MonoBehaviour
             UpdateTargetsList();
             nextUpdateTime = Time.time + updateTargetInterval;
         }
-
-        ProcessTargets();
+        
+        if (Time.time >= nextCalculateTime)
+        {
+            ProcessTargets();
+            nextCalculateTime = Time.time + updateScoreInterval;
+        }
     }
 
     private void UpdateTargetsList()
@@ -98,6 +106,8 @@ public class ConeDetection : MonoBehaviour
         targetScores.Clear();
         hasTargetInView = false;
 
+        int nonVisibleTargetCount = 0;
+
         foreach (var target in cachedTargets)
         {
             var targetScore = ProcessSingleTarget(target);
@@ -107,11 +117,19 @@ public class ConeDetection : MonoBehaviour
                 if (targetScore.isVisible)
                 {
                     hasTargetInView = true;
+                    CalculateTotalScore();
+                }
+                else
+                {
+                    nonVisibleTargetCount++;
                 }
             }
         }
 
-        FindBestTarget();
+        if (nonVisibleTargetCount >= cachedTargets.Count)
+        {
+            realtimeScore = 0;
+        }
     }
 
     private TargetScore BestTarget(TargetScore nonVisibleBestTarget = null)
@@ -134,24 +152,33 @@ public class ConeDetection : MonoBehaviour
         return bestTarget;
     }
 
-    private void FindBestTarget()
+    private void CalculateTotalScore()
     {
-        // 找出得分最高的目标
+        // 重置当前帧的得分
+        realtimeScore = 0f;
+        targetsInView.Clear();
+    
+        // 计算所有可见目标的总分
         if (targetScores.Count > 0)
         {
-            // 更新最佳目标的信息
-            if (BestTarget().isVisible)
+            foreach (var targetScore in targetScores)
             {
-                realtimeScore = BestTarget().score;
-                accumulatedScore += realtimeScore;
+                if (targetScore.isVisible)
+                {
+                    // 累加每个可见目标的分数
+                    realtimeScore += targetScore.score;
+                    targetsInView.Add(targetScore.target);
+                }
             }
-            else
+        
+            // 将当前帧的总分累加到总积分中
+            if (realtimeScore > 0)
             {
-                var nonVisibleBestTarget = BestTarget();
-                BestTarget(nonVisibleBestTarget);
+                accumulatedScore += realtimeScore;
             }
         }
     }
+
     
     /// <summary>
     /// 处理单个目标
@@ -160,34 +187,69 @@ public class ConeDetection : MonoBehaviour
     /// <returns></returns>
     private TargetScore ProcessSingleTarget(GameObject target)
     {
-        var rend = target.GetComponentInChildren<Renderer>();
-        if (rend == null) return null;
+        var rends = target.GetComponents<Renderer>().Concat(target.GetComponentsInChildren<Renderer>()).Concat(target.GetComponentsInChildren<SkinnedMeshRenderer>()).ToArray();
+if (rends.Length == 0) return null;
 
-        var bounds = rend.bounds;
-        var targetScore = new TargetScore
-        {
-            target = target,
-            position = bounds.center,
-            isVisible = false
-        };
+var combinedBounds = rends[0].bounds;
+foreach (var rend in rends)
+{
+    combinedBounds.Encapsulate(rend.bounds);
+}
+
+var targetScore = new TargetScore
+{
+    target = target,
+    position = combinedBounds.center,
+    isVisible = false
+};
 
         // 视锥体检测
-        if (!IsInViewFrustum(bounds)) return targetScore;
+        if (!IsInViewFrustum(combinedBounds)) return targetScore;
 
         // 计算可见比例
-        float visibilityRatio = CalculateVisibleRatio(bounds);
+        float visibilityRatio = CalculateVisibleRatio(combinedBounds);
         if (visibilityRatio <= 0) return targetScore;
 
         targetScore.isVisible = true;
         visibleRatio = visibilityRatio;
 
         // 计算距离指标
-        Vector3 objectCenter = bounds.center;
+        Vector3 objectCenter = combinedBounds.center;
         distanceToCamera = Vector3.Distance(cam.transform.position, objectCenter);
         centerOffsetDistance = CalculateCenterOffset(objectCenter);
 
         // 计算得分
         float baseScore = CalculateScore(centerOffsetDistance, distanceToCamera, visibleRatio) * 10;
+
+        if (GetComponent<CameraController>())
+        {
+            var filmTarget = target.GetComponent<FilmTarget>();
+            if (filmTarget != null)
+            {
+                baseScore *= filmTarget.aestheticLevel * filmTarget.currentAestheticFatigueValue;
+
+                // 随时间流逝，减少 currentAestheticFatigueValue
+                filmTarget.currentAestheticFatigueValue =
+                    Mathf.Max(0, filmTarget.currentAestheticFatigueValue - Time.fixedDeltaTime);
+            }
+
+            if (filmTarget.currentAestheticFatigueValue >= filmTarget.maxAestheticFatigueValue / 3 && visibleRatio >= 0.1f)
+            {
+                var outLine = target.GetComponent<HasOutLine>();
+                if (outLine != null)
+                {
+                    outLine.SetOutLine(true);
+                }
+            }
+            else
+            {
+                var outLine = target.GetComponent<HasOutLine>();
+                if (outLine != null)
+                {
+                    outLine.SetOutLine(false);
+                }
+            }
+        }
 
         // 检查目标状态并调整分数
         var targetBehaviour = target.GetComponent<Enemy>(); // 假设TargetBehaviour脚本包含CurrentState字段
