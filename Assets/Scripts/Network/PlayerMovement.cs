@@ -155,6 +155,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (gameObject.name == "CurrentPlayer" && !_healthSystem.isDeadNetworked)
         {
+            Transform cameraChild = GetDeepChildWithComponent<CameraController>(transform);
                 // 改用新Input：
                 // 判断这帧是否按下（用于替代旧的GetButtonDown）
                 if (jumpAction != null && jumpAction.WasPressedThisFrame())
@@ -165,11 +166,11 @@ public class PlayerMovement : NetworkBehaviour
                         if (_controller.isGrounded)
                         {
                             _healthSystem.stamina.Subtract(10f);
+                            cameraChild.GetComponent<CameraController>().ToggleHippiePose(true);
                         }
                     }
                 }
                 plCamera.nearClipPlane = _originalCameraNearClipPlane;
-                Transform cameraChild = GetDeepChildWithComponent<CameraController>(transform);
                 // 判断是否被按住（用于替代旧的GetButton）
                 if (sprintAction != null &&
     sprintAction.IsPressed())
@@ -193,6 +194,7 @@ public class PlayerMovement : NetworkBehaviour
 }
 else if (cameraChild != null && cameraChild.GetComponent<CameraController>().isHippie)
 {
+    Debug.Log("isHippie");
     AimState();
 }
 else

@@ -12,7 +12,7 @@ public class AimStateBehaviour : StateMachineBehaviour
         if (rigController == null)
             rigController = animator.GetComponent<RigController>();
         animator.SetBool("isHolding", false);
-        rigController?.SwitchToAim(2.0f);
+        rigController?.SwitchToHippie(2.0f);
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -20,6 +20,6 @@ public class AimStateBehaviour : StateMachineBehaviour
         if (rigController == null)
             rigController = animator.GetComponent<RigController>();
 
-        rigController.SwitchToHipFire(2.0f);
+        rigController.SwitchToHippie(2.0f);
     }
 }

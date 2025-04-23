@@ -205,7 +205,7 @@ namespace LPSurvivalEngine
                 transform.SetParent(GameObject.Find("CurrentPlayer").transform.Find("UpperBody/CameraRoot/HoldCameraRoot"));
                 transform.localPosition = Vector3.zero;
                 transform.localRotation = Quaternion.identity;
-                ToggleHippiePose(false);
+                ToggleHippiePose(true);
             }
         }
 
@@ -294,7 +294,7 @@ namespace LPSurvivalEngine
             }
 
             if (cameraFlashLight != null)
-            {
+            {   
                 StartCoroutine(DisableFlashLight());
             }
         }
