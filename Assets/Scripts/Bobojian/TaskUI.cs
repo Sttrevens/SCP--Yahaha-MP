@@ -73,7 +73,7 @@ public class TaskUI : MonoBehaviour
     
     private IEnumerator UpdateTimer()
     {
-        while (_task != null && !_task.isCompleted && !_task.isFailed && _task.remainingTime > 0)
+        while (_task != null && _task.remainingTime > 0)
         {
             // 更新时间文本
             timeRemainingText.text = $"{Mathf.CeilToInt(_task.remainingTime)}s";

@@ -11,18 +11,26 @@ public class BountyTaskManager : MonoBehaviour
         public string taskName;               // 任务名称
         public string taskDescription;        // 任务描述
         public FilmTarget targetObject;       // 任务目标
+        public BountyTaskInfo targetTaskInfo;
         public string donorName;              // 打赏的观众名称
         public float timeLimit;               // 时间限制（秒）
         public float remainingTime;           // 剩余时间
         public float rewardAmount;            // 奖励金额
-        public bool isCompleted;              // 是否已完成
-        public bool isFailed;                 // 是否已失败
-        public bool isTracking;               // 是否正在追踪
+        public int viewerRewardAmount;
+    }
+    
+    public interface ITaskConditionDetector
+    {
+        bool CheckCondition(FilmTarget target, TaskTemplate taskTemplate);
     }
     
     [Header("任务生成设置")]
     public int maxActiveTasks = 3;            // 最大活跃任务数
-    public float baseGenerationInterval = 300f; // 基础生成间隔（秒）
+    [Tooltip("初始任务的生成时间间隔（秒）。如：[10,20,30]表示游戏开始后10秒生成第一个任务，再过20秒生成第二个，再过30秒生成第三个")]
+    public List<float> initialTaskGenerationTimes = new List<float>();
+    private int currentInitialTaskIndex = 0;
+    private float nextInitialTaskTime = 0f;
+    private bool initialTasksCompleted = false;
     
     [Header("难度设置")]
     public float baseDifficulty = 1f;         // 基础难度
@@ -42,12 +50,11 @@ public class BountyTaskManager : MonoBehaviour
     private List<string> _recentDonorNames = new List<string>(); // 最近使用的打赏者名称
     private List<FilmTarget> _allTargetsInScene = new List<FilmTarget>();
     private Dictionary<string, List<string>> _usedTaskDescriptions = new Dictionary<string, List<string>>(); // 已使用的任务描述
-    private float _nextTaskGenerationTime;
     private int _completedTaskCount = 0;
     private int _failedTaskCount = 0;
     private float _taskSuccessRate = 0.5f; // 默认任务成功率
     private float _levelStartTime;
-    private float _estimatedLevelDuration = 300f; // 预计关卡时长（秒）
+    private float _estimatedLevelDuration = 600f; // 预计关卡时长（秒）
     
     // 事件
     public delegate void TaskEvent(ActiveTask task);
@@ -59,8 +66,6 @@ public class BountyTaskManager : MonoBehaviour
     public static BountyTaskManager Instance { get; private set; }
     
     [Header("观众互动任务生成")]
-    [Tooltip("启用基于观众数量的任务生成")]
-    public bool useViewerBasedGeneration = true;
     [Tooltip("累积观众-时间值达到此阈值时生成新任务")]
     public float viewerTimeThreshold = 5000f; // 1000人观看5秒或500人观看10秒都会触发
     [Tooltip("每次检查观众数的时间间隔（秒）")]
@@ -100,8 +105,7 @@ public class BountyTaskManager : MonoBehaviour
         // 记录关卡开始时间
         _levelStartTime = Time.time;
         
-        // 初始化任务生成时间
-        _nextTaskGenerationTime = Time.time + 30f;
+        SetupInitialTaskTimes();
     }
     
     private void Start()
@@ -113,6 +117,24 @@ public class BountyTaskManager : MonoBehaviour
         InitializeDonorNames();
     }
     
+    // 设置初始任务生成时间
+    private void SetupInitialTaskTimes()
+    {
+        initialTasksCompleted = initialTaskGenerationTimes.Count == 0;
+        
+        if (!initialTasksCompleted && initialTaskGenerationTimes.Count > 0)
+        {
+            // 设置第一个初始任务的生成时间
+            nextInitialTaskTime = Time.time + initialTaskGenerationTimes[0];
+            currentInitialTaskIndex = 0;
+            
+            if (showDebugInfo)
+            {
+                Debug.Log($"设置初始任务计划：共{initialTaskGenerationTimes.Count}个预定任务，首个任务将在{initialTaskGenerationTimes[0]}秒后生成");
+            }
+        }
+    }
+    
     private void Update()
     {
         // 更新所有活跃任务
@@ -121,18 +143,53 @@ public class BountyTaskManager : MonoBehaviour
         // 根据所选机制检查是否应该生成新任务
         if (_activeTasks.Count < maxActiveTasks)
         {
-            if (useViewerBasedGeneration)
+            if (!initialTasksCompleted)
             {
-                CheckViewerBasedTaskGeneration();
+                // 先处理初始任务队列
+                CheckInitialTaskGeneration();
             }
             else
             {
-                // 原有的基于时间间隔的生成方式
-                if (Time.time >= _nextTaskGenerationTime)
+                // 初始任务队列完成后，使用基于观众数量的生成方式
+                CheckViewerBasedTaskGeneration();
+            }
+        }
+    }
+    
+    // 检查是否应该生成初始队列中的任务
+    private void CheckInitialTaskGeneration()
+    {
+        if (Time.time >= nextInitialTaskTime)
+        {
+            // 生成一个初始任务
+            GenerateTask();
+            
+            // 更新到下一个初始任务
+            currentInitialTaskIndex++;
+            
+            if (currentInitialTaskIndex < initialTaskGenerationTimes.Count)
+            {
+                // 还有更多初始任务，设置下一个任务的时间
+                nextInitialTaskTime = Time.time + initialTaskGenerationTimes[currentInitialTaskIndex];
+                
+                if (showDebugInfo)
                 {
-                    GenerateTask();
-                    _nextTaskGenerationTime = Time.time + GetGenerationInterval();
+                    Debug.Log($"初始任务 {currentInitialTaskIndex} 已生成，下一个任务将在 {initialTaskGenerationTimes[currentInitialTaskIndex]} 秒后生成");
                 }
+            }
+            else
+            {
+                // 所有初始任务都已生成，转到基于观众人数的算法
+                initialTasksCompleted = true;
+                
+                if (showDebugInfo)
+                {
+                    Debug.Log("所有初始任务已生成完毕，转为基于观众人数的任务生成机制");
+                }
+                
+                // 重置观众累积值，开始新算法
+                _accumulatedViewerTime = 0f;
+                _nextViewerCheckTime = Time.time;
             }
         }
     }
@@ -256,7 +313,7 @@ public class BountyTaskManager : MonoBehaviour
             
             // 检查此对象是否有与新状态匹配的任务
             var availableTasks = target.GetAvailableTasks(currentProgress);
-            var stateTasks = availableTasks.FindAll(t => t.requiresSpecificState && t.specificStateName == newState);
+            var stateTasks = availableTasks.FindAll(t => t.task.requiresSpecificState && t.task.specificStateName == newState);
             
             if (stateTasks.Count > 0)
             {
@@ -267,13 +324,6 @@ public class BountyTaskManager : MonoBehaviour
                 }
             }
         }
-    }
-    
-    // 根据观众数量计算任务生成间隔
-    private float GetGenerationInterval()
-    {
-        int viewerCount = ScoreManager.Instance.CurrentViewers;
-        return baseGenerationInterval / (1f + viewerCount);
     }
     
     // 获取当前关卡进度（0-1之间）
@@ -313,7 +363,7 @@ public class BountyTaskManager : MonoBehaviour
             task.remainingTime -= Time.deltaTime;
             
             // 检查是否超时
-            if (task.remainingTime <= 0 && !task.isCompleted)
+            if (task.remainingTime <= 0)
             {
                 FailTask(task);
                 _activeTasks.RemoveAt(i);
@@ -360,6 +410,8 @@ public class BountyTaskManager : MonoBehaviour
         GenerateTaskForTarget(selectedTarget, availableTasks, trendModifier);
     }
     
+    private Dictionary<string, TaskTemplate> _taskTemplates = new Dictionary<string, TaskTemplate>();
+    
     // 为特定目标生成任务（增加趋势修正参数）
     private void GenerateTaskForTarget(FilmTarget target, List<BountyTaskInfo> availableTasks, float trendModifier = 1f)
     {
@@ -368,7 +420,7 @@ public class BountyTaskManager : MonoBehaviour
         if (selectedTaskInfo == null) return;
         
         // 计算难度
-        float totalDifficulty = CalculateTotalDifficulty(selectedTaskInfo.baseDifficulty);
+        float totalDifficulty = CalculateTotalDifficulty(selectedTaskInfo.task.baseDifficulty);
         
         // 应用玩家表现修正
         totalDifficulty *= GetPlayerPerformanceModifier();
@@ -377,7 +429,8 @@ public class BountyTaskManager : MonoBehaviour
         float timeLimit = CalculateTimeLimit(totalDifficulty) * trendModifier;
         
         // 计算奖励（受趋势影响更大）
-        float reward = CalculateReward(totalDifficulty, selectedTaskInfo.baseReward) * (trendModifier * 1.2f);
+        float reward = CalculateReward(totalDifficulty, selectedTaskInfo.task.baseReward) * (trendModifier * 1.2f);
+        int viewerReward = (int)(CalculateReward(totalDifficulty, selectedTaskInfo.task.baseViewerReward) * (trendModifier * 1.2f));
         
         // 随机选择一个任务描述
         string taskDescription = GetUniqueTaskDescription(target.targetTag, selectedTaskInfo);
@@ -388,18 +441,19 @@ public class BountyTaskManager : MonoBehaviour
         // 创建新任务实例
         ActiveTask newTask = new ActiveTask
         {
-            id = System.Guid.NewGuid().ToString(),
-            taskName = selectedTaskInfo.taskName,
+            id = selectedTaskInfo.task.taskID,
+            taskName = selectedTaskInfo.task.taskName,
             taskDescription = taskDescription,
             targetObject = target,
+            targetTaskInfo = selectedTaskInfo,
             donorName = donorName,
             timeLimit = timeLimit,
             remainingTime = timeLimit,
             rewardAmount = reward,
-            isCompleted = false,
-            isFailed = false,
-            isTracking = true
+            viewerRewardAmount = viewerReward,
         };
+        
+        _taskTemplates[newTask.id] = selectedTaskInfo.task;
         
         // 添加到活跃任务列表
         _activeTasks.Add(newTask);
@@ -420,8 +474,8 @@ public class BountyTaskManager : MonoBehaviour
     // 选择一个唯一的任务描述（避免重复）
     private string GetUniqueTaskDescription(string targetTag, BountyTaskInfo taskInfo)
     {
-        if (taskInfo.taskDescriptions == null || taskInfo.taskDescriptions.Length == 0)
-            return taskInfo.taskName;
+        if (taskInfo.task.taskDescriptions == null || taskInfo.task.taskDescriptions.Length == 0)
+            return taskInfo.task.taskName;
         
         // 初始化已使用描述列表
         if (!_usedTaskDescriptions.ContainsKey(targetTag))
@@ -431,7 +485,7 @@ public class BountyTaskManager : MonoBehaviour
         
         // 查找未使用的描述
         List<string> unusedDescriptions = new List<string>();
-        foreach (var desc in taskInfo.taskDescriptions)
+        foreach (var desc in taskInfo.task.taskDescriptions)
         {
             if (!_usedTaskDescriptions[targetTag].Contains(desc))
             {
@@ -443,7 +497,7 @@ public class BountyTaskManager : MonoBehaviour
         if (unusedDescriptions.Count == 0)
         {
             _usedTaskDescriptions[targetTag].Clear();
-            unusedDescriptions.AddRange(taskInfo.taskDescriptions);
+            unusedDescriptions.AddRange(taskInfo.task.taskDescriptions);
         }
         
         // 随机选择一个未使用的描述
@@ -461,6 +515,7 @@ public class BountyTaskManager : MonoBehaviour
         {
             // 使用美学等级作为权重因子
             totalWeight += target.aestheticLevel;
+            totalWeight += target.currentAestheticFatigueValue;
         }
         
         float randomValue = Random.Range(0, totalWeight);
@@ -565,40 +620,40 @@ public class BountyTaskManager : MonoBehaviour
         }
     }
     
+    public TaskTemplate GetTaskTemplate(string taskId)
+    {
+        if (_taskTemplates.TryGetValue(taskId, out TaskTemplate template))
+        {
+            return template;
+        }
+        return null;
+    }
+
+// 修改CheckStreamTaskCompletion方法
     public void CheckStreamTaskCompletion(FilmTarget target)
     {
-        foreach (var task in _activeTasks)
+        // 这个方法现在交由StreamTaskDetector处理所有条件逻辑
+        // 不需要在这里做任何事情，保留为空方法或记录日志
+        if (showDebugInfo)
         {
-            // 如果任务已经完成或失败，跳过
-            if (task.isCompleted || task.isFailed) continue;
-            
-            // 检查任务类型和目标匹配
-            if (task.targetObject == target)
-            {
-                    // 标记任务完成
-                    CompleteTask(task.id);
-            }
+            Debug.Log($"接收到来自{target.name}的任务检查请求");
         }
     }
+
     
     // 完成任务
     public void CompleteTask(string taskId)
     {
         ActiveTask task = _activeTasks.Find(t => t.id == taskId);
-        if (task == null || task.isCompleted || task.isFailed)
+        if (task == null)
         {
             Debug.Log("你这任务不对劲");
             return;
         }
-        
-        task.isCompleted = true;
-        
-        // 计算最终奖励（考虑剩余时间）
-        float remainingTimeRatio = task.remainingTime / task.timeLimit;
-        float finalReward = task.rewardAmount * (1f - 0.3f * remainingTimeRatio);
-        
+
         // 给玩家加分
-        //ScoreManager.Instance.AddScore((int)finalReward);
+        ScoreManager.Instance.AddMoney(task.rewardAmount);
+        ScoreManager.Instance.AddCurrentViewers(task.viewerRewardAmount);
         
         // 更新任务统计
         _completedTaskCount++;
@@ -609,15 +664,13 @@ public class BountyTaskManager : MonoBehaviour
         
         // 从活跃列表中移除
         _activeTasks.Remove(task);
+        
+        task.targetObject.RemoveTask(task.targetTaskInfo);
     }
     
     // 任务失败
     private void FailTask(ActiveTask task)
     {
-        if (task.isCompleted || task.isFailed) return;
-        
-        task.isFailed = true;
-        
         // 更新任务统计
         _failedTaskCount++;
         UpdateTaskSuccessRate();

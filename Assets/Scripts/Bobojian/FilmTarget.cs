@@ -5,12 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class BountyTaskInfo
 {
-    public string taskName;                // 任务名称
-    public string[] taskDescriptions;      // 可能的任务描述（随机选择）
-    public float baseDifficulty = 1f;      // 基础难度系数
-    public float baseReward = 100f;        // 基础奖励金额
-    public bool requiresSpecificState;     // 是否需要特定状态（如低血量、狂暴等）
-    public string specificStateName;       // 特定状态名称
+    public TaskTemplate task;
+    
     [Range(0f, 1f)]
     public float taskWeight = 1f;          // 任务生成权重
     public float minProgressToAppear = 0f; // 最小关卡进度要求（0-1）
@@ -32,14 +28,31 @@ public class FilmTarget : MonoBehaviour
     [Header("状态追踪")]
     public bool isInSpecialState = false;     // 是否处于特殊状态（如狂暴）
     public string currentState = "";          // 当前状态名称
+    public string[] allStates;
     
     [Header("事件")]
     // 用于在Unity事件系统中注册状态变化
     public UnityEngine.Events.UnityEvent<string> onStateChanged;
+
+    private Animator _animator;
+    
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        if (_animator == null)
+        {
+            _animator = GetComponentInChildren<Animator>();
+        }
+    }
     
     void Start()
     {
         currentAestheticFatigueValue = maxAestheticFatigueValue;
+    }
+    
+    void Update()
+    {
+        SyncAnimatorState();
     }
     
     // 更新对象状态（由对象自身逻辑或AI调用）
@@ -50,6 +63,30 @@ public class FilmTarget : MonoBehaviour
             currentState = stateName;
             isInSpecialState = !string.IsNullOrEmpty(stateName);
             onStateChanged?.Invoke(stateName);
+        }
+    }
+    
+    public void SyncAnimatorState()
+    {
+        if (_animator != null && _animator.enabled && allStates != null && allStates.Length > 0)
+        {
+            // 获取当前激活的动画层
+            int layerIndex = 0; // 默认使用第一层
+        
+            // 获取当前状态信息
+            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(layerIndex);
+        
+            // 遍历所有已知的状态名称
+            foreach (string stateName in allStates)
+            {
+                // 检查当前是否在这个状态
+                if (stateInfo.IsName(stateName))
+                {
+                    // 找到当前状态，更新状态名并退出循环
+                    SetState(stateName);
+                    break;
+                }
+            }
         }
     }
     
@@ -72,8 +109,8 @@ public class FilmTarget : MonoBehaviour
             bool progressCondition = currentLevelProgress >= task.minProgressToAppear && 
                                     currentLevelProgress <= task.maxProgressToAppear;
             
-            bool stateCondition = !task.requiresSpecificState || 
-                                 (isInSpecialState && task.specificStateName == currentState);
+            bool stateCondition = !task.task.requiresSpecificState || 
+                                 (isInSpecialState && task.task.specificStateName == currentState);
             
             if (progressCondition && stateCondition)
             {
@@ -82,5 +119,10 @@ public class FilmTarget : MonoBehaviour
         }
         
         return availableTasks;
+    }
+    
+    public void RemoveTask(BountyTaskInfo task)
+    {
+        possibleTasks.Remove(task);
     }
 }

@@ -8,21 +8,23 @@ public class StreamTaskDetector : MonoBehaviour
 {
     [Header("直播设置")]
     [SerializeField] private CameraController _cameraController;
-    [SerializeField] private float requiredStreamTime = 3f; // 需要直播多少秒才算完成
+    [SerializeField] private float requiredStreamTime = 0.5f; // 需要直播多少秒才算完成
     
     [Header("检测设置")]
     [SerializeField] private float checkInterval = 0.5f; // 检测间隔（秒）
     
     // 跟踪每个目标的直播时间
-    private Dictionary<FilmTarget, float> targetStreamTimes = new Dictionary<FilmTarget, float>();
+    private Dictionary<TaskTemplate, float> targetStreamTimes = new Dictionary<TaskTemplate, float>();
     // 跟踪已完成的任务目标
-    private HashSet<FilmTarget> completedTargets = new HashSet<FilmTarget>();
+    private HashSet<TaskTemplate> completedTargets = new HashSet<TaskTemplate>();
     
     // 直播事件（当一个目标被成功直播足够时间）
     public event Action<FilmTarget, float> OnTargetStreamed;
     
     private float _nextCheckTime;
     private ConeDetection _coneDetection;
+    
+    private Dictionary<string, BountyTaskManager.ITaskConditionDetector> _conditionDetectors = new Dictionary<string, BountyTaskManager.ITaskConditionDetector>();
     
     private void Start()
     {
@@ -48,6 +50,19 @@ public class StreamTaskDetector : MonoBehaviour
         
         // 设置第一次检测时间
         _nextCheckTime = Time.time + checkInterval;
+        
+        InitializeConditionDetectors();
+    }
+    
+    private void InitializeConditionDetectors()
+    {
+        // 注册时间检测器
+        _conditionDetectors["time"] = new TaskTimeConditionDetector(this);
+    
+        // 注册状态检测器
+        _conditionDetectors["state"] = new TaskStateConditionDetector();
+    
+        // 可以根据需要注册更多检测器...
     }
     
     private void Update()
@@ -58,97 +73,144 @@ public class StreamTaskDetector : MonoBehaviour
             return; 
         }
         
+        SyncCurrentTargets();
+        
         // 定期检查而不是每帧检查
         if (Time.time >= _nextCheckTime)
         {
             _nextCheckTime = Time.time + checkInterval;
-            CheckTargetsInView();
+            UpdateTaskBasedStreamTimes();
         }
     }
     
-    private void CheckTargetsInView()
+    private HashSet<TaskTemplate> currentTasksInView = new HashSet<TaskTemplate>();
+    
+    private void SyncCurrentTargets()
     {
-        // 获取当前视野内的所有目标
-        HashSet<FilmTarget> currentTargets = new HashSet<FilmTarget>();
+        // 先清空当前目标集合
+        currentTasksInView.Clear();
+    
+        // 从coneDetection获取最新的视野内目标
         foreach (var obj in _coneDetection.targetsInView)
         {
-            FilmTarget target = obj.GetComponent<FilmTarget>();
-            if (target != null)
+            foreach (var taskInfo in obj.GetComponent<FilmTarget>().possibleTasks)
             {
-                currentTargets.Add(target);
-                Debug.Log($"目标 {target.name} 在视野内");
+                TaskTemplate task = taskInfo.task;
+                if (task != null)
+                {
+                    currentTasksInView.Add(task);
+                }
             }
         }
-        
-        // 增加当前视野内所有目标的直播时间
-        foreach (var target in currentTargets)
-        {
-            // 如果这个目标已经完成了任务，跳过
-            /*if (completedTargets.Contains(target))
-            {
-                continue;
-            }*/
-                
-            // 增加直播时间
-            if (!targetStreamTimes.ContainsKey(target))
-            {
-                targetStreamTimes[target] = 0;
-            }
-            
-            targetStreamTimes[target] += checkInterval;
-            
-            // 检查是否达到所需直播时间
-            if (targetStreamTimes[target] >= requiredStreamTime)
-            {
-                // 触发直播完成事件
-                OnTargetStreamed?.Invoke(target, targetStreamTimes[target]);
-                
-                // 检查任务完成
-                CheckTaskCompletion(target);
-                
-                // 标记为已完成（防止重复触发）
-                //completedTargets.Add(target);
-            }
-        }
-        
+    
         // 移除不再视野内的目标的计时
-        List<FilmTarget> targetsToRemove = new List<FilmTarget>();
+        List<TaskTemplate> tasksToRemove = new List<TaskTemplate>();
         foreach (var pair in targetStreamTimes)
         {
-            if (!currentTargets.Contains(pair.Key))
+            if (!currentTasksInView.Contains(pair.Key))
             {
                 Debug.Log($"目标 {pair.Key.name} 离开视野,重置计时");
-                targetsToRemove.Add(pair.Key);
+                tasksToRemove.Add(pair.Key);
             }
         }
-        
-        foreach (var target in targetsToRemove)
+    
+        foreach (var task in tasksToRemove)
         {
-            targetStreamTimes.Remove(target);
+            targetStreamTimes.Remove(task);
         }
     }
     
-    // 检查是否完成了相关任务
-    private void CheckTaskCompletion(FilmTarget target)
+// 为每个任务单独跟踪拍摄时间
+private Dictionary<string, float> taskStreamTimes = new Dictionary<string, float>();
+
+// 更新时检查每个活跃任务的目标
+private void UpdateTaskBasedStreamTimes()
+{
+    if (BountyTaskManager.Instance == null) return;
+    
+    var activeTasks = BountyTaskManager.Instance.GetActiveTasks();
+    foreach (var task in activeTasks)
     {
-        if (BountyTaskManager.Instance == null) return;
+        var currentTask = BountyTaskManager.Instance.GetTaskTemplate(task.id);
         
-        Debug.Log("我去真完成了");
-        // 调用任务管理器检查这个目标的任务是否完成
-        BountyTaskManager.Instance.CheckStreamTaskCompletion(target);
+        // 如果目标在视野中
+        if (currentTasksInView.Contains(currentTask))
+        {
+            // 初始化计时器（如果不存在）
+            if (!taskStreamTimes.ContainsKey(task.id))
+            {
+                taskStreamTimes[task.id] = 0;
+                Debug.Log($"开始为任务 {task.taskName} 计时");
+            }
+
+            if (_conditionDetectors.ContainsKey("state"))
+            {
+                if (_conditionDetectors["state"].CheckCondition(task.targetObject, BountyTaskManager.Instance.GetTaskTemplate(task.id)))
+                {
+                    // 增加时间
+                    taskStreamTimes[task.id] += checkInterval;
+                }
+            }
+            
+            // 日志
+            Debug.Log($"任务 {task.taskName} 已拍摄 {taskStreamTimes[task.id]:F1} 秒");
+            
+            // 检查任务条件
+            CheckTaskTimeCompletion(task);
+        }
+        else
+        {
+            taskStreamTimes.Remove(task.id);
+        }
     }
     
-    // 重置特定目标的完成状态（例如当任务重新生成时）
-    public void ResetTargetCompletion(FilmTarget target)
+    // 清理已完成任务的计时器
+    List<string> tasksToRemove = new List<string>();
+    foreach (var kvp in taskStreamTimes)
     {
-        completedTargets.Remove(target);
-        targetStreamTimes.Remove(target);
+        if (!activeTasks.Exists(t => t.id == kvp.Key))
+        {
+            tasksToRemove.Add(kvp.Key);
+        }
     }
     
-    // 重置所有目标的完成状态
-    public void ResetAllTargets()
+    foreach (var taskId in tasksToRemove)
     {
-        completedTargets.Clear();
-        targetStreamTimes.Clear();
+        taskStreamTimes.Remove(taskId);
     }
+}
+
+// 检查特定任务的时间条件
+private void CheckTaskTimeCompletion(BountyTaskManager.ActiveTask task)
+{
+    // 获取任务模板
+    TaskTemplate taskTemplate = BountyTaskManager.Instance.GetTaskTemplate(task.id);
+    if (taskTemplate == null) return;
+    
+    // 检查时间是否达到要求
+    if (taskStreamTimes.TryGetValue(task.id, out float time) && 
+        time >= taskTemplate.requiredTimeLength)
+    {
+            BountyTaskManager.Instance.CompleteTask(task.id);
+            Debug.Log($"任务 {task.taskName} 已完成，拍摄时间: {time:F1}秒");
+    }
+}
+
+// 修改 GetTargetStreamTime 方法以支持特定任务
+public float GetTaskStreamTime(TaskTemplate task, string taskId = null)
+{
+    // 如果提供了任务ID，则返回该任务的计时
+    if (!string.IsNullOrEmpty(taskId) && taskStreamTimes.TryGetValue(taskId, out float taskTime))
+    {
+        return taskTime;
+    }
+    
+    // 否则返回目标的通用计时
+    if (targetStreamTimes.TryGetValue(task, out float time))
+    {
+        return time;
+    }
+    
+    return 0f;
+}
 }

@@ -175,6 +175,16 @@ public class ScoreManager : NetworkBehaviour
         }
     }
 
+    public void AddMoney(float amount)
+    {
+        revenueRate += amount;
+    }
+
+    public void AddCurrentViewers(int amount)
+    {
+        CurrentViewers += amount;
+    }
+
     /// <summary>
     /// 当相机消失(销毁)前，ConeDetection 调用本方法来把自己最后一次的分数提交到 ScoreManager。
     /// </summary>

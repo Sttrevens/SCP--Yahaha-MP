@@ -2210,7 +2210,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxActiveTasks: 3
-  baseGenerationInterval: 30000
+  initialTaskGenerationTimes:
+  - 10
+  - 30
   baseDifficulty: 1
   difficultyPerTask: 0.3
   levelNumFactor: 0.02
@@ -2218,8 +2220,7 @@ MonoBehaviour:
   taskUIContainer: {fileID: 402643762980950312}
   showDebugInfo: 0
   currentLevelName: 
-  useViewerBasedGeneration: 1
-  viewerTimeThreshold: 5000
+  viewerTimeThreshold: 10000
   viewerCheckInterval: 1
   viewerMultiplier: 1
 --- !u!1 &3573920541805540532
