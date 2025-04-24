@@ -53,6 +53,7 @@ public class BountyTaskManager : MonoBehaviour
     private int _completedTaskCount = 0;
     private int _failedTaskCount = 0;
     private float _taskSuccessRate = 0.5f; // 默认任务成功率
+    private bool _isLevelLoaded = false;
     private float _levelStartTime;
     private float _estimatedLevelDuration = 600f; // 预计关卡时长（秒）
     
@@ -102,9 +103,6 @@ public class BountyTaskManager : MonoBehaviour
         }
         Instance = this;
         
-        // 记录关卡开始时间
-        _levelStartTime = Time.time;
-        
         SetupInitialTaskTimes();
     }
     
@@ -115,6 +113,19 @@ public class BountyTaskManager : MonoBehaviour
         
         // 初始化观众名称池
         InitializeDonorNames();
+        
+        // 订阅LevelManager的关卡加载和销毁事件
+        if (LevelManager.Instance != null)
+        {
+            // 监听关卡加载完成事件
+            LevelManager.Instance.OnLevelLoaded += HandleLevelLoaded;
+            // 监听关卡销毁事件
+            LevelManager.Instance.OnLevelDestroyed += HandleLevelDestroyed;
+        }
+        else
+        {
+            Debug.LogWarning("LevelManager实例不存在，无法绑定关卡事件！");
+        }
     }
     
     // 设置初始任务生成时间
@@ -132,6 +143,51 @@ public class BountyTaskManager : MonoBehaviour
             {
                 Debug.Log($"设置初始任务计划：共{initialTaskGenerationTimes.Count}个预定任务，首个任务将在{initialTaskGenerationTimes[0]}秒后生成");
             }
+        }
+    }
+    
+    private void OnDestroy()
+    {
+        // 取消订阅事件，防止内存泄漏
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnLevelLoaded -= HandleLevelLoaded;
+            LevelManager.Instance.OnLevelDestroyed -= HandleLevelDestroyed;
+        }
+    }
+    
+    // 处理关卡加载完成事件
+    private void HandleLevelLoaded()
+    {
+        _isLevelLoaded = true;
+        _levelStartTime = Time.time;
+        
+        if (showDebugInfo)
+        {
+            Debug.Log($"关卡已加载，任务系统开始计时 - 时间: {_levelStartTime}");
+        }
+        
+        // 重新查找目标（可能新的关卡有新的目标）
+        FindAllTargetsInScene();
+        
+        // 重置初始任务队列
+        ResetInitialTaskQueue();
+    }
+    
+    // 处理关卡销毁事件
+    private void HandleLevelDestroyed()
+    {
+        _isLevelLoaded = false;
+        
+        // 清理所有当前活跃的任务
+        ClearAllActiveTasks();
+        
+        // 重置累积的观众-时间值
+        _accumulatedViewerTime = 0f;
+        
+        if (showDebugInfo)
+        {
+            Debug.Log("关卡已销毁，任务系统已重置");
         }
     }
     
@@ -329,9 +385,56 @@ public class BountyTaskManager : MonoBehaviour
     // 获取当前关卡进度（0-1之间）
     private float GetLevelProgress()
     {
+        // 只有在关卡已加载时才计算进度
+        if (!_isLevelLoaded)
+            return 0f;
+            
         float elapsedTime = Time.time - _levelStartTime;
         return Mathf.Clamp01(elapsedTime / _estimatedLevelDuration);
     }
+    
+    // 清除所有活跃任务
+    private void ClearAllActiveTasks()
+    {
+        // 复制列表以避免在遍历时修改
+        List<ActiveTask> tasksCopy = new List<ActiveTask>(_activeTasks);
+        
+        foreach (var task in tasksCopy)
+        {
+            OnTaskFailed?.Invoke(task);
+            
+            // 从活跃列表中移除
+            _activeTasks.Remove(task);
+        }
+        
+        // 清空任务UI
+        if (taskUIContainer != null)
+        {
+            foreach (Transform child in taskUIContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
+    
+    // 重置初始任务队列
+    private void ResetInitialTaskQueue()
+    {
+        initialTasksCompleted = initialTaskGenerationTimes.Count == 0;
+        
+        if (!initialTasksCompleted && initialTaskGenerationTimes.Count > 0)
+        {
+            // 设置第一个初始任务的生成时间
+            nextInitialTaskTime = Time.time + initialTaskGenerationTimes[0];
+            currentInitialTaskIndex = 0;
+            
+            if (showDebugInfo)
+            {
+                Debug.Log($"重置初始任务计划：共{initialTaskGenerationTimes.Count}个预定任务，首个任务将在{initialTaskGenerationTimes[0]}秒后生成");
+            }
+        }
+    }
+
     
     // 初始化观众名称池（从弹幕数据中提取）
     private void InitializeDonorNames()

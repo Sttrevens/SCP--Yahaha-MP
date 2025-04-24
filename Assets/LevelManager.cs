@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +13,10 @@ using UnityEngine.AI;
 public class LevelManager : NetworkBehaviour, IInteractable
 {
     public static LevelManager Instance { get; private set; } 
+
+    // 添加关卡加载和销毁的事件
+    public event Action OnLevelLoaded;
+    public event Action OnLevelDestroyed;
 
     [SerializeField] private GameObject uiPanel;
     private bool isPaused = false;
@@ -85,6 +90,17 @@ public class LevelManager : NetworkBehaviour, IInteractable
         Vector3 offset = LevelOffsets[levelNumber];
         currentLevel = Runner.Spawn(level, offset, Quaternion.identity);
         RPC_BuildNavMesh();
+        
+        // 触发关卡加载完成事件
+        RPC_LevelLoaded();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_LevelLoaded()
+    {
+        // 触发关卡加载完成事件
+        OnLevelLoaded?.Invoke();
+        UnityEngine.Debug.Log("关卡加载完成事件已触发");
     }
 
     public void LoadLevel()
@@ -113,7 +129,17 @@ public class LevelManager : NetworkBehaviour, IInteractable
             if (!enemy.GetComponent<EyedSlimeBlueController>())
                 Destroy(enemy.gameObject);
         }
-        //RPC_BuildNavMesh();
+        
+        // 触发关卡销毁事件
+        RPC_LevelDestroyed();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_LevelDestroyed()
+    {
+        // 触发关卡销毁事件
+        OnLevelDestroyed?.Invoke();
+        UnityEngine.Debug.Log("关卡销毁事件已触发");
     }
 
     public void DestroyLevel()

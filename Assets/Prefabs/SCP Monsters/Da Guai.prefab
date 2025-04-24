@@ -272,6 +272,18 @@ MonoBehaviour:
   currentAestheticFatigueValue: 0
   aestheticLevel: 10
   targetTag: 
+  possibleTasks:
+  - task: {fileID: 11400000, guid: 08041fa9058ddee45ae84ba7829288e3, type: 2}
+    taskWeight: 0.3
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
+  canGenerateTasks: 1
+  isInSpecialState: 0
+  currentState: 
+  allStates: []
+  onStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-3644613042208235146
 MonoBehaviour:
   m_ObjectHideFlags: 0
