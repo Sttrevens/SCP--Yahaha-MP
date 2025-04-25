@@ -300,7 +300,6 @@ public class BountyTaskManager : NetworkBehaviour
         {
             // 生成一个初始任务
             RPC_GenerateTask();
-            SyncActiveTasks();
             
             // 更新到下一个初始任务
             currentInitialTaskIndex++;
@@ -360,7 +359,6 @@ public class BountyTaskManager : NetworkBehaviour
             {
                 // 生成任务
                 RPC_GenerateTask();
-                SyncActiveTasks();
                 
                 // 降低累积值（保留部分，避免完全归零造成的节奏断裂）
                 float retainedValue = Random.Range(0f, viewerTimeThreshold * 0.2f); // 随机保留0-20%
