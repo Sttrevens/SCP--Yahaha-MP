@@ -266,6 +266,32 @@ public class BountyTaskManager : NetworkBehaviour
             }
         }
     }
+
+    private void SyncActiveTasks()
+    {
+        if (HasStateAuthority)
+        {
+            foreach (var task in _activeTasks)
+            {
+                RPC_BroadcastNewTask(
+                    task.id,
+                    task.taskName,
+                    task.taskDescription,
+                    task.targetObject.gameObject.name,
+                    task.donorName,
+                    task.timeLimit,
+                    task.rewardAmount,
+                    task.viewerRewardAmount,
+                    task.targetObject.targetTag,
+                    task.targetTaskInfo.task.taskID
+                );
+            }
+        }
+        else
+        {
+            RPC_RequestActiveTasks();
+        }
+    }
     
     // 检查是否应该生成初始队列中的任务
     private void CheckInitialTaskGeneration()
@@ -274,6 +300,7 @@ public class BountyTaskManager : NetworkBehaviour
         {
             // 生成一个初始任务
             RPC_GenerateTask();
+            SyncActiveTasks();
             
             // 更新到下一个初始任务
             currentInitialTaskIndex++;
@@ -333,6 +360,7 @@ public class BountyTaskManager : NetworkBehaviour
             {
                 // 生成任务
                 RPC_GenerateTask();
+                SyncActiveTasks();
                 
                 // 降低累积值（保留部分，避免完全归零造成的节奏断裂）
                 float retainedValue = Random.Range(0f, viewerTimeThreshold * 0.2f); // 随机保留0-20%
@@ -648,6 +676,12 @@ private void RPC_BroadcastNewTask(string id, string taskName, string taskDescrip
         rewardAmount = rewardAmount,
         viewerRewardAmount = viewerRewardAmount,
     };
+
+    if (_activeTasks.Contains(newTask))
+    {
+        RPC_GenerateTask();
+        return;
+    }
     
     _taskTemplates[newTask.id] = targetTaskInfo.task;
     
