@@ -119,6 +119,25 @@ public class BountyTaskManager : NetworkBehaviour
             // 如果是客户端，向服务器请求当前活跃任务
             RPC_RequestActiveTasks();
         }
+        
+        // 查找场景中所有的拍摄目标
+        FindAllTargetsInScene();
+        
+        // 初始化观众名称池
+        InitializeDonorNames();
+        
+        // 订阅LevelManager的关卡加载和销毁事件
+        if (LevelManager.Instance != null)
+        {
+            // 监听关卡加载完成事件
+            LevelManager.Instance.OnLevelLoaded += HandleLevelLoaded;
+            // 监听关卡销毁事件
+            LevelManager.Instance.OnLevelDestroyed += HandleLevelDestroyed;
+        }
+        else
+        {
+            Debug.LogWarning("LevelManager实例不存在，无法绑定关卡事件！");
+        }
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -155,28 +174,6 @@ public class BountyTaskManager : NetworkBehaviour
         Instance = this;
         
         SetupInitialTaskTimes();
-    }
-    
-    private void Start()
-    {
-        // 查找场景中所有的拍摄目标
-        FindAllTargetsInScene();
-        
-        // 初始化观众名称池
-        InitializeDonorNames();
-        
-        // 订阅LevelManager的关卡加载和销毁事件
-        if (LevelManager.Instance != null)
-        {
-            // 监听关卡加载完成事件
-            LevelManager.Instance.OnLevelLoaded += HandleLevelLoaded;
-            // 监听关卡销毁事件
-            LevelManager.Instance.OnLevelDestroyed += HandleLevelDestroyed;
-        }
-        else
-        {
-            Debug.LogWarning("LevelManager实例不存在，无法绑定关卡事件！");
-        }
     }
     
     // 设置初始任务生成时间
