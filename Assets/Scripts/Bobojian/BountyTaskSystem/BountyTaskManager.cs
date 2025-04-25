@@ -93,6 +93,56 @@ public class BountyTaskManager : NetworkBehaviour
         }
     }
 
+    public override void Spawned()
+    {
+        // 新客户端加入时，如果是服务器，向所有客户端发送当前活跃任务
+        if (HasStateAuthority)
+        {
+            foreach (var task in _activeTasks)
+            {
+                RPC_BroadcastNewTask(
+                    task.id,
+                    task.taskName,
+                    task.taskDescription,
+                    task.targetObject.gameObject.name,
+                    task.donorName,
+                    task.timeLimit,
+                    task.rewardAmount,
+                    task.viewerRewardAmount,
+                    task.targetObject.targetTag,
+                    task.targetTaskInfo.task.taskID
+                );
+            }
+        }
+        else
+        {
+            // 如果是客户端，向服务器请求当前活跃任务
+            RPC_RequestActiveTasks();
+        }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_RequestActiveTasks()
+    {
+        if (!HasStateAuthority) return;
+    
+        // 服务器收到请求，发送当前所有活跃任务
+        foreach (var task in _activeTasks)
+        {
+            RPC_BroadcastNewTask(
+                task.id,
+                task.taskName,
+                task.taskDescription,
+                task.targetObject.gameObject.name,
+                task.donorName,
+                task.timeLimit,
+                task.rewardAmount,
+                task.viewerRewardAmount,
+                task.targetObject.targetTag,
+                task.targetTaskInfo.task.taskID
+            );
+        }
+    }
     
     private void Awake()
     {
@@ -463,6 +513,8 @@ public class BountyTaskManager : NetworkBehaviour
     // 更新所有活跃任务
     private void UpdateActiveTasks()
     {
+        if (!HasStateAuthority) return;
+        
         for (int i = _activeTasks.Count - 1; i >= 0; i--)
         {
             var task = _activeTasks[i];
@@ -473,51 +525,146 @@ public class BountyTaskManager : NetworkBehaviour
             // 检查是否超时
             if (task.remainingTime <= 0)
             {
-                FailTask(task);
+                RPC_FailTask(task.id);
                 _activeTasks.RemoveAt(i);
             }
         }
     }
     
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_GenerateTask()
+   [Rpc(RpcSources.StateAuthority, RpcTargets.StateAuthority)]
+private void RPC_GenerateTask()
+{
+    if (!HasStateAuthority) return;
+    
+    // 获取观众趋势
+    float viewerTrend = GetViewerTrend();
+    
+    // 计算当前关卡进度
+    float currentProgress = GetLevelProgress();
+    
+    // 查找当前可用的目标
+    List<FilmTarget> eligibleTargets = new List<FilmTarget>();
+    foreach (var target in _allTargetsInScene)
     {
-        // 获取观众趋势
-        float viewerTrend = GetViewerTrend();
-        
-        // 计算当前关卡进度
-        float currentProgress = GetLevelProgress();
-        
-        // 查找当前可用的目标
-        List<FilmTarget> eligibleTargets = new List<FilmTarget>();
-        foreach (var target in _allTargetsInScene)
+        if (target.IsEligibleForTaskGeneration(currentProgress))
         {
-            if (target.IsEligibleForTaskGeneration(currentProgress))
-            {
-                eligibleTargets.Add(target);
-            }
+            eligibleTargets.Add(target);
         }
-        
-        if (eligibleTargets.Count == 0)
-        {
-            if (showDebugInfo) Debug.Log("没有合适的目标可以生成任务");
-            return;
-        }
-        
-        // 基于权重随机选择一个目标
-        FilmTarget selectedTarget = SelectTargetBasedOnWeight(eligibleTargets);
-        if (selectedTarget == null) return;
-        
-        // 获取目标的可用任务并选择一个
-        var availableTasks = selectedTarget.GetAvailableTasks(currentProgress);
-        if (availableTasks.Count == 0) return;
-        
-        // 根据观众趋势调整任务参数（例如，观众上升时任务更有价值）
-        float trendModifier = 1f + Mathf.Clamp(viewerTrend / 1000f, -0.3f, 0.5f);
-        
-        // 生成并应用趋势修正
-        GenerateTaskForTarget(selectedTarget, availableTasks, trendModifier);
     }
+    
+    if (eligibleTargets.Count == 0)
+    {
+        if (showDebugInfo) Debug.Log("没有合适的目标可以生成任务");
+        return;
+    }
+    
+    // 基于权重随机选择一个目标
+    FilmTarget selectedTarget = SelectTargetBasedOnWeight(eligibleTargets);
+    if (selectedTarget == null) return;
+    
+    // 获取目标的可用任务并选择一个
+    var availableTasks = selectedTarget.GetAvailableTasks(currentProgress);
+    if (availableTasks.Count == 0) return;
+    
+    // 根据观众趋势调整任务参数
+    float trendModifier = 1f + Mathf.Clamp(viewerTrend / 1000f, -0.3f, 0.5f);
+    
+    // 基于权重选择一个任务
+    BountyTaskInfo selectedTaskInfo = SelectTaskBasedOnWeight(availableTasks);
+    if (selectedTaskInfo == null) return;
+    
+    // 计算各项参数
+    float totalDifficulty = CalculateTotalDifficulty(selectedTaskInfo.task.baseDifficulty);
+    totalDifficulty *= GetPlayerPerformanceModifier();
+    float timeLimit = CalculateTimeLimit(totalDifficulty) * trendModifier;
+    float reward = CalculateReward(totalDifficulty, selectedTaskInfo.task.baseReward) * (trendModifier * 1.1f);
+    int viewerReward = (int)(CalculateReward(totalDifficulty, selectedTaskInfo.task.baseViewerReward) * (trendModifier * 1.1f));
+    string taskDescription = GetUniqueTaskDescription(selectedTarget.targetTag, selectedTaskInfo);
+    string donorName = GetRandomDonorName();
+    
+    // 通知所有客户端生成此任务
+    RPC_BroadcastNewTask(
+        selectedTaskInfo.task.taskID,
+        selectedTaskInfo.task.taskName,
+        taskDescription,
+        selectedTarget.gameObject.name, // 使用目标的名称而不是引用
+        donorName,
+        timeLimit,
+        reward,
+        viewerReward,
+        selectedTarget.targetTag,
+        selectedTaskInfo.task.taskID // 使用taskID传递任务信息
+    );
+}
+
+[Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+private void RPC_BroadcastNewTask(string id, string taskName, string taskDescription, 
+                                 string targetObjectName, string donorName, 
+                                 float timeLimit, float rewardAmount, int viewerRewardAmount,
+                                 string targetTag, string taskTemplateId)
+{
+    // 查找目标对象
+    FilmTarget targetObject = null;
+    GameObject targetGameObject = GameObject.Find(targetObjectName);
+    if (targetGameObject != null)
+    {
+        targetObject = targetGameObject.GetComponent<FilmTarget>();
+    }
+    
+    if (targetObject == null)
+    {
+        Debug.LogError($"找不到目标对象: {targetObjectName}");
+        return;
+    }
+    
+    // 查找任务信息
+    BountyTaskInfo targetTaskInfo = null;
+    foreach (var taskInfo in targetObject.possibleTasks)
+    {
+        if (taskInfo.task.taskID == taskTemplateId)
+        {
+            targetTaskInfo = taskInfo;
+            break;
+        }
+    }
+    
+    if (targetTaskInfo == null)
+    {
+        Debug.LogError($"在目标 {targetObjectName} 上找不到任务模板: {taskTemplateId}");
+        return;
+    }
+    
+    // 创建新任务实例
+    ActiveTask newTask = new ActiveTask
+    {
+        id = id,
+        taskName = taskName,
+        taskDescription = taskDescription,
+        targetObject = targetObject,
+        targetTaskInfo = targetTaskInfo,
+        donorName = donorName,
+        timeLimit = timeLimit,
+        remainingTime = timeLimit,
+        rewardAmount = rewardAmount,
+        viewerRewardAmount = viewerRewardAmount,
+    };
+    
+    _taskTemplates[newTask.id] = targetTaskInfo.task;
+    
+    // 添加到活跃任务列表
+    _activeTasks.Add(newTask);
+    
+    // 触发任务生成事件
+    OnTaskGenerated?.Invoke(newTask);
+    
+    // 创建任务UI
+    CreateTaskUI(newTask);
+    
+    if (showDebugInfo)
+    {
+        Debug.Log($"已生成任务: {newTask.taskName} - {newTask.taskDescription} - 时限: {timeLimit:F1}秒 - 奖励: {rewardAmount:F0}");
+    }
+}
     
     private Dictionary<string, TaskTemplate> _taskTemplates = new Dictionary<string, TaskTemplate>();
     
@@ -792,8 +939,15 @@ public class BountyTaskManager : NetworkBehaviour
 
     
     // 完成任务
-    public void CompleteTask(string taskId)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_CompleteTask(string taskId)
     {
+        if (!HasStateAuthority)
+        {
+            Debug.LogError("WTF????");
+            return;
+        }
+
         ActiveTask task = _activeTasks.Find(t => t.id == taskId);
         if (task == null)
         {
@@ -801,37 +955,57 @@ public class BountyTaskManager : NetworkBehaviour
             return;
         }
 
-        if (HasStateAuthority)
-        {
-            // 给玩家加分
-            ScoreManager.Instance.AddMoney(task.rewardAmount);
-            ScoreManager.Instance.AddCurrentViewers(task.viewerRewardAmount);
-        }
+        // 给玩家加分
+        ScoreManager.Instance.AddMoney(task.rewardAmount);
+        ScoreManager.Instance.AddCurrentViewers(task.viewerRewardAmount);
 
-        // 更新任务统计
+        // 通知所有客户端任务已完成
+        RPC_TaskCompleted(taskId);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_TaskCompleted(string taskId)
+    {
+        ActiveTask task = _activeTasks.Find(t => t.id == taskId);
+        if (task == null) return;
+    
+        // 更新统计
         _completedTaskCount++;
         UpdateTaskSuccessRate();
-        
+    
         // 触发任务完成事件
         OnTaskCompleted?.Invoke(task);
-        
+    
         // 从活跃列表中移除
         _activeTasks.Remove(task);
-        
-        task.targetObject.RemoveTask(task.targetTaskInfo);
+    
+        if (task.targetObject != null)
+        {
+            task.targetObject.RemoveTask(task.targetTaskInfo);
+        }
     }
     
     // 任务失败
-    private void FailTask(ActiveTask task)
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_FailTask(string taskId)
     {
+        ActiveTask task = _activeTasks.Find(t => t.id == taskId);
+        if (task == null) return;
+    
         // 更新任务统计
         _failedTaskCount++;
         UpdateTaskSuccessRate();
-        
+    
         // 触发任务失败事件
         OnTaskFailed?.Invoke(task);
-        
-        task.targetObject.RemoveTask(task.targetTaskInfo);
+    
+        // 从活跃列表中移除
+        _activeTasks.Remove(task);
+    
+        if (task.targetObject != null)
+        {
+            task.targetObject.RemoveTask(task.targetTaskInfo);
+        }
     }
     
     // 更新任务成功率

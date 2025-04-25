@@ -270,7 +270,7 @@ public class StreamTaskDetector : MonoBehaviour
         if (taskStreamTimes.TryGetValue(task.id, out float time) &&
             time >= taskTemplate.requiredTimeLength)
         {
-            BountyTaskManager.Instance.CompleteTask(task.id);
+            BountyTaskManager.Instance.RPC_CompleteTask(task.id);
             Debug.Log($"任务 {task.taskName} 已完成，拍摄时间: {time:F1}秒");
         }
     }
