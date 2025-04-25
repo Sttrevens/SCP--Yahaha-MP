@@ -2949,10 +2949,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a9cc6a42a57eb499483c9540c234c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAestheticFatigueValue: 15
+  maxAestheticFatigueValue: 20
   currentAestheticFatigueValue: 0
   aestheticLevel: 30
-  targetTag: 
+  targetTag: LieQ
+  possibleTasks:
+  - task: {fileID: 11400000, guid: 1d8c87b059a9e61418f4318b588e4dee, type: 2}
+    taskWeight: 0.6
+    minProgressToAppear: 0.29914534
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 0c0c93ba0e466f141bbf254ac4b61565, type: 2}
+    taskWeight: 0.5
+    minProgressToAppear: 0.30075186
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 1253288d09b147746b066e4119977c45, type: 2}
+    taskWeight: 0.5
+    minProgressToAppear: 0.3508771
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 88708b08edeae564ea610579bda5fdb3, type: 2}
+    taskWeight: 0.4
+    minProgressToAppear: 0.35087723
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 017c48ffd1b1f4645a00220b135967e9, type: 2}
+    taskWeight: 0.5
+    minProgressToAppear: 0.32080203
+    maxProgressToAppear: 1
+  canGenerateTasks: 1
+  isInSpecialState: 0
+  currentState: 
+  allStates:
+  - BigJump
+  - IdlePlant
+  - ComesAlive
+  - Run
+  - Attack01
+  onStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8386129506414112742
 MonoBehaviour:
   m_ObjectHideFlags: 0

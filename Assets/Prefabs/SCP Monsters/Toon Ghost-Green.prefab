@@ -5282,7 +5282,34 @@ MonoBehaviour:
   maxAestheticFatigueValue: 10
   currentAestheticFatigueValue: 0
   aestheticLevel: 5
-  targetTag: 
+  targetTag: GhostGreen
+  possibleTasks:
+  - task: {fileID: 11400000, guid: c35b4f5eca21cc94d86bf9a9bd203450, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0.24786319
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 060bb41361488b34d87f43f12748616b, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0.24786328
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: c1e5e4fd851daa943ad56bb98cfc82bd, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0.29914522
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: af69a03aa94c2594b8151725a508b7b4, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0.30341887
+    maxProgressToAppear: 1
+  canGenerateTasks: 1
+  isInSpecialState: 0
+  currentState: 
+  allStates:
+  - Walk Forward In Place 0
+  - Defend 0
+  - BiteAttack
+  onStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-3119688124603081479
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3063404c0a80bd14fa7365b27ffc8c49, type: 3}
+  m_Name: "\u7C89\u82B1\u653B\u51FB\u4EFB\u52A1"
+  m_EditorClassIdentifier: 
+  taskID: 006
+  taskName: "\u62CD\u4E00\u4E0B\u90A3\u4E2A\u53C8\u4F1A\u8DD1\u53C8\u4F1A\u54AC\u7684\u82B1"
+  taskDescriptions:
+  - "\u62CD\u6444\u7C89\u8272\u98DF\u4EBA\u82B1\u653B\u51FB\u59FF\u6001\u3002"
+  baseDifficulty: 3
+  baseReward: 25
+  baseViewerReward: 75
+  descriptionFormats:
+  - "\u62CD\u6444{0}\u7684\u7CBE\u5F69\u8868\u73B0"
+  requiresSpecificState: 1
+  specificStateName: BiteAttack
+  requiredTimeLength: 0.5
+  requiresOtherTarget: 0
+  requiredTargetTags:
+  - PinkFlower
+  minLevelProgress: 0
+  maxLevelProgress: 1
+  minViewersRequired: 0

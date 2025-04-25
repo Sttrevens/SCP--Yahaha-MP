@@ -2813,6 +2813,7 @@ GameObject:
   - component: {fileID: 3352045113354941783}
   - component: {fileID: 7057388831754074905}
   - component: {fileID: 4455728772946267660}
+  - component: {fileID: -8851743019628783297}
   m_Layer: 8
   m_Name: '[Game]A_Real_Character'
   m_TagString: Player
@@ -3017,6 +3018,7 @@ MonoBehaviour:
   lookAtTarget: {fileID: 7795210373775432363}
   _velocity: {x: 0, y: 0, z: 0}
   _jumpPressed: 0
+  _targetSpeed: 6
   defaultFOV: 80
   sprintFOV: 100
   defaultSpeed: 4
@@ -3382,6 +3384,54 @@ MonoBehaviour:
   SyncSettings: 79
   StateHashes: 00000000e9d0506ada63755d28a981077af3fe2ecb3c324688920145336e528eb1211e0b37b935014e73a6a7ffa4c8127deb84976856e4eb2bf8d7e8e538b0296777fcacff36d7373d441695d4d21d713f11958cf51b339478294cbaf53b8e04e83c4943b694a43574e66597a76005b13b1771c65f5186608149048feef32509ad072d5ec71eafa08527114d
   TriggerHashes: 0000000028a98107cb3c3246336e528e37b93501ffa4c812ff36d737550e6746f53b8e04b8a66478f3813327f51b3394
+--- !u!114 &-8851743019628783297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250024112804794185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a9cc6a42a57eb499483c9540c234c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAestheticFatigueValue: 10
+  currentAestheticFatigueValue: 0
+  aestheticLevel: 10
+  targetTag: Player
+  possibleTasks:
+  - task: {fileID: 11400000, guid: ee7d4bcd62a78c341b57aea17915cc0a, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0.17058682
+    maxProgressToAppear: 0.99999994
+  - task: {fileID: 11400000, guid: 55571e0b96b2dc14e9930b1a54ad18ec, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0.1577661
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 5f2f7d4e44699fd4fb8beb5551c2dc2f, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0.1542317
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 9ae8d613d71d44044938ebe8097f5f81, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0.17000842
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 54c42ab11143c7443b4a6755334f79a2, type: 2}
+    taskWeight: 0.7
+    minProgressToAppear: 0.30075186
+    maxProgressToAppear: 1
+  canGenerateTasks: 1
+  isInSpecialState: 0
+  currentState: 
+  allStates:
+  - Die
+  - Femal Standing Pose
+  - Dancing Twerk
+  - Hip Hop Dancing
+  onStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5385546817467512204
 GameObject:
   m_ObjectHideFlags: 0

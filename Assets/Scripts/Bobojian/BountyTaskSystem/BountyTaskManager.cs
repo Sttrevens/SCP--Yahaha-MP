@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
-public class BountyTaskManager : MonoBehaviour
+public class BountyTaskManager : NetworkBehaviour
 {
     [System.Serializable]
     public class ActiveTask
@@ -168,10 +169,14 @@ public class BountyTaskManager : MonoBehaviour
         }
         
         // 重新查找目标（可能新的关卡有新的目标）
-        FindAllTargetsInScene();
+        StartCoroutine(DelayedInit());
         
-        // 重置初始任务队列
-        ResetInitialTaskQueue();
+        IEnumerator DelayedInit()
+        {
+            yield return new WaitForSeconds(1.5f);
+            FindAllTargetsInScene();
+            ResetInitialTaskQueue();
+        }
     }
     
     // 处理关卡销毁事件
@@ -191,7 +196,7 @@ public class BountyTaskManager : MonoBehaviour
         }
     }
     
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         // 更新所有活跃任务
         UpdateActiveTasks();
@@ -218,7 +223,7 @@ public class BountyTaskManager : MonoBehaviour
         if (Time.time >= nextInitialTaskTime)
         {
             // 生成一个初始任务
-            GenerateTask();
+            RPC_GenerateTask();
             
             // 更新到下一个初始任务
             currentInitialTaskIndex++;
@@ -277,7 +282,7 @@ public class BountyTaskManager : MonoBehaviour
             if (_accumulatedViewerTime >= viewerTimeThreshold)
             {
                 // 生成任务
-                GenerateTask();
+                RPC_GenerateTask();
                 
                 // 降低累积值（保留部分，避免完全归零造成的节奏断裂）
                 float retainedValue = Random.Range(0f, viewerTimeThreshold * 0.2f); // 随机保留0-20%
@@ -443,8 +448,8 @@ public class BountyTaskManager : MonoBehaviour
         // 暂时使用一些示例名称
         _recentDonorNames = new List<string>
         {
-            "热心观众", "直播达人", "摄影师", "游戏爱好者", "电影迷", 
-            "忠实粉丝", "神秘人", "大佬", "小可爱", "土豪"
+            "热心观众", "打交特攻队", "我要做绫波丽的狗嘻嘻", "龙龙", "屌丝注定无爱", 
+            "忠实粉丝", "神秘人", "大佬", "小可爱", "土豪", "张张", "福瑞控"
         };
     }
     
@@ -474,7 +479,8 @@ public class BountyTaskManager : MonoBehaviour
         }
     }
     
-    private void GenerateTask()
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_GenerateTask()
     {
         // 获取观众趋势
         float viewerTrend = GetViewerTrend();
@@ -507,7 +513,7 @@ public class BountyTaskManager : MonoBehaviour
         if (availableTasks.Count == 0) return;
         
         // 根据观众趋势调整任务参数（例如，观众上升时任务更有价值）
-        float trendModifier = 1f + Mathf.Clamp(viewerTrend / 100f, -0.3f, 0.5f);
+        float trendModifier = 1f + Mathf.Clamp(viewerTrend / 1000f, -0.3f, 0.5f);
         
         // 生成并应用趋势修正
         GenerateTaskForTarget(selectedTarget, availableTasks, trendModifier);
@@ -532,8 +538,8 @@ public class BountyTaskManager : MonoBehaviour
         float timeLimit = CalculateTimeLimit(totalDifficulty) * trendModifier;
         
         // 计算奖励（受趋势影响更大）
-        float reward = CalculateReward(totalDifficulty, selectedTaskInfo.task.baseReward) * (trendModifier * 1.2f);
-        int viewerReward = (int)(CalculateReward(totalDifficulty, selectedTaskInfo.task.baseViewerReward) * (trendModifier * 1.2f));
+        float reward = CalculateReward(totalDifficulty, selectedTaskInfo.task.baseReward) * (trendModifier * 1.1f);
+        int viewerReward = (int)(CalculateReward(totalDifficulty, selectedTaskInfo.task.baseViewerReward) * (trendModifier * 1.1f));
         
         // 随机选择一个任务描述
         string taskDescription = GetUniqueTaskDescription(target.targetTag, selectedTaskInfo);
@@ -613,27 +619,68 @@ public class BountyTaskManager : MonoBehaviour
     // 基于权重选择目标
     private FilmTarget SelectTargetBasedOnWeight(List<FilmTarget> targets)
     {
+        float currentProgress = GetLevelProgress();
+        List<FilmTarget> targetsWithAvailableTasks = new List<FilmTarget>();
+        Dictionary<FilmTarget, float> weightMap = new Dictionary<FilmTarget, float>();
+    
         float totalWeight = 0;
+    
+        // 获取所有StreamTaskDetector
+        var detectors = FindObjectsOfType<StreamTaskDetector>();
+    
+        // 只考虑有可用任务的目标
         foreach (var target in targets)
         {
-            // 使用美学等级作为权重因子
-            totalWeight += target.aestheticLevel;
-            totalWeight += target.currentAestheticFatigueValue;
+            var availableTasks = target.GetAvailableTasks(currentProgress);
+            if (availableTasks.Count > 0)
+            {
+                targetsWithAvailableTasks.Add(target);
+                float weight = target.aestheticLevel + target.currentAestheticFatigueValue;
+                
+                // 检查目标是否在任何StreamTaskDetector的视野内
+                bool isInView = false;
+                foreach (var detector in detectors)
+                {
+                    if (detector.GetTargetsInView().Contains(target))
+                    {
+                        isInView = true;
+                        break;
+                    }
+                }
+                
+                // 如果在视野内，权重翻倍
+                if (isInView)
+                {
+                    weight *= 2;
+                }
+                
+                weightMap[target] = weight;
+                totalWeight += weight;
+            }
         }
-        
+    
+        // 如果没有目标有可用任务，返回null
+        if (targetsWithAvailableTasks.Count == 0)
+        {
+            if (showDebugInfo) Debug.Log("没有目标有可用任务");
+            return null;
+        }
+    
+        // 基于权重随机选择
         float randomValue = Random.Range(0, totalWeight);
         float weightSum = 0;
-        
-        foreach (var target in targets)
+    
+        foreach (var target in targetsWithAvailableTasks)
         {
-            weightSum += target.aestheticLevel;
+            weightSum += weightMap[target];
             if (randomValue <= weightSum)
             {
+                if (showDebugInfo) Debug.Log($"选择目标: {target.name}，权重: {weightMap[target]}/{totalWeight}");
                 return target;
             }
         }
-        
-        return targets[0]; // 默认返回第一个
+    
+        return targetsWithAvailableTasks[0];
     }
     
     // 基于权重选择任务
@@ -667,7 +714,7 @@ public class BountyTaskManager : MonoBehaviour
         float progressFactor = GetLevelProgress();
         float completionFactor = baseDifficulty + (_completedTaskCount * difficultyPerTask);
         
-        return completionFactor + (levelFactor * progressFactor);
+        return Mathf.Max(1f, (completionFactor + (levelFactor * progressFactor)) * 0.1f);
     }
     
     // 计算时间限制
@@ -682,7 +729,7 @@ public class BountyTaskManager : MonoBehaviour
         int viewerCount = ScoreManager.Instance.CurrentViewers;
         float viewerBonus = 1f + viewerCount / 250f;
         
-        return baseReward * totalDifficulty * viewerBonus;
+        return baseReward * totalDifficulty + viewerBonus;
     }
     
     // 根据玩家表现获取难度修正系数
@@ -754,10 +801,13 @@ public class BountyTaskManager : MonoBehaviour
             return;
         }
 
-        // 给玩家加分
-        ScoreManager.Instance.AddMoney(task.rewardAmount);
-        ScoreManager.Instance.AddCurrentViewers(task.viewerRewardAmount);
-        
+        if (HasStateAuthority)
+        {
+            // 给玩家加分
+            ScoreManager.Instance.AddMoney(task.rewardAmount);
+            ScoreManager.Instance.AddCurrentViewers(task.viewerRewardAmount);
+        }
+
         // 更新任务统计
         _completedTaskCount++;
         UpdateTaskSuccessRate();
@@ -780,6 +830,8 @@ public class BountyTaskManager : MonoBehaviour
         
         // 触发任务失败事件
         OnTaskFailed?.Invoke(task);
+        
+        task.targetObject.RemoveTask(task.targetTaskInfo);
     }
     
     // 更新任务成功率

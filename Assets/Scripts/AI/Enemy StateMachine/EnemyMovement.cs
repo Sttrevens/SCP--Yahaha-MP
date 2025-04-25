@@ -123,13 +123,13 @@ if (stateDictionary.TryGetValue(enemy.initialStateType, out IEnemyState foundSta
                 if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) <
                     agent.stoppingDistance)
                 {
-                    Debug.Log(
-                        $"[EnemyAI] Reached patrol point {currentPatrolIndex}, waiting {waitTimeAtPatrolPoint} seconds");
+                    //Debug.Log(
+                        //$"[EnemyAI] Reached patrol point {currentPatrolIndex}, waiting {waitTimeAtPatrolPoint} seconds");
                     enemy._animatorManager.isPatrolling = false;
                     yield return new WaitForSeconds(waitTimeAtPatrolPoint);
                     enemy._animatorManager.isPatrolling = true;
                     currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
-                    Debug.Log($"[EnemyAI] Moving to next patrol point {currentPatrolIndex}");
+                    //Debug.Log($"[EnemyAI] Moving to next patrol point {currentPatrolIndex}");
                 }
 
                 agent.SetDestination(patrolPoints[currentPatrolIndex].position);
@@ -139,13 +139,13 @@ if (stateDictionary.TryGetValue(enemy.initialStateType, out IEnemyState foundSta
             {
                 if (Vector3.Distance(transform.position, agent.destination) < agent.stoppingDistance)
                 {
-                    Debug.Log("[EnemyAI] Reached random patrol point, waiting before next point");
+                    //Debug.Log("[EnemyAI] Reached random patrol point, waiting before next point");
                     enemy._animatorManager.isPatrolling = false;
                     yield return new WaitForSeconds(waitTimeAtPatrolPoint);
                     enemy._animatorManager.isPatrolling = true;
                     Vector3 randomPatrolPoint = GetRandomPatrolPoint();
                     agent.SetDestination(randomPatrolPoint);
-                    Debug.Log($"[EnemyAI] Moving to new random patrol point at {randomPatrolPoint}");
+                    //Debug.Log($"[EnemyAI] Moving to new random patrol point at {randomPatrolPoint}");
                 }
             }
         }

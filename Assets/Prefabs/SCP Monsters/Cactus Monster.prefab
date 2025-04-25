@@ -10419,7 +10419,19 @@ MonoBehaviour:
   maxAestheticFatigueValue: 10
   currentAestheticFatigueValue: 0
   aestheticLevel: 20
-  targetTag: 
+  targetTag: CactusMaster
+  possibleTasks: []
+  canGenerateTasks: 1
+  isInSpecialState: 0
+  currentState: 
+  allStates:
+  - CastSpell
+  - Run Forward In Place
+  - PowerPunchAttack
+  - LeftPunchAttack
+  onStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8256710042297620024
 MonoBehaviour:
   m_ObjectHideFlags: 0

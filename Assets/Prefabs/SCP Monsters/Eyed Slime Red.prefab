@@ -291,7 +291,18 @@ MonoBehaviour:
   maxAestheticFatigueValue: 10
   currentAestheticFatigueValue: 0
   aestheticLevel: 3
-  targetTag: 
+  targetTag: EyedSlimeRed
+  possibleTasks: []
+  canGenerateTasks: 1
+  isInSpecialState: 0
+  currentState: 
+  allStates:
+  - RunFWD
+  - Attack01
+  - GetHit
+  onStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5261021990986966815
 MonoBehaviour:
   m_ObjectHideFlags: 0

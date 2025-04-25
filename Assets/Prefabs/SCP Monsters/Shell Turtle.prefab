@@ -1256,7 +1256,25 @@ MonoBehaviour:
   maxAestheticFatigueValue: 10
   currentAestheticFatigueValue: 0
   aestheticLevel: 10
-  targetTag: 
+  targetTag: ShellTurtle
+  possibleTasks:
+  - task: {fileID: 11400000, guid: 88c020cf54e52a548aacf85496710993, type: 2}
+    taskWeight: 0.5
+    minProgressToAppear: 0.14957261
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 0ba6e8c60923fdd43824b1ddeddc1a05, type: 2}
+    taskWeight: 0.3
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
+  canGenerateTasks: 1
+  isInSpecialState: 0
+  currentState: 
+  allStates:
+  - Attack02
+  - RunFWD
+  onStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-3236104374535090644
 MonoBehaviour:
   m_ObjectHideFlags: 0

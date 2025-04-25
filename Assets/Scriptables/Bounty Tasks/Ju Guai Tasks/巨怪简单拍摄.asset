@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3063404c0a80bd14fa7365b27ffc8c49, type: 3}
   m_Name: "\u5DE8\u602A\u7B80\u5355\u62CD\u6444"
   m_EditorClassIdentifier: 
-  taskID: 
-  taskName: 
-  taskDescriptions: []
-  baseDifficulty: 0
-  baseReward: 0
-  baseViewerReward: 0
+  taskID: 005
+  taskName: "\u53BB\u51B2\u5230\u91CC\u9762\u53BB\u62CD\u6700\u5927\u7684\u602A"
+  taskDescriptions:
+  - "\u62CD\u6444\u4F53\u578B\u8F83\u5927\u7684\u602A\u726920\u79D2\u949F\u3002"
+  baseDifficulty: 3
+  baseReward: 40
+  baseViewerReward: 200
   descriptionFormats: []
   requiresSpecificState: 0
   specificStateName: 
-  requiredTimeLength: 0
+  requiredTimeLength: 20
   requiresOtherTarget: 0
-  requiredTargetTags: []
+  requiredTargetTags:
+  - DaGuai
   minLevelProgress: 0
   maxLevelProgress: 0
   minViewersRequired: 0

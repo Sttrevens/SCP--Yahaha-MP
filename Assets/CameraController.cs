@@ -391,6 +391,8 @@ public void ToggleHippiePose(bool hippie)
         isHippie = false;
         _rigController.SwitchToHippie(3f);
     }
+    
+    BarrageHUDController.instance.SetVisible(hippie);
 }
 
 public void SetMaterialAndRenderTexture(Material material, RenderTexture renderTexture)

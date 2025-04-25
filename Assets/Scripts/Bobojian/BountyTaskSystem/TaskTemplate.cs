@@ -30,8 +30,8 @@ public class TaskTemplate : ScriptableObject
     public bool requiresSpecificState;            // 任务类型
     public string specificStateName;       // 特定状态名称
     public float requiredTimeLength;
-    public bool requiresOtherTarget;
-    public string[] requiredTargetTags;  // 需要的拍摄目标标签
+    public int requiresOtherTargetAmount = 1;
+    public string[] requiredTargetTags;  // 需要的拍摄目标标签, 如果requiresOtherTarget为true，则必须要全部满足，否则只需满足一个
     
     // 任务生成条件
     public float minLevelProgress;       // 最小关卡进度要求

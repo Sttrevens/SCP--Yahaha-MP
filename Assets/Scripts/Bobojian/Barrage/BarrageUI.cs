@@ -214,9 +214,14 @@ private void SetRegularGoodBadBarrage(float viewersTrend, bool forceBadBarrage)
 {
     // 如果观众少于阈值，强制设置为bad
     // 否则根据趋势判断
-    if (forceBadBarrage || viewersTrend < -0.1f)
+    if (forceBadBarrage || viewersTrend < 0)
     {
-        SetBarrageList(BarrageType.bad);
+        if (Random.value <= 1 + viewersTrend)
+            SetBarrageList(BarrageType.bad);
+        else
+        {
+            SetBarrageList(BarrageType.good);
+        }
     }
     else
     {
