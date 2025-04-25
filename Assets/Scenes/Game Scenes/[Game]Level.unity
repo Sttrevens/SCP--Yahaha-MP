@@ -167,6 +167,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &195472637 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5661437622115712900, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+  m_PrefabInstance: {fileID: 410948273}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba3731630f3d8147b3de9d35bd48176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &290077251
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -257,9 +268,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1152262963079108877, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: Flags
+      value: 262145
+      objectReference: {fileID: 0}
+    - target: {fileID: 1152262963079108877, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: SortKey
       value: 2523216515
       objectReference: {fileID: 0}
+    - target: {fileID: 1152262963079108877, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: NetworkedBehaviours.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1152262963079108877, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 3404109410974747573}
     - target: {fileID: 1178209540141898313, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: SortKey
       value: 2747295995
@@ -420,6 +443,10 @@ PrefabInstance:
       propertyPath: SortKey
       value: 4178419168
       objectReference: {fileID: 0}
+    - target: {fileID: 5661437622115712900, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: showDebugInfo
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5670563717161345672, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: SortKey
       value: 1869479093
@@ -468,6 +495,22 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7722464848654359346, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: Flags
+      value: 262145
+      objectReference: {fileID: 0}
+    - target: {fileID: 7722464848654359346, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: SortKey
+      value: 3023097359
+      objectReference: {fileID: 0}
+    - target: {fileID: 7722464848654359346, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: NetworkedBehaviours.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7722464848654359346, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 195472637}
     - target: {fileID: 7876332376624381997, guid: 64c9dff0f5184124e97423283d52a0a3, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
