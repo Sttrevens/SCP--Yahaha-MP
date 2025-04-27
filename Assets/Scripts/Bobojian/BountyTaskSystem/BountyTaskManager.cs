@@ -139,12 +139,6 @@ public class BountyTaskManager : NetworkBehaviour
             {
                 Debug.LogWarning("LevelManager实例不存在，无法绑定关卡事件！");
             }
-            
-            // 初始化任务时间字典
-            foreach (var task in _activeTasks)
-            {
-                TaskRemainingTimes.Set(task.id, task.remainingTime);
-            }
         }
         else
         {
@@ -535,6 +529,8 @@ public class BountyTaskManager : NetworkBehaviour
     // 更新所有活跃任务
     private void UpdateActiveTasks()
     {
+        TaskRemainingTimes.Clear();
+        
             for (int i = _activeTasks.Count - 1; i >= 0; i--)
             {
                 var task = _activeTasks[i];
@@ -548,7 +544,6 @@ public class BountyTaskManager : NetworkBehaviour
                 if (task.remainingTime <= 0)
                 {
                     RPC_FailTask(task.id);
-                    _activeTasks.RemoveAt(i);
                 
                     // 从字典中移除此任务
                     TaskRemainingTimes.Remove(task.id);
@@ -711,10 +706,10 @@ private void RPC_BroadcastNewTask(string id, string taskName, string taskDescrip
     // 触发任务生成事件
     OnTaskGenerated?.Invoke(newTask);
     
-    if (HasStateAuthority)
+    /*if (HasStateAuthority)
     {
         TaskRemainingTimes.Set(newTask.id, newTask.remainingTime);
-    }
+    }*/
     
     // 创建任务UI
     CreateTaskUI(newTask);
