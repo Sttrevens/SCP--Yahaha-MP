@@ -256,7 +256,7 @@ public class BountyTaskManager : NetworkBehaviour
     
     public override void FixedUpdateNetwork()
     {
-        Debug.Log($"[{(HasStateAuthority ? "Master Client" : "Client")}] FixedUpdateNetwork in BountyTaskManager");
+        //Debug.Log($"[{(HasStateAuthority ? "Master Client" : "Client")}] FixedUpdateNetwork in BountyTaskManager");
 
         // 更新所有活跃任务
         UpdateActiveTasks();
@@ -535,9 +535,6 @@ public class BountyTaskManager : NetworkBehaviour
     // 更新所有活跃任务
     private void UpdateActiveTasks()
     {
-        if (HasStateAuthority)
-        {
-            Debug.Log("Master Client Updating Task Time");
             for (int i = _activeTasks.Count - 1; i >= 0; i--)
             {
                 var task = _activeTasks[i];
@@ -557,21 +554,7 @@ public class BountyTaskManager : NetworkBehaviour
                     TaskRemainingTimes.Remove(task.id);
                 }
             }
-        }
-        else
-        {
-            Debug.Log("Client Receiving Updated Task Time");
-            // 非Authority客户端：从networked字典获取最新的任务时间
-            for (int i = 0; i < _activeTasks.Count; i++)
-            {
-                var task = _activeTasks[i];
-                if (TaskRemainingTimes.TryGet(task.id, out float currentTime))
-                {
-                    task.remainingTime = currentTime;
-                }
-            }
-        }
-
+            
         RPC_UpdateActiveTasksTime();
     }
 

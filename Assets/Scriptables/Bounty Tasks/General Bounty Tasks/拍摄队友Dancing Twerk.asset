@@ -13,19 +13,20 @@ MonoBehaviour:
   m_Name: "\u62CD\u6444\u961F\u53CBDancing Twerk"
   m_EditorClassIdentifier: 
   taskID: bc1bc048
-  taskName: "\u62CD\u6444\u961F\u53CBDancing Twerk"
+  taskName: "\u4F60\u4EEC\u6709\u6CA1\u6709\u624D\u827A\uFF0C\u5C55\u793A\u4E00\u4E0B"
   taskDescriptions:
-  - "\u62CD\u6444\u76EE\u6807"
+  - "\u62CD\u6444\u4EFB\u4E00\u961F\u53CB\u8DF3 Dancing Twerk \u821E\u8E4810\u79D2\u3002"
   baseDifficulty: 1
-  baseReward: 100
-  baseViewerReward: 0
+  baseReward: 10
+  baseViewerReward: 20
   descriptionFormats:
   - "\u62CD\u6444{0}\u7684\u7CBE\u5F69\u8868\u73B0"
-  requiresSpecificState: 0
-  specificStateName: 
+  requiresSpecificState: 1
+  specificStateName: Dancing Twerk
   requiredTimeLength: 0
   requiresOtherTargetAmount: 1
-  requiredTargetTags: []
+  requiredTargetTags:
+  - Player
   minLevelProgress: 0
   maxLevelProgress: 1
   minViewersRequired: 0
