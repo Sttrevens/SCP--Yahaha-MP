@@ -571,6 +571,22 @@ public class BountyTaskManager : NetworkBehaviour
                 }
             }
         }
+
+        RPC_UpdateActiveTasksTime();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_UpdateActiveTasksTime()
+    {
+        // 非Authority客户端：从networked字典获取最新的任务时间
+        for (int i = 0; i < _activeTasks.Count; i++)
+        {
+            var task = _activeTasks[i];
+            if (TaskRemainingTimes.TryGet(task.id, out float currentTime))
+            {
+                task.remainingTime = currentTime;
+            }
+        }
     }
     
    [Rpc(RpcSources.StateAuthority, RpcTargets.StateAuthority)]
