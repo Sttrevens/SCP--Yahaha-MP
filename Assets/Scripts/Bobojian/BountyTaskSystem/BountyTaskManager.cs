@@ -139,6 +139,12 @@ public class BountyTaskManager : NetworkBehaviour
             {
                 Debug.LogWarning("LevelManager实例不存在，无法绑定关卡事件！");
             }
+            
+            // 初始化任务时间字典
+            foreach (var task in _activeTasks)
+            {
+                TaskRemainingTimes.Set(task.id, task.remainingTime);
+            }
         }
         else
         {
@@ -520,8 +526,9 @@ public class BountyTaskManager : NetworkBehaviour
         return _recentDonorNames[Random.Range(0, _recentDonorNames.Count)];
     }
     
-    private float _taskUpdateTimer = 0f;
-    public float taskUpdateInterval = 1f; 
+    // 使用Fusion的Networked特性声明一个字典，用于同步任务剩余时间
+    [Networked]
+    private NetworkDictionary<string, float> TaskRemainingTimes => default;
     
     // 更新所有活跃任务
     private void UpdateActiveTasks()
@@ -533,61 +540,32 @@ public class BountyTaskManager : NetworkBehaviour
                 var task = _activeTasks[i];
                 // 更新剩余时间
                 task.remainingTime -= Time.deltaTime;
+            
+                // 更新网络字典中的值以同步到所有客户端
+                TaskRemainingTimes.Set(task.id, task.remainingTime);
+            
                 // 检查是否超时
                 if (task.remainingTime <= 0)
                 {
                     RPC_FailTask(task.id);
                     _activeTasks.RemoveAt(i);
+                
+                    // 从字典中移除此任务
+                    TaskRemainingTimes.Remove(task.id);
                 }
             }
         }
         else
         {
-            // 非Authority客户端：每隔一段时间请求更新任务时间
-            _taskUpdateTimer -= Time.deltaTime;
-            if (_taskUpdateTimer <= 0f)
+            // 非Authority客户端：从networked字典获取最新的任务时间
+            for (int i = 0; i < _activeTasks.Count; i++)
             {
-                RPC_RequestTaskTimeUpdate();
-                _taskUpdateTimer = taskUpdateInterval; // 重置计时器
+                var task = _activeTasks[i];
+                if (TaskRemainingTimes.TryGet(task.id, out float currentTime))
+                {
+                    task.remainingTime = currentTime;
+                }
             }
-        }
-    }
-    
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPC_RequestTaskTimeUpdate()
-    {
-        // 客户端调用服务器
-        if (HasStateAuthority)
-        {
-            // 服务器接收到请求后，向所有客户端广播当前任务时间
-            RPC_BroadcastTaskTimes();
-        }
-    }
-    
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_BroadcastTaskTimes()
-    {
-        // 仅服务器调用此方法
-        if (!HasStateAuthority) return;
-    
-        // 为每个活跃任务广播剩余时间
-        foreach (var task in _activeTasks)
-        {
-            RPC_UpdateTaskTime(task.id, task.remainingTime);
-        }
-    }
-    
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_UpdateTaskTime(string taskId, float remainingTime)
-    {
-        // 在所有客户端上更新指定任务的剩余时间
-        if (HasStateAuthority) return; // 服务器不需要更新自己的时间
-    
-        // 查找任务并更新时间
-        var task = _activeTasks.FirstOrDefault(t => t.id == taskId);
-        if (task != null)
-        {
-            task.remainingTime = remainingTime;
         }
     }
     
@@ -729,6 +707,11 @@ private void RPC_BroadcastNewTask(string id, string taskName, string taskDescrip
     
     // 触发任务生成事件
     OnTaskGenerated?.Invoke(newTask);
+    
+    if (HasStateAuthority)
+    {
+        TaskRemainingTimes.Set(newTask.id, newTask.remainingTime);
+    }
     
     // 创建任务UI
     CreateTaskUI(newTask);
@@ -1051,6 +1034,7 @@ private void RPC_BroadcastNewTask(string id, string taskName, string taskDescrip
     
         // 从活跃列表中移除
         _activeTasks.Remove(task);
+        TaskRemainingTimes.Remove(taskId);
     
         if (task.targetObject != null)
         {
@@ -1074,6 +1058,7 @@ private void RPC_BroadcastNewTask(string id, string taskName, string taskDescrip
     
         // 从活跃列表中移除
         _activeTasks.Remove(task);
+        TaskRemainingTimes.Remove(taskId);
     
         if (task.targetObject != null)
         {
