@@ -67,7 +67,7 @@ public class BarrageUI : NetworkBehaviour
     float contentBarrageChance = CalculateContentBarrageChance();
 
     // 计算观众趋势
-    float viewersTrend = CalculateViewersTrend(10f);
+    float viewersTrend = CalculateViewersTrend(5f);
     
     // 获取当前观众数量
     int currentViewers = ScoreManager.Instance.CurrentViewers;
@@ -187,15 +187,15 @@ private void HandleRegularBarrage(float viewersTrend, bool forceBadBarrage)
     }
     else if (currentViewers < goodViewersAmount)
     {
-        spamProbability = 0.1f; // 观众少，10%概率显示垃圾弹幕
+        spamProbability = 0.01f; // 观众少，10%概率显示垃圾弹幕
     }
     else if (currentViewers < goodViewersAmount * 2)
     {
-        spamProbability = 0.2f; // 观众适中，20%概率显示垃圾弹幕
+        spamProbability = 0.02f; // 观众适中，20%概率显示垃圾弹幕
     }
     else // currentViewers >= goodViewersAmount * 2
     {
-        spamProbability = 0.3f; // 观众很多，30%概率显示垃圾弹幕
+        spamProbability = 0.03f; // 观众很多，30%概率显示垃圾弹幕
     }
     
     // 决定是否显示垃圾弹幕

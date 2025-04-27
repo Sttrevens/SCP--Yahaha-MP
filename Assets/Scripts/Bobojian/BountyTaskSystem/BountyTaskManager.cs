@@ -539,7 +539,7 @@ public class BountyTaskManager : NetworkBehaviour
             {
                 var task = _activeTasks[i];
                 // 更新剩余时间
-                task.remainingTime -= Time.deltaTime;
+                task.remainingTime -= Runner.DeltaTime;
             
                 // 更新网络字典中的值以同步到所有客户端
                 TaskRemainingTimes.Set(task.id, task.remainingTime);
