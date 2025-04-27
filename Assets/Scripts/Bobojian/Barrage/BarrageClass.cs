@@ -12,7 +12,11 @@ public enum BarrageType{
     badenemy,
     spam,
     goodEyedSlimeBlue,
-    badEyedSlimeBlue
+    badEyedSlimeBlue,
+    goodPlayer,
+    badPlayer,
+    goodDaGuai,
+    goodLieQ
 }
 
 [Serializable]
@@ -159,6 +163,10 @@ public class BarrageClass
         TYPE_Barrage.Add(BarrageType.badenemy, getBarrageListByType(BarrageType.badenemy));
         TYPE_Barrage.Add(BarrageType.goodEyedSlimeBlue, getBarrageListByType(BarrageType.goodEyedSlimeBlue));
         TYPE_Barrage.Add(BarrageType.badEyedSlimeBlue, getBarrageListByType(BarrageType.badEyedSlimeBlue));
+        TYPE_Barrage.Add(BarrageType.goodPlayer, getBarrageListByType(BarrageType.goodPlayer));
+        TYPE_Barrage.Add(BarrageType.badPlayer, getBarrageListByType(BarrageType.badPlayer));
+        TYPE_Barrage.Add(BarrageType.goodDaGuai, getBarrageListByType(BarrageType.goodDaGuai));
+        TYPE_Barrage.Add(BarrageType.goodLieQ, getBarrageListByType(BarrageType.goodLieQ));
         
         // 创建临时包装类来序列化列表
         var wrapper = new BarrageItemsJsonWrapper { items = TYPE_Barrage[BarrageType.newbie].ToArray() };

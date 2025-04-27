@@ -112,7 +112,7 @@ public class FilmTarget : MonoBehaviour
             bool stateCondition = !task.task.requiresSpecificState || 
                                  (isInSpecialState && task.task.specificStateName == currentState);
             
-            if (progressCondition && stateCondition)
+            if (progressCondition/* && stateCondition*/)
             {
                 availableTasks.Add(task);
             }

@@ -195,7 +195,7 @@ private void HandleRegularBarrage(float viewersTrend, bool forceBadBarrage)
     }
     else // currentViewers >= goodViewersAmount * 2
     {
-        spamProbability = 0.4f; // 观众很多，40%概率显示垃圾弹幕
+        spamProbability = 0.3f; // 观众很多，30%概率显示垃圾弹幕
     }
     
     // 决定是否显示垃圾弹幕
@@ -214,9 +214,13 @@ private void SetRegularGoodBadBarrage(float viewersTrend, bool forceBadBarrage)
 {
     // 如果观众少于阈值，强制设置为bad
     // 否则根据趋势判断
-    if (forceBadBarrage || viewersTrend < 0)
+    if (forceBadBarrage)
     {
-        if (Random.value <= 1 + viewersTrend)
+        SetBarrageList(BarrageType.bad);
+    }
+    else if (viewersTrend < 0)
+    {
+        if (Random.value <= -viewersTrend)
             SetBarrageList(BarrageType.bad);
         else
         {
@@ -225,7 +229,7 @@ private void SetRegularGoodBadBarrage(float viewersTrend, bool forceBadBarrage)
     }
     else
     {
-        SetBarrageList(BarrageType.good);
+            SetBarrageList(BarrageType.good);
     }
 }
 

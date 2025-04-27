@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using System.Linq;
 
 public class BountyTaskManager : NetworkBehaviour
 {
@@ -119,6 +120,7 @@ public class BountyTaskManager : NetworkBehaviour
             IEnumerator DelayedInit()
             {
                 yield return new WaitForSeconds(15f);
+                SetupInitialTaskTimes();
                 FindAllTargetsInScene();
             }
         
@@ -177,8 +179,6 @@ public class BountyTaskManager : NetworkBehaviour
             return;
         }
         Instance = this;
-        
-        SetupInitialTaskTimes();
     }
     
     // 设置初始任务生成时间
@@ -411,7 +411,7 @@ public class BountyTaskManager : NetworkBehaviour
                 _allTargetsInScene.Add(target);
                 
                 // 订阅状态变化事件
-                target.onStateChanged.AddListener(state => OnTargetStateChanged(target, state));
+                //target.onStateChanged.AddListener(state => OnTargetStateChanged(target, state));
             }
         }
         
@@ -520,24 +520,74 @@ public class BountyTaskManager : NetworkBehaviour
         return _recentDonorNames[Random.Range(0, _recentDonorNames.Count)];
     }
     
+    private float _taskUpdateTimer = 0f;
+    public float taskUpdateInterval = 1f; 
+    
     // 更新所有活跃任务
     private void UpdateActiveTasks()
     {
-        if (!HasStateAuthority) return;
-        
-        for (int i = _activeTasks.Count - 1; i >= 0; i--)
+        if (HasStateAuthority)
         {
-            var task = _activeTasks[i];
-            
-            // 更新剩余时间
-            task.remainingTime -= Time.deltaTime;
-            
-            // 检查是否超时
-            if (task.remainingTime <= 0)
+            for (int i = _activeTasks.Count - 1; i >= 0; i--)
             {
-                RPC_FailTask(task.id);
-                _activeTasks.RemoveAt(i);
+                var task = _activeTasks[i];
+                // 更新剩余时间
+                task.remainingTime -= Time.deltaTime;
+                // 检查是否超时
+                if (task.remainingTime <= 0)
+                {
+                    RPC_FailTask(task.id);
+                    _activeTasks.RemoveAt(i);
+                }
             }
+        }
+        else
+        {
+            // 非Authority客户端：每隔一段时间请求更新任务时间
+            _taskUpdateTimer -= Time.deltaTime;
+            if (_taskUpdateTimer <= 0f)
+            {
+                RPC_RequestTaskTimeUpdate();
+                _taskUpdateTimer = taskUpdateInterval; // 重置计时器
+            }
+        }
+    }
+    
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_RequestTaskTimeUpdate()
+    {
+        // 客户端调用服务器
+        if (HasStateAuthority)
+        {
+            // 服务器接收到请求后，向所有客户端广播当前任务时间
+            RPC_BroadcastTaskTimes();
+        }
+    }
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_BroadcastTaskTimes()
+    {
+        // 仅服务器调用此方法
+        if (!HasStateAuthority) return;
+    
+        // 为每个活跃任务广播剩余时间
+        foreach (var task in _activeTasks)
+        {
+            RPC_UpdateTaskTime(task.id, task.remainingTime);
+        }
+    }
+    
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_UpdateTaskTime(string taskId, float remainingTime)
+    {
+        // 在所有客户端上更新指定任务的剩余时间
+        if (HasStateAuthority) return; // 服务器不需要更新自己的时间
+    
+        // 查找任务并更新时间
+        var task = _activeTasks.FirstOrDefault(t => t.id == taskId);
+        if (task != null)
+        {
+            task.remainingTime = remainingTime;
         }
     }
     
@@ -582,6 +632,13 @@ private void RPC_GenerateTask()
     // 基于权重选择一个任务
     BountyTaskInfo selectedTaskInfo = SelectTaskBasedOnWeight(availableTasks);
     if (selectedTaskInfo == null) return;
+
+    if (CheckIsInActiveTask(selectedTaskInfo))
+    {
+        //选择的任务已经存在于 active tasks 中，重新生成一个
+        RPC_GenerateTask();
+        return;
+    }
     
     // 计算各项参数
     float totalDifficulty = CalculateTotalDifficulty(selectedTaskInfo.task.baseDifficulty);
@@ -1038,5 +1095,18 @@ private void RPC_BroadcastNewTask(string id, string taskName, string taskDescrip
     public List<ActiveTask> GetActiveTasks()
     {
         return new List<ActiveTask>(_activeTasks);
+    }
+
+    public bool CheckIsInActiveTask(BountyTaskInfo taskInfo)
+    {
+        foreach (var task in _activeTasks)
+        {
+            if (task.targetTaskInfo == taskInfo)
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
