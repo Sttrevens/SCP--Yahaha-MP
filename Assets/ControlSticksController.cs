@@ -80,6 +80,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         Debug.Log($"isRotating: {isRotating}, IsFlying: {TakeoffController.Instance.IsFlying}, HandleSpaceshipState is null: {HandleSpaceshipState() == null}");
         if ((!isRotating && !TakeoffController.Instance.IsFlying))
         {
+            OnButtonPressed.Invoke();
             StartCoroutine(HandleSpaceshipState());
         }
     }
@@ -115,12 +116,11 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         else if (CurrentState == SpaceshipState.Landing)
         {
                 IsPulled = true;
-                Rpc_ScreenFade(true);
                 yield return RotateToAngle(rotationAngle);
                 door.GetComponent<EnterRoom>().RPC_ResetRotation();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
-
+                Rpc_ScreenFade(true);
                 AudioManager.Instance.PlayElevatorShakeSound(spaceship);
                 yield return new WaitForSeconds(2f);
                 TakeoffController.Instance.Rpc_OnInteract();

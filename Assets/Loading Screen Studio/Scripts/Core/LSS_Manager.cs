@@ -137,6 +137,11 @@ namespace Michsky.LSS
             loadingMode = LoadingMode.Additive;
         }
 
+        public void VirtualLoading(float duration)
+        {
+            LSS_LoadingScreen.PerformVirtualTransition(duration);
+        }
+
         void DoTriggerActions()
         {
             LSS_LoadingScreen.presetName = presetName;

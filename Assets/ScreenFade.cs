@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using Michsky.LSS;
 
 public class ScreenFade : MonoBehaviour
 {
@@ -75,8 +76,7 @@ public class ScreenFade : MonoBehaviour
     
     public void TriggerScreenFade(bool showSubtitle)
     {
-        fadeScreen.SetActive(true);
-        StartCoroutine(FadeScreenAndShowSubtitle(showSubtitle));
+        LSS_LoadingScreen.PerformVirtualTransition(fadeDuration);
     }
 
     public void TriggerScreenFadeOnly()
