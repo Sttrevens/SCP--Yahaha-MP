@@ -122,10 +122,16 @@ public class StreamTaskDetector : MonoBehaviour
             }
         }
 
+        foreach (var target in BountyTaskManager.Instance.allTargetsInScene)
+        {
+            target.isInView = false;
+        }
 // 遍历视野中的每个目标
         foreach (var obj in _coneDetection.targetsInView)
         {
             var filmTarget = obj.GetComponent<FilmTarget>();
+            filmTarget.isInView = true;
+            filmTarget.lastTimeInView = Time.time;
             foreach (var taskInfo in filmTarget.possibleTasks)
             {
                 TaskTemplate task = taskInfo.task;

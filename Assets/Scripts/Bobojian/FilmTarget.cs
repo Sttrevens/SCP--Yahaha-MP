@@ -29,6 +29,25 @@ public class FilmTarget : MonoBehaviour
     public bool isInSpecialState = false;     // 是否处于特殊状态（如狂暴）
     public string currentState = "";          // 当前状态名称
     public string[] allStates;
+    // 记录最后一次在视野中的时间
+    public float lastTimeInView = -1f; // -1表示从未在视野中
+    // 当前是否在视野中
+    public bool isInView = false;
+    // 在合适的地方更新视野状态和时间
+    public void UpdateViewStatus(bool inView)
+    {
+        // 如果状态发生变化或首次进入视野
+        if (inView != isInView || (inView && lastTimeInView < 0))
+        {
+            isInView = inView;
+            if (inView)
+            {
+                // 每次在视野中都更新时间
+                lastTimeInView = Time.time;
+            }
+        }
+    }
+
     
     [Header("事件")]
     // 用于在Unity事件系统中注册状态变化

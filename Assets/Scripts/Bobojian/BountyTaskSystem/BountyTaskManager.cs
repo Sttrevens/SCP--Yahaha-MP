@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using System.Linq;
+using UnityEngine.Serialization;
 
 public class BountyTaskManager : NetworkBehaviour
 {
@@ -50,12 +51,13 @@ public class BountyTaskManager : NetworkBehaviour
     // 私有字段
     private List<ActiveTask> _activeTasks = new List<ActiveTask>();
     private List<string> _recentDonorNames = new List<string>(); // 最近使用的打赏者名称
-    private List<FilmTarget> _allTargetsInScene = new List<FilmTarget>();
+    [FormerlySerializedAs("_allTargetsInScene")] public List<FilmTarget> allTargetsInScene = new List<FilmTarget>();
     private Dictionary<string, List<string>> _usedTaskDescriptions = new Dictionary<string, List<string>>(); // 已使用的任务描述
     private int _completedTaskCount = 0;
     private int _failedTaskCount = 0;
     private float _taskSuccessRate = 0.5f; // 默认任务成功率
     private bool _isLevelLoaded = false;
+    private bool _isLevelDestroyed = false;
     private float _levelStartTime;
     private float _estimatedLevelDuration = 600f; // 预计关卡时长（秒）
     
@@ -212,6 +214,7 @@ public class BountyTaskManager : NetworkBehaviour
     // 处理关卡加载完成事件
     private void HandleLevelLoaded()
     {
+        _isLevelDestroyed = false;
         _isLevelLoaded = true;
         _levelStartTime = Time.time;
         
@@ -241,6 +244,8 @@ public class BountyTaskManager : NetworkBehaviour
         
         // 重置累积的观众-时间值
         _accumulatedViewerTime = 0f;
+
+        _isLevelDestroyed = true;
         
         if (showDebugInfo)
         {
@@ -263,7 +268,7 @@ public class BountyTaskManager : NetworkBehaviour
                 // 先处理初始任务队列
                 CheckInitialTaskGeneration();
             }
-            else
+            else if (!_isLevelDestroyed)
             {
                 // 初始任务队列完成后，使用基于观众数量的生成方式
                 CheckViewerBasedTaskGeneration();
@@ -404,13 +409,13 @@ public class BountyTaskManager : NetworkBehaviour
     // 查找场景中所有拍摄目标
     private void FindAllTargetsInScene()
     {
-        _allTargetsInScene.Clear();
+        allTargetsInScene.Clear();
         FilmTarget[] targets = FindObjectsOfType<FilmTarget>();
         foreach (var target in targets)
         {
             if (target.canGenerateTasks && target.possibleTasks.Count > 0)
             {
-                _allTargetsInScene.Add(target);
+                allTargetsInScene.Add(target);
                 
                 // 订阅状态变化事件
                 //target.onStateChanged.AddListener(state => OnTargetStateChanged(target, state));
@@ -419,7 +424,7 @@ public class BountyTaskManager : NetworkBehaviour
         
         if (showDebugInfo)
         {
-            Debug.Log($"找到 {_allTargetsInScene.Count} 个可生成任务的目标");
+            Debug.Log($"找到 {allTargetsInScene.Count} 个可生成任务的目标");
         }
     }
     
@@ -580,7 +585,7 @@ private void RPC_GenerateTask()
     
     // 查找当前可用的目标
     List<FilmTarget> eligibleTargets = new List<FilmTarget>();
-    foreach (var target in _allTargetsInScene)
+    foreach (var target in allTargetsInScene)
     {
         if (target.IsEligibleForTaskGeneration(currentProgress))
         {
@@ -611,8 +616,6 @@ private void RPC_GenerateTask()
 
     if (CheckIsInActiveTask(selectedTaskInfo))
     {
-        //选择的任务已经存在于 active tasks 中，重新生成一个
-        RPC_GenerateTask();
         return;
     }
     
@@ -818,71 +821,125 @@ private void RPC_BroadcastNewTask(string id, string taskName, string taskDescrip
     }
     
     // 基于权重选择目标
-    private FilmTarget SelectTargetBasedOnWeight(List<FilmTarget> targets)
+// 基于权重选择目标
+private FilmTarget SelectTargetBasedOnWeight(List<FilmTarget> targets)
+{
+    if (targets == null || targets.Count == 0)
+        return null;
+
+    float currentProgress = GetLevelProgress();
+    
+    // 分离Player目标和其他目标
+    List<FilmTarget> playerTargets = new List<FilmTarget>();
+    List<FilmTarget> nonPlayerTargets = new List<FilmTarget>();
+    
+    foreach (var target in targets)
     {
-        float currentProgress = GetLevelProgress();
-        List<FilmTarget> targetsWithAvailableTasks = new List<FilmTarget>();
-        Dictionary<FilmTarget, float> weightMap = new Dictionary<FilmTarget, float>();
-    
-        float totalWeight = 0;
-    
-        // 获取所有StreamTaskDetector
-        var detectors = FindObjectsOfType<StreamTaskDetector>();
-    
-        // 只考虑有可用任务的目标
-        foreach (var target in targets)
+        if (target.targetTag == "Player")
         {
-            var availableTasks = target.GetAvailableTasks(currentProgress);
-            if (availableTasks.Count > 0)
-            {
-                targetsWithAvailableTasks.Add(target);
-                float weight = target.aestheticLevel + target.currentAestheticFatigueValue;
-                
-                // 检查目标是否在任何StreamTaskDetector的视野内
-                bool isInView = false;
-                foreach (var detector in detectors)
-                {
-                    if (detector.GetTargetsInView().Contains(target))
-                    {
-                        isInView = true;
-                        break;
-                    }
-                }
-                
-                // 如果在视野内，权重翻倍
-                if (isInView)
-                {
-                    weight *= 2;
-                }
-                
-                weightMap[target] = weight;
-                totalWeight += weight;
-            }
+            playerTargets.Add(target);
         }
-    
-        // 如果没有目标有可用任务，返回null
-        if (targetsWithAvailableTasks.Count == 0)
+        else
         {
-            if (showDebugInfo) Debug.Log("没有目标有可用任务");
-            return null;
+            nonPlayerTargets.Add(target);
         }
-    
-        // 基于权重随机选择
-        float randomValue = Random.Range(0, totalWeight);
-        float weightSum = 0;
-    
-        foreach (var target in targetsWithAvailableTasks)
-        {
-            weightSum += weightMap[target];
-            if (randomValue <= weightSum)
-            {
-                if (showDebugInfo) Debug.Log($"选择目标: {target.name}，权重: {weightMap[target]}/{totalWeight}");
-                return target;
-            }
-        }
-    
-        return targetsWithAvailableTasks[0];
     }
+    
+    // 筛选出曾经在视野中的非Player目标
+    List<FilmTarget> eligibleNonPlayerTargets = nonPlayerTargets.Where(t => t.lastTimeInView >= 0).ToList();
+    
+    // 合并符合条件的目标和Player目标
+    List<FilmTarget> eligibleTargets = new List<FilmTarget>(eligibleNonPlayerTargets);
+    eligibleTargets.AddRange(playerTargets); // Player目标不受视野历史条件限制
+    
+    // 如果没有符合条件的目标，则返回null
+    if (eligibleTargets.Count == 0)
+    {
+        if (showDebugInfo) Debug.Log("没有符合条件的目标");
+        return null;
+    }
+    
+    List<FilmTarget> targetsWithAvailableTasks = new List<FilmTarget>();
+    Dictionary<FilmTarget, float> weightMap = new Dictionary<FilmTarget, float>();
+    
+    float totalWeight = 0;
+    
+    // 获取所有StreamTaskDetector
+    var detectors = FindObjectsOfType<StreamTaskDetector>();
+    
+    // 只考虑有可用任务的目标
+    foreach (var target in eligibleTargets)
+    {
+        var availableTasks = target.GetAvailableTasks(currentProgress);
+        if (availableTasks.Count > 0)
+        {
+            targetsWithAvailableTasks.Add(target);
+            
+            // 基础权重：美学等级 + 疲劳值
+            float weight = target.aestheticLevel + target.currentAestheticFatigueValue;
+            
+            // 基于在视野中的时间添加权重（Player永远是1）
+            float viewTimeWeight = 1f;
+            
+            // 只为非Player目标计算视野权重
+            if (target.targetTag != "Player")
+            {
+                if (target.isInView)
+                {
+                    // 当前在视野中的目标获得最高权重加成
+                    viewTimeWeight = 10f;  // 可调整这个值
+                }
+                else
+                {
+                    // 基于最后一次在视野中的时间计算权重
+                    // 时间越近，权重越高
+                    float timeSinceLastView = Time.time - target.lastTimeInView;
+                    viewTimeWeight = Mathf.Max(1f, 5f - timeSinceLastView / 10f);  // 可调整这个公式
+                }
+            }
+            
+            // 应用视野时间权重
+            weight *= viewTimeWeight;
+            
+            weightMap[target] = weight;
+            totalWeight += weight;
+            
+            if (showDebugInfo) Debug.Log($"目标: {target.name}, 标签: {target.targetTag}, 基础权重: {target.aestheticLevel + target.currentAestheticFatigueValue}, 视野权重: {viewTimeWeight}, 总权重: {weight}");
+        }
+    }
+    
+    // 如果没有目标有可用任务，返回null
+    if (targetsWithAvailableTasks.Count == 0)
+    {
+        if (showDebugInfo) Debug.Log("没有目标有可用任务");
+        return null;
+    }
+    
+    // 如果总权重为零，随机选择一个目标
+    if (totalWeight <= 0f)
+    {
+        FilmTarget randomTarget = targetsWithAvailableTasks[Random.Range(0, targetsWithAvailableTasks.Count)];
+        if (showDebugInfo) Debug.Log($"总权重为零，随机选择目标: {randomTarget.name}");
+        return randomTarget;
+    }
+    
+    // 基于权重随机选择
+    float randomValue = Random.Range(0f, totalWeight);
+    float weightSum = 0f;
+    
+    foreach (var target in targetsWithAvailableTasks)
+    {
+        weightSum += weightMap[target];
+        if (randomValue <= weightSum)
+        {
+            if (showDebugInfo) Debug.Log($"选择目标: {target.name}，权重: {weightMap[target]}/{totalWeight}");
+            return target;
+        }
+    }
+    
+    // 以防万一，返回最后一个目标
+    return targetsWithAvailableTasks[targetsWithAvailableTasks.Count - 1];
+}
     
     // 基于权重选择任务
     private BountyTaskInfo SelectTaskBasedOnWeight(List<BountyTaskInfo> tasks)
@@ -899,10 +956,11 @@ private void RPC_BroadcastNewTask(string id, string taskName, string taskDescrip
         foreach (var task in tasks)
         {
             weightSum += task.taskWeight;
-            if (randomValue <= weightSum)
-            {
-                return task;
-            }
+            if (randomValue != 0 && weightSum != 0)
+                if (randomValue <= weightSum)
+                {
+                    return task;
+                }
         }
         
         return tasks[0]; // 默认返回第一个

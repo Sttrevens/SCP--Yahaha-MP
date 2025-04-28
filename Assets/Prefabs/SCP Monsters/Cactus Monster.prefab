@@ -10420,7 +10420,27 @@ MonoBehaviour:
   currentAestheticFatigueValue: 0
   aestheticLevel: 20
   targetTag: CactusMaster
-  possibleTasks: []
+  possibleTasks:
+  - task: {fileID: 11400000, guid: 0976cf85382291d46a56cc79022c17d5, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: e9adbafe509537a43b2b3caf5c74f697, type: 2}
+    taskWeight: 0.7
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: bf84b20cb3f178a408118e27e003f28b, type: 2}
+    taskWeight: 0.7
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 8c03943a4d1efbc4597b9aa61420253d, type: 2}
+    taskWeight: 0.6
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 7fb9e9735a8e4694c9dc3ebba278903f, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
   canGenerateTasks: 1
   isInSpecialState: 0
   currentState: 
@@ -10428,7 +10448,9 @@ MonoBehaviour:
   - CastSpell
   - Run Forward In Place
   - PowerPunchAttack
-  - LeftPunchAttack
+  - RightPunchAttack
+  lastTimeInView: -1
+  isInView: 0
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []

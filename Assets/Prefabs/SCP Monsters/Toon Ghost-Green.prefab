@@ -5286,7 +5286,7 @@ MonoBehaviour:
   possibleTasks:
   - task: {fileID: 11400000, guid: c35b4f5eca21cc94d86bf9a9bd203450, type: 2}
     taskWeight: 1
-    minProgressToAppear: 0.24786319
+    minProgressToAppear: 0
     maxProgressToAppear: 1
   - task: {fileID: 11400000, guid: 060bb41361488b34d87f43f12748616b, type: 2}
     taskWeight: 1
@@ -5307,6 +5307,8 @@ MonoBehaviour:
   - Walk Forward In Place 0
   - Defend 0
   - BiteAttack
+  lastTimeInView: -1
+  isInView: 0
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []

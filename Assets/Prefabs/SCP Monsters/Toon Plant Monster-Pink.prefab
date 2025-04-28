@@ -5730,11 +5730,11 @@ MonoBehaviour:
   possibleTasks:
   - task: {fileID: 11400000, guid: 53cb75927d2325e48b330efe9f12317a, type: 2}
     taskWeight: 1
-    minProgressToAppear: 0.19810385
+    minProgressToAppear: 0
     maxProgressToAppear: 1
   - task: {fileID: 11400000, guid: 637ad8c080a7e034784b0199622933b7, type: 2}
     taskWeight: 1
-    minProgressToAppear: 0.30339316
+    minProgressToAppear: 0
     maxProgressToAppear: 1
   - task: {fileID: 11400000, guid: 241d679ff39f20142a5d4cbc9c8d0441, type: 2}
     taskWeight: 1
@@ -5746,6 +5746,8 @@ MonoBehaviour:
   allStates:
   - BiteAttack
   - Walk Forward In Place 0
+  lastTimeInView: -1
+  isInView: 0
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []

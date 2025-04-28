@@ -2956,8 +2956,8 @@ MonoBehaviour:
   possibleTasks:
   - task: {fileID: 11400000, guid: 1d8c87b059a9e61418f4318b588e4dee, type: 2}
     taskWeight: 0.6
-    minProgressToAppear: 0.29914534
-    maxProgressToAppear: 1
+    minProgressToAppear: 0
+    maxProgressToAppear: 1.0000001
   - task: {fileID: 11400000, guid: 0c0c93ba0e466f141bbf254ac4b61565, type: 2}
     taskWeight: 0.5
     minProgressToAppear: 0.30075186
@@ -2983,6 +2983,8 @@ MonoBehaviour:
   - ComesAlive
   - Run
   - Attack01
+  lastTimeInView: -1
+  isInView: 0
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []
