@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3063404c0a80bd14fa7365b27ffc8c49, type: 3}
+  m_Name: "\u5DE8\u5927\u7EA2\u773C\u53F2\u83B1\u59C6\u5C0F\u5FC3\u62CD\u6444\u4EFB\u52A1"
+  m_EditorClassIdentifier: 
+  taskID: 020
+  taskName: "\u6697\u4E2D\u89C2\u5BDF\u90A3\u4E2A\u5C0F\u7EA2\u773C\u849C\u5934"
+  taskDescriptions:
+  - "\u5728\u4E0D\u88AB\u53D1\u73B0\u7684\u60C5\u51B5\u4E0B\uFF0C\u62CD\u6444\u5DE8\u5927\u7EA2\u773C\u53F2\u83B1\u59C610\u79D2\u3002"
+  baseDifficulty: 1
+  baseReward: 15
+  baseViewerReward: 43
+  descriptionFormats:
+  - "\u62CD\u6444{0}\u7684\u7CBE\u5F69\u8868\u73B0"
+  requiresSpecificState: 1
+  specificStateName: WalkFWD
+  requiredTimeLength: 10
+  requiresOtherTargetAmount: 1
+  requiredTargetTags:
+  - JudaEyedSlimeRed
+  minLevelProgress: 0
+  maxLevelProgress: 1
+  minViewersRequired: 0

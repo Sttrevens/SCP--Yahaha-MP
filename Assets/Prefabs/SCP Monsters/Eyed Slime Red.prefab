@@ -292,7 +292,27 @@ MonoBehaviour:
   currentAestheticFatigueValue: 0
   aestheticLevel: 3
   targetTag: EyedSlimeRed
-  possibleTasks: []
+  possibleTasks:
+  - task: {fileID: 11400000, guid: c30e4e363a56a8d4c9920dc51ab07509, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: 03b8176ffecbccf4da82c8e900747703, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: a6f08813c01a20f4f838ccb1ede42470, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: b8e5fee50bcda3442bfcd8c8c81041cd, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
+  - task: {fileID: 11400000, guid: aa53381250095f44695ed955f1f6c531, type: 2}
+    taskWeight: 1
+    minProgressToAppear: 0
+    maxProgressToAppear: 1
   canGenerateTasks: 1
   isInSpecialState: 0
   currentState: 
@@ -300,6 +320,9 @@ MonoBehaviour:
   - RunFWD
   - Attack01
   - GetHit
+  - WalkFWD
+  lastTimeInView: -1
+  isInView: 0
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []
