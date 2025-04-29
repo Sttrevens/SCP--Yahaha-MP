@@ -2,7 +2,10 @@ Shader "Custom/FatigueVerigo"
 {
     Properties
     {
-        _MainTex ("Base Map" , 2D) = "white" {}
+        _BlueNoiseTex("Blue Noise Texture" , 2D) = "white"{}
+        _Intensity("Blur Intensity" , Range(0,1)) = 0.5
+        _QuantizationNum("The Number Of Quantization",Int) = 6
+        _NoiseIntensity("Blue Noise Intensity" , Range(0,1)) = 0.2
     }
 
     SubShader
@@ -11,61 +14,57 @@ Shader "Custom/FatigueVerigo"
             "RenderType" = "Opaque"
             "RenderPipeline" = "UniversalPipeline"
         }
-
+        LOD 200
+        ZWrite Off
+        Cull Off
+        
+        HLSLINCLUDE
+        #include "Assets/D_PostProcessing/PostProcessing.hlsl"
+        ENDHLSL
         Pass
         {
+            Name "Quantization Pass"
             HLSLPROGRAM
-            #pragma vertex vert
+            #pragma vertex Vert
             #pragma fragment frag
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-
-            struct Attributes
-            {
-                float4 positionOS : POSITION;
-                float2 uv : TEXCOORD0;
-            };
-
-            struct Varyings
-            {
-                float4 positionHCS : SV_POSITION;
-                float2 uv : TEXCOORD0;
-            };
-
-          
-
+            sampler2D _BlueNoiseTex;
             CBUFFER_START(UnityPerMaterial)
-                sampler2D _MainTex;
+                float _Intensity;
+                int _QuantizationNum;
+                float _NoiseIntensity;
             CBUFFER_END
-
-            half4 ApplyGaussianBlur(float2 uv)
-            {
-                float2 offsets[5];
-                offsets[0] = float2(0.0 , 0.0);
-                offsets[1] = float2(1.0 / _ScreenParams.x , 0.0);
-                offsets[2] = float2(-1.0 / _ScreenParams.x , 0.0);
-                offsets[3] = float2(0.0 , 1.0 / _ScreenParams.y);
-                offsets[4] = float2(0.0 , -1.0 / _ScreenParams.y);
-
-                half4 color = tex2D(_MainTex,uv);
-                for (int i = 0 ; i < 5 ; i++)
-                {
-                    color += tex2D(_MainTex,uv+offsets[i]);
-                }
-                return color / 6.0;
-            }
-
-            Varyings vert(Attributes IN)
-            {
-                Varyings OUT;
-                OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
-                OUT.uv = IN.uv;
-                return OUT;
-            }
 
             half4 frag(Varyings IN) : SV_Target
             {
-                // Apply Gaussian Blur
-                return ApplyGaussianBlur(IN.uv);
+                half3 originalColor = GetSource(IN).rgb;
+                half3 gammaCorrected = pow(abs(originalColor),2.2);
+
+                // 1. 计算亮度
+                half luminance = dot(gammaCorrected, half3(0.299, 0.587, 0.114));
+
+                // 2. 动态偏移采样蓝噪声
+                half2 blueNoiseUV = IN.uv * 0.5;
+
+                // 动态偏移，可以用时间作简单平移
+                float2 noiseOffset = float2(0.05, 0.05) * frac(_Time.y * 0.1); 
+                // 小幅度平移，0.1是位移尺度，0.5是速度
+                blueNoiseUV = frac(blueNoiseUV + noiseOffset); // 保持UV在[0,1]
+
+                half blueNoiseValue = tex2D(_BlueNoiseTex, blueNoiseUV).r;
+                blueNoiseValue *= _NoiseIntensity;
+                // 3. 加入抖动
+                half ditherStrength = 1.0 / _QuantizationNum;
+                half dither = (blueNoiseValue - 0.5) * ditherStrength;
+
+                // 4. 量化亮度
+                half quantizedLuminance = floor((luminance + dither) * _QuantizationNum) / _QuantizationNum;
+
+                // 5. 保持色相饱和度
+                half3 colorRatio = gammaCorrected / max(luminance, 1e-5);
+                half3 quantizedColor = saturate(colorRatio * quantizedLuminance);
+                quantizedColor = pow(abs(quantizedColor),0.4545);
+                
+                return half4(quantizedColor, 1.0);
             }
             ENDHLSL
         }
