@@ -38,6 +38,7 @@ namespace LPSurvivalEngine
         public float oxygenHealthdecay;
 
         public bool isInOxygenRoom;
+        public bool isInSpaceShip;
         [Networked] public bool isDeadNetworked { get; set; } = false;
 
         private bool isDead = false;
@@ -147,6 +148,8 @@ private PlayerInput playerInput;
                 {
                     Debug.Log("δ�ҵ���ΪSanity");
                 }
+                
+                viewerBobojian = GameObject.Find("BobojianSystem").transform.Find("ViewerBobojian").gameObject;
             }
             else
             {
@@ -465,7 +468,6 @@ if (Gamepad.current != null)
             ControlSticksController.Instance.Rpc_HandlePlayerDeath();
             if (screenFade != null)
                 screenFade.TriggerScreenFadeOnly();
-            viewerBobojian = GameObject.Find("BobojianSystem").transform.Find("ViewerBobojian").gameObject;
             yield return new WaitForSeconds(screenFade.fadeDuration);
             if (viewerBobojian != null)
                 viewerBobojian.SetActive(true);
@@ -477,6 +479,7 @@ if (Gamepad.current != null)
             StopAllCoroutines();
             
             //if (gameObject.tag == "Untagged")
+            Debug.Log("Player " + GetComponent<PlayerData>().PlayerName + " rpc respawned.");;
             screenFade = FindObjectOfType<ScreenFade>();
             StartCoroutine(Respawning());
         }
@@ -485,13 +488,14 @@ if (Gamepad.current != null)
         {
             screenFade.TriggerScreenFadeOnly();
             yield return new WaitForSeconds(screenFade.fadeDuration);
+            Debug.Log("Player " + GetComponent<PlayerData>().PlayerName + " respawning.");;
             Respawn();
         }
 
         public void Respawn()
         {
-            if (viewerBobojian != null)
-                viewerBobojian.SetActive(false);
+            /*if (viewerBobojian != null)
+                viewerBobojian.SetActive(false);*/
             Cursor.lockState = CursorLockMode.Locked;
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
@@ -506,6 +510,8 @@ if (Gamepad.current != null)
             stamina.currentValue = stamina.maxValue;
             sanity.currentValue = sanity.maxValue;
             GetComponent<NetworkTransform>().Teleport(Vector3.zero, Quaternion.identity);
+            
+            Debug.Log("Player " + GetComponent<PlayerData>().PlayerName + " respawned.");;
         }
         
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

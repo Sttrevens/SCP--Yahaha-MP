@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using Fusion;
 using LPSurvivalEngine;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class ControlSticksController : NetworkBehaviour, IInteractable
 {
@@ -37,6 +38,9 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
     public int currentDays { get; set; } = 1;
 
     [SerializeField] private TextMeshProUGUI hintDaysLeftText;
+    public bool isSettling = false;
+
+    [FormerlySerializedAs("_viewerBobojian")] public GameObject viewerBobojian;
 
     private void Awake()
     {
@@ -94,6 +98,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
             AudioManager.Instance.PlayElevatorShakeSound(spaceship);
                 yield return new WaitForSeconds(2f);
                 TakeoffController.Instance.Rpc_OnInteract();
+                yield return new WaitForSeconds(1f);
                 Rpc_ScreenFade(false);
                 yield return new WaitForSeconds(2f);
                 LevelManager.Instance.LoadLevel();
@@ -108,7 +113,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 Debug.Log("[ControlSticksController] StartRotation called");
                 door.GetComponent<EnterRoom>().RPC_StartRotation();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(4f);
                 SetState(SpaceshipState.Landing);
                 IsPulled = true;
             }
@@ -120,10 +125,11 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 door.GetComponent<EnterRoom>().RPC_ResetRotation();
                 AudioManager.Instance.PlayElevatorCloseSound(door);
                 yield return new WaitForSeconds(2f);
-                Rpc_ScreenFade(true);
                 AudioManager.Instance.PlayElevatorShakeSound(spaceship);
                 yield return new WaitForSeconds(2f);
                 TakeoffController.Instance.Rpc_OnInteract();
+                yield return new WaitForSeconds(1f);
+                Settle(true);
                 
                 while (TakeoffController.Instance.IsFlying)
                 {
@@ -137,7 +143,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                     currentDays++;
                     hintDaysLeftText.text = currentDays + " DAYS LEFT";
                 }
-
+                Settle(false);
                 foreach (var player in GameObject.FindObjectsOfType<HealthSystem>())
                 {
                         player.Rpc_Respawn();
@@ -200,4 +206,19 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
             StartCoroutine(HandleSpaceshipState());
     }
 }
+
+    public void Settle(bool isSettled)
+    {
+        if (viewerBobojian != null)
+        {
+            isSettling = isSettled;
+            screenFade.TriggerSettlePanel(isSettled);
+        }
+        else
+        {
+            Debug.Log("BobojianSystem is null");
+        }
+        
+        PlayerController.instance.ToggleCursor(isSettled);
+    }
 }

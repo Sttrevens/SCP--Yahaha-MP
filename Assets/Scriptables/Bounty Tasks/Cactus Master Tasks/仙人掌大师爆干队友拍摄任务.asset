@@ -15,18 +15,19 @@ MonoBehaviour:
   taskID: 025
   taskName: "\u8BA9\u4ED9\u4EBA\u638C\u7528\u6700\u725B\u7684\u6280\u80FD\u5E72\u961F\u53CB"
   taskDescriptions:
-  - "\u62CD\u6444\u4ED9\u4EBA\u638C\u5927\u5E08\u4F7F\u7528\u9B54\u6CD5\u6280\u80FD\u7684\u753B\u9762\u3002"
+  - "\u62CD\u6444\u4ED9\u4EBA\u638C\u5927\u5E08\u4F7F\u7528\u6700\u5F3A\u529B\u7684\u62DB\u5F0F\u653B\u51FB\u961F\u53CB\u7684\u753B\u9762\u3002"
   baseDifficulty: 3
   baseReward: 55
   baseViewerReward: 160
   descriptionFormats:
   - "\u62CD\u6444{0}\u7684\u7CBE\u5F69\u8868\u73B0"
   requiresSpecificState: 1
-  specificStateName: CastSpell
+  specificStateName: PowerPunchAttack
   requiredTimeLength: 0.5
-  requiresOtherTargetAmount: 1
+  requiresOtherTargetAmount: 2
   requiredTargetTags:
   - CactusMaster
+  - Player
   minLevelProgress: 0
   maxLevelProgress: 1
   minViewersRequired: 0

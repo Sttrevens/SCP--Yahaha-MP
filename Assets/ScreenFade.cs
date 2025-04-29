@@ -15,6 +15,7 @@ public class ScreenFade : MonoBehaviour
     public float holdSubtitleDuration = 2.0f; // ��Ļ����ʱ��
 
     public ScoreManager scoreManager;
+    private GameObject _viewerBobojian;
 
     private void Awake()
     {
@@ -32,6 +33,8 @@ public class ScreenFade : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // ȷ�����󼤻�
         subtitleText.text = ""; // ȷ��û���ı�����
         subtitleText.color = new Color(1, 1, 1, 0); // ����Ϊȫ͸��
+        
+        _viewerBobojian = GameObject.Find("BobojianSystem").transform.Find("ViewerBobojian").gameObject;
     }
     // private void FadeScreen()
     // {
@@ -76,13 +79,28 @@ public class ScreenFade : MonoBehaviour
     
     public void TriggerScreenFade(bool showSubtitle)
     {
-        LSS_LoadingScreen.PerformVirtualTransition(fadeDuration);
+        LSS_LoadingScreen.PerformVirtualTransition(fadeDuration * 2);
     }
 
     public void TriggerScreenFadeOnly()
     {
         fadeScreen.SetActive(true);
         StartCoroutine(FadeScreenOnly());
+    }
+
+    public void TriggerSettlePanel(bool isSettled)
+    {
+        if (_viewerBobojian != null)
+        {
+            if (isSettled)
+            {
+                _viewerBobojian.GetComponent<CanvasGroup>().alpha = 1;
+            }
+            else
+            {
+                _viewerBobojian.GetComponent<CanvasGroup>().alpha = 0;
+            }
+        }
     }
 
     private IEnumerator FadeScreenOnly()
