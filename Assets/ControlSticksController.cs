@@ -62,6 +62,11 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         CurrentState = SpaceshipState.PreparingForTakeoff;
         initialRotation = transform.localRotation;
         IsPulled = false;
+
+        if (TitleScreenUI.IsSpectator)
+        {
+            Spectate(true);
+        }
     }
 
     public string GetInteractText()
@@ -218,7 +223,20 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
         {
             Debug.Log("BobojianSystem is null");
         }
+    }
+
+    public void Spectate(bool isSpectating)
+    {
+        Debug.Log("Spectating...");
+        if (viewerBobojian != null)
+        {
+            screenFade.TriggerSettlePanel(isSpectating);
+        }
+        else
+        {
+            Debug.Log("BobojianSystem is null");
+        }
         
-        PlayerController.instance.ToggleCursor(isSettled);
+        PlayerController.instance.ToggleCursor(isSpectating);
     }
 }

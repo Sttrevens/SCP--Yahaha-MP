@@ -11,7 +11,6 @@ public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
     public List<GameObject> PlayerPrefabsPool;
     public List<GameObject> originalPlayerPrefabsPool;
     public Transform spawnPoint;
-    public GameObject spectatorPanel;
 
     // 只在本地维护对生成的播放器Prefab的引用，方便离开时回收
     private Dictionary<PlayerRef, GameObject> assignedPrefabs = new Dictionary<PlayerRef, GameObject>();
@@ -124,7 +123,7 @@ public class PlayerSpawner : MonoBehaviour,INetworkRunnerCallbacks
         {
             if (Camera.main != null)
                 Camera.main.GetComponent<AudioListener>().enabled = false;
-            spectatorPanel.SetActive(true);
+            ControlSticksController.Instance.Spectate(true);
             return;
         }
 

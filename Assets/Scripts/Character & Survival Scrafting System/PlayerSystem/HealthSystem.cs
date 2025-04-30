@@ -148,8 +148,6 @@ private PlayerInput playerInput;
                 {
                     Debug.Log("δ�ҵ���ΪSanity");
                 }
-                
-                viewerBobojian = GameObject.Find("BobojianSystem").transform.Find("ViewerBobojian").gameObject;
             }
             else
             {
@@ -434,7 +432,6 @@ if (Gamepad.current != null)
         }
         
         private ScreenFade screenFade;
-        private GameObject viewerBobojian;
     
         public void Die()
         {
@@ -469,8 +466,7 @@ if (Gamepad.current != null)
             if (screenFade != null)
                 screenFade.TriggerScreenFadeOnly();
             yield return new WaitForSeconds(screenFade.fadeDuration);
-            if (viewerBobojian != null)
-                viewerBobojian.SetActive(true);
+            ControlSticksController.Instance.Spectate(true);
         }
 
         [Rpc(RpcSources.All, RpcTargets.All)]
@@ -494,8 +490,7 @@ if (Gamepad.current != null)
 
         public void Respawn()
         {
-            /*if (viewerBobojian != null)
-                viewerBobojian.SetActive(false);*/
+            ControlSticksController.Instance.Spectate(false);
             Cursor.lockState = CursorLockMode.Locked;
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;

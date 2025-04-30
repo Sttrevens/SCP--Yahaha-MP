@@ -15,7 +15,7 @@ public class ScreenFade : MonoBehaviour
     public float holdSubtitleDuration = 2.0f; // ��Ļ����ʱ��
 
     public ScoreManager scoreManager;
-    private GameObject _viewerBobojian;
+    public GameObject ViewerBobojian;
 
     private void Awake()
     {
@@ -33,8 +33,6 @@ public class ScreenFade : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // ȷ�����󼤻�
         subtitleText.text = ""; // ȷ��û���ı�����
         subtitleText.color = new Color(1, 1, 1, 0); // ����Ϊȫ͸��
-        
-        _viewerBobojian = GameObject.Find("BobojianSystem").transform.Find("ViewerBobojian").gameObject;
     }
     // private void FadeScreen()
     // {
@@ -90,15 +88,17 @@ public class ScreenFade : MonoBehaviour
 
     public void TriggerSettlePanel(bool isSettled)
     {
-        if (_viewerBobojian != null)
+        Debug.Log("Triggering Settle Panel!");
+        if (ViewerBobojian != null)
         {
             if (isSettled)
             {
-                _viewerBobojian.GetComponent<CanvasGroup>().alpha = 1;
+                Debug.Log("Settled!");
+                ViewerBobojian.GetComponent<CanvasGroup>().alpha = 1;
             }
             else
             {
-                _viewerBobojian.GetComponent<CanvasGroup>().alpha = 0;
+                ViewerBobojian.GetComponent<CanvasGroup>().alpha = 0;
             }
         }
     }
