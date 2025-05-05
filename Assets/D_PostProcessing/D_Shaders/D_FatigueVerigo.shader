@@ -37,34 +37,32 @@ Shader "Custom/FatigueVerigo"
             half4 frag(Varyings IN) : SV_Target
             {
                 half3 originalColor = GetSource(IN).rgb;
-                half3 gammaCorrected = pow(abs(originalColor),2.2);
+                half3 gammaCorrected = pow(abs(originalColor), 2.2);
 
-                // 1. 计算亮度
-                half luminance = dot(gammaCorrected, half3(0.299, 0.587, 0.114));
+                half luminance = dot(gammaCorrected, half3(0.299,0.587,0.114));
 
-                // 2. 动态偏移采样蓝噪声
-                half2 blueNoiseUV = IN.uv * 0.5;
+                // —— 更细的蓝噪声抖动 —— 
+                // 假设噪声贴图 256×256
+                float2 noiseScale = float2(_ScreenParams.x, _ScreenParams.y) / 256.0;
+                float2 noiseOffset = sin(_Time.y * 0.01 + IN.uv.xy * 0.5 * 0.01) * 0.1;
+                half blueNoise = tex2D(_BlueNoiseTex, frac(IN.uv.xy * 0.5 * noiseScale + noiseOffset)).r;
 
-                // 动态偏移，可以用时间作简单平移
-                float2 noiseOffset = float2(0.05, 0.05) * frac(_Time.y * 0.1); 
-                // 小幅度平移，0.1是位移尺度，0.5是速度
-                blueNoiseUV = frac(blueNoiseUV + noiseOffset); // 保持UV在[0,1]
+                // 量化 + 抖动
+                half dither = (blueNoise - 0.5) * (1.0/_QuantizationNum) * _NoiseIntensity;
+                half steps = _QuantizationNum;
+                half lf = (luminance + dither) * steps;
+                half baseLevel = floor(lf);
+                half fracPart = lf - baseLevel;
 
-                half blueNoiseValue = tex2D(_BlueNoiseTex, blueNoiseUV).r;
-                blueNoiseValue *= _NoiseIntensity;
-                // 3. 加入抖动
-                half ditherStrength = 1.0 / _QuantizationNum;
-                half dither = (blueNoiseValue - 0.5) * ditherStrength;
+                // 平滑过渡
+                float edge = 0.5 / steps;
+                half smooth = smoothstep(0.0, edge, fracPart) * (1.0 - smoothstep(1.0 - edge, 1.0, fracPart));
+                half quantizedLuminance = (baseLevel + smooth) / steps;
 
-                // 4. 量化亮度
-                half quantizedLuminance = floor((luminance + dither) * _QuantizationNum) / _QuantizationNum;
+                half3 ratio = gammaCorrected / max(luminance, 1e-5);
+                half3 quantColor = pow(abs(saturate(ratio * quantizedLuminance)), 0.4545);
 
-                // 5. 保持色相饱和度
-                half3 colorRatio = gammaCorrected / max(luminance, 1e-5);
-                half3 quantizedColor = saturate(colorRatio * quantizedLuminance);
-                quantizedColor = pow(abs(quantizedColor),0.4545);
-                
-                return half4(quantizedColor, 1.0);
+                return half4(quantColor, 1.0);
             }
             ENDHLSL
         }
