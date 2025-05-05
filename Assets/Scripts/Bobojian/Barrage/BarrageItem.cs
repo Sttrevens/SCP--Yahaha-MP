@@ -11,10 +11,10 @@ public class BarrageItem : NetworkBehaviour
     [Networked] public string textText { get; set; }
     public Text text;
 
-    public void setData(BarrageItemJson data){
+    public void setData(BarrageItemJson data, string username){
         if(!Object.HasStateAuthority) return;
         Debug.Log("开始set");
-        userNameText = UserNameClass.GetRandomName().nickName + ": ";
+            userNameText = username + ": ";
         textText = data.desc;
     }
 

@@ -43,10 +43,10 @@ public class ConeDetection : MonoBehaviour
     {
         public GameObject target;
         public float score;
-        public bool isVisible;
         public Vector3 position;
     }
     private List<TargetScore> targetScores = new List<TargetScore>();
+    private CameraController _cameraController;
 
     // 添加这些可配置参数
     [Header("视野检测设置")]
@@ -56,6 +56,8 @@ public class ConeDetection : MonoBehaviour
 
     void Start()
     {
+        _cameraController = GetComponent<CameraController>();
+        
         if (cam == null)
         {
             cam = Camera.main;
@@ -70,6 +72,14 @@ public class ConeDetection : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (_cameraController != null)
+        {
+            if (_cameraController.isDied)
+            {
+                return; 
+            }
+        }
+        
         if (Time.time >= nextUpdateTime)
         {
             UpdateTargetsList();
@@ -105,6 +115,7 @@ public class ConeDetection : MonoBehaviour
     {
         targetScores.Clear();
         hasTargetInView = false;
+        targetsInView.Clear();
 
         int nonVisibleTargetCount = 0;
 
@@ -114,7 +125,7 @@ public class ConeDetection : MonoBehaviour
             if (targetScore != null)
             {
                 targetScores.Add(targetScore);
-                if (targetScore.isVisible)
+                if (targetScore.score > 0)
                 {
                     hasTargetInView = true;
                     CalculateTotalScore();
@@ -143,7 +154,7 @@ public class ConeDetection : MonoBehaviour
         float maxScore = float.MinValue;
         foreach (var score in targetScores)
         {
-            if (score.score > maxScore && score.isVisible)
+            if (score.score > maxScore && score.score > 0)
             {
                 maxScore = score.score;
                 bestTarget = score;
@@ -156,14 +167,13 @@ public class ConeDetection : MonoBehaviour
     {
         // 重置当前帧的得分
         realtimeScore = 0f;
-        targetsInView.Clear();
     
         // 计算所有可见目标的总分
         if (targetScores.Count > 0)
         {
             foreach (var targetScore in targetScores)
             {
-                if (targetScore.isVisible)
+                if (targetScore.score > 0)
                 {
                     // 累加每个可见目标的分数
                     realtimeScore += targetScore.score;
@@ -188,7 +198,10 @@ public class ConeDetection : MonoBehaviour
     private TargetScore ProcessSingleTarget(GameObject target)
     {
         var rends = target.GetComponents<Renderer>().Concat(target.GetComponentsInChildren<Renderer>()).Concat(target.GetComponentsInChildren<SkinnedMeshRenderer>()).ToArray();
-if (rends.Length == 0) return null;
+        if (rends.Length == 0)
+        {
+            return null;
+        }
 
 var combinedBounds = rends[0].bounds;
 foreach (var rend in rends)
@@ -200,17 +213,21 @@ var targetScore = new TargetScore
 {
     target = target,
     position = combinedBounds.center,
-    isVisible = false
 };
 
         // 视锥体检测
-        if (!IsInViewFrustum(combinedBounds)) return targetScore;
+        if (!IsInViewFrustum(combinedBounds))
+        {
+            return targetScore;
+        }
 
         // 计算可见比例
         float visibilityRatio = CalculateVisibleRatio(combinedBounds);
-        if (visibilityRatio <= 0) return targetScore;
-
-        targetScore.isVisible = true;
+        if (visibilityRatio <= 0)
+        {
+            return targetScore;
+        }
+        
         visibleRatio = visibilityRatio;
 
         // 计算距离指标
@@ -221,12 +238,12 @@ var targetScore = new TargetScore
         // 计算得分
         float baseScore = CalculateScore(centerOffsetDistance, distanceToCamera, visibleRatio) * 10;
 
-        if (GetComponent<CameraController>())
+        if (_cameraController != null)
         {
             var filmTarget = target.GetComponent<FilmTarget>();
             if (filmTarget != null)
             {
-                baseScore *= filmTarget.aestheticLevel * filmTarget.currentAestheticFatigueValue;
+                baseScore *= filmTarget.aestheticLevel * (filmTarget.currentAestheticFatigueValue + 1);
 
                 // 随时间流逝，减少 currentAestheticFatigueValue
                 filmTarget.currentAestheticFatigueValue =
@@ -276,18 +293,27 @@ var targetScore = new TargetScore
 
     private bool IsInViewFrustum(Bounds bounds)
     {
-        if (!GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(cam), bounds))
+        // 获取视锥体平面
+        Plane[] frustumPlanes = GeometryUtility.CalculateFrustumPlanes(cam);
+    
+        // 第一步检查：使用内置视锥体检测
+        bool isInFrustum = GeometryUtility.TestPlanesAABB(frustumPlanes, bounds);
+    
+        if (!isInFrustum)
         {
             return false;
         }
 
+        // 第二步：检查点的可见性
         Vector3[] checkPoints = new Vector3[]
         {
             bounds.center,
             bounds.center + Vector3.up * bounds.extents.y,
             bounds.center - Vector3.up * bounds.extents.y,
             bounds.center + Vector3.right * bounds.extents.x,
-            bounds.center - Vector3.right * bounds.extents.x
+            bounds.center - Vector3.right * bounds.extents.x,
+            bounds.center + Vector3.forward * bounds.extents.z,
+            bounds.center - Vector3.forward * bounds.extents.z
         };
 
         int visiblePoints = 0;
@@ -303,18 +329,17 @@ var targetScore = new TargetScore
                 Vector3.Distance(hit.point, point) < visibilityThreshold)
             {
                 visiblePoints++;
-                
-                // 可选：添加调试可视化
-                Debug.DrawLine(cam.transform.position, point, Color.green, Time.deltaTime);
+                // Debug.DrawLine(cam.transform.position, point, Color.green, Time.deltaTime);
             }
             else
             {
-                // 可选：添加调试可视化
-                Debug.DrawLine(cam.transform.position, hit.point, Color.red, Time.deltaTime);
+                // Debug.DrawLine(cam.transform.position, hit.point, Color.red, Time.deltaTime);
             }
         }
 
-        return visiblePoints >= requiredVisiblePoints;
+        bool enoughVisiblePoints = visiblePoints >= requiredVisiblePoints;
+
+        return enoughVisiblePoints;
     }
 
     /// <summary>
@@ -416,6 +441,185 @@ var targetScore = new TargetScore
     {
         int myId = GetInstanceID();
         scoreManager.OnCameraDestroyed(myId, accumulatedScore);
+    }
+}
+    
+    // 添加到类的最后，在OnDestroy方法后
+
+private void OnDrawGizmos()
+{
+    if (cam == null)
+    {
+        if (Camera.main != null)
+        {
+            cam = Camera.main;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    // 绘制视锥体
+    DrawViewFrustum();
+    
+    // 可选：绘制射线检测范围指示
+    DrawRayVisualization();
+}
+
+private void DrawViewFrustum()
+{
+    // 获取视锥体平面
+    Plane[] frustumPlanes = GeometryUtility.CalculateFrustumPlanes(cam);
+    
+    // 定义远平面距离 (一般等于摄像机的far clip plane)
+    float farDistance = cam.farClipPlane;
+    
+    // 保存当前Gizmo颜色
+    Color originalColor = Gizmos.color;
+    
+    // 设置视锥体颜色
+    Gizmos.color = new Color(0.5f, 0.8f, 1f, 0.3f);
+    
+    // 获取视锥体的8个顶点
+    Vector3[] frustumCorners = new Vector3[8];
+    cam.CalculateFrustumCorners(new Rect(0, 0, 1, 1), cam.nearClipPlane, Camera.MonoOrStereoscopicEye.Mono, frustumCorners);
+    Vector3[] farCorners = new Vector3[4];
+    cam.CalculateFrustumCorners(new Rect(0, 0, 1, 1), farDistance, Camera.MonoOrStereoscopicEye.Mono, farCorners);
+    
+    // 转换到世界坐标
+    for (int i = 0; i < 4; i++)
+    {
+        frustumCorners[i] = cam.transform.TransformPoint(frustumCorners[i]);
+        farCorners[i] = cam.transform.TransformPoint(farCorners[i]);
+        frustumCorners[i + 4] = farCorners[i];
+    }
+    
+    // 绘制近平面
+    Gizmos.DrawLine(frustumCorners[0], frustumCorners[1]);
+    Gizmos.DrawLine(frustumCorners[1], frustumCorners[2]);
+    Gizmos.DrawLine(frustumCorners[2], frustumCorners[3]);
+    Gizmos.DrawLine(frustumCorners[3], frustumCorners[0]);
+    
+    // 绘制远平面
+    Gizmos.DrawLine(frustumCorners[4], frustumCorners[5]);
+    Gizmos.DrawLine(frustumCorners[5], frustumCorners[6]);
+    Gizmos.DrawLine(frustumCorners[6], frustumCorners[7]);
+    Gizmos.DrawLine(frustumCorners[7], frustumCorners[4]);
+    
+    // 绘制连接线
+    for (int i = 0; i < 4; i++)
+    {
+        Gizmos.DrawLine(frustumCorners[i], frustumCorners[i + 4]);
+    }
+    
+    // 恢复原始颜色
+    Gizmos.color = originalColor;
+}
+
+private void DrawRayVisualization()
+{
+    if (cachedTargets.Count == 0)
+        return;
+
+    // 模拟检测
+    foreach (var target in cachedTargets)
+    {
+        var rends = target.GetComponents<Renderer>()
+            .Concat(target.GetComponentsInChildren<Renderer>())
+            .Concat(target.GetComponentsInChildren<SkinnedMeshRenderer>()).ToArray();
+        
+        if (rends.Length == 0)
+            continue;
+
+        var combinedBounds = rends[0].bounds;
+        foreach (var rend in rends)
+        {
+            combinedBounds.Encapsulate(rend.bounds);
+        }
+
+        // 显示边界包围盒的世界坐标和大小
+        Vector3 center = combinedBounds.center;
+        Vector3 size = combinedBounds.size;
+        GUI.color = Color.yellow;
+        UnityEngine.Debug.DrawLine(center, center + Vector3.up * 2, Color.yellow, Time.deltaTime);
+        
+        // 检测视锥体测试结果
+        bool isInFrustumGeometry = GeometryUtility.TestPlanesAABB(
+            GeometryUtility.CalculateFrustumPlanes(cam), combinedBounds);
+            
+        // 在目标上方显示视锥体检测结果
+        if (isInFrustumGeometry)
+        {
+            Debug.DrawLine(center + Vector3.up * 2.2f, center + Vector3.up * 2.5f, Color.green, Time.deltaTime);
+        }
+        else
+        {
+            Debug.DrawLine(center + Vector3.up * 2.2f, center + Vector3.up * 2.5f, Color.red, Time.deltaTime);
+        }
+
+        // 检测点
+        Vector3[] checkPoints = new Vector3[]
+        {
+            combinedBounds.center,
+            combinedBounds.center + Vector3.up * combinedBounds.extents.y,
+            combinedBounds.center - Vector3.up * combinedBounds.extents.y,
+            combinedBounds.center + Vector3.right * combinedBounds.extents.x,
+            combinedBounds.center - Vector3.right * combinedBounds.extents.x,
+            combinedBounds.center + Vector3.forward * combinedBounds.extents.z,
+            combinedBounds.center - Vector3.forward * combinedBounds.extents.z
+        };
+
+        // 计算可见点数量 - 调试
+        int visiblePoints = 0;
+        
+        // 绘制所有可能的射线，不管是否在视锥体内
+        Gizmos.color = Color.gray;
+        foreach (Vector3 point in checkPoints)
+        {
+            Vector3 directionToPoint = point - cam.transform.position;
+            float distanceToPoint = directionToPoint.magnitude;
+            Ray ray = new Ray(cam.transform.position, directionToPoint.normalized);
+            RaycastHit hit;
+
+            if (!Physics.Raycast(ray, out hit, distanceToPoint, obstacleLayer) || 
+                Vector3.Distance(hit.point, point) < visibilityThreshold)
+            {
+                // 无障碍物阻挡
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(cam.transform.position, point);
+                visiblePoints++;
+            }
+            else
+            {
+                // 有障碍物阻挡
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(cam.transform.position, hit.point);
+                Gizmos.DrawWireSphere(hit.point, 0.1f);
+            }
+        }
+        
+        // 在目标上方标注可见点数量
+        string visibleText = $"{visiblePoints}/{checkPoints.Length}";
+        if (visiblePoints >= requiredVisiblePoints)
+        {
+            Debug.DrawLine(center + Vector3.up * 2.6f, center + Vector3.up * 2.9f, Color.green, Time.deltaTime);
+        }
+        else
+        {
+            Debug.DrawLine(center + Vector3.up * 2.6f, center + Vector3.up * 2.9f, Color.red, Time.deltaTime);
+        }
+        
+        // 绘制目标边界框
+        if (GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(cam), combinedBounds))
+        {
+            Gizmos.color = Color.yellow;
+        }
+        else
+        {
+            Gizmos.color = Color.grey;
+        }
+        Gizmos.DrawWireCube(combinedBounds.center, combinedBounds.size);
     }
 }
 }

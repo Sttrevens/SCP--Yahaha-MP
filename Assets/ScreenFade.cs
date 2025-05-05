@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using Michsky.LSS;
 
 public class ScreenFade : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class ScreenFade : MonoBehaviour
     public float holdSubtitleDuration = 2.0f; // ��Ļ����ʱ��
 
     public ScoreManager scoreManager;
+    public GameObject ViewerBobojian;
 
     private void Awake()
     {
@@ -75,14 +77,30 @@ public class ScreenFade : MonoBehaviour
     
     public void TriggerScreenFade(bool showSubtitle)
     {
-        fadeScreen.SetActive(true);
-        StartCoroutine(FadeScreenAndShowSubtitle(showSubtitle));
+        LSS_LoadingScreen.PerformVirtualTransition(fadeDuration * 2);
     }
 
     public void TriggerScreenFadeOnly()
     {
         fadeScreen.SetActive(true);
         StartCoroutine(FadeScreenOnly());
+    }
+
+    public void TriggerSettlePanel(bool isSettled)
+    {
+        Debug.Log("Triggering Settle Panel!");
+        if (ViewerBobojian != null)
+        {
+            if (isSettled)
+            {
+                Debug.Log("Settled!");
+                ViewerBobojian.GetComponent<CanvasGroup>().alpha = 1;
+            }
+            else
+            {
+                ViewerBobojian.GetComponent<CanvasGroup>().alpha = 0;
+            }
+        }
     }
 
     private IEnumerator FadeScreenOnly()

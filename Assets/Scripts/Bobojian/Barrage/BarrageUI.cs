@@ -11,13 +11,14 @@ public class BarrageUI : NetworkBehaviour
     public GameObject item;//弹幕object
     private List<BarrageItemsJson> barrageItemsJson = new List<BarrageItemsJson>();//弹幕组合列表
     private BarrageItemsJson curBarrageArr;//当前弹幕组合
-    private BarrageType barrageType;//当前弹幕组合类型
-    private BarrageItemJson curBarrage;//当前弹幕
+    public BarrageType barrageType;//当前弹幕组合类型
+    public BarrageItemJson curBarrage;//当前弹幕
     private int arrIndex = 0;//第几组弹幕
     private int index = 0;//弹幕组合里的第几条弹幕
     private BarrageClass barrageClass;//当前弹幕信息
-    private UserNameClass userNameClass;//当前用户名信息
-    BarrageItemJson[] baragesArr;
+    public string userNameText;//当前用户名信息
+    private UserNameClass userNameClass;
+    public BarrageItemJson[] baragesArr;
     double min;//最小弹幕出现速度
     double max;//最大弹幕出现速度
     public bool isStop = true;//是否弹幕滚动停止了
@@ -42,12 +43,12 @@ public class BarrageUI : NetworkBehaviour
     {
         Debug.Log("弹幕UI初始化");
         // 只需要创建一次实例
-        
-        userNameClass = new UserNameClass();
         if (BarrageClass.instance == null)
         {
             BarrageClass.instance = new BarrageClass();  // 确保初始化
         }
+
+        userNameClass = new UserNameClass();
         // 确保实例化成功
         // if (barrageClass == null)
         // {
@@ -67,7 +68,7 @@ public class BarrageUI : NetworkBehaviour
     float contentBarrageChance = CalculateContentBarrageChance();
 
     // 计算观众趋势
-    float viewersTrend = CalculateViewersTrend(10f);
+    float viewersTrend = CalculateViewersTrend(5f);
     
     // 获取当前观众数量
     int currentViewers = ScoreManager.Instance.CurrentViewers;
@@ -187,15 +188,15 @@ private void HandleRegularBarrage(float viewersTrend, bool forceBadBarrage)
     }
     else if (currentViewers < goodViewersAmount)
     {
-        spamProbability = 0.1f; // 观众少，10%概率显示垃圾弹幕
+        spamProbability = 0.01f; // 观众少，10%概率显示垃圾弹幕
     }
     else if (currentViewers < goodViewersAmount * 2)
     {
-        spamProbability = 0.2f; // 观众适中，20%概率显示垃圾弹幕
+        spamProbability = 0.02f; // 观众适中，20%概率显示垃圾弹幕
     }
     else // currentViewers >= goodViewersAmount * 2
     {
-        spamProbability = 0.4f; // 观众很多，40%概率显示垃圾弹幕
+        spamProbability = 0.03f; // 观众很多，30%概率显示垃圾弹幕
     }
     
     // 决定是否显示垃圾弹幕
@@ -214,13 +215,22 @@ private void SetRegularGoodBadBarrage(float viewersTrend, bool forceBadBarrage)
 {
     // 如果观众少于阈值，强制设置为bad
     // 否则根据趋势判断
-    if (forceBadBarrage || viewersTrend < -0.1f)
+    if (forceBadBarrage)
     {
         SetBarrageList(BarrageType.bad);
     }
+    else if (viewersTrend < 0)
+    {
+        if (Random.value <= -viewersTrend)
+            SetBarrageList(BarrageType.bad);
+        else
+        {
+            SetBarrageList(BarrageType.good);
+        }
+    }
     else
     {
-        SetBarrageList(BarrageType.good);
+            SetBarrageList(BarrageType.good);
     }
 }
 
@@ -317,41 +327,32 @@ else
 
 
     // 切换到下一组弹幕
-    public void NextBarrageArr(){
+    // 修改 NextBarrageArr 方法，添加一个参数来控制是否重置用户名
+    public void NextBarrageArr(bool resetUserName = true)
+    {
         //设置弹幕滚动停止为false
         isStop = false;
 
-        /*if(barrageType == BarrageType.newbie){
-                // 
-                arrIndex = 1;//播放下一段新手弹幕
-                //拿到当前弹幕组合
-                curBarrageArr = barrageItemsJson[arrIndex];
-                //拿到当前弹幕组合的弹幕
-                baragesArr = curBarrageArr.item;
-                //开始播放弹幕
-                StartCoroutine(nextBarrage());
-        }else if((barrageType == BarrageType.good || barrageType == BarrageType.bad) || barrageType == BarrageType.spam){*/
-            //随机抽取一段弹幕
-            arrIndex = Random.Range(0, barrageItemsJson.Count);
-            //拿到当前弹幕组合
-            curBarrageArr = barrageItemsJson[arrIndex];
-            //拿到当前弹幕组合的弹幕
-            baragesArr = curBarrageArr.item;
-            //初始化弹幕索引
-            index = Random.Range(0, baragesArr.Length);
-            //开始播放弹幕
-            StartCoroutine(nextBarrage());
-        /*}else if(barrageType == BarrageType.success || barrageType == BarrageType.fail){//特定场景下弹幕
-            if(arrIndex < barrageItemsJson.Count){//依次播放成功失败段落的弹幕
-                curBarrageArr = barrageItemsJson[0];
-                baragesArr = curBarrageArr.item;
-                // baragesArr = AddBarage();
-                RandomList(baragesArr, curBarrageArr.item.Length, out baragesArr);//打乱各条弹幕顺序
-                StartCoroutine(nextBarrage());
-                arrIndex ++;
-            }
-        }*/
+        //随机抽取一段弹幕
+        arrIndex = Random.Range(0, barrageItemsJson.Count);
+        //拿到当前弹幕组合
+        curBarrageArr = barrageItemsJson[arrIndex];
+        //拿到当前弹幕组合的弹幕
+        baragesArr = curBarrageArr.item;
+    
+        // 只有在需要重置用户名时才随机设置
+        if (resetUserName)
+        {
+            //随机用户名
+            userNameText = UserNameClass.GetRandomName().nickName;
+        }
+    
+        //初始化弹幕索引
+        index = Random.Range(0, baragesArr.Length);
+        //开始播放弹幕
+        StartCoroutine(nextBarrage());
     }
+    
     void RandomList(BarrageItemJson[] barrageItemsArr, int count, out BarrageItemJson[] rangeArr){
         List<BarrageItemJson> barrageList = new List<BarrageItemJson>();
         List<int> indexList = new List<int>();//一个和animalList数量相同的序列List
@@ -411,7 +412,7 @@ else
     NetworkObject _obj = Runner.Spawn(item, scroll_rect.content.transform.position, Quaternion.identity);
     //_obj.SetActive(true);
     yield return null;
-    _obj.gameObject.GetComponent<BarrageItem>().setData(curBarrage);
+    _obj.gameObject.GetComponent<BarrageItem>().setData(curBarrage, userNameText);
     RPC_OnItemCreated(_obj);
 }
 
@@ -435,4 +436,56 @@ else
     Debug.Log("Barrage Fucked2.");
    }
 
+   // 添加到BarrageUI.cs类中
+   public void InsertPlayerBarrage(BarrageItemJson playerBarrage, string userName)
+   {
+       // 如果当前没有正在显示的弹幕，返回
+       if (isStop || baragesArr == null || baragesArr.Length == 0)
+       {
+           Debug.LogWarning("弹幕系统目前已停止或弹幕数组为空，无法插入玩家弹幕");
+           return;
+       }
+    
+       // 创建一个新的弹幕数组，将玩家弹幕插入到当前位置
+       BarrageItemJson[] newBarrageArr = new BarrageItemJson[baragesArr.Length + 1];
+    
+       // 复制已经显示过的弹幕
+       for (int i = 0; i < index; i++)
+       {
+           newBarrageArr[i] = baragesArr[i];
+       }
+    
+       // 在当前位置插入玩家弹幕
+       newBarrageArr[index] = playerBarrage;
+    
+       // 复制剩余的弹幕
+       for (int i = index; i < baragesArr.Length; i++)
+       {
+           newBarrageArr[i + 1] = baragesArr[i];
+       }
+    
+       // 更新弹幕数组
+       baragesArr = newBarrageArr;
+    
+       //更改用户名
+       userNameText = userName;
+    
+       // 暂停当前弹幕显示协程，立即显示玩家弹幕
+       StopAllCoroutines();
+    
+       // 使用玩家弹幕专用的协程
+       StartCoroutine(PlayerNextBarrage());
+   }
+
+// 新增玩家弹幕特殊处理的协程
+   IEnumerator PlayerNextBarrage()
+   {
+       yield return new WaitForSeconds(Random.Range(((float)min), ((float)max)));
+       curBarrage = baragesArr[index];
+       RPC_CreateItem();
+       index++;
+    
+       // 调用NextBarrageArr时不重置用户名，确保用户名保持不变
+       NextBarrageArr(false);
+   }
 }

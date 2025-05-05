@@ -17,10 +17,10 @@ MonoBehaviour:
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
   - {fileID: 2330678740619131442}
+  - {fileID: 6550301642245094802}
   - {fileID: 4234752551705703222}
   - {fileID: 1079056205978291918}
-  - {fileID: 669312396980329429}
-  m_RendererFeatureMap: 327a2854f73b582036f3185402ddc43ace4e04fae693f90ed51bc73114e04909
+  m_RendererFeatureMap: 327a2854f73b5820923dad7da358e75a36f3185402ddc43ace4e04fae693f90e
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -59,19 +59,6 @@ MonoBehaviour:
   m_CopyDepthMode: 1
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
---- !u!114 &669312396980329429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c19165ededb52334db532794fa943599, type: 3}
-  m_Name: CustomPostProcessingFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
 --- !u!114 &1079056205978291918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,3 +136,22 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 3302065f671a8450b82c9ddf07426f3a, type: 3}
   - {fileID: 2800000, guid: 56a77a3e8d64f47b6afe9e3c95cb57d5, type: 3}
   m_Shader: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
+--- !u!114 &6550301642245094802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc0479188ada9624b9516317e851fd1b, type: 3}
+  m_Name: CustomRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    renderPassEvent: 550
+    shader: {fileID: 0}
+  enableLineStyle: 0
+  enableMoHuPostProcessing: 0
+  enableInvertColor: 0

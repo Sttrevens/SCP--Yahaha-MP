@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3063404c0a80bd14fa7365b27ffc8c49, type: 3}
+  m_Name: "\u4ED9\u4EBA\u638C\u5927\u5E08\u7206\u5E72\u961F\u53CB\u62CD\u6444\u4EFB\u52A1"
+  m_EditorClassIdentifier: 
+  taskID: 025
+  taskName: "\u8BA9\u4ED9\u4EBA\u638C\u7528\u6700\u725B\u7684\u6280\u80FD\u5E72\u961F\u53CB"
+  taskDescriptions:
+  - "\u62CD\u6444\u4ED9\u4EBA\u638C\u5927\u5E08\u4F7F\u7528\u6700\u5F3A\u529B\u7684\u62DB\u5F0F\u653B\u51FB\u961F\u53CB\u7684\u753B\u9762\u3002"
+  baseDifficulty: 3
+  baseReward: 55
+  baseViewerReward: 160
+  descriptionFormats:
+  - "\u62CD\u6444{0}\u7684\u7CBE\u5F69\u8868\u73B0"
+  requiresSpecificState: 1
+  specificStateName: PowerPunchAttack
+  requiredTimeLength: 0.5
+  requiresOtherTargetAmount: 2
+  requiredTargetTags:
+  - CactusMaster
+  - Player
+  minLevelProgress: 0
+  maxLevelProgress: 1
+  minViewersRequired: 0

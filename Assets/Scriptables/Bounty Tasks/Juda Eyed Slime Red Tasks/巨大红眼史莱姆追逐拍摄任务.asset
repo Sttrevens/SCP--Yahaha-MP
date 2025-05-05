@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3063404c0a80bd14fa7365b27ffc8c49, type: 3}
+  m_Name: "\u5DE8\u5927\u7EA2\u773C\u53F2\u83B1\u59C6\u8FFD\u9010\u62CD\u6444\u4EFB\u52A1"
+  m_EditorClassIdentifier: 
+  taskID: 023
+  taskName: "\u8BA9\u8FD9\u4E2A\u5927\u7EA2\u849C\u5934\u8FFD\u4F60\u4EEC"
+  taskDescriptions:
+  - "\u62CD\u6444\u5DE8\u5927\u7EA2\u773C\u53F2\u83B1\u59C6\u8FFD\u9010\u72B6\u60015\u79D2\u3002"
+  baseDifficulty: 1
+  baseReward: 36
+  baseViewerReward: 71
+  descriptionFormats:
+  - "\u62CD\u6444{0}\u7684\u7CBE\u5F69\u8868\u73B0"
+  requiresSpecificState: 1
+  specificStateName: RunFWD
+  requiredTimeLength: 5
+  requiresOtherTargetAmount: 1
+  requiredTargetTags:
+  - JudaEyedSlimeRed
+  minLevelProgress: 0
+  maxLevelProgress: 1
+  minViewersRequired: 0

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3063404c0a80bd14fa7365b27ffc8c49, type: 3}
+  m_Name: "LieQ\u653B\u51FB\u4EFB\u52A1"
+  m_EditorClassIdentifier: 
+  taskID: 45e5f4a7
+  taskName: "\u8FD9\u4E2A\u7EFF\u8272\u5927\u7F8E\u82B1\u592A\u5E05\u4E86\uFF0C\u6765\u70B9\u523A\u6FC0\u7684"
+  taskDescriptions:
+  - "\u62CD\u4E0B\u730E\u5947\u82B1\u7684\u653B\u51FB\u5F62\u6001\u3002"
+  baseDifficulty: 3
+  baseReward: 100
+  baseViewerReward: 400
+  descriptionFormats:
+  - "\u62CD\u6444{0}\u7684\u7CBE\u5F69\u8868\u73B0"
+  requiresSpecificState: 1
+  specificStateName: Attack01
+  requiredTimeLength: 0.5
+  requiresOtherTarget: 0
+  requiredTargetTags:
+  - LieQ
+  minLevelProgress: 0
+  maxLevelProgress: 1
+  minViewersRequired: 0

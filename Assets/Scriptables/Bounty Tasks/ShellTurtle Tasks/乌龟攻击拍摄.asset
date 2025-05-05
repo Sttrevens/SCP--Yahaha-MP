@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3063404c0a80bd14fa7365b27ffc8c49, type: 3}
+  m_Name: "\u4E4C\u9F9F\u653B\u51FB\u62CD\u6444"
+  m_EditorClassIdentifier: 
+  taskID: f0e5cd76
+  taskName: "\u6211\u611F\u89C9\u8FD9\u4E4C\u9F9F\u6253\u4EBA\u5E94\u8BE5\u4F1A\u5F88\u641E\u7B11"
+  taskDescriptions:
+  - "\u62CD\u6444\u5C16\u523A\u58F3\u4E4C\u9F9F\u653B\u51FB\u753B\u9762\u3002"
+  baseDifficulty: 1
+  baseReward: 20
+  baseViewerReward: 40
+  descriptionFormats:
+  - "\u62CD\u6444{0}\u7684\u7CBE\u5F69\u8868\u73B0"
+  requiresSpecificState: 1
+  specificStateName: Attack02
+  requiredTimeLength: 0.5
+  requiresOtherTarget: 0
+  requiredTargetTags:
+  - ShellTurtle
+  minLevelProgress: 0
+  maxLevelProgress: 1
+  minViewersRequired: 0

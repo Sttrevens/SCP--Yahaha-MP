@@ -94,7 +94,7 @@ public class ScoreManager : NetworkBehaviour
         // 每1秒更新 CurrentViewers
         if (Time.frameCount % Mathf.RoundToInt(1f / Time.fixedDeltaTime) == 0)
         {
-            CurrentViewers = (int)(ImmediateViewers + CachedViewers  + timerAccumulatedScore);
+            CurrentViewers = Mathf.Max(0, (int)(ImmediateViewers + CachedViewers + timerAccumulatedScore));
         }
     }
     
@@ -173,6 +173,16 @@ public class ScoreManager : NetworkBehaviour
             // 将当前的 accumulatedScore 覆盖或更新到字典
             cameraScoreMap[instanceId] = cd.accumulatedScore * (1 - BarrageUI.instance.spamProbability);
         }
+    }
+
+    public void AddMoney(float amount)
+    {
+        revenueRate += amount;
+    }
+
+    public void AddCurrentViewers(int amount)
+    {
+        CurrentViewers += amount;
     }
 
     /// <summary>

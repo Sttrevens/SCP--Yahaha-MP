@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using LPSurvivalEngine;
 
 public class UIDebugger : MonoBehaviour
 {
+    private bool isAlt;
+    
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // ¼ì²âÊó±ê×ó¼ü°´ÏÂ
+        if (Input.GetMouseButtonDown(0)) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current)
             {
-                pointerId = -1, // Ä¬ÈÏµÄÊó±êÊäÈë
+                pointerId = -1, // Ä¬ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 position = Input.mousePosition
             };
 
@@ -26,6 +29,20 @@ public class UIDebugger : MonoBehaviour
             else
             {
                 Debug.Log("It's not UI element that your mouse is clicking.");
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            if (isAlt)
+            {
+                PlayerController.instance.ToggleCursor(false);
+                isAlt = false;
+            }
+            else
+            {
+                PlayerController.instance.ToggleCursor(true);
+                isAlt = true;
             }
         }
     }

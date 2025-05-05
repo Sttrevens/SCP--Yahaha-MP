@@ -17,7 +17,8 @@ GameObject:
   - component: {fileID: 2041010698924757834}
   - component: {fileID: 4490970758372663443}
   - component: {fileID: 4163783752738669485}
-  m_Layer: 0
+  - component: {fileID: 9130158957341386289}
+  m_Layer: 30
   m_Name: WieldableCamera
   m_TagString: LiveCamera
   m_Icon: {fileID: 0}
@@ -68,6 +69,7 @@ MonoBehaviour:
   MaxFOV: 80
   baseFOV: 60
   durabilityDrainPerSecond: 0.2
+  isDied: 0
   diedObjects:
   - {fileID: 8540076340833062624}
   - {fileID: 1246979066746601712}
@@ -123,9 +125,10 @@ MonoBehaviour:
   accumulatedScore: 0
   realtimeScore: 0
   cachedTargets: []
+  targetsInView: []
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 4160864255
+    m_Bits: 939573243
   requiredVisiblePoints: 2
   visibilityThreshold: 0.1
 --- !u!114 &7050679032339698554
@@ -314,6 +317,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9130158957341386289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a0db627d327274b8de66e215365bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraController: {fileID: -3222643352481867639}
+  requiredStreamTime: 3
+  checkInterval: 0.5
 --- !u!1 &176766
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +343,7 @@ GameObject:
   - component: {fileID: 488464}
   - component: {fileID: 3354956}
   - component: {fileID: 2391252}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +426,7 @@ GameObject:
   - component: {fileID: 434320}
   - component: {fileID: 3307978}
   - component: {fileID: 2323278}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -494,7 +512,7 @@ GameObject:
   - component: {fileID: 130721672268757483}
   - component: {fileID: 7073308838336779793}
   - component: {fileID: 3540395987962652090}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: PhotoCamera
   m_TagString: PadCamera
   m_Icon: {fileID: 0}
@@ -650,7 +668,7 @@ GameObject:
   - component: {fileID: 3312234419378344092}
   - component: {fileID: 1898460974110826297}
   - component: {fileID: 4448509127282502643}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: pad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -736,7 +754,7 @@ GameObject:
   - component: {fileID: 5958429672452131141}
   - component: {fileID: 8144935070449832344}
   - component: {fileID: 4827186788233892651}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: FlashLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -940,7 +958,7 @@ GameObject:
   - component: {fileID: 26249235387562735}
   - component: {fileID: 484767831476937785}
   - component: {fileID: 6017763019652176584}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}

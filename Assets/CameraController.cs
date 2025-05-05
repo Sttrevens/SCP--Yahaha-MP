@@ -34,6 +34,8 @@ namespace LPSurvivalEngine
         [Header("Durability Settings")]
         [SerializeField] private float durabilityDrainPerSecond = 0.2f;
 
+        public bool isDied;
+
         [SerializeField] private GameObject[] diedObjects;
 
         [Header("UI")]
@@ -90,6 +92,7 @@ namespace LPSurvivalEngine
                         {
                             go.SetActive(false);
                         }
+                        isDied = true;
                     }
                     else
                     {
@@ -97,6 +100,7 @@ namespace LPSurvivalEngine
                         {
                             go.SetActive(true);
                         }
+                        isDied = false;
                     }
             }
         }
@@ -387,6 +391,8 @@ public void ToggleHippiePose(bool hippie)
         isHippie = false;
         _rigController.SwitchToHippie(3f);
     }
+    
+    BarrageHUDController.instance.SetVisible(hippie);
 }
 
 public void SetMaterialAndRenderTexture(Material material, RenderTexture renderTexture)

@@ -59,7 +59,7 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   stepAngle: 10
   pullRadius: 5
-  breakFreeThreshold: 1000
+  breakFreeThreshold: 10
   escapeCooldown: 10
   drawGizmos: 0
 --- !u!114 &4071784738706587045
@@ -187,7 +187,16 @@ MonoBehaviour:
   maxAestheticFatigueValue: 10
   currentAestheticFatigueValue: 0
   aestheticLevel: 3
-  targetTag: 
+  targetTag: Fugen
+  possibleTasks: []
+  canGenerateTasks: 1
+  isInSpecialState: 0
+  currentState: 
+  allStates:
+  - RootAttacking
+  onStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-2562331493011894757
 MonoBehaviour:
   m_ObjectHideFlags: 0

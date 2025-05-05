@@ -12,7 +12,13 @@ public enum BarrageType{
     badenemy,
     spam,
     goodEyedSlimeBlue,
-    badEyedSlimeBlue
+    badEyedSlimeBlue,
+    goodPlayer,
+    badPlayer,
+    goodDaGuai,
+    goodLieQ,
+    goodPurpleFlower,
+    badPurpleFlower
 }
 
 [Serializable]
@@ -149,16 +155,10 @@ public class BarrageClass
     public void reset()
     {
         // ... existing code ...
-        TYPE_Barrage.Add(BarrageType.newbie, getBarrageListByType(BarrageType.newbie));
-        TYPE_Barrage.Add(BarrageType.good, getBarrageListByType(BarrageType.good));
-        TYPE_Barrage.Add(BarrageType.bad, getBarrageListByType(BarrageType.bad));
-        TYPE_Barrage.Add(BarrageType.success, getBarrageListByType(BarrageType.success));
-        TYPE_Barrage.Add(BarrageType.fail, getBarrageListByType(BarrageType.fail));
-        TYPE_Barrage.Add(BarrageType.spam, getBarrageListByType(BarrageType.spam));
-        TYPE_Barrage.Add(BarrageType.goodenemy, getBarrageListByType(BarrageType.goodenemy));
-        TYPE_Barrage.Add(BarrageType.badenemy, getBarrageListByType(BarrageType.badenemy));
-        TYPE_Barrage.Add(BarrageType.goodEyedSlimeBlue, getBarrageListByType(BarrageType.goodEyedSlimeBlue));
-        TYPE_Barrage.Add(BarrageType.badEyedSlimeBlue, getBarrageListByType(BarrageType.badEyedSlimeBlue));
+        foreach (BarrageType type in System.Enum.GetValues(typeof(BarrageType)))
+        {
+            TYPE_Barrage.Add(type, getBarrageListByType(type));
+        }
         
         // 创建临时包装类来序列化列表
         var wrapper = new BarrageItemsJsonWrapper { items = TYPE_Barrage[BarrageType.newbie].ToArray() };

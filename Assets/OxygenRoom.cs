@@ -8,12 +8,21 @@ public class OxygenRoom : MonoBehaviour
     [SerializeField] private ControlSticksController controlSticksController;
     private void OnTriggerStay(Collider other)
     {
+        HealthSystem healthSystem = other.GetComponent<HealthSystem>();
+        if (healthSystem != null)
+        {
+            Debug.Log($"Setting isInOxygenRoom to true for {other.name}");
+            healthSystem.isInSpaceShip = true;
+        }
+        else
+        {
+            Debug.Log($"No HealthSystem component found on {other.name}");
+        }
         
         if (controlSticksController != null && 
             controlSticksController.CurrentState == ControlSticksController.SpaceshipState.PreparingForTakeoff)
         {
             Debug.Log("Spaceship is in PreparingForTakeoff state");
-            HealthSystem healthSystem = other.GetComponent<HealthSystem>();
             if (healthSystem != null)
             {
                 Debug.Log($"Setting isInOxygenRoom to true for {other.name}");
@@ -27,7 +36,6 @@ public class OxygenRoom : MonoBehaviour
         else
         {
             Debug.Log("Spaceship is NOT in PreparingForTakeoff state");
-            HealthSystem healthSystem = other.GetComponent<HealthSystem>();
             if (healthSystem != null)
             {
                 Debug.Log($"Setting isInOxygenRoom to false for {other.name}");
@@ -47,6 +55,7 @@ public class OxygenRoom : MonoBehaviour
         if (healthSystem != null)
         {
             healthSystem.isInOxygenRoom = false;
+            healthSystem.isInSpaceShip = false;
         }
     }
 }

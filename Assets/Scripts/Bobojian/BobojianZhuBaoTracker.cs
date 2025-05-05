@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using LPSurvivalEngine;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,8 +8,12 @@ using TMPro;
 public class BobojianZhuBaoTracker : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI playerNameText;
-    [SerializeField] private TextMeshProUGUI noSignalText;
+    public TextMeshProUGUI noSignalText;
+    public TextMeshProUGUI settledStatusText;
+    public PlayerData playerData;
+    [SerializeField] private GameObject blackScreen;
     private RenderTexture myRenderTexture;
+    private bool playerNameLocked = false; // 标记玩家名称是否已锁定
 
     private void Start()
     {
@@ -31,7 +36,11 @@ public class BobojianZhuBaoTracker : MonoBehaviour
         GameObject[] liveCameraObjects = GameObject.FindGameObjectsWithTag("LiveCamera");
         if (liveCameraObjects == null || liveCameraObjects.Length == 0)
         {
-            if (noSignalText != null) noSignalText.gameObject.SetActive(true);
+            if (noSignalText != null && !ControlSticksController.Instance.isSettling)
+            {
+                noSignalText.gameObject.SetActive(true);
+            }
+            if (blackScreen != null) blackScreen.SetActive(true);
             Debug.LogWarning("No GameObjects with tag 'LiveCamera' found.");
             return;
         }
@@ -40,14 +49,22 @@ public class BobojianZhuBaoTracker : MonoBehaviour
         {
             if (liveCamObj == null)
             {
-                if (noSignalText != null) noSignalText.gameObject.SetActive(true);
+                if (noSignalText != null && !ControlSticksController.Instance.isSettling)
+                {
+                    noSignalText.gameObject.SetActive(true);
+                }
+                if (blackScreen != null) blackScreen.SetActive(true);
                 continue;
             }
 
             Transform photoCamTransform = liveCamObj.transform.Find("PhotoCamera");
             if (photoCamTransform == null)
             {
-                if (noSignalText != null) noSignalText.gameObject.SetActive(true);
+                if (noSignalText != null && !ControlSticksController.Instance.isSettling)
+                {
+                    noSignalText.gameObject.SetActive(true);
+                }
+                if (blackScreen != null) blackScreen.SetActive(true);
                 Debug.LogWarning("PhotoCamera not found in " + liveCamObj.name);
                 continue;
             }
@@ -55,7 +72,11 @@ public class BobojianZhuBaoTracker : MonoBehaviour
             Camera cam = photoCamTransform.GetComponent<Camera>();
             if (cam == null)
             {
-                if (noSignalText != null) noSignalText.gameObject.SetActive(true);
+                if (noSignalText != null && !ControlSticksController.Instance.isSettling)
+                {
+                    noSignalText.gameObject.SetActive(true);
+                }
+                if (blackScreen != null) blackScreen.SetActive(true);
                 Debug.LogWarning("Camera component not found on PhotoCamera in " + liveCamObj.name);
                 continue;
             }
@@ -74,8 +95,8 @@ public class BobojianZhuBaoTracker : MonoBehaviour
                 topParent = topParent.parent;
             }
 
-            PlayerData pd = topParent.GetComponent<PlayerData>();
-            if (pd == null)
+            playerData = topParent.GetComponent<PlayerData>();
+            if (playerData == null)
             {
                 Debug.LogWarning("PlayerData component not found on top parent: " + topParent.name);
                 continue;
@@ -87,9 +108,21 @@ public class BobojianZhuBaoTracker : MonoBehaviour
                 continue;
             }
             
-            playerNameText.text = "monitoring: " + pd.PlayerName;
+            // 只有在未锁定状态下才更新玩家名称
+            if (!playerNameLocked)
+            {
+                playerNameText.text = "monitoring: " + playerData.PlayerName;
+                playerNameLocked = true; // 一旦设置了有效的玩家名称，就锁定它
+            }
             
             if (noSignalText != null) noSignalText.gameObject.SetActive(false);
+            if (blackScreen != null) blackScreen.SetActive(false);
         }
+    }
+
+    // 提供一个公共方法来解锁玩家名称显示
+    public void UnlockPlayerNameDisplay()
+    {
+        playerNameLocked = false;
     }
 }
