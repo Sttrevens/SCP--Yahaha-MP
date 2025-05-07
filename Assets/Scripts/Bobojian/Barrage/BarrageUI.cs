@@ -188,15 +188,15 @@ private void HandleRegularBarrage(float viewersTrend, bool forceBadBarrage)
     }
     else if (currentViewers < goodViewersAmount)
     {
-        spamProbability = 0.01f; // 观众少，10%概率显示垃圾弹幕
+        spamProbability = 0.02f; // 观众少，10%概率显示垃圾弹幕
     }
     else if (currentViewers < goodViewersAmount * 2)
     {
-        spamProbability = 0.02f; // 观众适中，20%概率显示垃圾弹幕
+        spamProbability = 0.04f; // 观众适中，20%概率显示垃圾弹幕
     }
     else // currentViewers >= goodViewersAmount * 2
     {
-        spamProbability = 0.03f; // 观众很多，30%概率显示垃圾弹幕
+        spamProbability = 0.06f; // 观众很多，30%概率显示垃圾弹幕
     }
     
     // 决定是否显示垃圾弹幕

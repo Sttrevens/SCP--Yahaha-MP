@@ -18,7 +18,14 @@ public enum BarrageType{
     goodDaGuai,
     goodLieQ,
     goodPurpleFlower,
-    badPurpleFlower
+    badPurpleFlower,
+    goodCactusMaster,
+    goodGhostGreen,
+    goodGhostTrans,
+    goodBlueScyver,
+    goodGlodenScyver,
+    goodRedScyver,
+    goodJudaEyedSlimeRed
 }
 
 [Serializable]

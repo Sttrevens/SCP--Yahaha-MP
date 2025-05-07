@@ -247,7 +247,7 @@ var targetScore = new TargetScore
 
                 // 随时间流逝，减少 currentAestheticFatigueValue
                 filmTarget.currentAestheticFatigueValue =
-                    Mathf.Max(0, filmTarget.currentAestheticFatigueValue - Time.fixedDeltaTime);
+                    Mathf.Max(0.1f, filmTarget.currentAestheticFatigueValue - Time.fixedDeltaTime);
             }
 
             if (filmTarget.currentAestheticFatigueValue >= filmTarget.maxAestheticFatigueValue / 3 && visibleRatio >= 0.1f)
