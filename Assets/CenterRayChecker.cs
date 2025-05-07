@@ -18,7 +18,7 @@ public class CenterRayChecker : MonoBehaviour
             // 尝试在命中的物体或其子物体上获取Billboard组件
             Billboard billboard = hit.transform.GetComponent<PlayerData>()?.billboard;
 
-            if (billboard != null && hit.transform.gameObject.name != "Currentplayer")
+            if (billboard != null && hit.transform.gameObject.name != "CurrentPlayer")
             {
                 // 若命中新目标，先关闭上一次的Billboard
                 if (lastBillboard != billboard)
