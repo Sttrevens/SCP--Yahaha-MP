@@ -92,6 +92,22 @@ if (brightestLight != null)
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void Rpc_Ahhh()
     {
+        PlayGetHitSfX(_enemy);
         _enemy.animator.SetTrigger("GetHit");
+    }
+    
+    void PlayGetHitSfX(Enemy enemy)
+    {
+        if (enemy.sfxClips != null)
+        {
+            foreach (var clip in enemy.sfxClips)
+            {
+                if (clip.label == "GetHit")
+                {
+                    AudioManager.instance.PlaySFX(enemy.gameObject, clip.clip);
+                    break;
+                }
+            }
+        }
     }
 }

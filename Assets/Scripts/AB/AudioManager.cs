@@ -163,7 +163,7 @@ public class AudioManager : MonoBehaviour
     //usage
     public void PlayStartButtonSound()
     {
-        PlaySFX(gameObject, startButtonSound);
+        PlaySFX(Camera.main.gameObject, startButtonSound);
     }
 
     public void PlayElevatorShakeSound(GameObject _object)

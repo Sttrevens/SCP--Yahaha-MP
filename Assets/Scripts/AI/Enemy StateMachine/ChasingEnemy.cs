@@ -4,6 +4,7 @@ using UnityEngine;
 using Fusion;
 using LPSurvivalEngine;
 using UnityEngine.Serialization;
+using VLB;
 
 public class ChasingEnemy : EnemyMovement
 {
@@ -14,6 +15,10 @@ public class ChasingEnemy : EnemyMovement
     public IEnemyState StateAfterChasing;
     
     [SerializeField] private string stateAfterChasingString; // 在Inspector中设置
+
+    [SerializeField] private AudioClip[] chasingSfXs;
+    [SerializeField] private Vector2 chasingSfXTimeRange;
+    private Coroutine _soundEffectCoroutine;
     
     private Dictionary<string, IEnemyState> stateDictionary 
         = new Dictionary<string, IEnemyState>
@@ -43,6 +48,18 @@ public class ChasingEnemy : EnemyMovement
             Debug.Log("[EnemyAI] Player detected while patrolling, switching to chase state");
             enemy.SwitchState(new ChasingState());
             agent.speed = chasingSpeed;
+        }
+
+        if (enemy.CurrentState is ChasingState)
+        {
+            if (chasingSfXs != null && chasingSfXs.Length > 0 && _soundEffectCoroutine == null)
+            {
+                _soundEffectCoroutine = StartCoroutine(PlayRandomSoundEffects());
+            }
+        }
+        else if (_soundEffectCoroutine != null)
+        {
+            StopSoundEffectCoroutine();
         }
     }
     
@@ -135,6 +152,30 @@ public bool PlayerInSight()
     return false;
 }
 
+    private IEnumerator PlayRandomSoundEffects()
+    {
+        while (true)
+        {
+            float waitTime = Random.Range(chasingSfXTimeRange.x, chasingSfXTimeRange.y);
+            yield return new WaitForSeconds(waitTime);
+            
+            if (chasingSfXs != null && chasingSfXs.Length > 0)
+            {
+                AudioClip randomClip = chasingSfXs[Random.Range(0, chasingSfXs.Length)];
+                AudioManager.instance.PlaySFX(this.gameObject, randomClip);
+            }
+        }
+    }
+    
+    private void StopSoundEffectCoroutine()
+    {
+        if (_soundEffectCoroutine != null)
+        {
+            StopCoroutine(_soundEffectCoroutine);
+            _soundEffectCoroutine = null;
+        }
+    }
+    
     public bool PlayerHeard()
     {
         Debug.Log("[EnemyAI] Checking for players by sound...");

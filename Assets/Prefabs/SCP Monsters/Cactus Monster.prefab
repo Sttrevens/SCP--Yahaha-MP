@@ -10186,7 +10186,9 @@ MonoBehaviour:
   animator: {fileID: 0}
   _animatorManager: {fileID: 0}
   initialStateType: 
-  sfxClips: []
+  sfxClips:
+  - clip: {fileID: 8300000, guid: 40776e3484753b94d980e829dac2b08b, type: 3}
+    label: Bite
 --- !u!114 &2687222387807620275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10318,6 +10320,9 @@ MonoBehaviour:
   chasingSpeed: 7
   hearingRadius: 10
   stateAfterChasingString: 
+  chasingSfXs:
+  - {fileID: 8300000, guid: 39a872dca0629d94987060a5f41c88ac, type: 3}
+  chasingSfXTimeRange: {x: 5, y: 10}
   stepAngle: 10
   drawGizmos: 0
 --- !u!114 &4676449541512774918
@@ -10369,7 +10374,8 @@ MonoBehaviour:
   - {fileID: 1986071774000716076}
   spell: {fileID: 1654418733993109780}
   _enemyAttack: {fileID: 4676449541512774918}
-  cactusSpellClip: {fileID: 0}
+  cactusSpellClip: {fileID: 8300000, guid: 6ed2131d4d6533446b651534e9441560, type: 3}
+  cactusCastPunchClip: {fileID: 8300000, guid: 71387028649c88f46b26eb2012f944c5, type: 3}
 --- !u!114 &1654418733993109780
 MonoBehaviour:
   m_ObjectHideFlags: 0

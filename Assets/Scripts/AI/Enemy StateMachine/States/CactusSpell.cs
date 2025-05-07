@@ -8,6 +8,7 @@ public class CactusSpell : MonoBehaviour
     [SerializeField] private EnemyAttack _enemyAttack;
 
     [SerializeField] private AudioClip cactusSpellClip;
+    [SerializeField] private AudioClip cactusCastPunchClip;
 
     private int originalEnemyDamage;
 
@@ -37,5 +38,11 @@ public class CactusSpell : MonoBehaviour
         spell.isSpellActive = false;
         
         yield return null;
+    }
+    
+    public void CastPunch()
+    {
+        if (cactusCastPunchClip != null)
+            AudioManager.instance.PlaySFX(this.gameObject, cactusCastPunchClip);
     }
 }

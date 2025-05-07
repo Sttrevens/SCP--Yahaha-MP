@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 5890031812073893347}
   - component: {fileID: -8797547206612358521}
   - component: {fileID: 5261021990986966815}
+  - component: {fileID: 6048979076101292416}
   m_Layer: 14
   m_Name: Eyed Slime Red
   m_TagString: Untagged
@@ -243,6 +244,8 @@ MonoBehaviour:
   chasingSpeed: 5
   hearingRadius: 1
   stateAfterChasingString: 
+  chasingSfXs: []
+  chasingSfXTimeRange: {x: 0, y: 0}
   stepAngle: 10
   drawGizmos: 0
 --- !u!114 &5890031812073893347
@@ -339,6 +342,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineLayer: 8
+--- !u!95 &6048979076101292416
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191068282315392365}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1798999583971922423
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +532,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3216214776924582411}
   - component: {fileID: 3110002938063485081}
+  - component: {fileID: 886755940035948986}
+  - component: {fileID: 1458157325758166045}
   m_Layer: 14
   m_Name: SlimePolyart
   m_TagString: Untagged
@@ -553,6 +579,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &886755940035948986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2876000124876875953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7d3c5f61e4f984ca954394373a96e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mudFootstepClips:
+  - {fileID: 8300000, guid: 9e545149e09a7654092c5a3078278de4, type: 3}
+  metalFootstepClips:
+  - {fileID: 8300000, guid: 9e545149e09a7654092c5a3078278de4, type: 3}
+  raycastDistance: 1.1
+--- !u!114 &1458157325758166045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2876000124876875953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc8dbfc3339fa44b84925e482b277fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bouncingSound: {fileID: 8300000, guid: 617b85ce830b1c347b1ffc715c0a422b, type: 3}
 --- !u!1 &2903925913722682650
 GameObject:
   m_ObjectHideFlags: 0
