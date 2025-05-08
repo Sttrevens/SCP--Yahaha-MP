@@ -80,6 +80,9 @@ public class TitleScreenUI : MonoBehaviour
                     "kr"   => "Korea",
                     "sa"   => "South America",
                     "cn"   => "Mainland China",
+                    "ru"   => "Russia",
+                    "rue"  => "Russia East",
+                    "za"   => "South Africa",
                     _      => reg.RegionCode
                 };
                 // 此处只显示友好名称和 ping，不需要直接在文本中嵌入 RegionCode
