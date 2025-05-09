@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0d7f671c49f34698fb4ced9bf47fa, type: 3}
   m_Name: InvertColor
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   invert:
     m_OverrideState: 0
     m_Value: 0
@@ -34,6 +34,7 @@ MonoBehaviour:
   - {fileID: 398456787952359869}
   - {fileID: -6353412297249472654}
   - {fileID: 6116263549530252664}
+  - {fileID: 9109487643985060488}
 --- !u!114 &398456787952359869
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -118,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 114c2b3c97ab75a4bb0cd85f90eb0528, type: 3}
   m_Name: LineStyle
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   isShow:
     m_OverrideState: 1
     m_Value: 0
@@ -143,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e168e522803f24c836df272cfc3e7f, type: 3}
   m_Name: MoHuPostProcessing
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   distortionStrength:
     m_OverrideState: 1
     m_Value: 0.049
@@ -162,13 +163,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
   m_Name: LiftGammaGain
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   lift:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0.40298507}
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1, z: 1, w: -0.0036223193}
   gamma:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 0.90802425, z: 0.867231, w: -0.031479225}
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 0.90802425, z: 0.867231, w: -0.4320204}
   gain:
     m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: -0.20397995}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.013382779}
+--- !u!114 &9109487643985060488
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac43bbaad5bcb034a86132a2b1f843dd, type: 3}
+  m_Name: BlurCPP
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.415
+  quantizationLevel:
+    m_OverrideState: 1
+    m_Value: 1627

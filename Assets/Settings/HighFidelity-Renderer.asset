@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3533453955292776849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19165ededb52334db532794fa943599, type: 3}
+  m_Name: CustomPostProcessingFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20,7 +33,8 @@ MonoBehaviour:
   - {fileID: 6550301642245094802}
   - {fileID: 4234752551705703222}
   - {fileID: 1079056205978291918}
-  m_RendererFeatureMap: 327a2854f73b5820923dad7da358e75a36f3185402ddc43ace4e04fae693f90e
+  - {fileID: -3533453955292776849}
+  m_RendererFeatureMap: 327a2854f73b5820923dad7da358e75a36f3185402ddc43ace4e04fae693f90e6f36934459a6f6ce
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -56,7 +70,7 @@ MonoBehaviour:
   m_ShadowTransparentReceive: 1
   m_RenderingMode: 0
   m_DepthPrimingMode: 0
-  m_CopyDepthMode: 1
+  m_CopyDepthMode: 2
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
 --- !u!114 &1079056205978291918
@@ -71,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1bf42c897c344772a8dea9cae097da4, type: 3}
   m_Name: FastOutline
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings: {fileID: 11400000, guid: 60def1a5c8a24174fb41555d03a8ea67, type: 2}
   shaders:
     mask: {fileID: 4800000, guid: d6efd8a53bb54ff68576b38c066c3134, type: 3}
@@ -90,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e598cd55476104d909f677d2b056f508, type: 3}
   m_Name: SoftOutline
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings: {fileID: 11400000, guid: e57e8505aa34d6a448c9ebbaf35defe1, type: 2}
   shaders:
     mask: {fileID: 4800000, guid: 231df427ffff4fee9202f22ce6a5d357, type: 3}
@@ -148,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0479188ada9624b9516317e851fd1b, type: 3}
   m_Name: CustomRendererFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     renderPassEvent: 550
     shader: {fileID: 0}
