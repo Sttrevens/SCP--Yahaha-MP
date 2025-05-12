@@ -412,7 +412,7 @@ else
     NetworkObject _obj = Runner.Spawn(item, scroll_rect.content.transform.position, Quaternion.identity);
     //_obj.SetActive(true);
     yield return null;
-    _obj.gameObject.GetComponent<BarrageItem>().setData(curBarrage, userNameText);
+    _obj.gameObject.GetComponent<BarrageItem>().SetData(curBarrage, userNameText);
     RPC_OnItemCreated(_obj);
 }
 

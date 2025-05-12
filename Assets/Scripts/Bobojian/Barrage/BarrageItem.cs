@@ -22,7 +22,7 @@ public class BarrageItem : NetworkBehaviour
     private string _localUserNameText;
     private string _localTextText;
 
-    public void setData(BarrageItemJson data, string username)
+    public void SetData(BarrageItemJson data, string username)
     {
         if (!Object.HasStateAuthority) return;
         _localUserNameText = username + ": ";
@@ -42,10 +42,7 @@ public class BarrageItem : NetworkBehaviour
             userNameText = _localUserNameText;
             textText     = _localTextText;
         }
-
-        // 2) 非 Authority 接收更新，检测文本变化
-        if (!Object.HasStateAuthority)
-        {
+        
             bool changed = false;
             if (userName.text != userNameText)
             {
@@ -64,7 +61,6 @@ public class BarrageItem : NetworkBehaviour
                 _waitingForLayout = true;
                 StartCoroutine(DelayedLayoutAndScroll());
             }
-        }
     }
 
     /// <summary>
