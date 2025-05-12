@@ -420,7 +420,7 @@ else
    public void RPC_OnItemCreated(NetworkObject _obj) {
        // 这里是在所有客户端执行
        if (_obj == null) return;
-       
+       _obj.gameObject.GetComponent<BarrageItem>().setData(curBarrage, userNameText);
        RectTransform rt = _obj.gameObject.GetComponent<RectTransform>();
        if(rt == null) return;
 
