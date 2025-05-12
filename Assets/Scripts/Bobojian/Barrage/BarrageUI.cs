@@ -417,28 +417,16 @@ else
 }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void RPC_OnItemCreated(NetworkObject _obj) {
-        if (_obj == null) return;
+    public void RPC_OnItemCreated(NetworkObject _obj)
+    {
+        if (_obj == null) { Debug.LogError("obj is null"); return; }
 
-        var rt = _obj.gameObject.GetComponent<RectTransform>();
-        // 1. 先设置父对象（用 false 保持本地坐标不变）
-        rt.SetParent(scroll_rect.content, false);
+        // 只处理一次父子关系与动画，布局交给 BarrageItem
+        var item = _obj.GetComponent<BarrageItem>();
+        item.SetParentContent(scroll_rect.content);
 
-        // 2. 重置变换
-        rt.anchoredPosition3D = Vector3.zero;
-        rt.localRotation       = Quaternion.identity;
-        rt.localScale          = Vector3.one;
-
-        // 3. 确保所有 UI 脏标记都立即刷新
-        Canvas.ForceUpdateCanvases();
-
-        // 4. 强制执行一次根节点的 Layout 重建（会执行 HorizontalLayoutGroup -> ContentSizeFitter）
-        LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
-
-        // （可选）如果 Content 容器也有 AMS 等布局需求，再做一次
-        LayoutRebuilder.ForceRebuildLayoutImmediate(scroll_rect.content);
-
-        // 5. 启动你的滚动动画
+        // 启动你的滚动动画
+        var rt = _obj.GetComponent<RectTransform>();
         scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, ((float)min)/2));
     }
 
