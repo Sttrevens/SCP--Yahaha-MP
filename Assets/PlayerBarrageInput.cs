@@ -34,7 +34,7 @@ public class PlayerBarrageInput : NetworkBehaviour
         
         foreach (var player in allPlayers)
         {
-            if (player.HasInputAuthority)
+            if (player.name == "CurrentPlayer")
             {
                 localPlayerData = player;
                 Debug.Log("找到本地玩家: " + localPlayerData.PlayerName);
@@ -64,12 +64,10 @@ public class PlayerBarrageInput : NetworkBehaviour
                 playerName = localPlayerData.PlayerName;
             }
             
-            // 发送RPC给Master Client
+            // 发送RPC给所有客户端，由Master Client处理
             if (localPlayerData != null && localPlayerData.Object != null)
             {
-                // 使用修改后的RPC方法
-                RPC_SendBarrageToHost(message, playerName);
-                Debug.Log($"发送弹幕请求到服务器: {message}, 用户: {playerName}");
+                RPC_PlayerBarrageRequest(message, playerName);
             }
             
             // 清空输入框
@@ -89,68 +87,12 @@ public class PlayerBarrageInput : NetworkBehaviour
         }
     }
     
-    // 修改RPC，仅从客户端发送到主机
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_SendBarrageToHost(string message, string playerName)
-    {
-        // 只在Master Client上执行
-        if (Object.HasStateAuthority)
-        {
-            Debug.Log($"Master Client接收到弹幕请求: {message}, 用户: {playerName}");
-            
-            // 创建弹幕数据
-            UserName userName = new UserName { id = 999, nickName = playerName };
-            int userNameIndex = -1;
-            
-            // 查找玩家名称是否存在于UserName数组中
-            if (UserNameClass.userName != null)
-            {
-                for (int i = 0; i < UserNameClass.userName.Length; i++)
-                {
-                    if (UserNameClass.userName[i].nickName == playerName)
-                    {
-                        userNameIndex = i;
-                        break;
-                    }
-                }
-            }
-            
-            // 如果找不到，则使用默认值
-            if (userNameIndex == -1 && UserNameClass.userName != null && UserNameClass.userName.Length > 0)
-            {
-                userNameIndex = 0; // 使用第一个用户名
-                playerName = UserNameClass.userName[userNameIndex].nickName;
-            }
-            
-            // 创建弹幕项
-            BarrageItemJson playerBarrage = new BarrageItemJson
-            {
-                index = userNameIndex >= 0 ? userNameIndex : 0,
-                desc = message
-            };
-            
-            // 处理创建弹幕
-            if (BarrageUI.instance != null)
-            {
-                BarrageUI.instance.curBarrage = playerBarrage;
-                BarrageUI.instance.userNameText = playerName;
-                BarrageUI.instance.RPC_CreateItem();
-            }
-            else
-            {
-                Debug.LogError("Master Client上找不到弹幕UI实例");
-            }
-        }
-    }
-    
-    // 保留原来的RPC方法但不再使用
+    // 所有客户端可以调用，发给所有客户端
     [Rpc(RpcSources.All, RpcTargets.All)]
     public void RPC_PlayerBarrageRequest(string message, string playerName)
     {
         // 只在拥有StateAuthority的客户端处理（Master Client）
         if (!Object.HasStateAuthority) return;
-        
-        Debug.LogWarning("使用了旧的RPC_PlayerBarrageRequest方法，建议使用新的RPC_SendBarrageToHost方法");
         
         if (BarrageUI.instance != null)
         {
@@ -185,8 +127,8 @@ public class PlayerBarrageInput : NetworkBehaviour
                 desc = message
             };
             
-            // 这里错误地使用了localPlayerData.PlayerName，应该使用传入的playerName
-            InsertPlayerBarrageToBarrageUI(playerBarrage, playerName);
+            // 处理插入弹幕
+            InsertPlayerBarrageToBarrageUI(playerBarrage, localPlayerData.PlayerName);
         }
     }
     
@@ -208,4 +150,5 @@ public class PlayerBarrageInput : NetworkBehaviour
             BarrageUI.instance.InsertPlayerBarrage(playerBarrage, username);
         }
     }
+
 }
