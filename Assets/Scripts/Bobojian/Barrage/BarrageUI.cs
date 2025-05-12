@@ -416,32 +416,31 @@ else
     RPC_OnItemCreated(_obj);
 }
 
-[Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-   public void RPC_OnItemCreated(NetworkObject _obj) {
-       // 这里是在所有客户端执行
-       if (_obj == null)
-       {
-           Debug.LogError("obj is null");
-           return;
-       }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_OnItemCreated(NetworkObject _obj) {
+        if (_obj == null) return;
 
-       RectTransform rt = _obj.gameObject.GetComponent<RectTransform>();
-       if(rt == null){
-           Debug.LogError("rt is null");
-           return;
-       }
+        var rt = _obj.gameObject.GetComponent<RectTransform>();
+        // 1. 先设置父对象（用 false 保持本地坐标不变）
+        rt.SetParent(scroll_rect.content, false);
 
-       rt.SetParent(scroll_rect.content.transform);
-       rt.anchoredPosition3D = Vector3.zero; // 重置锚点位置
-       rt.localRotation = Quaternion.identity;
-       rt.localScale = Vector3.one;
-    Debug.Log("Barrage Fucked1.");
-    // 强制刷新布局
-    LayoutRebuilder.ForceRebuildLayoutImmediate(scroll_rect.content);
-    
-    scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, ((float)min)/2));
-    Debug.Log("Barrage Fucked2.");
-   }
+        // 2. 重置变换
+        rt.anchoredPosition3D = Vector3.zero;
+        rt.localRotation       = Quaternion.identity;
+        rt.localScale          = Vector3.one;
+
+        // 3. 确保所有 UI 脏标记都立即刷新
+        Canvas.ForceUpdateCanvases();
+
+        // 4. 强制执行一次根节点的 Layout 重建（会执行 HorizontalLayoutGroup -> ContentSizeFitter）
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
+
+        // （可选）如果 Content 容器也有 AMS 等布局需求，再做一次
+        LayoutRebuilder.ForceRebuildLayoutImmediate(scroll_rect.content);
+
+        // 5. 启动你的滚动动画
+        scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, ((float)min)/2));
+    }
 
    // 添加到BarrageUI.cs类中
    public void InsertPlayerBarrage(BarrageItemJson playerBarrage, string userName)
