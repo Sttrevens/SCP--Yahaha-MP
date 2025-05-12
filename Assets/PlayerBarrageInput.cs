@@ -90,7 +90,7 @@ public class PlayerBarrageInput : NetworkBehaviour
     }
     
     // 修改RPC，仅从客户端发送到主机
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_SendBarrageToHost(string message, string playerName)
     {
         // 只在Master Client上执行
