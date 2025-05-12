@@ -11,7 +11,6 @@ public class BarrageItem : NetworkBehaviour
     [Networked] public string textText     { get; set; }
     public Text    text;
 
-    public ScrollViewNevigation scrollViewNevigation;
     public double min;//最小弹幕出现速度
     public double max;//最大弹幕出现速度
     
@@ -71,9 +70,8 @@ public class BarrageItem : NetworkBehaviour
     /// BarrageUI 在 RPC_OnItemCreated 里，Spawn 后一定要立刻调用：
     ///    item.SetParentContent(scroll_rect.content);
     /// </summary>
-    public void SetParentContent(RectTransform content, ScrollViewNevigation _scrollViewNevigation, double _max, double _min)
+    public void SetParentContent(RectTransform content, double _max, double _min)
     {
-        scrollViewNevigation = _scrollViewNevigation;
         max = _max;
         min = _min;
         
@@ -99,7 +97,7 @@ public class BarrageItem : NetworkBehaviour
 
         // 触发滚动
         // 注意：这里用具体的 scrollViewNevigation 实例
-        scrollViewNevigation.Nevigate(_rt, Mathf.Min(0.8f, ((float)min)/2));
+        ScrollViewNevigation.Instance.Nevigate(_rt, Mathf.Min(0.8f, ((float)min)/2));
 
         _waitingForLayout = false;
     }

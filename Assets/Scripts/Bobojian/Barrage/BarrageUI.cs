@@ -420,7 +420,7 @@ else
     public void RPC_OnItemCreated(NetworkObject obj)
     {
         var item = obj.GetComponent<BarrageItem>();
-        item.SetParentContent(scroll_rect.content, scrollViewNevigation, max, min);
+        item.SetParentContent(scroll_rect.content, max, min);
 
         // 不要在这里做任何布局或滚动，让 Item 自己调度
     }

@@ -4,10 +4,16 @@ using UnityEngine.UI;
 
 public class ScrollViewNevigation : MonoBehaviour
 {
-
     private ScrollRect scrollRect;
     private RectTransform viewport;
     private RectTransform content;
+    
+    public static ScrollViewNevigation Instance;
+    
+    void Awake()
+    {
+        Instance = this;
+    }
 
 	// Use this for initialization
 	void Start ()
