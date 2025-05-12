@@ -11,6 +11,8 @@ public class PlayerBarrageInput : NetworkBehaviour
     [SerializeField] private TMP_InputField barrageInputField;
     
     private PlayerData localPlayerData;
+    private Coroutine findPlayerCoroutine;
+    private bool isSearchingPlayer = false;
     
     private void Start()
     {
@@ -20,34 +22,130 @@ public class PlayerBarrageInput : NetworkBehaviour
         // 确保在输入后清空输入框
         barrageInputField.onEndEdit.AddListener(ClearInputAfterSubmit);
         
-        // 尝试获取本地玩家
-        StartCoroutine(FindLocalPlayer());
+        // 启动协程，但保存引用
+        StartFindingLocalPlayer();
     }
     
-    private IEnumerator FindLocalPlayer()
+    // 网络对象生成时调用（在Start之后）
+    public override void Spawned()
     {
-        // 等待玩家生成
-        yield return new WaitForSeconds(1.0f);
+        base.Spawned();
         
-        // 尝试查找玩家
-        PlayerData[] allPlayers = FindObjectsOfType<PlayerData>();
-        
-        foreach (var player in allPlayers)
+        // 确保在网络连接后也尝试找到本地玩家
+        Debug.Log("Spawned被调用，确保玩家查找协程在运行");
+        StartFindingLocalPlayer();
+    }
+    
+    // 重写OnEnable确保组件启用时协程继续运行
+    private void OnEnable()
+    {
+        StartFindingLocalPlayer();
+    }
+    
+    // 安全地启动查找玩家的协程
+    private void StartFindingLocalPlayer()
+    {
+        if (isSearchingPlayer)
         {
-            if (player.name == "CurrentPlayer")
+            Debug.Log("已经在查找本地玩家中，不需要重新启动协程");
+            return;
+        }
+        
+        Debug.Log("启动查找本地玩家的协程");
+        isSearchingPlayer = true;
+        
+        // 如果之前的协程存在，先停止它
+        if (findPlayerCoroutine != null)
+            StopCoroutine(findPlayerCoroutine);
+        
+        // 启动新的协程并保存引用
+        findPlayerCoroutine = StartCoroutine(FindLocalPlayerPersistent());
+    }
+    
+    // 更加健壮的查找本地玩家协程
+    private IEnumerator FindLocalPlayerPersistent()
+    {
+        Debug.Log("开始持久化查找本地玩家...");
+        int attempts = 0;
+        
+        // 持续尝试直到找到本地玩家
+        while (localPlayerData == null && isSearchingPlayer)
+        {
+            attempts++;
+            Debug.Log($"查找本地玩家尝试 #{attempts}");
+            
+            // 等待一小段时间
+            yield return new WaitForSeconds(1.0f);
+            
+            // 尝试查找玩家
+            PlayerData[] allPlayers = FindObjectsOfType<PlayerData>();
+            Debug.Log($"当前场景中找到 {allPlayers.Length} 个玩家");
+            
+            foreach (var player in allPlayers)
             {
-                localPlayerData = player;
-                Debug.Log("找到本地玩家: " + localPlayerData.PlayerName);
-                break;
+                // 找到名为CurrentPlayer的对象，这是根据你的原始逻辑
+                if (player.name == "CurrentPlayer")
+                {
+                    localPlayerData = player;
+                    Debug.Log($"成功找到本地玩家: {localPlayerData.PlayerName}");
+                    
+                    // 打印更多关于玩家的信息
+                    Debug.Log($"本地玩家ID: {localPlayerData.GetInstanceID()}, Object: {(localPlayerData.Object != null ? "有效" : "无效")}");
+                    
+                    // 通知UI更新或执行其他初始化
+                    OnLocalPlayerFound();
+                    
+                    // 找到后跳出循环
+                    break;
+                }
+            }
+            
+            // 如果找到了，退出协程
+            if (localPlayerData != null)
+            {
+                Debug.Log("本地玩家已找到，查找协程结束");
+                isSearchingPlayer = false;
+                yield break;
+            }
+            
+            Debug.LogWarning("未找到本地玩家，将在1秒后重试");
+            
+            // 检查组件和GameObject状态
+            if (!this.enabled || !this.gameObject.activeInHierarchy)
+            {
+                Debug.LogError("PlayerBarrageInput组件被禁用或GameObject不活跃，协程可能会意外终止");
             }
         }
-        
-        if (localPlayerData == null)
+    }
+    
+    // 找到本地玩家后的处理
+    private void OnLocalPlayerFound()
+    {
+        Debug.Log("本地玩家已找到，初始化弹幕功能");
+        // 这里可以添加任何需要在找到本地玩家后执行的逻辑
+    }
+
+    // 确保在组件被禁用或销毁时清理状态
+    private void OnDisable()
+    {
+        if (findPlayerCoroutine != null)
         {
-            Debug.LogWarning("未找到本地玩家，将在1秒后重试");
-            yield return new WaitForSeconds(1.0f);
-            StartCoroutine(FindLocalPlayer());
+            StopCoroutine(findPlayerCoroutine);
+            findPlayerCoroutine = null;
         }
+        isSearchingPlayer = false;
+        Debug.Log("PlayerBarrageInput被禁用，停止查找玩家协程");
+    }
+    
+    private void OnDestroy()
+    {
+        if (findPlayerCoroutine != null)
+        {
+            StopCoroutine(findPlayerCoroutine);
+            findPlayerCoroutine = null;
+        }
+        isSearchingPlayer = false;
+        Debug.Log("PlayerBarrageInput被销毁，停止查找玩家协程");
     }
 
     private void OnBarrageSubmitted(string message)
