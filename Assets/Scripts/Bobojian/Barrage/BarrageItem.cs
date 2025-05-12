@@ -6,18 +6,21 @@ using Fusion;
 public class BarrageItem : NetworkBehaviour
 {
     [Networked] public string userNameText { get; set; }
-    public Text userName;
-    [Networked] public string textText { get; set; }
-    public Text text;
+    public Text    userName;
+    [Networked] public string textText     { get; set; }
+    public Text    text;
 
-    // 本地缓存，用于 Authority 端写入
+    public ScrollViewNevigation scrollViewNevigation;
+    public double min;//最小弹幕出现速度
+    public double max;//最大弹幕出现速度
+    
+    private RectTransform    _rt;
+    private RectTransform    _parentContent;
+    private bool             _waitingForLayout = false;
+
+    // 本地 Authority 端数据
     private string _localUserNameText;
     private string _localTextText;
-
-    // 延迟布局标记 & RectTransform 缓存
-    private bool    _layoutDirty = false;
-    private RectTransform _rt;
-    private RectTransform _parentContentRt;
 
     public void setData(BarrageItemJson data, string username)
     {
@@ -28,68 +31,76 @@ public class BarrageItem : NetworkBehaviour
 
     public override void Spawned()
     {
-        // 缓存
         _rt = GetComponent<RectTransform>();
-
-        // 首次赋值
-        userName.text = userNameText;
-        text.text     = textText;
-        _rt.localScale = Vector3.one;
-
-        // 等待布局重建
-        _layoutDirty = true;
     }
 
     public override void FixedUpdateNetwork()
     {
-        // Authority 端把本地数据写入 Networked 属性
+        // 1) Authority 写入网络属性
         if (Object.HasStateAuthority)
         {
             userNameText = _localUserNameText;
             textText     = _localTextText;
         }
 
-        // 非 Authority 端接收到更新后，标记需要重建
-        bool changed = false;
-        if (userName.text != userNameText)
+        // 2) 非 Authority 接收更新，检测文本变化
+        if (!Object.HasStateAuthority)
         {
-            userName.text = userNameText; changed = true;
+            bool changed = false;
+            if (userName.text != userNameText)
+            {
+                userName.text = userNameText;
+                changed = true;
+            }
+            if (text.text != textText)
+            {
+                text.text = textText;
+                changed = true;
+            }
+
+            // 发现变动就准备下一帧去做布局 + 滚动
+            if (changed && !_waitingForLayout)
+            {
+                _waitingForLayout = true;
+                StartCoroutine(DelayedLayoutAndScroll());
+            }
         }
-        if (text.text != textText)
-        {
-            text.text = textText; changed = true;
-        }
-        if (changed) _layoutDirty = true;
-
-        _rt.localScale = Vector3.one;
-    }
-
-    private void LateUpdate()
-    {
-        if (!_layoutDirty || _rt == null) return;
-
-        // 1) 确保所有 Canvas 布局脏标记更新完毕  
-        Canvas.ForceUpdateCanvases();
-        // 2) 重建自己，触发 HorizontalLayoutGroup + ContentSizeFitter
-        LayoutRebuilder.ForceRebuildLayoutImmediate(_rt);
-        // 3) 同步重建父容器（scroll_rect.content）  
-        if (_parentContentRt != null)
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_parentContentRt);
-
-        _layoutDirty = false;
     }
 
     /// <summary>
-    /// 由外部（BarrageUI）在 Spawn/RPC 完成后调用，设置父容器
+    /// BarrageUI 在 RPC_OnItemCreated 里，Spawn 后一定要立刻调用：
+    ///    item.SetParentContent(scroll_rect.content);
     /// </summary>
-    public void SetParentContent(RectTransform contentRt)
+    public void SetParentContent(RectTransform content, ScrollViewNevigation _scrollViewNevigation, double _max, double _min)
     {
-        _parentContentRt = contentRt;
-        _rt.SetParent(contentRt, false);
-        _rt.anchoredPosition3D = Vector3.zero;
-        _rt.localRotation      = Quaternion.identity;
-        _rt.localScale         = Vector3.one;
-        // 贴上父后，再次触发重建
-        _layoutDirty = true;
+        scrollViewNevigation = _scrollViewNevigation;
+        max = _max;
+        min = _min;
+        
+        _parentContent = content;
+        _rt.SetParent(content, false);
+        _rt.localScale = Vector3.one;
+    }
+
+    private IEnumerator DelayedLayoutAndScroll()
+    {
+        // 等到当前帧渲染和网络文本同步完成
+        yield return new WaitForEndOfFrame();
+
+        // 强制刷新所有 Canvas 布局
+        Canvas.ForceUpdateCanvases();
+
+        // 重建这个 Item 的布局
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_rt);
+
+        // 重建父容器布局（如果有滚动内容需要自适）
+        if (_parentContent != null)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_parentContent);
+
+        // 触发滚动
+        // 注意：这里用具体的 scrollViewNevigation 实例
+        scrollViewNevigation.Nevigate(_rt, Mathf.Min(0.8f, ((float)min)/2));
+
+        _waitingForLayout = false;
     }
 }

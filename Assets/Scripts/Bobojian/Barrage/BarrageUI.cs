@@ -417,18 +417,14 @@ else
 }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    public void RPC_OnItemCreated(NetworkObject _obj)
+    public void RPC_OnItemCreated(NetworkObject obj)
     {
-        if (_obj == null) { Debug.LogError("obj is null"); return; }
+        var item = obj.GetComponent<BarrageItem>();
+        item.SetParentContent(scroll_rect.content, scrollViewNevigation, max, min);
 
-        // 只处理一次父子关系与动画，布局交给 BarrageItem
-        var item = _obj.GetComponent<BarrageItem>();
-        item.SetParentContent(scroll_rect.content);
-
-        // 启动你的滚动动画
-        var rt = _obj.GetComponent<RectTransform>();
-        scrollViewNevigation.Nevigate(rt, Mathf.Min(0.8f, ((float)min)/2));
+        // 不要在这里做任何布局或滚动，让 Item 自己调度
     }
+
 
    // 添加到BarrageUI.cs类中
    public void InsertPlayerBarrage(BarrageItemJson playerBarrage, string userName)
