@@ -53,25 +53,41 @@ public class PlayerBarrageInput : NetworkBehaviour
     private void OnBarrageSubmitted(string message)
     {
         if (string.IsNullOrWhiteSpace(message))
+        {
+            Debug.Log("收到空弹幕，已忽略");
             return;
-        
+        }
+    
         if (BarrageUI.instance != null)
         {
+            Debug.Log("开始处理弹幕消息: " + message);
+        
             // 获取玩家名字
             string playerName = "匿名用户";
             if (localPlayerData != null && !string.IsNullOrEmpty(localPlayerData.PlayerName))
             {
                 playerName = localPlayerData.PlayerName;
+                Debug.Log("使用玩家名称: " + playerName);
             }
-            
+            else
+            {
+                Debug.Log("未找到玩家数据或玩家名称为空,使用默认名称: " + playerName);
+            }
+        
             // 发送RPC给所有客户端，由Master Client处理
             if (localPlayerData != null && localPlayerData.Object != null)
             {
+                Debug.Log("发送弹幕RPC请求");
                 RPC_PlayerBarrageRequest(message, playerName);
             }
-            
+            else
+            {
+                Debug.LogWarning("本地玩家对象无效，无法发送RPC");
+            }
+        
             // 清空输入框
             barrageInputField.text = string.Empty;
+            Debug.Log("已清空输入框");
         }
         else
         {
@@ -93,7 +109,7 @@ public class PlayerBarrageInput : NetworkBehaviour
     {
         // 只在拥有StateAuthority的客户端处理（Master Client）
         if (!Object.HasStateAuthority) return;
-        
+        Debug.Log("Master Client Handling Player Barrage Request: " + message + " from " + playerName + "");
         if (BarrageUI.instance != null)
         {
             // 创建玩家弹幕项
