@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,25 +43,28 @@ public class BarrageItem : NetworkBehaviour
             userNameText = _localUserNameText;
             textText     = _localTextText;
         }
-        
-            bool changed = false;
-            if (userName.text != userNameText)
-            {
-                userName.text = userNameText;
-                changed = true;
-            }
-            if (text.text != textText)
-            {
-                text.text = textText;
-                changed = true;
-            }
+    }
 
-            // 发现变动就准备下一帧去做布局 + 滚动
-            if (changed && !_waitingForLayout)
-            {
-                _waitingForLayout = true;
-                StartCoroutine(DelayedLayoutAndScroll());
-            }
+    private void FixedUpdate()
+    {
+        bool changed = false;
+        if (userName.text != userNameText)
+        {
+            userName.text = userNameText;
+            changed = true;
+        }
+        if (text.text != textText)
+        {
+            text.text = textText;
+            changed = true;
+        }
+
+        // 发现变动就准备下一帧去做布局 + 滚动
+        if (changed && !_waitingForLayout)
+        {
+            _waitingForLayout = true;
+            StartCoroutine(DelayedLayoutAndScroll());
+        }
     }
 
     /// <summary>
