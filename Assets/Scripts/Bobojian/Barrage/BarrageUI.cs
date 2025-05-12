@@ -419,10 +419,17 @@ else
 [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
    public void RPC_OnItemCreated(NetworkObject _obj) {
        // 这里是在所有客户端执行
-       if (_obj == null) return;
-       _obj.gameObject.GetComponent<BarrageItem>().setData(curBarrage, userNameText);
+       if (_obj == null)
+       {
+           Debug.LogError("obj is null");
+           return;
+       }
+
        RectTransform rt = _obj.gameObject.GetComponent<RectTransform>();
-       if(rt == null) return;
+       if(rt == null){
+           Debug.LogError("rt is null");
+           return;
+       }
 
        rt.SetParent(scroll_rect.content.transform);
        rt.anchoredPosition3D = Vector3.zero; // 重置锚点位置
