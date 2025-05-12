@@ -40,16 +40,16 @@ public class GlobalPostProcessing : MonoBehaviour
 
     public void ChangeMohuState(bool state)
     {
-        // customRendererFeature.enableMoHuPostProcessing = state;
+        customRendererFeature.enableMoHuPostProcessing = state;
     }
     
     public void ChangeStateLineStyle(bool state)
     {
-        // customRendererFeature.enableLineStyle = state;
+        customRendererFeature.enableLineStyle = state;
     }
 
     public void ChangeStateInvert(bool state)
     {
-        // customRendererFeature.enableInvertColor = state;
+        customRendererFeature.enableInvertColor = state;
     }
 }

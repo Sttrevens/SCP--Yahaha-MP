@@ -25,7 +25,8 @@ public enum BarrageType{
     goodBlueScyver,
     goodGlodenScyver,
     goodRedScyver,
-    goodJudaEyedSlimeRed
+    goodJudaEyedSlimeRed,
+    badGhostTrans
 }
 
 [Serializable]

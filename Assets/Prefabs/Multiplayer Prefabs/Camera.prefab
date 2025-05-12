@@ -58,6 +58,7 @@ MonoBehaviour:
   accumulatedScore: 0
   realtimeScore: 0
   cachedTargets: []
+  targetsInView: []
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -140,13 +141,14 @@ MonoBehaviour:
   visibleRatio: 0
   centerOffsetDistance: 0
   distanceToCamera: 0
-  centerOffsetWeight: 0
-  distanceToCameraWeight: 0
-  visibleRatioWeight: 0
+  centerOffsetWeight: 0.1
+  distanceToCameraWeight: 0.1
+  visibleRatioWeight: 0.1
   cam: {fileID: 8422162903330514959}
   accumulatedScore: 0
   realtimeScore: 0
   cachedTargets: []
+  targetsInView: []
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0

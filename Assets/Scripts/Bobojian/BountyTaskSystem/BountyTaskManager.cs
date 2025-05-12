@@ -62,7 +62,7 @@ public class BountyTaskManager : NetworkBehaviour
     private float _estimatedLevelDuration = 600f; // 预计关卡时长（秒）
     
     // 事件
-    public delegate void TaskEvent(ActiveTask task);
+    public delegate void TaskEvent(string taskid);
     public event TaskEvent OnTaskGenerated;
     public event TaskEvent OnTaskCompleted;
     public event TaskEvent OnTaskFailed;
@@ -473,7 +473,7 @@ public class BountyTaskManager : NetworkBehaviour
         
         foreach (var task in tasksCopy)
         {
-            OnTaskFailed?.Invoke(task);
+            OnTaskFailed?.Invoke(task.id);
             
             // 从活跃列表中移除
             _activeTasks.Remove(task);
@@ -542,17 +542,14 @@ public class BountyTaskManager : NetworkBehaviour
                 // 更新剩余时间
                 task.remainingTime -= Runner.DeltaTime;
             
-                // 更新网络字典中的值以同步到所有客户端
-                TaskRemainingTimes.Set(task.id, task.remainingTime);
-            
                 // 检查是否超时
                 if (task.remainingTime <= 0)
                 {
                     RPC_FailTask(task.id);
-                
-                    // 从字典中移除此任务
-                    TaskRemainingTimes.Remove(task.id);
                 }
+                
+                // 更新网络字典中的值以同步到所有客户端
+                TaskRemainingTimes.Set(task.id, task.remainingTime);
             }
             
         RPC_UpdateActiveTasksTime();
@@ -707,7 +704,7 @@ private void RPC_BroadcastNewTask(string id, string taskName, string taskDescrip
     _activeTasks.Add(newTask);
     
     // 触发任务生成事件
-    OnTaskGenerated?.Invoke(newTask);
+    OnTaskGenerated?.Invoke(newTask.id);
     
     /*if (HasStateAuthority)
     {
@@ -772,7 +769,7 @@ private void RPC_BroadcastNewTask(string id, string taskName, string taskDescrip
         _activeTasks.Add(newTask);
         
         // 触发任务生成事件
-        OnTaskGenerated?.Invoke(newTask);
+        OnTaskGenerated?.Invoke(newTask.id);
         
         // 创建任务UI
         CreateTaskUI(newTask);
@@ -1086,7 +1083,7 @@ private FilmTarget SelectTargetBasedOnWeight(List<FilmTarget> targets)
         UpdateTaskSuccessRate();
     
         // 触发任务完成事件
-        OnTaskCompleted?.Invoke(task);
+        OnTaskCompleted?.Invoke(taskId);
     
         // 从活跃列表中移除
         _activeTasks.Remove(task);
@@ -1110,7 +1107,7 @@ private FilmTarget SelectTargetBasedOnWeight(List<FilmTarget> targets)
         UpdateTaskSuccessRate();
     
         // 触发任务失败事件
-        OnTaskFailed?.Invoke(task);
+        OnTaskFailed?.Invoke(taskId);
     
         // 从活跃列表中移除
         _activeTasks.Remove(task);

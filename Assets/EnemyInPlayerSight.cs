@@ -11,7 +11,13 @@ public class EnemyInPlayerSight : NetworkBehaviour
             if (gameObject.name == "CurrentPlayer")
             {
                 var curCamera = Camera.main;
-                isEnemyInSight = curCamera.GetComponentInChildren<ConeDetection>().hasTargetInView;
+                var ghostConeObj = curCamera.transform.Find("GhostConeDetection");
+                if (ghostConeObj != null) {
+                    var coneDetection = ghostConeObj.GetComponent<ConeDetection>();
+                    if (coneDetection != null) {
+                        isEnemyInSight = coneDetection.hasTargetInView;
+                    }
+                }
                 Debug.Log($"EnemyInSight: {isEnemyInSight}");
             }
             else

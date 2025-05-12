@@ -290,9 +290,18 @@ var targetScore = new TargetScore
 
         return targetScore;
     }
+    
+    [Header("自定义视野角度")]
+    [Range(0f, 180f)]
+    [SerializeField] private float maxViewAngle = 60f;
 
     private bool IsInViewFrustum(Bounds bounds)
     {
+        Vector3 dir = (bounds.center - cam.transform.position).normalized;
+        float angle = Vector3.Angle(cam.transform.forward, dir);
+        if (angle > maxViewAngle)
+            return false;
+        
         // 获取视锥体平面
         Plane[] frustumPlanes = GeometryUtility.CalculateFrustumPlanes(cam);
     

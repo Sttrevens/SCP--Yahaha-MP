@@ -140,18 +140,18 @@ public class TaskUI : MonoBehaviour
         }
     }
     
-    private void OnTaskCompleted(BountyTaskManager.ActiveTask task)
+    private void OnTaskCompleted(string taskid)
     {
-        if (_task.id == task.id)
+        if (_task.id == taskid)
         {
             StopTimer();
             StartCoroutine(ShowCompletionFlash(true));
         }
     }
     
-    private void OnTaskFailed(BountyTaskManager.ActiveTask task)
+    private void OnTaskFailed(string taskid)
     {
-        if (_task.id == task.id)
+        if (_task.id == taskid)
         {
             StopTimer();
             StartCoroutine(ShowCompletionFlash(false));
@@ -172,7 +172,7 @@ public class TaskUI : MonoBehaviour
         Color flashColor = success ? completionColor : failureColor;
         
         // 闪烁效果
-        for (float t = 0; t < completionFlashDuration; t += Time.deltaTime)
+        for (float t = 0; t < completionFlashDuration; t += Time.fixedDeltaTime)
         {
             float normalizedTime = t / completionFlashDuration;
             float intensity = Mathf.PingPong(normalizedTime * 2f, 1f);
