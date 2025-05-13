@@ -17,6 +17,10 @@ public class SpaceshipMonitorController : MonoBehaviour,INetworkRunnerCallbacks
     private ScoreManager scoreManager;
     private NetworkStart networkStart;
     private ControlSticksController controlSticksController;
+    
+    private float playerUpdateInterval = 1f;
+    private float playerUpdateTimer = 0f;
+    private bool needUpdateRoomName = true;
 
     void Start()
     {
@@ -28,20 +32,34 @@ public class SpaceshipMonitorController : MonoBehaviour,INetworkRunnerCallbacks
         {
             Debug.LogError("UI Text references not set in SpaceshipMonitorController");
         }
+        needUpdateRoomName = true;
     }
 
     void Update()
     {
-        // UpdatePlayerNames();
+        playerUpdateTimer += Time.fixedDeltaTime;
+        
         UpdateTotalScore();
-        // UpdateRoomName();
+        
+        if (playerUpdateTimer >= playerUpdateInterval)
+        {
+            UpdatePlayerNames();
+            playerUpdateTimer = 0f;
+        }
+        
+        if (needUpdateRoomName)
+        {
+            UpdateRoomName();
+            needUpdateRoomName = false;
+        }
+
     }
 
     public void UpdatePlayerNames()
     {
         if (playerNamesText == null)
         {
-            Debug.LogWarning("PlayerNamesText is null in SpaceshipMonitorController");
+            //Debug.LogWarning("PlayerNamesText is null in SpaceshipMonitorController");
             return;
         }
 
@@ -54,13 +72,13 @@ public class SpaceshipMonitorController : MonoBehaviour,INetworkRunnerCallbacks
         {
             if (player == null)
             {
-                Debug.LogWarning("Found null PlayerData object");
+                //Debug.LogWarning("Found null PlayerData object");
                 continue;
             }
 
             if (string.IsNullOrEmpty(player.PlayerName))
             {
-                Debug.LogWarning("Player has empty or null name");
+                //Debug.LogWarning("Player has empty or null name");
                 names += "Unknown Player\n";
             }
             else
@@ -96,26 +114,26 @@ public class SpaceshipMonitorController : MonoBehaviour,INetworkRunnerCallbacks
     {
         if (roomNameText == null)
         {
-            Debug.LogWarning("roomNameText is null in SpaceshipMonitorController");
+            //Debug.LogWarning("roomNameText is null in SpaceshipMonitorController");
             return;
         }
 
         if (networkStart == null)
         {
-            Debug.Log("networkStart is null, searching for NetworkStart instance");
+            //Debug.Log("networkStart is null, searching for NetworkStart instance");
             networkStart = FindObjectOfType<NetworkStart>();
         }
 
         if (networkStart == null)
         {
-            Debug.LogError("Failed to find NetworkStart instance");
+            //Debug.LogError("Failed to find NetworkStart instance");
             roomNameText.text = "Current Room Name: \nNot Available";
             return;
         }
 
         if (string.IsNullOrEmpty(networkStart.roomName))
         {
-            Debug.LogWarning("roomName is null or empty");
+            //Debug.LogWarning("roomName is null or empty");
             roomNameText.text = "Current Room Name: \nUnnamed Room";
         }
         else

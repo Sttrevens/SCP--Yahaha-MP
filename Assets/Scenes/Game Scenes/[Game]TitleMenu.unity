@@ -1782,8 +1782,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1c78df731a3195e44a4c007874290105, type: 2}
-  m_sharedMaterial: {fileID: -2789533458116302962, guid: 1c78df731a3195e44a4c007874290105, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6e0185f90132e8342abc2693e116dea3, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1846,7 +1846,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 19.038902, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &117812372
@@ -5354,8 +5354,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter your name...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1c78df731a3195e44a4c007874290105, type: 2}
-  m_sharedMaterial: {fileID: -2789533458116302962, guid: 1c78df731a3195e44a4c007874290105, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6e0185f90132e8342abc2693e116dea3, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5418,7 +5418,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &314308616
@@ -22418,7 +22418,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 521fe7a6f0f89b245a7668d2f0b5d036, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6e0185f90132e8342abc2693e116dea3, type: 2}
   m_sharedMaterial: {fileID: -1565719559972394689, guid: 521fe7a6f0f89b245a7668d2f0b5d036, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -22482,7 +22482,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 19.038902, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1001 &1223403939
@@ -24896,7 +24896,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 1c78df731a3195e44a4c007874290105, type: 2}
+  m_GlobalFontAsset: {fileID: 0}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
@@ -25048,7 +25048,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter the room name...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 521fe7a6f0f89b245a7668d2f0b5d036, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6e0185f90132e8342abc2693e116dea3, type: 2}
   m_sharedMaterial: {fileID: -1565719559972394689, guid: 521fe7a6f0f89b245a7668d2f0b5d036, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -25112,7 +25112,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &1331084039
@@ -40575,6 +40575,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4493154301180243}
   - component: {fileID: 108908138872274557}
+  - component: {fileID: 108908138872274558}
   m_Layer: 0
   m_Name: Light (6)
   m_TagString: Untagged
@@ -43255,6 +43256,29 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &108908138872274558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884568159877451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!108 &108926827196717161
 Light:
   m_ObjectHideFlags: 0
