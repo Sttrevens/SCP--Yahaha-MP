@@ -158,9 +158,8 @@ else
     }
 }
     
-    public IEnumerator RestrainPlayer()
+    public void RestrainPlayer()
     {
-        yield return new WaitForSeconds(5f);
         isRestraining = true;
         Rpc_GoAlive();
 
@@ -194,7 +193,6 @@ else
 
             // 持续牵制效果（玩家掉san等逻辑留空）
             // TODO: 玩家持续掉SAN逻辑由其他部分提供
-            yield return null;
         }
 
         Debug.Log("牵制结束，进入冷却状态。");

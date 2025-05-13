@@ -27,7 +27,7 @@ public class IdleState : EnemyBaseState
     {
         Debug.Log("Starting restrain player coroutine.");
         _lieQController.restrainCoroutine =
-            _lieQController.StartCoroutine(_lieQController.RestrainPlayer());
+            _lieQController.StartCoroutine(AttemptRestrainPlayer());
     }
     else
     {
@@ -84,4 +84,25 @@ public class IdleState : EnemyBaseState
     Debug.Log($"No player detected within range: {radius} at position: {enemyTransform.position}");
     return false;
 }
+
+    private IEnumerator AttemptRestrainPlayer()
+    {
+        int checkCount = 0;
+        const int requiredChecks = 5;
+    
+        while (checkCount < requiredChecks)
+        {
+            if (!IsPlayerInRange(_lieQController.transform, _lieQController.detectionRange))
+            {
+                _lieQController.restrainCoroutine = null;
+                yield break;
+            }
+    
+            checkCount++;
+            yield return new WaitForSeconds(1f);
+        }
+    
+        _lieQController.RestrainPlayer();
+        _lieQController.restrainCoroutine = null;
+    }
 }

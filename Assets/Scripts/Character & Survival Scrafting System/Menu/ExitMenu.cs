@@ -81,12 +81,15 @@ public class ExitMenu : MonoBehaviour
     // 显示退出菜单
     public void ShowExitMenu()
     {
-        exitMenuPanel.SetActive(true); 
-        if (GameObject.Find("CurrentPlayer").CompareTag("Player"))
-            PlayerController.instance.ToggleCursor(true);
-        //Time.timeScale = 0; 
+        if (GameObject.Find("CurrentPlayer") != null)
+        {
+            exitMenuPanel.SetActive(true);
+            if (GameObject.Find("CurrentPlayer").CompareTag("Player"))
+                PlayerController.instance.ToggleCursor(true);
+            //Time.timeScale = 0; 
 
-        isPaused = true;
+            isPaused = true;
+        }
     }
 
     // 继续游戏
