@@ -104,7 +104,7 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
                 yield return new WaitForSeconds(2f);
                 TakeoffController.Instance.Rpc_OnInteract();
                 yield return new WaitForSeconds(1f);
-                Rpc_ScreenFade(false);
+                Rpc_ScreenFade();
                 yield return new WaitForSeconds(2f);
                 LevelManager.Instance.LoadLevel();
                 yield return RotateToAngle(19.303f);
@@ -158,9 +158,9 @@ public class ControlSticksController : NetworkBehaviour, IInteractable
     }
 
     [Rpc(RpcSources.All, RpcTargets.All)]
-    private void Rpc_ScreenFade(bool fade)
+    private void Rpc_ScreenFade()
     {
-        screenFade.TriggerScreenFade(fade);
+        screenFade.TriggerScreenFade();
     }
 
     private IEnumerator RotateToAngle(float targetAngle)

@@ -102,20 +102,22 @@ public class ScoreManager : NetworkBehaviour
         // 计算即时观众（原有逻辑增强）
         float newImmediate = allConeDetections.Sum(cd => cd.realtimeScore);
     
-        // 差值缓冲处理
+        // 差值缓冲处理 
         float delta = newImmediate - ImmediateViewers;
         ImmediateViewers += delta * Time.deltaTime * 10f; // 平滑过渡
+        ImmediateViewers = Mathf.Max(0, ImmediateViewers); // 保证不小于0
     
         // 缓存池衰减（分状态处理）
         if (newImmediate > 0.1f) {
             // 活跃状态：缓存池增速渐缓
             CachedViewers += ImmediateViewers * 0.5f * Time.deltaTime;
-            CachedViewers *= Mathf.Pow(0.97f, Time.deltaTime); 
+            CachedViewers *= Mathf.Pow(0.97f, Time.deltaTime);
         } else {
             // 非活跃状态：平方根衰减
             float decayRate = 0.01f * Mathf.Sqrt(CachedViewers);
             CachedViewers *= (1 - decayRate * Time.deltaTime);
         }
+        CachedViewers = Mathf.Max(0, CachedViewers); // 保证不小于0
     }
 
     private void Update()

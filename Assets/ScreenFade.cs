@@ -75,7 +75,7 @@ public class ScreenFade : MonoBehaviour
         fadeScreen.SetActive(false);
     }
     
-    public void TriggerScreenFade(bool showSubtitle)
+    public void TriggerScreenFade()
     {
         LSS_LoadingScreen.PerformVirtualTransition(fadeDuration * 4);
     }

@@ -35,10 +35,10 @@ public class CustomRendererFeature : ScriptableRendererFeature
             renderer.EnqueuePass(_lineStylePass); // 将 pass1 添加到渲染队列中并且等待执行
         }
 
-        if (enableMoHuPostProcessing)
+        /*if (enableMoHuPostProcessing)
         {
             renderer.EnqueuePass(_mohuPostProcessingPass); 
-        }
+        }*/
 
         if (enableInvertColor)
         {

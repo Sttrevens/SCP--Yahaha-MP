@@ -219,7 +219,7 @@ private void SetRegularGoodBadBarrage(float viewersTrend, bool forceBadBarrage)
     {
         SetBarrageList(BarrageType.bad);
     }
-    else if (viewersTrend < 0)
+    else if (viewersTrend < 0.1f)
     {
         if (Random.value <= -viewersTrend)
             SetBarrageList(BarrageType.bad);
@@ -256,7 +256,7 @@ private float CalculateViewersTrend(float timeWindow)
         }
         else if (decreaseRatio > 0.3f) // 如果下降超过30%的时间窗口
         {
-            return -0.2f; // 轻微的下降趋势
+            return Random.Range(-0.2f, -0.05f); // 轻微的下降趋势
         }
     }
     

@@ -515,8 +515,8 @@ public class BountyTaskManager : NetworkBehaviour
         // 暂时使用一些示例名称
         _recentDonorNames = new List<string>
         {
-            "热心观众", "打交特攻队", "我要做绫波丽的狗嘻嘻", "龙龙", "屌丝注定无爱", 
-            "忠实粉丝", "神秘人", "大佬", "小可爱", "土豪", "张张", "福瑞控"
+            "打交特攻队", "我要做绫波丽的狗", "龙龙", "屌丝注定无爱", 
+            "小可爱", "张张", "福瑞控", UserNameClass.GetRandomName().nickName
         };
     }
     

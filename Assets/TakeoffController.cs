@@ -140,10 +140,4 @@ public class TakeoffController : NetworkBehaviour
             audioSource.Stop();
         }
     }
-
-    private void TriggerScreenFade()
-    {
-        screenFade.TriggerScreenFade(false);
-        //screenFade?.StartCoroutine("FadeScreenAndShowSubtitle");
-    }
 }

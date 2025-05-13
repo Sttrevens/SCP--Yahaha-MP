@@ -6,10 +6,14 @@ using Fusion;
 public class IdleState : EnemyBaseState
 {
     private LieQController _lieQController;
+    private List<GameObject> _allPlayers;
     public override void EnterState(Enemy enemy)
     {
         base.EnterState(enemy);
         _lieQController = enemy.GetComponent<LieQController>();
+        _allPlayers = new List<GameObject>();
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+            _allPlayers.Add(player);
     }
 
     public override void UpdateState(Enemy enemy)
@@ -43,7 +47,7 @@ public class IdleState : EnemyBaseState
     
     private bool IsPlayerInRange(Transform enemyTransform, float radius)
 {
-    foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+    foreach (GameObject player in _allPlayers)
     {
         Vector3 toPlayer = player.transform.position - enemyTransform.position;
         float distanceToPlayer = toPlayer.magnitude;
@@ -73,7 +77,7 @@ public class IdleState : EnemyBaseState
 
                     if (hit.collider.gameObject == player)
                     {
-                        Debug.Log("[EnemyAI] Player detected via multiple rays!");
+                        //Debug.Log("[EnemyAI] Player detected via multiple rays!");
                         _lieQController.targetPlayer = player;
                         return true;
                     }
@@ -81,7 +85,7 @@ public class IdleState : EnemyBaseState
             }
         }
     }
-    Debug.Log($"No player detected within range: {radius} at position: {enemyTransform.position}");
+    //Debug.Log($"No player detected within range: {radius} at position: {enemyTransform.position}");
     return false;
 }
 
