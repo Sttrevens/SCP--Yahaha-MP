@@ -14,6 +14,9 @@ public class PlayerData : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI playerName;
     
     public Billboard billboard;
+    
+    public RenderTexture renderTexture;
+    public bool isStartStreaming = false;
 
     private void Start()
     {

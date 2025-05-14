@@ -123,7 +123,13 @@ namespace LPSurvivalEngine
 
         private void Awake()
         {
-            //CameraInCamera = GetComponentInChildren<Camera>();
+            Transform topParent = transform;
+            while (topParent.parent != null)
+            {
+                topParent = topParent.parent;
+            }
+            PlayerData playerData = topParent.gameObject.GetComponent<PlayerData>();
+
             mainCamera = Camera.main;
             if (cameraFlashLight == null)
             {
@@ -134,7 +140,17 @@ namespace LPSurvivalEngine
                 audioSource = GetComponent<AudioSource>();
             }
 
-            Debug.Log("[CameraController] Awake - Components Initialized");
+            if (playerData != null)
+            {
+                if (playerData.isStartStreaming)
+                {
+                    if (playerData.renderTexture != null)
+                    {
+                        CameraInCamera.targetTexture = playerData.renderTexture;
+                        return;
+                    }
+                }
+            }
             
              // 1. 找出所有已存在的 CameraController，收集它们用的 bobojianReferenceinScene
             CameraController[] allCameras = FindObjectsOfType<CameraController>();
@@ -176,6 +192,15 @@ namespace LPSurvivalEngine
                     if (screenRenderer != null)
                     {
                         screenRenderer.material = candidateMaterials[chosenIndex];
+                        
+                        if (playerData != null)
+                        {
+                            if (!playerData.isStartStreaming)
+                            {
+                                playerData.renderTexture = candidateRenderTextures[chosenIndex];
+                                playerData.isStartStreaming = true;
+                            }
+                        }
                     }
                 }
 
