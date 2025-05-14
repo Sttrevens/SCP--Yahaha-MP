@@ -231,7 +231,7 @@ public class PlayerBarrageInput : NetworkBehaviour
             if (userNameIndex == -1 && UserNameClass.userName != null && UserNameClass.userName.Length > 0)
             {
                 userNameIndex = 0; // 使用第一个用户名
-                playerName = UserNameClass.userName[userNameIndex].nickName;
+                //playerName = UserNameClass.userName[userNameIndex].nickName;
             }
             
             // 创建弹幕项
@@ -242,7 +242,7 @@ public class PlayerBarrageInput : NetworkBehaviour
             };
             
             // 处理插入弹幕
-            InsertPlayerBarrageToBarrageUI(playerBarrage, localPlayerData.PlayerName);
+            InsertPlayerBarrageToBarrageUI(playerBarrage, playerName);
         }
     }
     
