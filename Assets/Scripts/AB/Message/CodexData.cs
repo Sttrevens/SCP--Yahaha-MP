@@ -8,6 +8,6 @@ public class CodexData : Messages
 
     private void OnEnable()
     {
-        messageType = MessageType.Codex;
+        messageType = MessagesType.Codex;
     }
 }

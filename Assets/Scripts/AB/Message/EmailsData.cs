@@ -9,6 +9,6 @@ public class EmailsData : Messages
 
     private void OnEnable()
     {
-        messageType = MessageType.Email;
+        messageType = MessagesType.Email;
     }
 }
