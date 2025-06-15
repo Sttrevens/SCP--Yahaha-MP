@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Localization;
 
 public class LocalizedFontApplier : MonoBehaviour
 {
-    [SerializeField] LocalizedTmpFont titleFont;  // Inspector 里指向 TitleFont 键
+    public LocalizedTmpFont titleFont;  // Inspector 里指向 TitleFont 键
     TMP_Text txt;
 
     void OnEnable()
