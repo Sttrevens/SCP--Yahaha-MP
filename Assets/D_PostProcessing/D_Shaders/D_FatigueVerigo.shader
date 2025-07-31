@@ -64,15 +64,11 @@ Shader "Custom/FatigueVerigo"
                 // —— 3. 对超暗区域强制黑 —— 
                 half quantizedLuminance;
                 half  edge = 0.5 / steps;
-                if (luminance < edge) {
-                    quantizedLuminance = 0;
-                } else {
-                    half baseLevel = floor(lf);
-                    half fracPart  = lf - baseLevel;
-                    half smooth    = smoothstep(0.0, edge, fracPart)
-                                     * (1.0 - smoothstep(1.0-edge, 1.0, fracPart));
-                    quantizedLuminance = (baseLevel + smooth) / steps;
-                }
+                half baseLevel = floor(lf);
+                half fracPart  = lf - baseLevel;
+                half smooth    = smoothstep(0.0, edge, fracPart)
+                                    * (1.0 - smoothstep(1.0-edge, 1.0, fracPart));
+                quantizedLuminance = (baseLevel + smooth) / steps;
 
                 half3 quantColor = pow(abs(saturate(ratio * quantizedLuminance)), 0.4545);
 
