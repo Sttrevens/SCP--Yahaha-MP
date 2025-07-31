@@ -62,7 +62,7 @@ Shader "Custom/FatigueVerigo"
                 ratio = saturate(ratio);
 
                 // —— 3. 对超暗区域强制黑 —— 
-                half quantizedLuminance;
+                half quantizedLuminance; 
                 half  edge = 0.5 / steps;
                 half baseLevel = floor(lf);
                 half fracPart  = lf - baseLevel;
